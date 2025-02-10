@@ -1,7 +1,15 @@
-*.png filter=lfs diff=lfs merge=lfs -text
-*.json filter=lfs diff=lfs merge=lfs -text
-*.apiupaterconfigs filter=lfs diff=lfs merge=lfs -text
-*.dll filter=lfs diff=lfs merge=lfs -text
-*.scenetemplate filter=lfs diff=lfs merge=lfs -text
+*.png binary
+*.jpg binary
+*.wav binary
+*.meta text eol=lf
+# Обрабатывать файлы C# и csproj как текст с LF
+*.cs text eol=lf
+*.csproj text eol=lf
+
+# Остальные файлы обрабатывать как бинарные (не изменять line endings)
+* -text
+
+# большой файл
 *.dylib filter=lfs diff=lfs merge=lfs -text
+
 * text=auto eol=lf
