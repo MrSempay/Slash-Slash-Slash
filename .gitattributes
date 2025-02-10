@@ -1,15 +1,31 @@
-*.png binary
-*.jpg binary
-*.wav binary
-*.meta text eol=lf
-# Обрабатывать файлы C# и csproj как текст с LF
+# Файлы C# и проекты должны быть с LF
 *.cs text eol=lf
 *.csproj text eol=lf
+*.sln text eol=lf
 
-# Остальные файлы обрабатывать как бинарные (не изменять line endings)
-* -text
+# Метафайлы Unity должны быть с LF (если они содержат только текст)
+*.meta text eol=lf
+
+# Бинарные файлы
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.psd binary
+*.tif binary
+*.tiff binary
+*.bmp binary
+*.fbx binary
+*.obj binary
+*.blend binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.aiff binary
 
 # большой файл
 *.dylib filter=lfs diff=lfs merge=lfs -text
 
-* text=auto eol=lf
+# Другие файлы (DLL, файлы сборки и т.д.) - не текстовые
+* -text
