@@ -1062,6 +1062,7 @@ GameObject:
   - component: {fileID: 1776096747}
   - component: {fileID: 1776096749}
   - component: {fileID: 1776096750}
+  - component: {fileID: 1776096751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1201,7 +1202,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1236,11 +1237,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776096743}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af31249c8585c314aade59ab1d7fa880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
+  jumpForce: 5
+  isGrounded: 1
+  mainCamera: {fileID: 519420031}
+--- !u!114 &1776096751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776096743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07478c7399e21d4f85274779bc0e30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTouchPosition: {x: 0, y: 0, z: 0}
+  endTouchPosition: {x: 0, y: 0, z: 0}
+  startPositionPlayerBeforeMoving: {x: 0, y: 0, z: 0}
+  differenceXBetweenStartAndEndPositions: 0
   speed: 2
   jumpForce: 5
   isGrounded: 1
