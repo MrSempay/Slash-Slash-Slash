@@ -6,13 +6,15 @@ public class Player : Unit
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Transform transform;       // Rigidbody2D кубика
-    public Vector3 startTouchPosition, endTouchPosition; // Для отслеживания свайпов
-    public Vector3 startPositionPlayerBeforeMoving; // стартовая позиция игрока до того, как он начал движение
-    public float differenceXBetweenStartAndEndPositions; // разница по координате х между началом свайпа и его окончанием
+    [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
+    [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
+    [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
+
     public float speed = 2f;       // Скорость перемещения
-    public float jumpForce = 5f;  // Сила прыжка
-    public bool isGrounded = true; // Проверка, находится ли кубик на земле
+    public float jumpForce = 10f;  // Сила прыжка
+    public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Camera mainCamera; // Ссылка на камеру
+    public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
 
 
     private void Awake()
@@ -22,9 +24,13 @@ public class Player : Unit
         transform = GetComponent<Transform>();
         _fsm = new Fsm();
 
+        speed = 2f;
+        jumpForce = 12f;
+
         _fsm.AddState(new FsmStateIdle(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalk(_fsm, gameObject));
         _fsm.AddState(new FsmStateJump(_fsm, gameObject));
+        _fsm.AddState(new FsmStateFall(_fsm, gameObject));
 
 
         _fsm.SetState<FsmStateIdle>();
@@ -37,7 +43,7 @@ public class Player : Unit
 
     void Update()
     {
-        Debug.Log(_fsm.StateCurrent);
+        //Debug.Log(_fsm.StateCurrent);
         _fsm.Update();
     }
 
@@ -59,7 +65,7 @@ public class Player : Unit
 
     // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.
     // Нужно детектить нижнюю часть игрока, то есть отдельный коллайдер и скрипт на него. 
-    void OnCollisionEnter2D(Collision2D collision)
+    /*void OnCollisionEnter2D(Collision2D collision)
     {
         // Проверяем, столкнулся ли кубик с объектом с тегом "Ground"
         if (collision.gameObject.CompareTag("Ground"))
@@ -70,6 +76,6 @@ public class Player : Unit
                 if (rb.linearVelocity.x == 0) _fsm.SetState<FsmStateIdle>();
             }
         }
-    }
+    } */
 
 }

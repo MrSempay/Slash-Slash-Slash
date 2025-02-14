@@ -18,5 +18,12 @@ public class FsmStateMovementPlayer : FsmStatePlayer
         Debug.Log($"Move???ment({this.GetType().Name}) state [Exit]");
     }
 
+    public bool GetFloor(bool onFloor)
+    {
+        return (onFloor && player.rb.linearVelocity.y <= 0); // ��� ����: hit.collider != null. � ��� �� ����������, ��� �������� �� ����� � ��� ���� �� ������ ����������� (��� ����� �������
+                                                       // ��, ��� �������� ������ 0
+    }
+
+
 
 }

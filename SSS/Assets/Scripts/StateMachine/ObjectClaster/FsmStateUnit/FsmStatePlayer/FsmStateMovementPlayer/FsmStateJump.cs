@@ -8,15 +8,15 @@ public class FsmStateJump : FsmStateMovementPlayer
     private float distanceToGround;
     private bool onFloor;
     public FsmStateJump(Fsm fsm, GameObject GameObject) : base(fsm, GameObject) {
-        // Здесь у нас то, что определяется единожды при создании объекта состояния
         
-
     }
 
     public override void Enter()
     {
         Debug.Log("Jump state [ENTER]");
-        Jump(); // просто при приземлении переход в FsmStateIdle (реализовано в родительском классе FsmStatePlayer
+        player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);
+        player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
+        //player.isGrounded = false; 
 
     }
 
@@ -28,14 +28,11 @@ public class FsmStateJump : FsmStateMovementPlayer
 
     public override void Update()
     {
-        MakingSwipe(); // отсюда потом переход в FsmStateWalk
+        MakingSwipe(); // С‚СѓС‚ СЌРјСѓР»РёСЂРµС‚СЃСЏ СЃРёРіРЅР°Р» РґР»СЏ РїРµСЂРµС…РѕРґР° РІ FsmStateWalk
+        if (player.rb.linearVelocity.y < 0) Fsm.SetState<FsmStateFall>();
     }
 
-    void Jump()
-    {
-        player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
-        player.isGrounded = false; // Устанавливаем, что кубик в воздухе
-    }
+
 
 
 

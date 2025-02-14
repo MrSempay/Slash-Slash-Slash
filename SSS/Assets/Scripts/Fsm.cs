@@ -30,6 +30,10 @@ public class Fsm
             StateCurrent.Enter();
 
         }
+        else
+        {
+            Debug.Log("ÀÀÀÀÀÀÀÀ ÑÓÊÀ ¨ÁÀÍÀß ÑÎÑÒÎßÍÈÅ ÇÀÁÛËËËËËËËËËËËËËËËËËËËËËËËË");
+        }
     }
 
     public void Update()

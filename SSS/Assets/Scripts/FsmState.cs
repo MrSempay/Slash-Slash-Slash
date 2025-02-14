@@ -20,6 +20,7 @@ public abstract class FsmState
     public virtual void FixedUpdate() { }
     public virtual void OnEnable() { }
     public virtual void OnDisable() { }
+    public virtual void OnDestroy() { }
 
 
 }

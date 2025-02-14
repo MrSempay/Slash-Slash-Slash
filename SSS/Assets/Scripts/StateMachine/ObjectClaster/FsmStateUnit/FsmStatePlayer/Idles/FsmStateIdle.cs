@@ -6,7 +6,7 @@ public class FsmStateIdle : FsmStatePlayer
 {
     public FsmStateIdle(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-
+        OnSwipeEnded += SetStateWalk; // эмулирется в MakingSwipe
     }
 
     public override void Enter()
@@ -22,7 +22,18 @@ public class FsmStateIdle : FsmStatePlayer
 
     public override void Update()
     {
-        MakingSwipe();
+        MakingSwipe(); // здесь эмулируется событие OnSwipeEnded
+        if (!player.isGrounded) fsmPlayer.SetState<FsmStateFall>();
+    }
+
+    private void SetStateWalk()
+    {
+        fsmPlayer.SetState<FsmStateWalk>();
+    }
+
+    public override void OnDestroy()
+    {
+        OnSwipeEnded += SetStateWalk;
     }
 }
 
