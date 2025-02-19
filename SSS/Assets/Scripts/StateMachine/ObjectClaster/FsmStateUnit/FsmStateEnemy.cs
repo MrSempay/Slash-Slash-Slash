@@ -1,20 +1,26 @@
 using System.Collections;
 using System.IO;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Text.RegularExpressions;
 
 public class FsmStateEnemy : FsmStateUnit
 {
+
     private float rotationThreshold = 1.0f; // ƒопустимое отклонение от целевого угла
-    private float baseUpOffsetForStartPointFindingPath = 0.5f; // дополгнительное "поднимание вверх" конечной и стартовой точки дл€ поиска пути (чтоб был запас по отрицательному
+    private Vector3 baseUpOffsetForStartPointFindingPath = new Vector3 (0, 0.5f, 0); // дополгнительное "поднимание вверх" конечной и стартовой точки дл€ поиска пути (чтоб был запас по отрицательному
                                                                // углу при детекции провалов
     private Coroutine constraintTimeFlipXCoroutine;
     private bool canFlipByTimeDeley;
 
+    protected readonly object _lock = new object();
+
     public Fsm fsmEnemy;
     public Enemy enemy;
+    public MeleeEnemy enemy1;
     public NavMeshPath path; // ѕеременна€ дл€ хранени€ пути
     public bool onFloor;
 
@@ -23,11 +29,15 @@ public class FsmStateEnemy : FsmStateUnit
     {
         fsmEnemy = fsm;
         enemy = gameObject.GetComponent<Enemy>();
-        
+
         path = new NavMeshPath();
         enemy.scriptFloorDetector.OnObjGetFloor += OnFloor;
     }
 
+    public override void Update()
+    {
+
+    }
 
     //–ассчитывает, отрисовывает путь. ћен€ет направление взгл€да персонажа, смещает все детекторы, двигает по оси х.
     public void CalculateDrawPathChangeDirectionAndMove()
@@ -36,14 +46,16 @@ public class FsmStateEnemy : FsmStateUnit
         FixingFuckingBuggingRotation();
         if (constraintTimeFlipXCoroutine == null)
         {
-            constraintTimeFlipXCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, constraintTimeFlipX());
+            constraintTimeFlipXCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ConstraintTimeFlipX());
         }
-
-            // ќбновл€ем путь, если необходимо (например, если игрок переместилс€)
-            if (Mathf.Abs(enemy.transformmm.position.x - enemy.playerTransform.position.x) > 0.1f)
+        //Debug.Log(enemy.currentTargetTransform.position);
+        //Debug.Log(enemy.currentTargetTransform);
+            // ќбновл€ем путь, если необходимо (например, если игрок переместилс€). ѕо идее надо детектить ещЄ и y-состовл€ющую, но да ладно...
+        if (Mathf.Abs(enemy.transform.position.x - enemy.currentTargetTransform.position.x) > 0.1f)
         {
             //Debug.Log("Emmm???1");
-            enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + new Vector3(0, baseUpOffsetForStartPointFindingPath, 0), enemy.playerTransform.position + new Vector3(0, baseUpOffsetForStartPointFindingPath, 0), NavMesh.AllAreas, path);
+            enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.currentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
+            //Debug.Log(path.corners.Length);
             //enemy.agent.destination = enemy.playerTransform.position;
             //path = enemy.agent.path;
             if (path.corners.Length >= 1) enemy.isPathValid = true;
@@ -61,30 +73,32 @@ public class FsmStateEnemy : FsmStateUnit
             enemy.rb.linearVelocityX = 0;
             return; // Ќичего не делаем, если путь не валиден или слишком короткий
         }
-
+        //Debug.Log("Emmm???3");
         // ѕолучаем текущую цель (втора€ точка)
         if (enemy.currentCornerIndex < path.corners.Length)
         {
-            enemy.targetPosition = path.corners[enemy.currentCornerIndex];
+            //Debug.Log("Emmm???4");
+            enemy.nextPointInPath = path.corners[enemy.currentCornerIndex];
             //Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]));
             //Debug.Log(enemy.isGrounded);
             //Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]));
             if (StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]) >= 75f &&
-                StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]) <= 165f) Jump();
+                StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]) <= 165f) Jump(false);
         }
         else
         {
+            //Debug.Log("Emmm???5");
             //≈сли все углы пройдены, то останавливаемс€
             enemy.rb.linearVelocityX = 0;
             return;
         }
-
+        //Debug.Log("Emmm???6");
 
         // ѕеремещение к целевой позиции. Cначала вычисл€м перемещение (чтоб пон€ть, куда поворачиватьс€) и только после отзеркаливаем спрайт
         //Debug.Log("Emmm???3");
         MoveTowardsTarget();
         //ќриентаци€ спрайта и прочего
-        if (enemy.lookingRight == enemy.targetPosition.x < enemy.transform.position.x)
+        if (enemy.lookingRight == enemy.nextPointInPath.x < enemy.transform.position.x)
         {
             ChangeDirectionView();
         }
@@ -98,10 +112,10 @@ public class FsmStateEnemy : FsmStateUnit
     void MoveTowardsTarget()
     {
         //Debug.Log("Emmm???4");
-        float direction = Mathf.Sign(enemy.targetPosition.x - enemy.transformmm.position.x);
+        float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
         enemy.rb.linearVelocityX = direction * enemy.speed;
         // ѕроверка достижени€ цели
-        if (Mathf.Abs(enemy.transformmm.position.x - enemy.targetPosition.x) <= enemy.arrivalThreshold)
+        if (Mathf.Abs(enemy.transform.position.x - enemy.nextPointInPath.x) <= enemy.arrivalThreshold)
         {
             //Debug.Log("Emmm???5");
             // ѕереходим к следующей точке
@@ -132,7 +146,7 @@ public class FsmStateEnemy : FsmStateUnit
     {
         if (canFlipByTimeDeley)
         {
-            enemy.lookingRight = enemy.targetPosition.x > enemy.transformmm.position.x;
+            enemy.lookingRight = enemy.nextPointInPath.x > enemy.transform.position.x;
             enemy.selfSprite.flipX = !enemy.selfSprite.flipX;
             enemy.attackAreaTransform.localPosition = new Vector3(-1 * enemy.attackAreaTransform.localPosition.x, enemy.attackAreaTransform.localPosition.y, enemy.attackAreaTransform.localPosition.z);
             enemy.pitDetectorTransform.localPosition = new Vector3(-1 * enemy.pitDetectorTransform.localPosition.x, enemy.pitDetectorTransform.localPosition.y, enemy.pitDetectorTransform.localPosition.z);
@@ -141,23 +155,25 @@ public class FsmStateEnemy : FsmStateUnit
     }
 
     // прыгаем. ¬ызываетс€ либо если угол наклона пр€мой пути больше 45 градусов или была обнаружена €ма (эмулируетс€ сигнал из PitDetector)
-    protected void Jump()
+    protected void Jump(bool jumpOfPit)
     {
         if (enemy.isGrounded) { // ≈сли мы на земле
-            if (path.corners.Length > 0) { // вот на ровном месте оно почему-то тут выдаЄт 0 иногда 0_0
+            if (path.corners.Length > 1 && enemy.currentCornerIndex < path.corners.Length) { // вот на ровном месте оно почему-то тут выдаЄт 0 иногда 0_0
                 //Debug.Log(enemy.currentCornerIndex - 1);
                 //Debug.Log(enemy.currentCornerIndex);
                 //Debug.Log(path.corners.Length);
-                if (!(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) <= -10f
-                && StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) >= -170f))
+                if (!(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) <= -5f
+                && StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) >= -175f))
                 { // если нам не вниз
-                    if (path.corners.Length >= 2) fsmEnemy.SetState<FsmStateJumpEnemy>(); //если Player не в пр€мой видимости (чтоб за нами не прыгал если мы прыгнем, тогда количество точек пути = 2)
+                    if (path.corners.Length != 2) fsmEnemy.SetState<FsmStateJumpEnemy>(); //если Player не в пр€мой видимости (чтоб за нами не прыгал если мы прыгнем, тогда количество точек пути = 2)
+                    if (jumpOfPit) fsmEnemy.SetState<FsmStateJumpEnemy>(); // игнорируем пр€мую видимость геро€ в том случае, если надо перерыгивать через пропасть
                 }
+
             }     
         }
     }
 
-    private IEnumerator constraintTimeFlipX()
+    private IEnumerator ConstraintTimeFlipX()
     {
         while (true)
         {
@@ -213,5 +229,11 @@ public class FsmStateEnemy : FsmStateUnit
     public override void OnDestroy()
     {
         enemy.scriptFloorDetector.OnObjGetFloor -= OnFloor;
+
     }
+
+
+
+
+
 }

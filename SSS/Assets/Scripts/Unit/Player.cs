@@ -1,31 +1,32 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 public class Player : Unit
 {
-    private Fsm _fsm;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
-    [NonSerialized] public Transform transform;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
     [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
     [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
 
-    public float speed = 2f;       // Скорость перемещения
-    public float jumpForce = 10f;  // Сила прыжка
+    public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
+    public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
+
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
 
 
-    private void Awake()
+
+    protected override void Awake()
     {
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM
+        nameOfUnit = "Player";
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();
-        transform = GetComponent<Transform>();
-        _fsm = new Fsm();
+        selfSprite = GetComponent<SpriteRenderer>();
 
-        speed = 2f;
-        jumpForce = 12f;
+        _fsm = new Fsm();
 
         _fsm.AddState(new FsmStateIdle(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalk(_fsm, gameObject));
@@ -43,12 +44,14 @@ public class Player : Unit
 
     void Update()
     {
+
         //Debug.Log(_fsm.StateCurrent);
         _fsm.Update();
     }
 
     private void FixedUpdate()
     {
+
         _fsm.FixedUpdate();
     }
 

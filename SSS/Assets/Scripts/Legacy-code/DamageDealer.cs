@@ -34,12 +34,10 @@ public class DamageDealer : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ibo");
         DamageReceiver damageReceiver = other.GetComponent<DamageReceiver>();
         if (damageReceiver != null)
         {
             currentTarget = other.gameObject;
-            Debug.Log("Обнаружена цель: " + other.gameObject.name);
         }
     }
 
@@ -50,7 +48,6 @@ public class DamageDealer : MonoBehaviour
         {
             currentTarget = null;
             timer = 0;
-            Debug.Log("Цель покинула зону поражения: " + other.gameObject.name);
         }
     }
 

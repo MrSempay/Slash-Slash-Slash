@@ -9,7 +9,9 @@ public class FsmStateWalkEnemy : FsmStateEnemy
     public FsmStateWalkEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
         // Здесь у нас то, что определяется единожды при создании объекта состояния
-        
+        //Debug.Log(enemy);
+        //Debug.Log(enemy.agent);
+        //Debug.Log(enemy.agent.updatePosition);
         enemy.agent.updatePosition = false;
         enemy.pitDetectorScript.OnDetectedPit += Jump;
 
@@ -26,6 +28,13 @@ public class FsmStateWalkEnemy : FsmStateEnemy
     public override void Exit()
     {
         Debug.Log("Walk state [EXIT]");
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if (enemy.listOfUnitsInAttackArea.Count > 0) fsmEnemy.SetState<FsmStateMeleeAttackEnemy>();
+
     }
 
     public override void FixedUpdate()

@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Awake()
+    {
+        GameManager.Instance.Initialize();
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // следующая сцена в списке загружаемых для настроек сборки (на 14.02 - Sample Scene)
@@ -13,4 +18,5 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Игра закрылась");
         Application.Quit();
     }
+
 }

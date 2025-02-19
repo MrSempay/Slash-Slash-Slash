@@ -6,7 +6,6 @@ public class FsmStateIdleEnemy : FsmStateEnemy
     
     public FsmStateIdleEnemy(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        enemy.triggerAreaScript.OnPlayerEnteredTriggerArea += FollowPlayer;
 
     }
 
@@ -23,20 +22,16 @@ public class FsmStateIdleEnemy : FsmStateEnemy
 
     public override void Update()
     {
-        if (!enemy.isGrounded) fsmEnemy.SetState<FsmStateFallEnemy>();
+        base.Update();
+        //if (!enemy.isGrounded) fsmEnemy.SetState<FsmStateFallEnemy>();
         FixingFuckingBuggingRotation();
     }
 
-    private void FollowPlayer()
-    {
-        fsmEnemy.SetState<FsmStateWalkEnemy>();
-    }
 
 
 
     public override void OnDestroy()
     {
-        enemy.triggerAreaScript.OnPlayerEnteredTriggerArea -= FollowPlayer;
-        enemy.scriptFloorDetector.OnObjGetFloor -= OnFloor;
+        base.OnDestroy();
     }
 }

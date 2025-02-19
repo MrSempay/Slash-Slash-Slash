@@ -13,17 +13,18 @@ public class FsmStatePlayer : FsmStateUnit
     {
         fsmPlayer = fsm;
         player = gameObject.GetComponent<Player>();
+        
     }
 
     public override void Update()
     {
-       
+
     }
 
     public void MakingSwipe()
     {
-        if (fsmPlayer.StateCurrent.GetType() != typeof(FsmStateIdle))
-            IsAtSpecifiedPosition(); // узнаём, добрался ли игрок до конечной точки пути (по сути его позиция + длина свайпа. Если да, то сбрасываем мгновенную скорость по х в ноль.
+
+        IsAtSpecifiedPosition(); // узнаём, добрался ли игрок до конечной точки пути (по сути его позиция + длина свайпа. Если да, то сбрасываем мгновенную скорость по х в ноль.
         // Для мобильных устройств
         if (Input.touchCount > 0)
         {
@@ -55,7 +56,13 @@ public class FsmStatePlayer : FsmStateUnit
             // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
             // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
             OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-            if (fsmPlayer.StateCurrent.GetType() != typeof(FsmStateIdle)) HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+            HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+            fsmPlayer.SetState<FsmStateWalk>();
+        }
+
+        if (player.lookingRight == player.rb.linearVelocityX < 0)
+        {
+            ChangeDirectionView();
         }
     }
 
@@ -89,13 +96,15 @@ public class FsmStatePlayer : FsmStateUnit
     private void MoveLeft()
     {
         //rb.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
-        player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
+        //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
+        player.rb.linearVelocityX = -player.speed * 10;
     }
 
     private void MoveRight()
     {
         //rb.AddForce(Vector2.right * speed, ForceMode2D.Impulse); // в теории можно сделать и импульсом перемещение, но тогда он будет накапливаться при многочисленных свайпах.
-        player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
+        //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
+        player.rb.linearVelocityX = player.speed * 10;
     }
 
     public void IsAtSpecifiedPosition()
@@ -114,4 +123,17 @@ public class FsmStatePlayer : FsmStateUnit
     {
         fsmPlayer.SetState<FsmStateJump>();
     }
+
+    void ChangeDirectionView()
+    {
+        if (player.rb.linearVelocityX != 0) // чтоб во время остановки у нас спрайт не разворачивался влево всегда. Как остановились, так остановились
+        {
+            
+            player.lookingRight = player.rb.linearVelocityX > 0;
+            player.selfSprite.flipX = !player.selfSprite.flipX;
+            player.attackAreaTransform.localPosition = new Vector3(-1 * player.attackAreaTransform.localPosition.x, player.attackAreaTransform.localPosition.y, player.attackAreaTransform.localPosition.z);
+        }
+    }
+
+
 }

@@ -29,7 +29,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
 
     public override void Update()
     {
-
+        base.Update();
     }
 
     public override void FixedUpdate()
@@ -44,7 +44,12 @@ public class FsmStateFallEnemy : FsmStateEnemy
         CalculateDrawPathChangeDirectionAndMove();
         if (GetFloor(onFloor))
         {
-            Fsm.SetState<FsmStateWalkEnemy>();
+            if (enemy.rb.linearVelocityX != 0)
+            {
+                fsm.SetState<FsmStateWalkEnemy>();
+                return;
+            }
+            fsm.SetState<FsmStateIdleEnemy>();
         }
 
     }

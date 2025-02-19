@@ -11,13 +11,13 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
+  - name: FallZone1
     cost: 1
-  - name: 
+  - name: FallZone2
     cost: 1
-  - name: 
+  - name: FallZone3
     cost: 1
-  - name: 
+  - name: FallZone4
     cost: 1
   - name: 
     cost: 1

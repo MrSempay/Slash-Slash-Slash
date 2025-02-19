@@ -51,7 +51,7 @@ public class CoroutineManager : MonoBehaviour
         }
     }
 
-    // Метод для остановки конкретной корутины
+    // Метод для остановки конкретной корутины (вроде как он ещё и удаляет её из списка текущих активных корутин для объекта)
     public void StopManagedCoroutine(GameObject owner, Coroutine coroutine)
     {
         if (activeCoroutines.TryGetValue(owner, out List<Coroutine> coroutines))

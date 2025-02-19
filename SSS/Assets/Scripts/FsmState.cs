@@ -3,13 +3,13 @@ using UnityEngine;
 
 public abstract class FsmState
 {
-    protected readonly Fsm Fsm;
+    protected readonly Fsm fsm;
     protected readonly GameObject gameObject;
 
 
-    public FsmState(Fsm fsm, GameObject GameObject)
+    public FsmState(Fsm Fsm, GameObject GameObject)
     {
-        Fsm = fsm;
+        fsm = Fsm;
         gameObject = GameObject;
 
     }

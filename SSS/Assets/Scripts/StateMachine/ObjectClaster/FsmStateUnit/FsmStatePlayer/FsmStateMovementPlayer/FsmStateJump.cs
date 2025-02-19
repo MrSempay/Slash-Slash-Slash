@@ -29,7 +29,7 @@ public class FsmStateJump : FsmStateMovementPlayer
     public override void Update()
     {
         MakingSwipe(); // тут эмулирется сигнал для перехода в FsmStateWalk
-        if (player.rb.linearVelocity.y < 0) Fsm.SetState<FsmStateFall>();
+        if (player.rb.linearVelocity.y < 0) fsm.SetState<FsmStateFall>();
     }
 
 

@@ -33,7 +33,7 @@ public class FsmStateFall : FsmStateMovementPlayer
         MakingSwipe();
         if (GetFloor(onFloor))
         {
-            Fsm.SetState<FsmStateIdle>();
+            fsm.SetState<FsmStateIdle>();
         }
     }
 
