@@ -7,21 +7,36 @@ using static UnityEngine.GraphicsBuffer;
 
 public class LevelBuildScript : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Transform schoolTransform;
-    [SerializeField] private Transform treasuryTransform;
+    // В коде будем использовать словарь, для удобства, поэтому создадим его на основе списка
+
     [SerializeField] private Enemy enemy;
+    [SerializeField] private List<TransformIntPair> targetPointsList = new List<TransformIntPair>(); // храним массив элементов класса, описывающего элемент словаря ключ-значения
+                                                                                                     // transform-int для задания целей врагам.
+
+    private Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом является ссылка на компонент transform цели, значением - количество
+                                                                                                // врагов, которые направятся к цели.
+    private Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>() // увеличение параметров на %
+    {
+            { "healthMax", 5 },
+            { "damageReduction", 0 },
+            { "speed", 0 },
+            { "jumpForce", 0 },
+            { "damage", 5 } };
 
     private Coroutine spawnEnemyByTimerCoroutine;
     private List<Transform> spawnPointsTransforms; // массив для компонентов Transform всех точек спавна
     private Transform clusterSpawnPointsTransform; // кластер (родительский элемент) всех точек спавна
     private bool isStillEnemyForSpawn;
+    private int numberOfSpawnIteration = 0; // чтоб знали, насколько усиливать врагов на текущей итерации
     private List<Transform> targetTransformsForRandom;
-    private Dictionary<Transform, int> targetPointsForEnemy; // ключом является ссылка на компонент transform цели, значением - количество врагов, которые направятся к цели.
+
+
+
 
     void Awake()
     {
         // получаем компоненты transform у целей
+        /*
         playerTransform = GameObject.Find("Player").transform;
         treasuryTransform = GameObject.Find("Treasury").transform;
         schoolTransform = GameObject.Find("School").transform;
@@ -31,8 +46,8 @@ public class LevelBuildScript : MonoBehaviour
             {playerTransform, 15},
             {schoolTransform, 20},
             {treasuryTransform, 8}
-        };
-
+        }; */
+        //OnValidate();
         // получаем компоненты transform у точек для спавна
         spawnPointsTransforms = new List<Transform>();
         clusterSpawnPointsTransform = GameObject.Find("SpawnPoints").transform;
@@ -69,6 +84,7 @@ public class LevelBuildScript : MonoBehaviour
             {
                 SpawnEnemy(spawnPointTransform);
             }
+            numberOfSpawnIteration++;
             yield return new WaitForSeconds(2f);
         }
     }
@@ -87,7 +103,7 @@ public class LevelBuildScript : MonoBehaviour
                                                                                                  // целевых точек для врага. В таком случае соответствующее поле Transfrom будет null
                 }
             }
-            
+
             // если массив не пустой (то есть были позици, на которые ещё должны идти враги), то движемся далее
             if (targetTransformsForRandom.Count > 0) {
                 // генерируем случайный индекс
@@ -104,8 +120,31 @@ public class LevelBuildScript : MonoBehaviour
                 // присваиваем случайный Transform врагу
                 newEnemy.currentTargetTransform = randomTarget;
                 newEnemy.isInstancedByLevel = true;
+                Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значения
+                                                                                                                                  // для усиления юнитов
+                foreach (var increasingValue in percentageIncreaseEnemiesParametersBySpawnIteration)
+                {
+                    string newKey = string.Copy(increasingValue.Key); // Создаем новый экземпляр строки
+                    float newValue = increasingValue.Value * numberOfSpawnIteration; // Для float это простое копирование значения
+                    percentageIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
+                }
+                newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration);
+                return;
             }
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, spawnEnemyByTimerCoroutine);
+        }
+    }
 
+    private void OnValidate() // Вызывается в редакторе при изменении значений
+    {
+        // Синхронизируем список со словарем, чтобы изменения в инспекторе сохранялись в словаре
+        targetPointsForEnemy.Clear();
+        foreach (var pair in targetPointsList)
+        {
+            if (pair.target != null && !targetPointsForEnemy.ContainsKey(pair.target))
+            {
+                targetPointsForEnemy[pair.target] = pair.enemyCount;
+            }
         }
     }
 }

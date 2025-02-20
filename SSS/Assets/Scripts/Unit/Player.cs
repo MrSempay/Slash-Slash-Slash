@@ -1,8 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Player : Unit
 {
+    private Coroutine zeroizeKillComboTicksCoroutine;
+
+    [SerializeField] private float _currentExperience = 0;
+    [SerializeField] private float _currentMoney = 0;
+    [SerializeField] private int _currentLevel = 0;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
@@ -15,6 +21,56 @@ public class Player : Unit
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
+    public float experienceToNextLevel;
+    public int currentKillCombo = 0;
+    public float increasingGettingExperienceByKillComboTickPercentage;
+    public float increasingGettingMoneyByKillComboTickPercentage;
+    public event Action<float> OnExperienceChanged; // Событие для изменения опыта
+    public event Action<float> OnMoneyChanged;     // Событие для изменения денег
+    public event Action<int> OnLevelChanged;       // Событие для изменения уровня
+
+    public float CurrentExperience
+    {
+        get { return _currentExperience; }
+        set
+        {
+            _currentExperience = value;
+
+            // Проверяем, достаточно ли опыта для повышения уровня
+            while (_currentExperience >= experienceToNextLevel)
+            {
+                _currentExperience -= experienceToNextLevel; // Вычитаем опыт, необходимый для повышения
+                CurrentLevel++; // Повышаем уровень
+            }
+
+            // Вызываем событие, если есть подписчики
+            OnExperienceChanged?.Invoke(_currentExperience);
+        }
+    }
+
+    public float CurrentMoney
+    {
+        get { return _currentMoney; }
+        set
+        {
+            _currentMoney = value;
+
+            // Вызываем событие, если есть подписчики
+            OnMoneyChanged?.Invoke(_currentMoney);
+        }
+    }
+
+    public int CurrentLevel
+    {
+        get { return _currentLevel; }
+        set
+        {
+            _currentLevel = value;
+
+            // Вызываем событие, если есть подписчики
+            OnLevelChanged?.Invoke(_currentLevel);
+        }
+    }
 
 
 
@@ -65,6 +121,30 @@ public class Player : Unit
         //_fsm.OnDisable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
     }
 
+    protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money)
+    {
+        // Останавливаем предыдущую корутину (если она существует)
+        if (zeroizeKillComboTicksCoroutine != null)
+        {
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, zeroizeKillComboTicksCoroutine);
+        }
+
+        // Запускаем новую корутину
+        zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
+
+        CurrentExperience += experience * (1 + currentKillCombo * (increasingGettingExperienceByKillComboTickPercentage / 100));
+        CurrentMoney += money * (1 + currentKillCombo * (increasingGettingMoneyByKillComboTickPercentage / 100));
+        currentKillCombo++;
+    }
+
+    IEnumerator ZeroizeKillComboTicks()
+    {
+        yield return new WaitForSeconds(1f); // Ждем 1 секунду
+
+        // Сбрасываем комбо после задержки
+        currentKillCombo = 0;
+        zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
+    }
 
     // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.
     // Нужно детектить нижнюю часть игрока, то есть отдельный коллайдер и скрипт на него. 

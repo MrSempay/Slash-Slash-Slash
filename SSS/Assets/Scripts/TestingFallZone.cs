@@ -25,18 +25,18 @@ public class TestingFallZone : MonoBehaviour
     {
         path = new NavMeshPath();
         Transform parent = transform; // Ссылка на Transform родительского объекта (текущего)
-
+/*
         foreach (Transform child in parent)
         {
             listOfNumbersFallZones.Add(child.gameObject.GetComponent<NavMeshModifierVolume>().area);
             Debug.Log("Area " + listOfNumbersFallZones[i]);
             i++;
-        }
+        }*/
         areaMask = ~((1 << 3) | (1 << 4) | (1 << 5) | (1 << 6)); ;
         //int areaMask = CreateAreaMaskExcluding(listOfNumbersFallZones);
         filter = new NavMeshQueryFilter();
         filter.areaMask = areaMask;
-        NavMesh.CalculatePath(new Vector3(0, 0, 0), new Vector3(28,21,0), filter, path);
+        //NavMesh.CalculatePath(new Vector3(0, 0, 0), new Vector3(20,25,0), filter, path);
         Debug.Log(NavMesh.AllAreas);
         Debug.Log(path.corners.Length);
         Debug.Log(filter.areaMask);
@@ -45,7 +45,7 @@ public class TestingFallZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NavMesh.CalculatePath(new Vector3(0, 0, 0), new Vector3(28, 21, 0), areaMask, path);
+        NavMesh.CalculatePath(new Vector3(0, 0, 0), new Vector3(-10, 1.5f, 0), filter, path);
         DrawPath(path);
     }
 

@@ -34,7 +34,7 @@ public class FsmStateWalk : FsmStateMovementPlayer
     private void MakeDamageToEnemy(bool isEnemyInArea, Unit enemy)
     {
         // так как урон можем наносить только во время свайпа, а иметь мгновенную скорость по оси Х также только во время свайпа, проверяем в условии скорость на неравенство нулю.
-        if (isEnemyInArea) { enemy.GetDamage(player.damage); }
+        if (isEnemyInArea) { enemy.GetDamage(player.damage, player); }
     }
 
     public override void OnDestroy()

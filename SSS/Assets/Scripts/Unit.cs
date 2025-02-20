@@ -5,6 +5,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour
@@ -26,6 +27,8 @@ public abstract class Unit : MonoBehaviour
     public float jumpForce; // сила прыжка
     public float speed; // скорость
     public float damage; // урон
+    public float moneyFromKill; // урон
+    public float experienceFromKill; // урон
     
     protected virtual void Awake()
     {
@@ -46,13 +49,14 @@ public abstract class Unit : MonoBehaviour
 
     }
 
-    public virtual void GetDamage(float damageSize)
+    // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
+    public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
     {
         healthCurrent -= damageSize; // Уменьшаем здоровье
 
         if (healthCurrent <= 0)
         {
-            Die(); // Вызываем метод смерти
+            Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
         }
         else
         {
@@ -61,9 +65,17 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    void Die()
+    void Die(Unit unitFromWhoWasGottenDamage = null)
     {
         Debug.Log(gameObject.name + " уничтожен!");
+        if (unitFromWhoWasGottenDamage)
+        {
+            if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
+                                                                            // с помощью какого-нибудь интерфейса
+            {
+                unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(moneyFromKill, experienceFromKill);
+            }
+        }
         HealthChanged?.Invoke(0);
         Destroy(gameObject); // Уничтожаем объект
     }
@@ -105,5 +117,45 @@ public abstract class Unit : MonoBehaviour
             }
         }
     }
+
+    public void ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases)
+    {
+        Type type = this.GetType(); // Получаем тип текущего класса
+
+        foreach (var kvp in parametersIncreases)
+        {
+            string parameterName = kvp.Key;
+            float parameterIncreasing = kvp.Value;
+
+            // Получаем поле с именем, соответствующим ключу словаря
+            FieldInfo fieldInfo = type.GetField(parameterName);
+
+            if (fieldInfo != null)
+            {
+                // Пытаемся преобразовать значение к типу поля
+                try
+                {
+                    object increasedValue = (float) fieldInfo.GetValue(this) * (1 + (parameterIncreasing/100));
+                    fieldInfo.SetValue(this, increasedValue); // Присваиваем значение полю
+                }
+                catch (InvalidCastException e)
+                {
+                    Debug.LogError($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
+            }
+
+            if (parameterName == "healthMax")
+            {
+                healthCurrent = healthCurrent * (1 + (parameterIncreasing / 100));
+            }
+        }
+    }
+
+    protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money) { }
+
 
 }
