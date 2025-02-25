@@ -1,7 +1,0 @@
-
-
-# большой файл
-*.dylib filter=lfs diff=lfs merge=lfs -text
-
-# Другие файлы (DLL, файлы сборки и т.д.) - не текстовые
-* -text
