@@ -20,7 +20,6 @@ public class FsmStateEnemy : FsmStateUnit
 
     public Fsm fsmEnemy;
     public Enemy enemy;
-    public MeleeEnemy enemy1;
     public NavMeshPath path; // Переменная для хранения пути
     public bool onFloor;
 

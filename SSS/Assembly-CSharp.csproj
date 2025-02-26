@@ -61,12 +61,16 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.37f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DebugExtension.cs" />
     <Compile Include="Assets\Scripts\TransformIntPair.cs" />
     <Compile Include="Assets\Scripts\FsmState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateTranslatingEquipment.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment.cs" />
     <Compile Include="Assets\Scripts\Building.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\GLOBAL\AdjustEquipmentParameters.cs" />
     <Compile Include="Assets\Scripts\TestingFallZone.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateJump.cs" />
@@ -79,7 +83,11 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingOpened.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentSelected.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\Move_Player.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateFallEnemy.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateFall.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateIdleEnemy.cs" />
@@ -93,7 +101,9 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\FloorDetector.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentAtPlayer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateDoor.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
     <Compile Include="Assets\Scripts\Unit\Door.cs" />
     <Compile Include="Assets\Scripts\Building\Treasury.cs" />
@@ -103,6 +113,8 @@
     <Compile Include="Assets\Scripts\CoroutineManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Player.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Ammunition.cs" />
+    <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuildScript.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateJumpEnemy.cs" />

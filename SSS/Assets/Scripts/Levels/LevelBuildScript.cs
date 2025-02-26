@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -11,7 +12,8 @@ public class LevelBuildScript : MonoBehaviour
 
     [SerializeField] private Enemy enemy;
     [SerializeField] private List<TransformIntPair> targetPointsList = new List<TransformIntPair>(); // храним массив элементов класса, описывающего элемент словар€ ключ-значени€
-                                                                                                     // transform-int дл€ задани€ целей врагам.
+                                                                                                     // transform-int дл€ задани€ целей врагам. ¬ целом это поле дл€ реализации
+                                                                                                     // возможности задавать цели и количество врагов дл€ них через редактор
 
     private Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом €вл€етс€ ссылка на компонент transform цели, значением - количество
                                                                                                 // врагов, которые направ€тс€ к цели.
@@ -30,8 +32,33 @@ public class LevelBuildScript : MonoBehaviour
     private int numberOfSpawnIteration = 0; // чтоб знали, насколько усиливать врагов на текущей итерации
     private List<Transform> targetTransformsForRandom;
 
+    public Dictionary<Transform, int> TargetPointsForEnemy
+    {
+        get { return targetPointsForEnemy; }
+        set
+        {
+            // 1. ќбновл€ем существующий словарь, а не создаем новый
+            targetPointsForEnemy.Clear(); // ќчищаем старый словарь
+            foreach (var targetPoint in value)
+            {
+                targetPointsForEnemy[targetPoint.Key] = targetPoint.Value; //  опируем элементы из нового словар€
+            }
 
+            // 2. ќпредел€ем, нужно ли запускать или останавливать корутину
+            bool shouldSpawnEnemies = targetPointsForEnemy.Any(targetPoint => targetPoint.Value > 0);
 
+            // 3. «апускаем или останавливаем корутину в зависимости от услови€
+            if (shouldSpawnEnemies && spawnEnemyByTimerCoroutine == null)
+            {
+                spawnEnemyByTimerCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, SpawnEnemyByTimer());
+            }
+            else if (!shouldSpawnEnemies && spawnEnemyByTimerCoroutine != null)
+            {
+                CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, spawnEnemyByTimerCoroutine);
+                spawnEnemyByTimerCoroutine = null;
+            }
+        }
+    }
 
     void Awake()
     {
@@ -73,7 +100,6 @@ public class LevelBuildScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     private IEnumerator SpawnEnemyByTimer()
@@ -131,7 +157,7 @@ public class LevelBuildScript : MonoBehaviour
                 newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration);
                 return;
             }
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, spawnEnemyByTimerCoroutine);
+            
         }
     }
 

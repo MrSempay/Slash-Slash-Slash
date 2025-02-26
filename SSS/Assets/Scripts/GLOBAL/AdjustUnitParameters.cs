@@ -16,7 +16,14 @@ public static class AdjustUnitParameters
             { "experienceFromKill", 0 }, 
             { "increasingGettingExperienceByKillComboTickPercentage", 20f }, 
             { "increasingGettingMoneyByKillComboTickPercentage", 20f }, 
-            { "damage", 10 } } },
+            { "increasingParametersByLevelUpPercentage",  new Dictionary<string, float>() {
+                { "healthMax", 10f },
+                { "damage", 10f } } }, 
+            { "damage", 10 },
+
+
+            { "CountAccessToUpInSchool", 0 },
+            { "CurrentMoney", 150 } } }, // для свойств потом, возможно, лучше сделать отдельный словарик, а может и нет...
         { "MeleeEnemy", new Dictionary<string, object>() {
             { "healthMax", 150 },
             { "damageReduction", 150 },

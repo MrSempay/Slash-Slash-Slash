@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : Unit
 {
-    private Coroutine zeroizeKillComboTicksCoroutine;
+    private Coroutine _zeroizeKillComboTicksCoroutine;
+    private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
 
+    [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
     [SerializeField] private float _currentExperience = 0;
     [SerializeField] private float _currentMoney = 0;
     [SerializeField] private int _currentLevel = 0;
+    [SerializeField] private int _currentKillCombo = 0;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
@@ -17,17 +20,19 @@ public class Player : Unit
 
     public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
+    public RectTransform spellPanelTransform; // 
 
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
     public float experienceToNextLevel;
-    public int currentKillCombo = 0;
     public float increasingGettingExperienceByKillComboTickPercentage;
     public float increasingGettingMoneyByKillComboTickPercentage;
+    public Dictionary<string, float> increasingParametersByLevelUpPercentage;
     public event Action<float> OnExperienceChanged; // Событие для изменения опыта
     public event Action<float> OnMoneyChanged;     // Событие для изменения денег
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
+    public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
 
     public float CurrentExperience
     {
@@ -41,6 +46,8 @@ public class Player : Unit
             {
                 _currentExperience -= experienceToNextLevel; // Вычитаем опыт, необходимый для повышения
                 CurrentLevel++; // Повышаем уровень
+                if (CurrentLevel % 5 == 0) _countAccessToUpInSchool++;
+                ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage);
             }
 
             // Вызываем событие, если есть подписчики
@@ -72,6 +79,39 @@ public class Player : Unit
         }
     }
 
+    public int CurrentKillCombo
+    {
+        get { return _currentKillCombo; }
+        set
+        {
+            _currentKillCombo = value;
+
+            // Вызываем событие, если есть подписчики
+            OnKillComboChanged?.Invoke(_currentKillCombo);
+        }
+    }
+    
+    public int CountAccessToUpInSchool
+    {
+        get { return _countAccessToUpInSchool; }
+        set
+        {
+            _countAccessToUpInSchool = value;
+        }
+    }
+
+    public bool IsTranslatingEquipment
+    {
+        get { return _isTranslatingEquipment; }
+        set
+        {
+            _isTranslatingEquipment = value;
+            if (value) _fsm.SetState<FsmStateTranslatingEquipment>();
+            else _fsm.SetState<FsmStateIdle>();
+
+        }
+    }
+
 
 
     protected override void Awake()
@@ -82,25 +122,29 @@ public class Player : Unit
         rb = GetComponent<Rigidbody2D>();
         selfSprite = GetComponent<SpriteRenderer>();
 
-        _fsm = new Fsm();
+        foreach (RectTransform spellTransform in spellPanelTransform)
+        {
+
+        }
+
 
         _fsm.AddState(new FsmStateIdle(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalk(_fsm, gameObject));
         _fsm.AddState(new FsmStateJump(_fsm, gameObject));
         _fsm.AddState(new FsmStateFall(_fsm, gameObject));
+        _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
 
 
-        _fsm.SetState<FsmStateIdle>();
     }
-    void Start()
+    protected override void Start()
     {
-
+        base.Start();
+        _fsm.SetState<FsmStateIdle>();
     }
 
 
     void Update()
     {
-
         //Debug.Log(_fsm.StateCurrent);
         _fsm.Update();
     }
@@ -124,17 +168,17 @@ public class Player : Unit
     protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money)
     {
         // Останавливаем предыдущую корутину (если она существует)
-        if (zeroizeKillComboTicksCoroutine != null)
+        if (_zeroizeKillComboTicksCoroutine != null)
         {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, zeroizeKillComboTicksCoroutine);
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeKillComboTicksCoroutine);
         }
 
         // Запускаем новую корутину
-        zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
+        _zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
 
-        CurrentExperience += experience * (1 + currentKillCombo * (increasingGettingExperienceByKillComboTickPercentage / 100));
-        CurrentMoney += money * (1 + currentKillCombo * (increasingGettingMoneyByKillComboTickPercentage / 100));
-        currentKillCombo++;
+        CurrentExperience += experience * (1 + CurrentKillCombo * (increasingGettingExperienceByKillComboTickPercentage / 100));
+        CurrentMoney += money * (1 + CurrentKillCombo * (increasingGettingMoneyByKillComboTickPercentage / 100));
+        CurrentKillCombo++;
     }
 
     IEnumerator ZeroizeKillComboTicks()
@@ -142,8 +186,8 @@ public class Player : Unit
         yield return new WaitForSeconds(1f); // Ждем 1 секунду
 
         // Сбрасываем комбо после задержки
-        currentKillCombo = 0;
-        zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
+        CurrentKillCombo = 0;
+        _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
     }
 
     // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.

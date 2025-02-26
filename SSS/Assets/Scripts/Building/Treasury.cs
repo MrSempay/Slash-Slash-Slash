@@ -4,17 +4,9 @@ public class Treasury : Building
 {
     protected override void Awake()
     {
+        rectTransformTargetEquipmentPanelPlayer = GameObject.Find("AmmunitionPanel").GetComponent<RectTransform>();
         base.Awake();
     }
 
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

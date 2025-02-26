@@ -10,10 +10,20 @@ public class FsmStateBuildingNormal : FsmStateBuilding
     public override void Enter()
     {
         Debug.Log("BuildingNormal state [ENTER]");
+
     }
 
     public override void Exit()
     {
         Debug.Log("BuildingNormal state [EXIT]");
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        building.buttonEnter.SetActive(building.IsAroundBuilding);
+        if (building.buttonEnterWasPressedToEnter) fsm.SetState<FsmStateBuildingOpened>();
+
     }
 }

@@ -32,9 +32,14 @@ public abstract class Unit : MonoBehaviour
     
     protected virtual void Awake()
     {
+
         unitParameters = (Dictionary<string, object>) AdjustUnitParameters.GetSetupOfUnit(nameOfUnit);
-        AssignParameters(unitParameters);
+        //AssignParameters(unitParameters);
+        StaticClassForAdditionalFunctions.AssignParameters(AdjustUnitParameters.unitParameters, this, nameOfUnit);
+        StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustUnitParameters.unitParameters, this, nameOfUnit);
         healthCurrent = healthMax;
+
+        _fsm = new Fsm();
         // на данный момент не уверен, что мы будем пользоватьс€ словарЄм дл€ доступа к параметрам юнита. ѕока что просто по нему будем определ€ть начальные параметры юнитов
         // при их создании. ¬ообще может было бы напр€мую обращатьс€ в таком случае к AdjustUnitParameters.GetParameter, но пока что оставим этот дубль словар€ (хз зачем)
         /*healthMax = (float) unitParameters["Health"];
@@ -65,7 +70,8 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    void Die(Unit unitFromWhoWasGottenDamage = null)
+    // по идее надо изменить на private, но оставим так дл€ мгновенной смерти из спела SomeSpell1
+    public void Die(Unit unitFromWhoWasGottenDamage = null)
     {
         Debug.Log(gameObject.name + " уничтожен!");
         if (unitFromWhoWasGottenDamage)
@@ -86,6 +92,7 @@ public abstract class Unit : MonoBehaviour
         _healthBarFilling.fillAmount = valueAsPercantage;
     }
 
+    // все дочерние параметры, относ€щиес€ к производным классам от данного должны быть public
     void AssignParameters(Dictionary<string, object> objectParameters)
     {
         Type type = this.GetType(); // ѕолучаем тип текущего класса
@@ -94,7 +101,7 @@ public abstract class Unit : MonoBehaviour
         {
             string parameterName = kvp.Key;
             object parameterValue = kvp.Value;
-            
+
             // ѕолучаем поле с именем, соответствующим ключу словар€
             FieldInfo fieldInfo = type.GetField(parameterName);
 
@@ -120,6 +127,7 @@ public abstract class Unit : MonoBehaviour
 
     public void ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases)
     {
+
         Type type = this.GetType(); // ѕолучаем тип текущего класса
 
         foreach (var kvp in parametersIncreases)
