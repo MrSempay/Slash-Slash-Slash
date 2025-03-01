@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -8,9 +9,14 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class Building : MonoBehaviour
 {
     private Fsm _fsm;
+    private Coroutine _coroutineUpdateAssortimentInBuilding;
     private bool _isAroundBuilding = false;
-    private string folderImage = "Spells/";  // Относительный путь к папке с изображениями из папки Assets/Resources
 
+    protected string nameOfObject;
+
+    [NonSerialized] public string _nameTargetEquipmentPanelPlayer;
+    [NonSerialized] public float _timeForUpdateAssortiment;
+    [NonSerialized] public string folderImage;  // Относительный путь к папке с изображениями из папки Assets/Resources
     [NonSerialized] public GameObject entirePanel;
     [NonSerialized] public GameObject buttonEnter;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
@@ -40,45 +46,16 @@ public class Building : MonoBehaviour
 
     protected virtual void Awake()
     {
+        StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
+        //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
+
+        rectTransformTargetEquipmentPanelPlayer = GameObject.Find(_nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
         entirePanel = transform.Find("EntirePanel")?.gameObject; // Используем ?. для безопасного доступа (если не найдено)
         buttonEnter = transform.Find("CanvasButtonEnter")?.gameObject;
         RectTransform rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
-        foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
-        {
-            // СОЗДАЁМ ОБЪЕКТ СНАРЯЖЕНИЯ, ПОЛУЧАЕМ ЕГО ИМЯ, RectTransform, СПАВНИМ У ЗАДАННОГО РОДИТЕЛЯ (МЕСТА СНАРЯЖЕНИЯ)
-            GameObject newEquipment = Instantiate(prefubOfEquipment, Vector3.zero, Quaternion.identity);
-            RectTransform newEquipmentRectTransform = newEquipment.GetComponent<RectTransform>();
-            string randomEquipmentName = AdjustEquipmentParameters.GetRandomSpellName();
-            newEquipmentRectTransform.SetParent(placeForEquipment, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
+        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
 
-            // НАСТРАИВАЕМ КОМПОНЕНТ RectTransform У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
-            newEquipmentRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-            newEquipmentRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            newEquipmentRectTransform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
-            newEquipmentRectTransform.localPosition = new Vector3(0, -0.5f, -1);
-            newEquipmentRectTransform.name = randomEquipmentName;
-
-            // НАСТРАИВАЕМ КОМПОНЕНТ SpriteRenderer У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
-            SpriteRenderer spriteRenderer = newEquipment.GetComponent<SpriteRenderer>();
-            string fullPath = folderImage + randomEquipmentName;
-            Sprite spellSprite = Resources.Load<Sprite>(fullPath);
-            spriteRenderer.sprite = spellSprite;
-
-            // НАСТРАИВАЕМ КОМПОНЕНТ Equipment (СОБСНА ЕГО СКРИПТ) У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
-            Equipment scriptOfEquipment = newEquipment.GetComponent<Equipment>();
-            scriptOfEquipment.equipmentName = randomEquipmentName;
-            scriptOfEquipment.isEquipmentASpell = true; // пока что для спелов только
-            scriptOfEquipment.startLocalPosition = newEquipmentRectTransform.localPosition;
-            scriptOfEquipment.BuildingWhereEquipmentIs = this;
-            scriptOfEquipment.rectTransformTargetEquipmentPanelPlayer = rectTransformTargetEquipmentPanelPlayer;
-            scriptOfEquipment.transformCurrentEquipmentPlace = placeForEquipment;
-
-            // ИЗМЕНЯЕМ ПАРАМЕТРЫ ЗДАНИЯ ПРИ ДОБАВЛЕНИИ В НЕГО НОВОГО СНАРЯЖЕНИЯ
-            equipmentInBuilding.Add(newEquipment);
-            PlaceForEquipment scriptOfPlace = placeForEquipment.gameObject.GetComponent<PlaceForEquipment>();
-            scriptOfPlace.Equipment = scriptOfEquipment;
-            scriptOfPlace.isBuildingPlace = true;
-        }
+  
         
 
         _fsm = new Fsm();
@@ -115,10 +92,66 @@ public class Building : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = false; }
     }
 
+
+    IEnumerator TimerUpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
+    {
+        while (true)
+        {
+            UpdateAssortmentInBuilding(rectTransformEquipmentPlaces);
+            yield return new WaitForSeconds(_timeForUpdateAssortiment); // Ждем 15 секунд
+        }
+    }
+
+    protected virtual void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
+    {
+        foreach (GameObject equipment in equipmentInBuilding)
+        {
+            if (equipment) Destroy(equipment);
+        }
+        equipmentInBuilding.Clear();
+        foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
+        {
+            // СОЗДАЁМ ОБЪЕКТ СНАРЯЖЕНИЯ, ПОЛУЧАЕМ ЕГО ИМЯ, RectTransform, СПАВНИМ У ЗАДАННОГО РОДИТЕЛЯ (МЕСТА СНАРЯЖЕНИЯ)
+            GameObject newEquipment = Instantiate(prefubOfEquipment, Vector3.zero, Quaternion.identity);
+            RectTransform newEquipmentRectTransform = newEquipment.GetComponent<RectTransform>();
+            string randomEquipmentName = AdjustEquipmentParameters.GetRandomSpellName();
+            newEquipmentRectTransform.SetParent(placeForEquipment, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
+
+            // НАСТРАИВАЕМ КОМПОНЕНТ RectTransform У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
+            newEquipmentRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            newEquipmentRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            newEquipmentRectTransform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
+            newEquipmentRectTransform.localPosition = new Vector3(0, -0.5f, -1);
+            newEquipmentRectTransform.name = randomEquipmentName;
+
+            // НАСТРАИВАЕМ КОМПОНЕНТ SpriteRenderer У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
+            SpriteRenderer spriteRenderer = newEquipment.GetComponent<SpriteRenderer>();
+            string fullPath = folderImage + randomEquipmentName;
+            Sprite spellSprite = Resources.Load<Sprite>(fullPath);
+            spriteRenderer.sprite = spellSprite;
+
+            // НАСТРАИВАЕМ КОМПОНЕНТ Equipment (СОБСНА ЕГО СКРИПТ) У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ
+            Equipment scriptOfEquipment = newEquipment.GetComponent<Equipment>();
+            scriptOfEquipment.equipmentName = randomEquipmentName;
+            scriptOfEquipment.isEquipmentASpell = true; // пока что для спелов только
+            scriptOfEquipment.startLocalPosition = newEquipmentRectTransform.localPosition;
+            scriptOfEquipment.BuildingWhereEquipmentIs = this;
+            scriptOfEquipment.rectTransformTargetEquipmentPanelPlayer = rectTransformTargetEquipmentPanelPlayer;
+            scriptOfEquipment.transformCurrentEquipmentPlace = placeForEquipment;
+
+            // ИЗМЕНЯЕМ ПАРАМЕТРЫ ЗДАНИЯ ПРИ ДОБАВЛЕНИИ В НЕГО НОВОГО СНАРЯЖЕНИЯ
+            equipmentInBuilding.Add(newEquipment);
+            PlaceForEquipment scriptOfPlace = placeForEquipment.gameObject.GetComponent<PlaceForEquipment>();
+            scriptOfPlace.Equipment = scriptOfEquipment;
+            scriptOfPlace.isBuildingPlace = true;
+        }
+    }
+
     public void EnterToBuilding()
     {
         buttonEnterWasPressedToEnter = !buttonEnterWasPressedToEnter;
     }
+
     public bool HasTargetEnoughMoneyForBuy(Player targetForBuy, Equipment equipment)
     {
         return targetForBuy.CurrentMoney >= equipment.cost;
@@ -142,5 +175,14 @@ public class Building : MonoBehaviour
         equipment.wasSold = true;
         targetForBuy.CountAccessToUpInSchool--;
 
+    }
+
+    public virtual void OnDestroy()
+    {
+        if (_coroutineUpdateAssortimentInBuilding != null)
+        {
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineUpdateAssortimentInBuilding);
+            _coroutineUpdateAssortimentInBuilding = null;
+        }
     }
 }

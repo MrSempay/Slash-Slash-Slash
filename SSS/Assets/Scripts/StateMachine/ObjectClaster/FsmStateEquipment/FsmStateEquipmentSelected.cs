@@ -25,7 +25,6 @@ public class FsmStateEquipmentSelected : FsmStateEquipment
 
     public override void Update()
     {
-        Debug.Log("SHITTTTTTTTT");
         base.Update();
         //Получаем текущую позицию курсора в мировых координатах
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -70,10 +69,10 @@ public class FsmStateEquipmentSelected : FsmStateEquipment
                     {
                         isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                         isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
+                        isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
                         isAtPlaceEquipment.startLocalPosition = equipment.startLocalPosition;
                         isAtPlaceEquipment.transform.localPosition = equipment.startLocalPosition;
                         isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;
-                        isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
                                                                                                                                                        // другое снаряжения в его скрипте
 
                     }

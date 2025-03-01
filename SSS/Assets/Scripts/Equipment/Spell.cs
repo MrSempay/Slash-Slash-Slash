@@ -9,6 +9,7 @@ public class Spell : Equipment
 
     protected override void Start()
     {
+        StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustEquipmentParameters.spellParameters, this, equipmentName); // нужно вызвать до входа в первое состояние, поэтому до base
         base.Start();
     }
 

@@ -154,7 +154,7 @@ public class LevelBuildScript : MonoBehaviour
                     float newValue = increasingValue.Value * numberOfSpawnIteration; // Для float это простое копирование значения
                     percentageIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
                 }
-                newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration);
+                newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration, true);
                 return;
             }
             

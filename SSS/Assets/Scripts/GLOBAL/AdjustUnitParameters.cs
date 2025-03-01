@@ -3,39 +3,52 @@ using UnityEngine;
 
 public static class AdjustUnitParameters
 {
-    public static readonly Dictionary<string, Dictionary<string, object>> unitParameters = new Dictionary<string, Dictionary<string, object>>()
-    {
-        // »нициализируем словарь при объ€влении
-        { "Player", new Dictionary<string, object>() { 
-            { "healthMax", 10000 }, 
-            { "damageReduction", 100 }, 
-            { "speed", 2 }, 
-            { "jumpForce", 12 }, 
-            { "moneyFromKill", 0 }, 
-            { "experienceToNextLevel", 200 }, 
-            { "experienceFromKill", 0 }, 
-            { "increasingGettingExperienceByKillComboTickPercentage", 20f }, 
-            { "increasingGettingMoneyByKillComboTickPercentage", 20f }, 
-            { "increasingParametersByLevelUpPercentage",  new Dictionary<string, float>() {
-                { "healthMax", 10f },
-                { "damage", 10f } } }, 
-            { "damage", 10 },
-
-
-            { "CountAccessToUpInSchool", 0 },
-            { "CurrentMoney", 150 } } }, // дл€ свойств потом, возможно, лучше сделать отдельный словарик, а может и нет...
-        { "MeleeEnemy", new Dictionary<string, object>() {
-            { "healthMax", 150 },
-            { "damageReduction", 150 },
-            { "speed", 4 },
-            { "jumpForce", 14 },
-            { "moneyFromKill", 50 },
-            { "experienceFromKill", 20 },
-            { "som", 14 },
-            { "damage", 5 } } },
-        { "Door", new Dictionary<string, object>() {
-            { "healthMax", 15000 } } }
-    };
+    public static readonly Dictionary<string, Dictionary<string, object>> unitParameters =
+        new Dictionary<string, Dictionary<string, object>>()
+        {
+        {
+            C.DK.Player, new Dictionary<string, object>()
+            {
+                { C.DK.healthMax, 10000 },
+                { C.DK.damageReduction, 100 },
+                { C.DK.speed, 2 },
+                { C.DK.jumpForce, 12 },
+                { C.DK.moneyFromKill, 0 },
+                { C.DK.experienceToNextLevel, 200 },
+                { C.DK.experienceFromKill, 0 },
+                { C.DK.increasingGettingExperienceByKillComboTickPercentage, 20f },
+                { C.DK.increasingGettingMoneyByKillComboTickPercentage, 20f },
+                { C.DK.increasingParametersByLevelUpPercentage, new Dictionary<string, float>()
+                    {
+                        { C.DK.healthMax, 10f },
+                        { C.DK.damage, 10f }
+                    }
+                },
+                { C.DK.damage, 10 },
+                { C.DK.CountAccessToUpInSchool, 0 },
+                { C.DK.CurrentMoney, 150 }
+            }
+        },
+        {
+            C.DK.MeleeEnemy, new Dictionary<string, object>()
+            {
+                { C.DK.healthMax, 150 },
+                { C.DK.damageReduction, 150 },
+                { C.DK.speed, 4 },
+                { C.DK.jumpForce, 14 },
+                { C.DK.moneyFromKill, 50 },
+                { C.DK.experienceFromKill, 20 },
+                { C.DK.som, 14 },
+                { C.DK.damage, 5 }
+            }
+        },
+        {
+            C.DK.Door, new Dictionary<string, object>()
+            {
+                { C.DK.healthMax, 15000 }
+            }
+        }
+        };
 
     // получаем параметр из словар€ по названию юнита и параметра
     public static object GetParameter(string unitName, string parameterName)

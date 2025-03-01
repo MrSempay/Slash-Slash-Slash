@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class DamageReceiver : MonoBehaviour
 {
-    public float healthCurrent = 100f; // Начальное здоровье
+    public float HealthCurrent = 100f; // Начальное здоровье
     public float healthMax = 100f; // Начальное здоровье
     public float damageReduction = 0f; //Поглощение урона
     public event Action<float> HealthChanged;
     public void TakeDamage(float damage)
     {
-        healthCurrent -= damage; // Уменьшаем здоровье
-        Debug.Log(gameObject.name + " получил урон: " + damage + ", осталось здоровья: " + healthCurrent);
+        HealthCurrent -= damage; // Уменьшаем здоровье
+        Debug.Log(gameObject.name + " получил урон: " + damage + ", осталось здоровья: " + HealthCurrent);
 
-        if (healthCurrent <= 0)
+        if (HealthCurrent <= 0)
         {
             Die(); // Вызываем метод смерти
         }
         else
         {
-            float _currentHealthAsPercantage = (float)healthCurrent / healthMax;
+            float _currentHealthAsPercantage = (float)HealthCurrent / healthMax;
             HealthChanged?.Invoke(_currentHealthAsPercantage);
         }
     }

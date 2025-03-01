@@ -4,7 +4,7 @@ public class School : Building
 {
     protected override void Awake()
     {
-        rectTransformTargetEquipmentPanelPlayer = GameObject.Find("SpellPanel").GetComponent<RectTransform>();
+        nameOfObject = "School";
         base.Awake();
     }
 

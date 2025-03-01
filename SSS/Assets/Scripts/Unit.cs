@@ -10,17 +10,19 @@ using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour
 {
+    private float _healthCurrent; // Начальное здоровье
+
     [SerializeField] private Image _healthBarFilling;
     
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
 
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение фрага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true
-    public float healthCurrent; // Начальное здоровье
-    public event Action<float> HealthChanged;
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
     public Fsm _fsm;
+    public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
+    public event Action<float> OnHealthChanged;       // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
 
     public float healthMax; // Начальное здоровье
     public float damageReduction; //Поглощение урона
@@ -29,15 +31,29 @@ public abstract class Unit : MonoBehaviour
     public float damage; // урон
     public float moneyFromKill; // урон
     public float experienceFromKill; // урон
-    
+
+    public float HealthCurrent
+    {
+        get { return _healthCurrent; }
+        set
+        {
+            _healthCurrent = value;
+            float _currentHealthAsPercantage = (float)HealthCurrent / healthMax;
+            ChangeHealthBar(_currentHealthAsPercantage);
+            // Вызываем событие, если есть подписчики
+            OnHealthChanged?.Invoke(_healthCurrent); // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
+        }
+    }
+
     protected virtual void Awake()
     {
 
         unitParameters = (Dictionary<string, object>) AdjustUnitParameters.GetSetupOfUnit(nameOfUnit);
         //AssignParameters(unitParameters);
-        StaticClassForAdditionalFunctions.AssignParameters(AdjustUnitParameters.unitParameters, this, nameOfUnit);
-        StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustUnitParameters.unitParameters, this, nameOfUnit);
-        healthCurrent = healthMax;
+        StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustUnitParameters.unitParameters, this, nameOfUnit);
+        //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustUnitParameters.unitParameters, this, nameOfUnit);
+        baseParametersValues = new Dictionary<string, object>(AdjustUnitParameters.unitParameters[nameOfUnit]);
+        HealthCurrent = healthMax;
 
         _fsm = new Fsm();
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
@@ -57,16 +73,11 @@ public abstract class Unit : MonoBehaviour
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
     public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
     {
-        healthCurrent -= damageSize; // Уменьшаем здоровье
+        HealthCurrent -= damageSize; // Уменьшаем здоровье
 
-        if (healthCurrent <= 0)
+        if (HealthCurrent <= 0)
         {
             Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
-        }
-        else
-        {
-            float _currentHealthAsPercantage = (float)healthCurrent / healthMax;
-            ChangeHealthBar(_currentHealthAsPercantage);
         }
     }
 
@@ -82,7 +93,7 @@ public abstract class Unit : MonoBehaviour
                 unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(moneyFromKill, experienceFromKill);
             }
         }
-        HealthChanged?.Invoke(0);
+        HealthCurrent = 0;
         Destroy(gameObject); // Уничтожаем объект
     }
 
@@ -93,43 +104,13 @@ public abstract class Unit : MonoBehaviour
     }
 
     // все дочерние параметры, относящиеся к производным классам от данного должны быть public
-    void AssignParameters(Dictionary<string, object> objectParameters)
-    {
-        Type type = this.GetType(); // Получаем тип текущего класса
 
-        foreach (var kvp in objectParameters)
-        {
-            string parameterName = kvp.Key;
-            object parameterValue = kvp.Value;
-
-            // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterName);
-
-            if (fieldInfo != null)
-            {
-                // Пытаемся преобразовать значение к типу поля
-                try
-                {
-                    object convertedValue = Convert.ChangeType(parameterValue, fieldInfo.FieldType);
-                    fieldInfo.SetValue(this, convertedValue); // Присваиваем значение полю
-                }
-                catch (InvalidCastException e)
-                {
-                    Debug.LogError($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
-            }
-        }
-    }
-
-    public void ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases)
+    // функция для увеличения параметров на процент. Процент стакается, то есть увеличиваение идёт от текущего значения параметра, а не от базового
+    public Dictionary<string, float> ChangeUnitParametersByPercentageCumilative(Dictionary<string, float> parametersIncreases, bool isIncreasing)
     {
 
         Type type = this.GetType(); // Получаем тип текущего класса
-
+        Dictionary<string, float> changedParametersValuesAbs = new Dictionary<string, float>();
         foreach (var kvp in parametersIncreases)
         {
             string parameterName = kvp.Key;
@@ -143,8 +124,16 @@ public abstract class Unit : MonoBehaviour
                 // Пытаемся преобразовать значение к типу поля
                 try
                 {
-                    object increasedValue = (float) fieldInfo.GetValue(this) * (1 + (parameterIncreasing/100));
+                    object increasedValue;
+                    changedParametersValuesAbs[parameterName] = (float)fieldInfo.GetValue(this);
+                    if (isIncreasing) { increasedValue = (float)fieldInfo.GetValue(this) * (1 + (parameterIncreasing / 100)); }
+                    else { increasedValue = (float)fieldInfo.GetValue(this) * (1 - (parameterIncreasing / 100)); }
                     fieldInfo.SetValue(this, increasedValue); // Присваиваем значение полю
+                    // возвращаем массив с абсолютными значениями изменений наших параметров. Чтоб потом можно было высчитать, сколько это абсолютное значение составляет процентов
+                    // от текущего значения параметра. К примеру было 10к ХП, увеличили на 50%, вернули 5к для данного свойства. После, когда так или иначе у нас будет 25к ХП мы
+                    // всё равно будем помнить, что вот от данного увеличения параметра на проценты у нас прибавилось 5к ХП. Далее чтоб понять, сколько нужно процентов отнимать, 
+                    // можно рассчитать 25к/5к = 20%. 
+                    changedParametersValuesAbs[parameterName] = Math.Abs((changedParametersValuesAbs[parameterName] - (float)increasedValue));
                 }
                 catch (InvalidCastException e)
                 {
@@ -158,10 +147,70 @@ public abstract class Unit : MonoBehaviour
 
             if (parameterName == "healthMax")
             {
-                healthCurrent = healthCurrent * (1 + (parameterIncreasing / 100));
+                HealthCurrent = HealthCurrent * (1 + (parameterIncreasing / 100));
             }
         }
+        return changedParametersValuesAbs;
     }
+
+    // функция, увеличивающая текущий параметр на процент об базового значения данного параметра, то есть увеличение/уменьшение параметров на % будет всегда фиксированным
+    public Dictionary<string, float> ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases, bool isIncreasing)
+    {
+        Type type = this.GetType(); // Получаем тип текущего класса
+        Dictionary<string, float> changedParametersValuesAbs = new Dictionary<string, float>();
+        foreach (var kvp in parametersIncreases)
+        {
+            string parameterName = kvp.Key;
+            float parameterIncreasing = kvp.Value;
+            // Получаем поле с именем, соответствующим ключу словаря
+            FieldInfo fieldInfo = type.GetField(parameterName);
+
+            if (fieldInfo != null)
+            {
+                // Пытаемся преобразовать значение к типу поля
+                try
+                {
+                    // 1. Получаем базовое значение (предполагаем, что оно типа object)
+                    object baseValueObject = baseParametersValues[parameterName];
+
+                    // 2. Преобразуем базовое значение к float
+                    float baseValue = Convert.ToSingle(baseValueObject);
+
+                    if (parameterName == "healthMax")
+                    {
+                        HealthCurrent = isIncreasing
+                            ? HealthCurrent + (baseValue * (HealthCurrent / healthMax) * (parameterIncreasing / 100))
+                            : HealthCurrent - (baseValue * (HealthCurrent / healthMax) * (parameterIncreasing / 100));
+                    }
+
+                    // 3. Вычисляем новое значение
+                    float increasedValue = isIncreasing
+                        ? (float)fieldInfo.GetValue(this) + (baseValue * (parameterIncreasing / 100))
+                        : (float)fieldInfo.GetValue(this) - (baseValue * (parameterIncreasing / 100));
+
+                    // 4. Преобразуем новое значение к типу поля
+                    object convertedValue = Convert.ChangeType(increasedValue, fieldInfo.FieldType);
+
+                    // 5. Присваиваем значение полю
+                    fieldInfo.SetValue(this, convertedValue);
+
+                }
+                catch (InvalidCastException e)
+                {
+                    Debug.Log($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
+            }
+
+
+        }
+        return changedParametersValuesAbs;
+    }
+
+
 
     protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money) { }
 

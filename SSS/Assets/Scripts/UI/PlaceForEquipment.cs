@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -7,9 +8,11 @@ public class PlaceForEquipment : MonoBehaviour
 {
 
     private Equipment _equipment; // снар€жение в данном месте дл€ снар€жени€
+    private Dictionary<string, float> increasedParametersValuesByEquipmentInThisPlace; // снар€жение в данном месте дл€ снар€жени€
 
     [SerializeField] private TextMeshProUGUI nameOfEquipment;
     [SerializeField] private TextMeshProUGUI costOfEquipment;
+    public Equipment previousEquipment;
 
     public bool isBuildingPlace = false; // флаг дл€ детекции, находитс€ ли это место в здании
     public Equipment Equipment
@@ -17,6 +20,9 @@ public class PlaceForEquipment : MonoBehaviour
         get { return _equipment; }
         set
         {
+            previousEquipment = _equipment; // —охран€ем предыдущее значение
+            Debug.Log(this.ToString() + previousEquipment);
+            Debug.Log(this.ToString() + _equipment);
             if (isBuildingPlace)
             {
 
@@ -26,12 +32,46 @@ public class PlaceForEquipment : MonoBehaviour
                     costOfEquipment.enabled = false;
                     _equipment.ParametersOfEquipmentWasAssigned -= ChangeNameAndCostEquipment; // если место дл€ снар€жени€ не в здании и снар€жение из этого места исчезло, отписываемс€
                                                                                                // от детекции сигнала о смене его параметров (прошлого экземпл€ра снар€жени€)
-                    return;
                 }
-                nameOfEquipment.enabled = true;
-                costOfEquipment.enabled = !value.isEquipmentASpell; // не устанавливаем цену дл€ снар€жени€ типа Spell
-                value.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment; // если место дл€ снар€жени€ не в здании и снар€жение по€вилось на данном месте, подписываемс€ на
-                                                                                      // изменение его параметров (вот этого нового экземпл€ра снар€жени€)
+                else
+                {
+                    nameOfEquipment.enabled = true;
+                    costOfEquipment.enabled = !value.isEquipmentASpell; // не устанавливаем цену дл€ снар€жени€ типа Spell
+                    value.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment; // если место дл€ снар€жени€ не в здании и снар€жение по€вилось на данном месте, подписываемс€ на
+                                                                                          // изменение его параметров (вот этого нового экземпл€ра снар€жени€)
+                }
+            }
+            else
+            {
+
+                if (value != null)
+                {
+                    if (!value.isEquipmentASpell)
+                    {
+                        Ammunition ammunition = (Ammunition)value;
+                        increasedParametersValuesByEquipmentInThisPlace = ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunition, true);
+                    }
+                }
+                else
+                {
+                    //Debug.Log("Shit Here?");
+                    //Debug.Log(previousEquipment);
+                    if (previousEquipment)
+                    {
+                        Debug.Log("Shit Here?");
+                        if (!previousEquipment.isEquipmentASpell)
+                        {
+                            Debug.Log("Shit Here?");
+                            Ammunition ammunition = (Ammunition)previousEquipment;
+                            /*Dictionary<string, float> decreasingUnitParametersByAmmunition;
+                            foreach (var increasedParameter in increasedParametersValuesByEquipmentInThisPlace)
+                            {
+                                decreasingUnitParametersByAmmunition[increasedParameter.Key] = increasedParameter.Value/ ammunition.player.;
+                            }*/
+                            ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunition, false);
+                        }
+                    }
+                }
             }
             _equipment = value;
         }

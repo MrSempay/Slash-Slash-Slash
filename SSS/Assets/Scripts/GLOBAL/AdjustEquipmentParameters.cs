@@ -9,35 +9,189 @@ public static class AdjustEquipmentParameters : object
     {
         // Инициализируем словарь при объявлении
         { "SomeSpell1", new Dictionary<string, object>() {
-            { "equipmentName", "SomeSpell1" },
-            { "cost", 0 },
+            { C.DK.equipmentName, "SomeSpell1" },
+            { C.DK.cost, 0 },
         } },
         { "SomeSpell2", new Dictionary<string, object>() {
-            { "equipmentName", "SomeSpell2" },
-            { "cost", 0 },
+            { C.DK.equipmentName, "SomeSpell2" },
+            { C.DK.cost, 0 },
         } },
         { "SomeSpell3", new Dictionary<string, object>() {
-            { "equipmentName", "SomeSpell3" },
-            { "cost", 0 },
+            { C.DK.equipmentName, "SomeSpell3" },
+            { C.DK.cost, 0 },
         } }
     };
 
-    public static readonly Dictionary<string, Dictionary<string, object>> ammunitionParameters = new Dictionary<string, Dictionary<string, object>>()
+    /*public static readonly Dictionary<string, Dictionary<string, object>> ammunitionParameters = new Dictionary<string, Dictionary<string, object>>()
     {
         // Инициализируем словарь при объявлении
         { "Ammunition1", new Dictionary<string, object>() {
-            { "equipmentName", "Ammunition1" },
-            { "cost", 15 },
+            { C.DK.equipmentName, "Ammunition1" },
+            { C.DK.cost, 15 },
         } },
         { "Ammunition2", new Dictionary<string, object>() {
-            { "equipmentName", "Ammunition2" },
-            { "cost", 45 },
+            { C.DK.equipmentName, "Ammunition2" },
+            { C.DK.cost, 45 },
         } },
         { "Ammunition3", new Dictionary<string, object>() {
-            { "equipmentName", "Ammunition3" },
-            { "cost", 70 },
+            { C.DK.equipmentName, "Ammunition3" },
+            { C.DK.cost, 70 },
         } }
+    };*/
+
+
+
+    public struct EquipmentChance // структура, описывающая какие предметы в каких разрезах выпадают с какой вероятностью
+    {
+        public string equipmentCategory; // например Weapon, Armor и т.п
+        public string equipmentRarityType; // например Standart, Rare и т.п
+        public float chance;    // Вероятность выпадения (в процентах)
+    }
+
+    public static List<EquipmentChance> allEquipmentTypesAndCategoriesChance = new List<EquipmentChance>() { 
+        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Standart, chance = 25f } ,
+        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
+        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
+        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Standart, chance = 25f } ,
+        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
+        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Standart, chance = 20f } ,
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Rare, chance = 7.14f } ,
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1.43f } ,   
     };
+
+    public static readonly Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, object>>>> ammunitionParameters =
+        new Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, object>>>>()
+        {
+            {
+                C.DK.Weapon, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
+                {
+                    {
+                        C.DK.Standart, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.Sword, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
+                                    { C.DK.cost, 20 } } },
+                            {
+                                C.DK.Knife, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
+                                    { C.DK.cost, 20 } } } } },
+                    {
+                        C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.BigSword, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
+                                    { C.DK.cost, 70 } } },
+                            {
+                                C.DK.Blade, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
+                                    { C.DK.cost, 70 } } } } },
+                    {
+                        C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.SaintDragonSword, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
+                                    { C.DK.cost, 170 } } },
+                            {
+                                C.DK.WitchBlade, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
+                                    { C.DK.cost, 170 } } } } }, } },
+            {
+                C.DK.Armor, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
+                {
+                    {
+                        C.DK.Standart, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.NormalArmor1, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
+                                    { C.DK.cost, 20 } } },
+                            {
+                                C.DK.NormalArmor2, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
+                                    { C.DK.cost, 20 } } } } },
+                    {
+                        C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.BigArmor1, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
+                                    { C.DK.cost, 70 } } },
+                            {
+                                C.DK.BigArmor2, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
+                                    { C.DK.cost, 70 } } } } },
+                    {
+                        C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.LegendaryArmor1, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
+                                    { C.DK.cost, 170 } } },
+                            {
+                                C.DK.LegendaryArmor2, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
+                                    { C.DK.cost, 170 } } } } }, } },
+            {
+                C.DK.Accessories, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
+                {
+                    {
+                        C.DK.Standart, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.DeathBook, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "DeathBook" },
+                                    { C.DK.cost, 70 } } },
+                            {
+                                C.DK.LifeBook, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "LifeBook" },
+                                    { C.DK.cost, 70 } } } } },
+                    {
+                        C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.RedBook, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "RedBook" },
+                                    { C.DK.cost, 70 } } },
+                            {
+                                C.DK.GreenBook, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "GreenBook" },
+                                    { C.DK.cost, 70 } } } } },
+                    {
+                        C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
+                        {
+                            {
+                                C.DK.MathBook, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "MathBook" },
+                                    { C.DK.cost, 70 } } },
+                            {
+                                C.DK.TjanulDedRepku, new Dictionary<string, object>()
+                                {
+                                    { C.DK.equipmentName, "TjanulDedRepku" },
+                                    { C.DK.cost, 70 } } } } }, } }
+
+
+        };
 
     // получаем параметр из словаря по названию юнита и параметра
     public static object GetParameter(string spellName, string parameterName)
@@ -49,27 +203,52 @@ public static class AdjustEquipmentParameters : object
         return null;
     }
 
-/*    // получаем весь словарь для отдельного юнита по его имени
-    public static object GetSetupOfSpell(string spellName)
-    {
-        if (spellParameters.ContainsKey(spellName))
-        {
-            return spellParameters[spellName];
-        }
-        return null;
-    }*/
 
-    // Метод для получения случайного ключа из словаря unitParameters
+    // Метод для получения случайного ключа из словаря spellParameters
     public static string GetRandomSpellName()
     {
-        List<string> keys = new List<string>(spellParameters.Keys);
-        if (keys.Count == 0)
+        List<string> spellNames = new List<string>(spellParameters.Keys);
+        if (spellNames.Count == 0)
         {
             Debug.LogError("No spell names available in unitParameters!");
             return null; // Или какое-то значение по умолчанию
         }
-        int randomIndex = UnityEngine.Random.Range(0, keys.Count);
-        return keys[randomIndex];
+        int randomIndex = UnityEngine.Random.Range(0, spellNames.Count);
+        return spellNames[randomIndex];
+    }
+
+    public static string GetRandomAmmunitionName(EquipmentChance randomCategoryAndRarityTypesOfEquipment = default)
+    {
+        List<string> ammunitionNames = new List<string>();
+        if (randomCategoryAndRarityTypesOfEquipment.equipmentCategory != null) // Проверяем, что предмет был выбран (randomCategoryAndRarityTypesOfEquipment не остался default)
+        {
+            foreach (var equipment in ammunitionParameters[randomCategoryAndRarityTypesOfEquipment.equipmentCategory][randomCategoryAndRarityTypesOfEquipment.equipmentRarityType])
+            {
+                ammunitionNames.Add(equipment.Key);
+            }
+        }
+        else
+        {
+            foreach (var equipmentCategory in ammunitionParameters)
+            {
+                foreach (var equipmentRarityType in equipmentCategory.Value)
+                {
+                    foreach (var equipment in equipmentRarityType.Value)
+                    {
+                        ammunitionNames.Add(equipment.Key);
+                    }
+                }
+            }
+        }
+        
+        if (ammunitionNames.Count == 0)
+           {
+               Debug.LogError("No ammunition names available in unitParameters!");
+               return null; // Или какое-то значение по умолчанию
+           }
+        
+        int randomIndex = UnityEngine.Random.Range(0, ammunitionNames.Count);
+        return ammunitionNames[randomIndex];                
     }
 
     public static void CallSpellByName(Spell spell)

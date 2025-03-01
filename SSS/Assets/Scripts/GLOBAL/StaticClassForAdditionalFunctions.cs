@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 using UnityEngine;
+using NUnit.Framework.Internal;
 
 
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
@@ -17,35 +18,72 @@ public static class StaticClassForAdditionalFunctions : object
     }
 
 
-    public static void AssignParameters(Dictionary<string, Dictionary<string, object>> objectsParameters, MonoBehaviour objectForAssigning, string nameOfObject)
+    public static void AssignParametersAndProperties(Dictionary<string, Dictionary<string, object>> objectsParameters, MonoBehaviour objectForAssigning, string nameOfObject)
     {
+
+        if (objectsParameters == null)
+        {
+            Debug.LogError("objectsParameters is null!");
+            return;
+        }
+
+        if (!objectsParameters.ContainsKey(nameOfObject))
+        {
+            Debug.LogWarning($"Object with name '{nameOfObject}' not found in objectsParameters.");
+            return;
+        }
+
         Type type = objectForAssigning.GetType(); // Получаем тип текущего класса
         Dictionary<string, object> objectParameters = objectsParameters[nameOfObject];
 
         foreach (var kvp in objectParameters)
         {
-            string parameterName = kvp.Key;
-            object parameterValue = kvp.Value;
+            string parameterOrPropertyName = kvp.Key;
+            object parameterOrPropertyValue = kvp.Value;
 
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterName);
+            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
 
             if (fieldInfo != null)
             {
                 // Пытаемся преобразовать значение к типу поля
                 try
                 {
-                    object convertedValue = Convert.ChangeType(parameterValue, fieldInfo.FieldType);
+                    object convertedValue = Convert.ChangeType(parameterOrPropertyValue, fieldInfo.FieldType);
                     fieldInfo.SetValue(objectForAssigning, convertedValue); // Присваиваем значение полю
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.LogError($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    Debug.LogError($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
             {
-                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
+                PropertyInfo propertyInfo = type.GetProperty(parameterOrPropertyName); 
+                if (propertyInfo != null && propertyInfo.CanWrite) //Убедимся, что свойство существует и доступно для записи
+                {
+                    // Пытаемся преобразовать значение к типу свойства
+                    try
+                    {
+                        object convertedValue = Convert.ChangeType(parameterOrPropertyValue, propertyInfo.PropertyType);
+                        propertyInfo.SetValue(objectForAssigning, convertedValue, null); // Присваиваем значение свойству
+                    }
+                    catch (InvalidCastException e)
+                    {
+                        Debug.LogError($"Could not convert value for property '{parameterOrPropertyName}' to type '{propertyInfo.PropertyType.Name}': {e.Message}");
+                    }
+                }
+                else
+                {
+                    if (propertyInfo == null)
+                    {
+                        Debug.LogWarning($"Property '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                    }
+                    else if (!propertyInfo.CanWrite)
+                    {
+                        Debug.LogWarning($"Property '{parameterOrPropertyName}' in class '{type.Name}' does not have a setter (is read-only).");
+                    }
+                }
             }
         }
     }

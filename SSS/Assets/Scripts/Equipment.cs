@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -17,7 +18,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public bool isEquipmentASpell;
     [NonSerialized] public string equipmentName;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
-
+    [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunition = new Dictionary<string, float>();
     public BoxCollider2D selfCollider;
     public event Action<string, int> ParametersOfEquipmentWasAssigned;       // Событие для изменения комбо за убийства 
 
@@ -50,8 +51,6 @@ public class Equipment : MonoBehaviour
     }
     protected virtual void Start()
     {
-        if (isEquipmentASpell) StaticClassForAdditionalFunctions.AssignParameters(AdjustEquipmentParameters.spellParameters, this, equipmentName);
-        else StaticClassForAdditionalFunctions.AssignParameters(AdjustEquipmentParameters.ammunitionParameters, this, equipmentName);
         if (BuildingWhereEquipmentIs) ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала
         _fsm.SetState<FsmStateEquipmentInsideShop>();
     }
@@ -71,6 +70,12 @@ public class Equipment : MonoBehaviour
     {
         if (rectTransformPlace)
         {
+            transform.parent.gameObject.GetComponent<PlaceForEquipment>().Equipment = null; // у скрипта экземпляра старого места поле Equipment сбрасываем в null (ибо с него убираем)
+            PlaceForEquipment rectTransformTargetPlaceScript = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>(); // получаем скрипт целевого места
+            rectTransformTargetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
+                                                             // этого текущего. Далее для целевого места назначим снаряжение наше новое (вот это). Сделано для того, чтоб модификаторы
+                                                             // снаряжения в ИНВЕНТАРЕ сбросились и назначились корректно
+            rectTransformTargetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
             // 4. Устанавливаем родительский элемент
             transform.SetParent(rectTransformPlace, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
 
@@ -79,8 +84,7 @@ public class Equipment : MonoBehaviour
             transform.anchorMax = new Vector2(0.5f, 0.5f);
             transform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
             transform.localPosition = new Vector3(0, -0.5f, -1);
-            transform.parent.gameObject.GetComponent<PlaceForEquipment>().Equipment = null; // у скрипта экземпляра старого места поле Equipment сбрасываем в null (ибо с него убираем)
-            rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
+            //Debug.Log(this);
             if (BuildingWhereEquipmentIs) BuildingWhereEquipmentIs.equipmentInBuilding.Remove(gameObject); // собственно удаляем из списка снаряжения в здании это снаряжение только
                                                                                                            // если оно находится в здании
 

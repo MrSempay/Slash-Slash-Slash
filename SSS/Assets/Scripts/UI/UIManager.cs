@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject playMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private TextMeshProUGUI currentLevelUI;
+    [SerializeField] private TextMeshProUGUI currentLevelUpUI;
     [SerializeField] private TextMeshProUGUI currentComboUI;
     [SerializeField] private TextMeshProUGUI currentMoneyUI;
     [SerializeField] private TextMeshProUGUI currentExperienceUI;
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour
         player.OnExperienceChanged += ChangeExperienceTextUI;
         player.OnMoneyChanged += ChangeMoneyTextUI;
         player.OnLevelChanged += ChangeLevelTextUI;
+        player.OnLevelUpChanged += ChangeLevelUpTextUI;
         player.OnKillComboChanged += ChangeComboTextUI;
     }
     public void OpenOrClosePlayMenu()
@@ -31,6 +33,11 @@ public class UIManager : MonoBehaviour
     private void ChangeLevelTextUI(int level)
     {
         currentLevelUI.text = "Level: " + level.ToString();
+    }
+    
+    private void ChangeLevelUpTextUI(int levelUp)
+    {
+        currentLevelUpUI.text = "Up lvl: " + levelUp.ToString();
     }
 
     private void ChangeMoneyTextUI(float money)
@@ -48,5 +55,13 @@ public class UIManager : MonoBehaviour
         currentComboUI.text = "Combo: " + combo.ToString();
     }
 
+    private void OnDestroy()
+    {
+        player.OnExperienceChanged -= ChangeExperienceTextUI;
+        player.OnMoneyChanged -= ChangeMoneyTextUI;
+        player.OnLevelChanged -= ChangeLevelTextUI;
+        player.OnLevelUpChanged -= ChangeLevelUpTextUI;
+        player.OnKillComboChanged -= ChangeComboTextUI;
+    }
 
 }

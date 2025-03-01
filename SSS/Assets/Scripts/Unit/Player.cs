@@ -12,6 +12,7 @@ public class Player : Unit
     [SerializeField] private float _currentMoney = 0;
     [SerializeField] private int _currentLevel = 0;
     [SerializeField] private int _currentKillCombo = 0;
+    [SerializeField] private int _currentStamina;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
@@ -21,6 +22,7 @@ public class Player : Unit
     public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
+    public RectTransform ammunitionPanelTransform; // 
 
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Camera mainCamera; // Ссылка на камеру
@@ -28,11 +30,13 @@ public class Player : Unit
     public float experienceToNextLevel;
     public float increasingGettingExperienceByKillComboTickPercentage;
     public float increasingGettingMoneyByKillComboTickPercentage;
+    public int staminaMax;
     public Dictionary<string, float> increasingParametersByLevelUpPercentage;
     public event Action<float> OnExperienceChanged; // Событие для изменения опыта
     public event Action<float> OnMoneyChanged;     // Событие для изменения денег
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
+    public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе 
 
     public float CurrentExperience
     {
@@ -47,7 +51,7 @@ public class Player : Unit
                 _currentExperience -= experienceToNextLevel; // Вычитаем опыт, необходимый для повышения
                 CurrentLevel++; // Повышаем уровень
                 if (CurrentLevel % 5 == 0) _countAccessToUpInSchool++;
-                ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage);
+                ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage, true);
             }
 
             // Вызываем событие, если есть подписчики
@@ -97,6 +101,7 @@ public class Player : Unit
         set
         {
             _countAccessToUpInSchool = value;
+            OnLevelUpChanged?.Invoke(_countAccessToUpInSchool);
         }
     }
 
@@ -109,6 +114,16 @@ public class Player : Unit
             if (value) _fsm.SetState<FsmStateTranslatingEquipment>();
             else _fsm.SetState<FsmStateIdle>();
 
+        }
+    }
+
+    public int CurrentStamina
+    {
+        get { return _currentStamina; }
+        set
+        {
+            _currentStamina = value;
+            ChangeStaminaBar(_currentStamina);
         }
     }
 
@@ -204,5 +219,10 @@ public class Player : Unit
             }
         }
     } */
+
+    private void ChangeStaminaBar(int currentStamina)
+    {
+
+    }
 
 }
