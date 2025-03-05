@@ -50,17 +50,20 @@ public class FsmStatePlayer : FsmStateUnit
         }
         else if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши
         {
-            player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            player.endTouchPosition.z = 0;
-            player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-            // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
-            // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-            OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-            HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-            fsmPlayer.SetState<FsmStateWalk>();
+            if (player.CurrentStamina > 0)
+            {
+                player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                player.endTouchPosition.z = 0;
+                player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
+                // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
+                // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
+                OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
+                HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+                fsmPlayer.SetState<FsmStateWalk>();
+                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) player.CurrentStamina--; // чтоб просто при кликаньи на месте выносливость не тратилась
+            }
         }
-
-        if (player.lookingRight == player.rb.linearVelocityX < 0)
+        if ((player.lookingRight == player.rb.linearVelocityX < 0) && Mathf.Abs(player.rb.linearVelocityX) > 0.01) // добавили некоторый treshhold для нивелирования небольшого заноса от CompositeCollider
         {
             ChangeDirectionView();
         }

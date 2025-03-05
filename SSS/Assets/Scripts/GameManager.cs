@@ -1,8 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    private string _nameCurrentScene;
+    private string _nameTargetScene;
+    
+    public string nameDialogueCurrent;
 
     // при первом обращении к этому свойству (а более не к чему в начале) создастся экземпляр класса GlobalGameScript, запишется в _instance и вернёт ссылку на этот
     // экземпляр. При повторных обращениях будет возвращать ссылку на этот же экземпляр (у нас ибо static поле _instance, применится ко всему классу), static же для
@@ -14,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            
             if (_instance == null)
             {
                 var obj = new GameObject("GameManager");
@@ -45,5 +51,27 @@ public class GameManager : MonoBehaviour
         // Игнорируем столкновения между слоем "Enemy" и самим собой. Происходит игнорирование также всех зон/коллайдеров для данного слоя (слой можно назначить как для родительского,
         // так и для всех объектов. Если у объекта изменить слой у одного из дочерних элементов, будет происходить детекция коллизий коллайдеров и зон только для этого элемента
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
+    }
+
+    // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
+    public void ChangeSceneToDialogue(string nameTargetScene)
+    {
+
+        _nameCurrentScene = SceneManager.GetActiveScene().name;
+        _nameTargetScene = nameTargetScene;
+        nameDialogueCurrent = _nameCurrentScene + "-" + nameTargetScene;
+
+        if (SceneManager.GetActiveScene().name != C.NameScene.SceneDialogue)
+        {
+
+            SceneManager.LoadScene(C.NameScene.SceneDialogue);
+        }
+    }
+
+    // всегда должен вызываться после метода ChangeScene с перегрузкой на два 2 параметра (то есть, по идее, только в диалоговой сцене)
+    public void ChangingSceneFinish()
+    {
+        _nameCurrentScene = _nameTargetScene; // по идее это поле нам нужно чтоб просто находить диалоги на целевой сцене. К примеру _nameCurrentScene будет указывать на папку диалогов
+        SceneManager.LoadScene(_nameTargetScene);
     }
 }

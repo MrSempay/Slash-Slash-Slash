@@ -10,12 +10,15 @@ public static class AdjustUnitParameters
             C.DK.Player, new Dictionary<string, object>()
             {
                 { C.DK.healthMax, 10000 },
+                { C.DK.staminaMax, 2 },
                 { C.DK.damageReduction, 100 },
                 { C.DK.speed, 2 },
                 { C.DK.jumpForce, 12 },
                 { C.DK.moneyFromKill, 0 },
                 { C.DK.experienceToNextLevel, 200 },
                 { C.DK.experienceFromKill, 0 },
+                { C.DK.timeRecoverStaminaPoint, 0.5f },
+                { C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.increasingGettingExperienceByKillComboTickPercentage, 20f },
                 { C.DK.increasingGettingMoneyByKillComboTickPercentage, 20f },
                 { C.DK.increasingParametersByLevelUpPercentage, new Dictionary<string, float>()

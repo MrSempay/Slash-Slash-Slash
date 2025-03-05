@@ -21,8 +21,8 @@ public class PlaceForEquipment : MonoBehaviour
         set
         {
             previousEquipment = _equipment; // Сохраняем предыдущее значение
-            Debug.Log(this.ToString() + previousEquipment);
-            Debug.Log(this.ToString() + _equipment);
+            //Debug.Log(this.ToString() + previousEquipment);
+            //Debug.Log(this.ToString() + _equipment);
             if (isBuildingPlace)
             {
 
@@ -35,6 +35,7 @@ public class PlaceForEquipment : MonoBehaviour
                 }
                 else
                 {
+                    ChangeNameAndCostEquipment(value.equipmentName, value.cost); // чтоб если в здании вообще появилось новое снаряжение, мы обновляли его цену и имя
                     nameOfEquipment.enabled = true;
                     costOfEquipment.enabled = !value.isEquipmentASpell; // не устанавливаем цену для снаряжения типа Spell
                     value.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment; // если место для снаряжения не в здании и снаряжение появилось на данном месте, подписываемся на

@@ -10,7 +10,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // следующая сцена в списке загружаемых для настроек сборки (на 14.02 - Sample Scene)
+        GameManager.Instance.ChangeSceneToDialogue(C.NameScene.SampleScene);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // следующая сцена в списке загружаемых для настроек сборки (на 14.02 - Sample Scene)
     }
 
     public void ExitGame()

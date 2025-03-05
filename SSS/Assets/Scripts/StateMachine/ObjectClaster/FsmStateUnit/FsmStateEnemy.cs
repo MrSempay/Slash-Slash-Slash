@@ -110,9 +110,13 @@ public class FsmStateEnemy : FsmStateUnit
     // двигаем персонажа по пути
     void MoveTowardsTarget()
     {
+        Debug.Log(enemy.rb.linearVelocityX);
         //Debug.Log("Emmm???4");
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
+        Debug.Log(direction);
+        Debug.Log(enemy.speed);
         enemy.rb.linearVelocityX = direction * enemy.speed;
+        Debug.Log(enemy.rb.linearVelocityX);
         // Проверка достижения цели
         if (Mathf.Abs(enemy.transform.position.x - enemy.nextPointInPath.x) <= enemy.arrivalThreshold)
         {

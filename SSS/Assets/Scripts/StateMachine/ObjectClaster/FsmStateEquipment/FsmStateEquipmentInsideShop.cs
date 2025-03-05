@@ -13,11 +13,13 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
     {
         Debug.Log("Equipment inside shop state [ENTER]");
         equipment.transform.localPosition = equipment.startLocalPosition;
+        equipment.selfSprite.sortingOrder = 6; 
     }
 
     public override void Exit()
     {
         Debug.Log("Equipment inside shop state [EXIT]");
+        equipment.selfSprite.sortingOrder = 11;
     }
 
     public override void Update()

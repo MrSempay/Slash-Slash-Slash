@@ -10,6 +10,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
+    [NonSerialized] public SpriteRenderer selfSprite; // свой спрайт
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public Player player;
@@ -18,7 +19,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public bool isEquipmentASpell;
     [NonSerialized] public string equipmentName;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
-    [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunition = new Dictionary<string, float>();
+
     public BoxCollider2D selfCollider;
     public event Action<string, int> ParametersOfEquipmentWasAssigned;       // Событие для изменения комбо за убийства 
 
@@ -41,6 +42,7 @@ public class Equipment : MonoBehaviour
 
         transform = GetComponent<RectTransform>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        selfSprite = GetComponent<SpriteRenderer>();
 
         _fsm = new Fsm();
 

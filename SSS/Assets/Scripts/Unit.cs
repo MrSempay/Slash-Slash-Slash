@@ -10,14 +10,14 @@ using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour
 {
-    private float _healthCurrent; // Начальное здоровье
+    [SerializeField] private float _healthCurrent; // Начальное здоровье
 
     [SerializeField] private Image _healthBarFilling;
     
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
 
     public void UnitStandart() { }
-    public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение фрага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true
+    public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
     public Fsm _fsm;
@@ -32,16 +32,16 @@ public abstract class Unit : MonoBehaviour
     public float moneyFromKill; // урон
     public float experienceFromKill; // урон
 
-    public float HealthCurrent
+    public float CurrentHealth
     {
         get { return _healthCurrent; }
         set
         {
             _healthCurrent = value;
-            float _currentHealthAsPercantage = (float)HealthCurrent / healthMax;
+            float _currentHealthAsPercantage = _healthCurrent / healthMax;
             ChangeHealthBar(_currentHealthAsPercantage);
             // Вызываем событие, если есть подписчики
-            OnHealthChanged?.Invoke(_healthCurrent); // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
+            OnHealthChanged?.Invoke(_healthCurrent); // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar)
         }
     }
 
@@ -53,8 +53,7 @@ public abstract class Unit : MonoBehaviour
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustUnitParameters.unitParameters, this, nameOfUnit);
         //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustUnitParameters.unitParameters, this, nameOfUnit);
         baseParametersValues = new Dictionary<string, object>(AdjustUnitParameters.unitParameters[nameOfUnit]);
-        HealthCurrent = healthMax;
-
+        CurrentHealth = healthMax;
         _fsm = new Fsm();
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
         // при их создании. Вообще может было бы напрямую обращаться в таком случае к AdjustUnitParameters.GetParameter, но пока что оставим этот дубль словаря (хз зачем)
@@ -73,9 +72,9 @@ public abstract class Unit : MonoBehaviour
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
     public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
     {
-        HealthCurrent -= damageSize; // Уменьшаем здоровье
+        CurrentHealth -= damageSize; // Уменьшаем здоровье
 
-        if (HealthCurrent <= 0)
+        if (CurrentHealth <= 0)
         {
             Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
         }
@@ -93,7 +92,7 @@ public abstract class Unit : MonoBehaviour
                 unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(moneyFromKill, experienceFromKill);
             }
         }
-        HealthCurrent = 0;
+        CurrentHealth = 0;
         Destroy(gameObject); // Уничтожаем объект
     }
 
@@ -147,7 +146,7 @@ public abstract class Unit : MonoBehaviour
 
             if (parameterName == "healthMax")
             {
-                HealthCurrent = HealthCurrent * (1 + (parameterIncreasing / 100));
+                CurrentHealth = CurrentHealth * (1 + (parameterIncreasing / 100));
             }
         }
         return changedParametersValuesAbs;
@@ -173,27 +172,38 @@ public abstract class Unit : MonoBehaviour
                     // 1. Получаем базовое значение (предполагаем, что оно типа object)
                     object baseValueObject = baseParametersValues[parameterName];
 
-                    // 2. Преобразуем базовое значение к float
-                    float baseValue = Convert.ToSingle(baseValueObject);
+                    // 2. Преобразуем базовое значение к Double
+                    double baseValueDouble = Convert.ToDouble(baseValueObject);
+                    double parameterIncreasingDouble = Convert.ToDouble(parameterIncreasing);
 
-                    if (parameterName == "healthMax")
+                    /*if (parameterName == "healthMax")
                     {
-                        HealthCurrent = isIncreasing
-                            ? HealthCurrent + (baseValue * (HealthCurrent / healthMax) * (parameterIncreasing / 100))
-                            : HealthCurrent - (baseValue * (HealthCurrent / healthMax) * (parameterIncreasing / 100));
+                        FieldInfo fieldInfoOfCurrentValue = type.GetField(parameterName);
+                        CurrentHealth = isIncreasing
+                            ? CurrentHealth + (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100))
+                            : CurrentHealth - (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100));
                     }
+                    if (parameterName == "staminaMax")
+                    {
+                        CurrentHealth = isIncreasing
+                            ? CurrentHealth + (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100))
+                            : CurrentHealth - (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100));
+                    }*/
 
-                    // 3. Вычисляем новое значение
-                    float increasedValue = isIncreasing
-                        ? (float)fieldInfo.GetValue(this) + (baseValue * (parameterIncreasing / 100))
-                        : (float)fieldInfo.GetValue(this) - (baseValue * (parameterIncreasing / 100));
+                    double increasedValue = isIncreasing
+                        ? Convert.ToDouble(fieldInfo.GetValue(this)) + (baseValueDouble * (parameterIncreasingDouble / 100))
+                        : Convert.ToDouble(fieldInfo.GetValue(this)) - (baseValueDouble * (parameterIncreasingDouble / 100));
 
-                    // 4. Преобразуем новое значение к типу поля
+                    // 4. Преобразуем обратно к типу поля
                     object convertedValue = Convert.ChangeType(increasedValue, fieldInfo.FieldType);
 
-                    // 5. Присваиваем значение полю
-                    fieldInfo.SetValue(this, convertedValue);
 
+                    fieldInfo.SetValue(this, convertedValue);
+                    if (parameterName == C.DK.healthMax || parameterName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
+                                                                                       // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
+                                                                                       // текущее значение параметра
+                        AdjustCurrentParametersValues(parameterName, isIncreasing, parameterIncreasing, baseValueDouble);
+                    // 5. Присваиваем значение полю
                 }
                 catch (InvalidCastException e)
                 {
@@ -211,6 +221,55 @@ public abstract class Unit : MonoBehaviour
     }
 
 
+    // для работы данной функции необходимо, чтоб значение максимального параметра имело имя по типу: healthMax, а свойства с текущем значением - CurrentHealth.
+    // Функция найдёт свойство с текущим значением CurrentHealth отнёв от healthMax постфикс Max, увеличив первую букву и добавив перед ней Current
+    private void AdjustCurrentParametersValues(string nameOfMaxParameter, bool isIncreasing, float increasingValuePercentage, double baseParameterValue)
+    {
+        string subString = nameOfMaxParameter.Substring(0, nameOfMaxParameter.Length - 3);
+        string firstCharToUpper = subString.Substring(0, 1).ToUpper() + subString.Substring(1);
+        string nameOfCurrentProperty = "Current" + firstCharToUpper;
+
+        Type type = this.GetType(); // Получаем тип текущего класса
+        PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
+        FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
+
+        Debug.Log(nameOfCurrentProperty);
+        Debug.Log(currentPropertyInfo);
+        Debug.Log(currentPropertyInfo.CanWrite);
+        if (currentPropertyInfo != null && currentPropertyInfo.CanWrite) //Убедимся, что свойство существует и доступно для записи
+        {
+            // Пытаемся преобразовать значение к типу свойства 
+            try
+            {
+                double currentPropertyValue = Convert.ToDouble(currentPropertyInfo.GetValue(this));
+                double maxFieldValue = Convert.ToDouble(maxFieldInfo.GetValue(this));
+
+                double assigningCurrentPropertyValue = isIncreasing
+                        ? currentPropertyValue + (baseParameterValue * (currentPropertyValue / (maxFieldValue - (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100))
+                        : currentPropertyValue - (baseParameterValue * (currentPropertyValue / (maxFieldValue + (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100));
+
+                Debug.Log(assigningCurrentPropertyValue);
+                object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
+                currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству
+            }
+            catch (InvalidCastException e)
+            {
+                Debug.LogError($"Could not convert value for property '{currentPropertyInfo}' to type '{currentPropertyInfo.PropertyType.Name}': {e.Message}");
+            }
+        }
+        else
+        {
+            if (currentPropertyInfo == null)
+            {
+                Debug.LogWarning($"Property '{currentPropertyInfo}' not found in class '{type.Name}'.");
+            }
+            else if (!currentPropertyInfo.CanWrite)
+            {
+                Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
+            }
+        }
+
+    }
 
     protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money) { }
 

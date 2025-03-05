@@ -156,39 +156,39 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.DeathBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "DeathBook" },
-                                    { C.DK.cost, 70 } } },
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.cost, 50 } } },
                             {
                                 C.DK.LifeBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "LifeBook" },
-                                    { C.DK.cost, 70 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.cost, 50 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
                         {
                             {
                                 C.DK.RedBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "RedBook" },
-                                    { C.DK.cost, 70 } } },
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.cost, 170 } } },
                             {
                                 C.DK.GreenBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "GreenBook" },
-                                    { C.DK.cost, 70 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.cost, 170 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
                         {
                             {
                                 C.DK.MathBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "MathBook" },
-                                    { C.DK.cost, 70 } } },
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.cost, 270 } } },
                             {
                                 C.DK.TjanulDedRepku, new Dictionary<string, object>()
                                 {
-                                    { C.DK.equipmentName, "TjanulDedRepku" },
-                                    { C.DK.cost, 70 } } } } }, } }
+                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.cost, 270 } } } } }, } }
 
 
         };

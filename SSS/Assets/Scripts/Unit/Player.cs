@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Unit
 {
     private Coroutine _zeroizeKillComboTicksCoroutine;
+    private Coroutine _recoverStaminaPointCoroutine;
     private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
 
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
@@ -12,7 +13,9 @@ public class Player : Unit
     [SerializeField] private float _currentMoney = 0;
     [SerializeField] private int _currentLevel = 0;
     [SerializeField] private int _currentKillCombo = 0;
-    [SerializeField] private int _currentStamina;
+    [SerializeField] private int _currentStamina = 0;
+    [SerializeField] private RectTransform _rectTransformStaminaBar;
+    [SerializeField] private GameObject _prefubOfStaminaPoint;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
@@ -25,6 +28,8 @@ public class Player : Unit
     public RectTransform ammunitionPanelTransform; // 
 
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
+    public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
+    public float timeZeroizeKillComboTicks; // время для сбрасывания текущего комбо за убийства
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
     public float experienceToNextLevel;
@@ -122,7 +127,7 @@ public class Player : Unit
         get { return _currentStamina; }
         set
         {
-            _currentStamina = value;
+            _currentStamina = value > 0 ? value : 0;
             ChangeStaminaBar(_currentStamina);
         }
     }
@@ -131,9 +136,11 @@ public class Player : Unit
 
     protected override void Awake()
     {
+
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM
         nameOfUnit = "Player";
         base.Awake();
+        CurrentStamina = staminaMax;
         rb = GetComponent<Rigidbody2D>();
         selfSprite = GetComponent<SpriteRenderer>();
 
@@ -154,6 +161,7 @@ public class Player : Unit
     protected override void Start()
     {
         base.Start();
+        _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
         _fsm.SetState<FsmStateIdle>();
     }
 
@@ -191,6 +199,7 @@ public class Player : Unit
         // Запускаем новую корутину
         _zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
 
+
         CurrentExperience += experience * (1 + CurrentKillCombo * (increasingGettingExperienceByKillComboTickPercentage / 100));
         CurrentMoney += money * (1 + CurrentKillCombo * (increasingGettingMoneyByKillComboTickPercentage / 100));
         CurrentKillCombo++;
@@ -198,11 +207,21 @@ public class Player : Unit
 
     IEnumerator ZeroizeKillComboTicks()
     {
-        yield return new WaitForSeconds(1f); // Ждем 1 секунду
+        yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
 
         // Сбрасываем комбо после задержки
         CurrentKillCombo = 0;
         _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
+    }
+    IEnumerator RecoverStaminaPoint()
+    {
+        while (true)
+        {
+            if (CurrentStamina < staminaMax) CurrentStamina++;
+            yield return new WaitForSeconds(timeRecoverStaminaPoint);
+
+        }
+
     }
 
     // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.
@@ -222,7 +241,30 @@ public class Player : Unit
 
     private void ChangeStaminaBar(int currentStamina)
     {
+        Debug.Log(currentStamina);
+        if (_rectTransformStaminaBar.childCount != 0)
+        {
+            // Получаем количество дочерних объектов
+            int childCount = _rectTransformStaminaBar.childCount;
 
+            // Итерируемся по дочерним объектам в обратном порядке
+            for (int i = childCount - 1; i >= 0; i--)
+            {
+                // Получаем дочерний объект
+                Transform child = _rectTransformStaminaBar.GetChild(i);
+                Destroy(child.gameObject); // Используем Destroy во время выполнения игры
+            }
+        }
+        for (int i = 0; i < currentStamina; i++)
+        {
+            GameObject newStaminaPoint = Instantiate(_prefubOfStaminaPoint, Vector3.zero, Quaternion.identity);
+            newStaminaPoint.GetComponent<RectTransform>().SetParent(_rectTransformStaminaBar, false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);
     }
 
 }

@@ -127,7 +127,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -151,9 +151,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ac9b781c4128f47932659814f54a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3896860184346152032, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
-  isEquipmentASpell: 0
   selfCollider: {fileID: 1610743810911700948}
-  equipmentName: 
-  transformCurrentEquipmentPlace: {fileID: 0}
   transform: {fileID: 0}

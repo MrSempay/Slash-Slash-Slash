@@ -1,0 +1,24 @@
+using TMPro;
+using UnityEngine;
+
+public class SceneDialogueBuild : DialogueParser
+{
+    protected override void Awake()
+    {
+        base.Awake();
+        LoadAndParseDialogueAndShowFirstPhrase();
+
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void FinishDialogue()
+    {
+        GameManager.Instance.ChangingSceneFinish(); // собсна если мы в диалоговой сцене, то переходим на целевую
+    }
+
+}

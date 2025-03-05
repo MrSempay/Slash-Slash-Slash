@@ -53,6 +53,9 @@ public class C
 
         // Параметры юнитов
         public const string healthMax = "healthMax";
+        public const string timeRecoverStaminaPoint = "timeRecoverStaminaPoint";
+        public const string timeZeroizeKillComboTicks = "timeZeroizeKillComboTicks";
+        public const string staminaMax = "staminaMax";
         public const string damageReduction = "damageReduction";
         public const string speed = "speed";
         public const string jumpForce = "jumpForce";
@@ -63,10 +66,16 @@ public class C
         public const string increasingGettingMoneyByKillComboTickPercentage = "increasingGettingMoneyByKillComboTickPercentage";
         public const string increasingParametersByLevelUpPercentage = "increasingParametersByLevelUpPercentage";
         public const string damage = "damage";
-        public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Это исключение, так как строка начинается с заглавной
+        public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Это исключение, так как строка начинается с заглавной (все свойства будут такими)
         public const string CurrentMoney = "CurrentMoney"; // Это исключение, так как строка начинается с заглавной
         public const string som = "som";
+
     }
 
-
+    public static class NameScene
+    {
+        public const string SceneDialogue = "SceneDialogue";
+        public const string SampleScene = "SampleScene";
+        public const string MainMenu = "MainMenu";
+    }
 }

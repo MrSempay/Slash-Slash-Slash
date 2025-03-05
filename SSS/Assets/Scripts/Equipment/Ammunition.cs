@@ -14,6 +14,7 @@ public class Ammunition : Equipment
     }
     protected override void Start()
     {
+        // увы, присваиваем параметры не в Awake, а тут, ибо в Awake мы ещё не знаем значения полей categoryAndRarityTypesOfEquipment и, соответственно, что это именно за снаряжение
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(ammunitionParameters[categoryAndRarityTypesOfEquipment.equipmentCategory][categoryAndRarityTypesOfEquipment.equipmentRarityType], this, equipmentName);
         base.Start();
     }

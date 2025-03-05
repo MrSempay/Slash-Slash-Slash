@@ -5,7 +5,7 @@ public class PlayingMenu : MonoBehaviour
 {
     public void ExitToMainMenu()
     {
-        SceneManager.LoadScene(0); 
+        GameManager.Instance.ChangeSceneToDialogue(C.NameScene.MainMenu);
     }
 
     public void ExitGame()
