@@ -20,11 +20,12 @@ public class Building : MonoBehaviour
     [NonSerialized] public GameObject entirePanel;
     [NonSerialized] public GameObject buttonEnter;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
-    [NonSerialized] public List<GameObject> equipmentInBuilding = new List<GameObject>(); // список всего снар€жени€ в здании
+    [NonSerialized] public List<Equipment> equipmentInBuilding = new List<Equipment>(); // список всего снар€жени€ в здании
 
     public GameObject prefubOfEquipment;
     public bool buttonEnterWasPressedToEnter = false;
 
+    public event Action<List<Equipment>> onUpdateAssortment;
 
     public bool IsAroundBuilding
     {
@@ -104,9 +105,11 @@ public class Building : MonoBehaviour
 
     protected virtual void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
-        foreach (GameObject equipment in equipmentInBuilding)
+        onUpdateAssortment?.Invoke(null); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда отписыватьс€ от прослушивани€ событи€ прошлой партии ассортимента, пока
+                                          // та ещЄ не была удалена
+        foreach (Equipment equipment in equipmentInBuilding)
         {
-            if (equipment) Destroy(equipment);
+            if (equipment) Destroy(equipment.gameObject);
         }
         equipmentInBuilding.Clear();
         foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
@@ -140,11 +143,12 @@ public class Building : MonoBehaviour
             scriptOfEquipment.transformCurrentEquipmentPlace = placeForEquipment;
 
             // »«ћ≈Ќя≈ћ ѕј–јћ≈“–џ «ƒјЌ»я ѕ–» ƒќЅј¬Ћ≈Ќ»» ¬ Ќ≈√ќ Ќќ¬ќ√ќ —Ќј–я∆≈Ќ»я
-            equipmentInBuilding.Add(newEquipment);
+            equipmentInBuilding.Add(scriptOfEquipment);
             PlaceForEquipment scriptOfPlace = placeForEquipment.gameObject.GetComponent<PlaceForEquipment>();
             scriptOfPlace.Equipment = scriptOfEquipment;
             scriptOfPlace.isBuildingPlace = true;
         }
+        onUpdateAssortment?.Invoke(equipmentInBuilding); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
     }
 
     public void EnterToBuilding()
@@ -160,7 +164,7 @@ public class Building : MonoBehaviour
 
     public void Sell(Player targetForBuy, Equipment equipment)
     {
-        equipment.wasSold = true;
+        equipment.WasSold = true;
         targetForBuy.CurrentMoney -= equipment.cost;
     }
 
@@ -172,9 +176,7 @@ public class Building : MonoBehaviour
 
     public void TeachByUpLevel(Player targetForBuy, Equipment equipment)
     {
-        equipment.wasSold = true;
         targetForBuy.CountAccessToUpInSchool--;
-
     }
 
     public virtual void OnDestroy()

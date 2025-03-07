@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static Unit;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -23,14 +24,16 @@ public abstract class Unit : MonoBehaviour
     public Fsm _fsm;
     public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
     public event Action<float> OnHealthChanged;       // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
+    public delegate void UnitWasKilled(Unit unit); // шаблон функции
+    public event UnitWasKilled onUnitWasKilled;         // экземляр(?) функции/сигнала(?)
 
     public float healthMax; // Начальное здоровье
     public float damageReduction; //Поглощение урона
     public float jumpForce; // сила прыжка
     public float speed; // скорость
     public float damage; // урон
-    public float moneyFromKill; // урон
-    public float experienceFromKill; // урон
+    public float moneyFromKill; // деньги за убийство юнита
+    public float experienceFromKill; // опыт за убийство юнита
 
     public float CurrentHealth
     {
@@ -81,7 +84,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     // по идее надо изменить на private, но оставим так для мгновенной смерти из спела SomeSpell1
-    public void Die(Unit unitFromWhoWasGottenDamage = null)
+    public virtual void Die(Unit unitFromWhoWasGottenDamage = null)
     {
         Debug.Log(gameObject.name + " уничтожен!");
         if (unitFromWhoWasGottenDamage)
@@ -89,10 +92,11 @@ public abstract class Unit : MonoBehaviour
             if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
                                                                             // с помощью какого-нибудь интерфейса
             {
-                unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(moneyFromKill, experienceFromKill);
+                unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(experienceFromKill, moneyFromKill);
             }
         }
         CurrentHealth = 0;
+        onUnitWasKilled?.Invoke(this);
         Destroy(gameObject); // Уничтожаем объект
     }
 
@@ -222,7 +226,7 @@ public abstract class Unit : MonoBehaviour
 
 
     // для работы данной функции необходимо, чтоб значение максимального параметра имело имя по типу: healthMax, а свойства с текущем значением - CurrentHealth.
-    // Функция найдёт свойство с текущим значением CurrentHealth отнёв от healthMax постфикс Max, увеличив первую букву и добавив перед ней Current
+    // Функция найдёт свойство с текущим значением CurrentHealth отняв от healthMax постфикс Max, увеличив первую букву и добавив перед ней Current
     private void AdjustCurrentParametersValues(string nameOfMaxParameter, bool isIncreasing, float increasingValuePercentage, double baseParameterValue)
     {
         string subString = nameOfMaxParameter.Substring(0, nameOfMaxParameter.Length - 3);

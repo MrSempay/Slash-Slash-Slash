@@ -33,7 +33,9 @@ public class Enemy : Unit
     public string typeOfEnemy; // —сылка на скрипт детектора пола
     public AttackAreaEnemy attackAreaScript; // —крипт зоны дл€ атаки
     public List<Unit> listOfUnitsInAttackArea = new List<Unit>();
-            
+
+
+
 
 
 
@@ -92,6 +94,7 @@ public class Enemy : Unit
             _fsm.SetState<FsmStateIdleEnemy>();
             return;
         }
+
         _fsm.SetState<FsmStateWalkEnemy>();
     }
 
@@ -133,4 +136,6 @@ public class Enemy : Unit
         if (_fsm.StateCurrent?.GetType() == typeof(FsmStateIdleEnemy)) _fsm.SetState<FsmStateWalkEnemy>();
         currentTargetTransform = playerTransform;
     }
+
+
 }

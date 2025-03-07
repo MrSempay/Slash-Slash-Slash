@@ -58,7 +58,7 @@ public class DialogueParser : MonoBehaviour
     public void LoadAndParseDialogueAndShowFirstPhrase()
     {
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
-        string fullPathToDialogueFile = _nameDialogueFolder +  _nameDialogueFileWithParentFolder;
+        string fullPathToDialogueFile = _nameDialogueFolder + _nameDialogueFileWithParentFolder;
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)

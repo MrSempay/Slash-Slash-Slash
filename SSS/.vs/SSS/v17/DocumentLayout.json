@@ -3,23 +3,47 @@
   "WorkspaceRootPath": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\scenarioscript\\level1scenario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenarioscript\\level1scenario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|c:\\users\\fossa2016\\documents\\github\\slash-slash-slash\\sss\\assets\\scripts\\scenarioscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenarioscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\scenarioscript\\level1scenario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenarioscript\\level1scenario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentselected.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentselected.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\building.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\building.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentatplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentatplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentinsideshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentinsideshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstatetranslatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstatetranslatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialogueparser\\scenedialoguebuild.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialogueparser\\scenedialoguebuild.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialogueparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialogueparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\building\\treasury.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\building\\treasury.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|c:\\users\\fossa2016\\documents\\github\\slash-slash-slash\\sss\\assets\\scripts\\dialogues\\dialogueparser\\playerdialogue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialogueparser\\playerdialogue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialogueparser\\playerdialogue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,28 +51,44 @@
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatefallenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatefallenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialoguearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialoguearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\unit\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentinsideshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentinsideshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstateidle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstateidle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatewalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatewalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatewalkenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatewalkenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatefall.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatefall.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatemeleeattackenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatemeleeattackenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\unit\\enemy\\areadetectors\\triggerarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit\\enemy\\areadetectors\\triggerarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\levels\\levelbuildscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\levels\\levelbuildscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,12 +99,20 @@
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\building.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\building.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialoguearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialoguearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\levels\\levelbuildscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\levels\\levelbuildscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\dialogues\\dialogueparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dialogues\\dialogueparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -119,18 +167,6 @@
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\global\\adjustbuildingparameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\building\\treasury.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\building\\treasury.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\unit\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentselected.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentselected.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\equipment\\spell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\equipment\\spell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -151,36 +187,16 @@
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstatebuilding\\fsmstatebuildingopened.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentatplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateequipment\\fsmstateequipmentatplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstatetranslatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstatetranslatingequipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\fsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatewalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatewalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatejump.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\fsmstatemovementplayer\\fsmstatejump.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstateidle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateplayer\\idles\\fsmstateidle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatefallenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatefallenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\unit\\enemy\\meleeenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -189,10 +205,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\unit\\door.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\unit\\door.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatemeleeattackenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B761A0C2-538D-562E-942C-389A1924BB0D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\statemachine\\objectclaster\\fsmstateunit\\fsmstateenemy\\fsmstatemeleeenemy\\fsmstatemeleeattackenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -202,7 +214,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -210,33 +222,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 16,
+              "Title": "FsmStateWalkEnemy.cs",
+              "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateWalkEnemy.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateWalkEnemy.cs",
+              "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateWalkEnemy.cs",
+              "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateWalkEnemy.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T21:00:50.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FsmStateFall.cs",
+              "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateFall.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateFall.cs",
+              "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateFall.cs",
+              "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateFall.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T21:00:20.037Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "TriggerArea.cs",
+              "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Enemy\\AreaDetectors\\TriggerArea.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Unit\\Enemy\\AreaDetectors\\TriggerArea.cs",
+              "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Enemy\\AreaDetectors\\TriggerArea.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Unit\\Enemy\\AreaDetectors\\TriggerArea.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T20:21:10.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ScenarioScript.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\ScenarioScript.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ScenarioScript.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\ScenarioScript.cs",
               "RelativeToolTip": "Assets\\Scripts\\ScenarioScript.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAowCIAAABNAAAA",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAEwJAAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T02:48:30.11Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Level1Scenario.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\ScenarioScript\\Level1Scenario.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ScenarioScript\\Level1Scenario.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\ScenarioScript\\Level1Scenario.cs",
               "RelativeToolTip": "Assets\\Scripts\\ScenarioScript\\Level1Scenario.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAQwCQAAAAiAAAA",
+              "ViewState": "AQIAADUAAAAAAAAAAAAmwEEAAABoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T02:16:30.314Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "SceneDialogueBuild.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueParser\\SceneDialogueBuild.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Dialogues\\DialogueParser\\SceneDialogueBuild.cs",
@@ -249,45 +300,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "PlayerDialogue.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueParser\\PlayerDialogue.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Dialogues\\DialogueParser\\PlayerDialogue.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueParser\\PlayerDialogue.cs",
               "RelativeToolTip": "Assets\\Scripts\\Dialogues\\DialogueParser\\PlayerDialogue.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAKAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T16:18:51.55Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 25,
               "Title": "DialogueParser.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueParser.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Dialogues\\DialogueParser.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueParser.cs",
               "RelativeToolTip": "Assets\\Scripts\\Dialogues\\DialogueParser.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAZAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAqwAcAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T16:18:48.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 24,
               "Title": "DialogueArea.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueArea.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Dialogues\\DialogueArea.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Dialogues\\DialogueArea.cs",
               "RelativeToolTip": "Assets\\Scripts\\Dialogues\\DialogueArea.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAQwCAAAAAAAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAiwCAAAADCAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T16:18:38.664Z"
+              "WhenOpened": "2025-03-03T16:18:38.664Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 28,
               "Title": "MainMenu.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\MainMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\MainMenu.cs",
@@ -295,24 +347,25 @@
               "RelativeToolTip": "Assets\\Scripts\\MainMenu.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T00:26:57.728Z"
+              "WhenOpened": "2025-03-03T00:26:57.728Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 26,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "ViewState": "AQIAACwAAAAAAAAAAAAwwEYAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T21:42:29.828Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 30,
               "Title": "PlayingMenu.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\UI\\PlayingMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\PlayingMenu.cs",
@@ -320,11 +373,12 @@
               "RelativeToolTip": "Assets\\Scripts\\UI\\PlayingMenu.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-02T22:47:54.22Z"
+              "WhenOpened": "2025-03-02T22:47:54.22Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 35,
               "Title": "WeaponDatabase.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\WeaponSettings\\WeaponDatabase.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSettings\\WeaponDatabase.cs",
@@ -332,23 +386,25 @@
               "RelativeToolTip": "Assets\\Scripts\\WeaponSettings\\WeaponDatabase.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T00:38:26.924Z"
+              "WhenOpened": "2025-02-27T00:38:26.924Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 3,
               "Title": "FsmStateEquipmentSelected.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentSelected.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentSelected.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentSelected.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentSelected.cs",
-              "ViewState": "AQIAADEAAAAAAAAAAAAtwEUAAABBAAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAtwC0AAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:15:33.865Z"
+              "WhenOpened": "2025-02-24T00:15:33.865Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 40,
               "Title": "AdjustBuildingParameters.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GLOBAL\\AdjustBuildingParameters.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GLOBAL\\AdjustBuildingParameters.cs",
@@ -356,11 +412,12 @@
               "RelativeToolTip": "Assets\\Scripts\\GLOBAL\\AdjustBuildingParameters.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-26T17:27:38.151Z"
+              "WhenOpened": "2025-02-26T17:27:38.151Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 31,
               "Title": "C.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GLOBAL\\C.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GLOBAL\\C.cs",
@@ -368,11 +425,12 @@
               "RelativeToolTip": "Assets\\Scripts\\GLOBAL\\C.cs",
               "ViewState": "AQIAADEAAAAAAAAAAAAgwE4AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T20:25:26.967Z"
+              "WhenOpened": "2025-02-27T20:25:26.967Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 42,
               "Title": "WeaponInfo.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\WeaponSettings\\WeaponInfo.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSettings\\WeaponInfo.cs",
@@ -380,23 +438,25 @@
               "RelativeToolTip": "Assets\\Scripts\\WeaponSettings\\WeaponInfo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T00:35:53.434Z"
+              "WhenOpened": "2025-02-27T00:35:53.434Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 36,
               "Title": "PlaceForEquipment.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\UI\\PlaceForEquipment.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\PlaceForEquipment.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\UI\\PlaceForEquipment.cs",
               "RelativeToolTip": "Assets\\Scripts\\UI\\PlaceForEquipment.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAIBJwCgAAAA6AAAA",
+              "ViewState": "AQIAABUAAAAAAAAAAAAqwCgAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T21:00:56.081Z"
+              "WhenOpened": "2025-02-25T21:00:56.081Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 29,
               "Title": "AdjustEquipmentParameters.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GLOBAL\\AdjustEquipmentParameters.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GLOBAL\\AdjustEquipmentParameters.cs",
@@ -404,11 +464,12 @@
               "RelativeToolTip": "Assets\\Scripts\\GLOBAL\\AdjustEquipmentParameters.cs",
               "ViewState": "AQIAAEwAAAAAAAAAAAAgwL0AAACHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T15:24:15.142Z"
+              "WhenOpened": "2025-02-25T15:24:15.142Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "FsmStateJump.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateJump.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateJump.cs",
@@ -416,23 +477,25 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateJump.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAawB8AAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T18:27:02.66Z"
+              "WhenOpened": "2025-02-24T18:27:02.66Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 14,
               "Title": "FsmStateIdle.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateIdle.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateIdle.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateIdle.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateIdle.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAATAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T18:27:00.492Z"
+              "WhenOpened": "2025-02-24T18:27:00.492Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 39,
               "Title": "StaticClassForAdditionalFunctions.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GLOBAL\\StaticClassForAdditionalFunctions.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GLOBAL\\StaticClassForAdditionalFunctions.cs",
@@ -440,11 +503,12 @@
               "RelativeToolTip": "Assets\\Scripts\\GLOBAL\\StaticClassForAdditionalFunctions.cs",
               "ViewState": "AQIAABsAAAAAAAAAAAAowCMAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T14:50:05.833Z"
+              "WhenOpened": "2025-02-25T14:50:05.833Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 7,
               "Title": "FsmStateTranslatingEquipment.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateTranslatingEquipment.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateTranslatingEquipment.cs",
@@ -452,11 +516,12 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\Idles\\FsmStateTranslatingEquipment.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T16:01:03.56Z"
+              "WhenOpened": "2025-02-24T16:01:03.56Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 47,
               "Title": "Fsm.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Fsm.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Fsm.cs",
@@ -464,35 +529,38 @@
               "RelativeToolTip": "Assets\\Scripts\\Fsm.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAgwAwAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T15:54:10.493Z"
+              "WhenOpened": "2025-02-24T15:54:10.493Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 15,
               "Title": "FsmStateWalk.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateWalk.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateWalk.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateWalk.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer\\FsmStateWalk.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAowCoAAAAOAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAvwBUAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:25:20.28Z"
+              "WhenOpened": "2025-02-24T00:25:20.28Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "Equipment.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Equipment.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Equipment.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Equipment.cs",
               "RelativeToolTip": "Assets\\Scripts\\Equipment.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAQwCwAAAAwAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAowAgAAABsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:07:44.121Z"
+              "WhenOpened": "2025-02-24T00:07:44.121Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 46,
               "Title": "FsmStateMovementPlayer.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer.cs",
@@ -500,11 +568,12 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer\\FsmStateMovementPlayer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T18:27:08.103Z"
+              "WhenOpened": "2025-02-24T18:27:08.103Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 27,
               "Title": "FsmStateEquipment.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment.cs",
@@ -512,23 +581,25 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:03:35.454Z"
+              "WhenOpened": "2025-02-24T00:03:35.454Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "FsmStateEquipmentInsideShop.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentInsideShop.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentInsideShop.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentInsideShop.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentInsideShop.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAqwBUAAAApAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAMAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:14:12.508Z"
+              "WhenOpened": "2025-02-24T00:14:12.508Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 49,
               "Title": "MeleeEnemy.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Enemy\\MeleeEnemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Unit\\Enemy\\MeleeEnemy.cs",
@@ -536,11 +607,12 @@
               "RelativeToolTip": "Assets\\Scripts\\Unit\\Enemy\\MeleeEnemy.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T18:23:39.962Z"
+              "WhenOpened": "2025-02-24T18:23:39.962Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 50,
               "Title": "Door.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Door.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Unit\\Door.cs",
@@ -548,23 +620,25 @@
               "RelativeToolTip": "Assets\\Scripts\\Unit\\Door.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAqwBIAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T16:59:48.336Z"
+              "WhenOpened": "2025-02-24T16:59:48.336Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 5,
               "Title": "FsmStateEquipmentAtPlayer.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentAtPlayer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentAtPlayer.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentAtPlayer.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateEquipment\\FsmStateEquipmentAtPlayer.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAwwBIAAAAqAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:13:35.703Z"
+              "WhenOpened": "2025-02-24T00:13:35.703Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 41,
               "Title": "Spell.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Equipment\\Spell.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Equipment\\Spell.cs",
@@ -572,11 +646,12 @@
               "RelativeToolTip": "Assets\\Scripts\\Equipment\\Spell.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:07:43.492Z"
+              "WhenOpened": "2025-02-24T00:07:43.492Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 37,
               "Title": "Ammunition.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Equipment\\Ammunition.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Equipment\\Ammunition.cs",
@@ -584,23 +659,25 @@
               "RelativeToolTip": "Assets\\Scripts\\Equipment\\Ammunition.cs",
               "ViewState": "AQIAAAEAAAAAAAAAAAAmwBAAAAC1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T00:07:08.422Z"
+              "WhenOpened": "2025-02-24T00:07:08.422Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 9,
               "Title": "Treasury.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Building\\Treasury.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Building\\Treasury.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Building\\Treasury.cs",
               "RelativeToolTip": "Assets\\Scripts\\Building\\Treasury.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAIBJwDEAAAAUAAAA",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAgwBIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T16:11:27.456Z"
+              "WhenOpened": "2025-02-23T16:11:27.456Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 45,
               "Title": "FsmStateBuildingOpened.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingOpened.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingOpened.cs",
@@ -608,11 +685,12 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingOpened.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAUwBoAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T15:45:12.311Z"
+              "WhenOpened": "2025-02-23T15:45:12.311Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 44,
               "Title": "FsmStateBuildingNormal.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingNormal.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingNormal.cs",
@@ -620,11 +698,12 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingNormal.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T15:45:10.463Z"
+              "WhenOpened": "2025-02-23T15:45:10.463Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 43,
               "Title": "School.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Building\\School.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Building\\School.cs",
@@ -632,23 +711,25 @@
               "RelativeToolTip": "Assets\\Scripts\\Building\\School.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T13:49:45.983Z"
+              "WhenOpened": "2025-02-21T13:49:45.983Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 4,
               "Title": "Building.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Building.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Building.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Building.cs",
               "RelativeToolTip": "Assets\\Scripts\\Building.cs",
-              "ViewState": "AQIAAGwAAAAAAAAAAAAawH8AAAAAAAAA",
+              "ViewState": "AQIAAJgAAAAAAAAAAAAEwKYAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T13:45:33.238Z"
+              "WhenOpened": "2025-02-21T13:45:33.238Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 34,
               "Title": "UIManager.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\UI\\UIManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\UIManager.cs",
@@ -656,23 +737,25 @@
               "RelativeToolTip": "Assets\\Scripts\\UI\\UIManager.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAAAQwAUAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T21:47:50.74Z"
+              "WhenOpened": "2025-02-20T21:47:50.74Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 12,
               "Title": "FsmStateFallEnemy.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateFallEnemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateFallEnemy.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateFallEnemy.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateFallEnemy.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAgwDMAAAAlAAAA",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAWwDgAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T01:26:35.548Z"
+              "WhenOpened": "2025-02-14T01:26:35.548Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 38,
               "Title": "AdjustUnitParameters.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\GLOBAL\\AdjustUnitParameters.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GLOBAL\\AdjustUnitParameters.cs",
@@ -680,11 +763,12 @@
               "RelativeToolTip": "Assets\\Scripts\\GLOBAL\\AdjustUnitParameters.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAAAQwAwAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T17:38:21.736Z"
+              "WhenOpened": "2025-02-18T17:38:21.736Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "LevelBuildScript.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Levels\\LevelBuildScript.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Levels\\LevelBuildScript.cs",
@@ -692,47 +776,51 @@
               "RelativeToolTip": "Assets\\Scripts\\Levels\\LevelBuildScript.cs",
               "ViewState": "AQIAAIEAAAAAAAAAAAAmwI0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T15:33:12.365Z"
+              "WhenOpened": "2025-02-18T15:33:12.365Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 19,
               "Title": "FsmStateMeleeAttackEnemy.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateMeleeAttackEnemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateMeleeAttackEnemy.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateMeleeAttackEnemy.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy\\FsmStateMeleeEnemy\\FsmStateMeleeAttackEnemy.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAwAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T13:34:33.345Z"
+              "WhenOpened": "2025-02-18T13:34:33.345Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 13,
               "Title": "Enemy.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Enemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Unit\\Enemy.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Enemy.cs",
               "RelativeToolTip": "Assets\\Scripts\\Unit\\Enemy.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAABQwAsAAAAqAAAA",
+              "ViewState": "AQIAAHAAAAAAAAAAAAAowH0AAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T15:23:47.513Z"
+              "WhenOpened": "2025-02-12T15:23:47.513Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 18,
               "Title": "FsmStateEnemy.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStateEnemy.cs",
-              "ViewState": "AQIAAGUAAAAAAAAAAAAwwHYAAAAIAAAA",
+              "ViewState": "AQIAAIoAAAAAAAAAAAAnwKkAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T17:37:42.036Z"
+              "WhenOpened": "2025-03-04T17:37:42.036Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 33,
               "Title": "FsmStateBuildingDestroyed.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingDestroyed.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingDestroyed.cs",
@@ -740,11 +828,12 @@
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateBuilding\\FsmStateBuildingDestroyed.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T15:45:09.735Z"
+              "WhenOpened": "2025-02-23T15:45:09.735Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 32,
               "Title": "FsmState.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\FsmState.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\FsmState.cs",
@@ -752,44 +841,47 @@
               "RelativeToolTip": "Assets\\Scripts\\FsmState.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T23:15:43.145Z"
+              "WhenOpened": "2025-02-11T23:15:43.145Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Unit\\Player.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Unit\\Player.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAQwE4AAAAAAAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAewC8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-11T23:11:54.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 22,
               "Title": "FsmStatePlayer.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer.cs",
               "RelativeToolTip": "Assets\\Scripts\\StateMachine\\ObjectClaster\\FsmStateUnit\\FsmStatePlayer.cs",
-              "ViewState": "AQIAAEQAAAAAAAAAAAAwwEAAAAAJAAAA",
+              "ViewState": "AQIAACkAAAAAAAAAAAAwwDQAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T22:17:33.747Z"
+              "WhenOpened": "2025-02-11T22:17:33.747Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 23,
               "Title": "Unit.cs",
               "DocumentMoniker": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Unit.cs",
               "ToolTip": "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets\\Scripts\\Unit.cs",
               "RelativeToolTip": "Assets\\Scripts\\Unit.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAgwBMAAABQAAAA",
+              "ViewState": "AQIAAPsAAAAAAAAAAAAQwOQAAABFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T23:15:44.895Z"
+              "WhenOpened": "2025-02-11T23:15:44.895Z",
+              "EditorCaption": ""
             }
           ]
         }

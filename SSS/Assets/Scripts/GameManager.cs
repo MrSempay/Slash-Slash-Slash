@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // всегда должен вызыватьс€ после метода ChangeScene с перегрузкой на два 2 параметра (то есть, по идее, только в диалоговой сцене)
+    // всегда должен вызыватьс€ после метода ChangeScene (то есть, по идее, только в диалоговой сцене)
     public void ChangingSceneFinish()
     {
         _nameCurrentScene = _nameTargetScene; // по идее это поле нам нужно чтоб просто находить диалоги на целевой сцене.   примеру _nameCurrentScene будет указывать на папку диалогов

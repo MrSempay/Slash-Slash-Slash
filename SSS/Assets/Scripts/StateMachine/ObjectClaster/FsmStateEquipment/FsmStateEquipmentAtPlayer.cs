@@ -18,9 +18,9 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
         Debug.Log("Equipment At Player state [ENTER]");
         equipment.BuildingWhereEquipmentIs = null; // по умолчанию будем считать, что мы снаряжение вытащили из здания. Менять этот параметр пока что будем в состоянии FsmStateEquipmentAtPlayer
         equipment.transform.localPosition = equipment.startLocalPosition;
-        if (!equipment.wasSold)
+        if (!equipment.WasSold) // не устанавливаем WasSold в true, если снаряжение уже у нас типа в инвентаре
         {
-            equipment.wasSold = true;
+            equipment.WasSold = true;
         }
     }
 
@@ -39,7 +39,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
                                                  // и не из состояния FsmStateEquipmentAtPlayer, а лишь при создании, в таком случае получится дубликат в списке equipmentInBuilding
         {
             // на самом деле это вообще не работает сейчас, ибо мы разрешили менять местами снаряжение только в целевой панели снаряжений. Между панелями обмен закрыт на данный момент
-            equipment.BuildingWhereEquipmentIs.equipmentInBuilding.Add(equipment.gameObject);
+            equipment.BuildingWhereEquipmentIs.equipmentInBuilding.Add(equipment);
             fsm.SetState<FsmStateEquipmentInsideShop>();
         }
 

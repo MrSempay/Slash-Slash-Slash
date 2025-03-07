@@ -41,7 +41,7 @@ public class FsmStateEnemy : FsmStateUnit
     //Рассчитывает, отрисовывает путь. Меняет направление взгляда персонажа, смещает все детекторы, двигает по оси х.
     public void CalculateDrawPathChangeDirectionAndMove()
     {
-        
+        Debug.Log(path.corners.Length);
         FixingFuckingBuggingRotation();
         if (constraintTimeFlipXCoroutine == null)
         {
@@ -110,13 +110,12 @@ public class FsmStateEnemy : FsmStateUnit
     // двигаем персонажа по пути
     void MoveTowardsTarget()
     {
-        Debug.Log(enemy.rb.linearVelocityX);
         //Debug.Log("Emmm???4");
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
-        Debug.Log(direction);
-        Debug.Log(enemy.speed);
+        //Debug.Log(direction);
+        //Debug.Log(enemy.speed);
         enemy.rb.linearVelocityX = direction * enemy.speed;
-        Debug.Log(enemy.rb.linearVelocityX);
+        //Debug.Log(enemy.rb.linearVelocityX);
         // Проверка достижения цели
         if (Mathf.Abs(enemy.transform.position.x - enemy.nextPointInPath.x) <= enemy.arrivalThreshold)
         {

@@ -5,6 +5,8 @@ using static AdjustEquipmentParameters;
 
 public class Treasury : Building
 {
+    public new event Action<List<Equipment>> onUpdateAssortment;
+
     protected override void Awake()
     {
         nameOfObject = "Treasury";
@@ -14,10 +16,11 @@ public class Treasury : Building
     protected override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
         List<EquipmentChance> randomCategoryAndRarityTypesOfEquipment = GenerateItems(rectTransformEquipmentPlaces.childCount);
+        onUpdateAssortment?.Invoke(null);
         int i = 0;
-        foreach (GameObject equipment in equipmentInBuilding)
+        foreach (Equipment equipment in equipmentInBuilding)
         {
-            if (equipment) Destroy(equipment);
+            if (equipment) Destroy(equipment.gameObject);
         }
         equipmentInBuilding.Clear();
         foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
@@ -52,7 +55,7 @@ public class Treasury : Building
             scriptOfEquipment.categoryAndRarityTypesOfEquipment = randomCategoryAndRarityTypesOfEquipment[i];
 
             // »«ћ≈Ќя≈ћ ѕј–јћ≈“–џ «ƒјЌ»я ѕ–» ƒќЅј¬Ћ≈Ќ»» ¬ Ќ≈√ќ Ќќ¬ќ√ќ —Ќј–я∆≈Ќ»я
-            equipmentInBuilding.Add(newEquipment);
+            equipmentInBuilding.Add(scriptOfEquipment);
             PlaceForEquipment scriptOfPlace = placeForEquipment.gameObject.GetComponent<PlaceForEquipment>();
             scriptOfPlace.Equipment = scriptOfEquipment;
             scriptOfPlace.isBuildingPlace = true;
@@ -60,6 +63,7 @@ public class Treasury : Building
             i++;
 
         }
+        onUpdateAssortment?.Invoke(equipmentInBuilding); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
     }
 
 
@@ -98,7 +102,7 @@ public class Treasury : Building
 
             foreach (var item in possibleItems)
             {
-                Debug.Log(item.chance);
+                //Debug.Log(item.chance);
                 cumulativeChance += item.chance;
                 if (randomValue <= cumulativeChance)
                 {

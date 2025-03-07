@@ -43,7 +43,7 @@ public class FsmStateEquipmentSelected : FsmStateEquipment
 
                     // Ќ”∆Ќќ ƒЋя ƒ≈“≈ ÷»», Ќј ѕ–ќƒј∆” Ћ» ƒјЌЌџ… Ё «≈ћѕЋя– —Ќј–я∆≈Ќ»я. ≈сли нет (уже было продано), то ничего не делаем, если да, то провер€ем, хватает ли денег, если нет, возвращае
                     // в состо€ние FsmStateEquipmentInsideShop
-                    if (equipment.wasSold == false)
+                    if (equipment.WasSold == false)
                     {
                         if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(equipment.player, equipment)) // спелы сто€т 0 злата, так что по идее на них всегда будет хватать
                         {

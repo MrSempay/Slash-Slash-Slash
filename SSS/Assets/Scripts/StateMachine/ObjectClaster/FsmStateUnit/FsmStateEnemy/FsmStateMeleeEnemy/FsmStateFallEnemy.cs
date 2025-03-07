@@ -44,7 +44,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
         CalculateDrawPathChangeDirectionAndMove();
         if (GetFloor(onFloor))
         {
-            if (enemy.rb.linearVelocityX != 0)
+            if (enemy.currentTargetTransform != null)
             {
                 fsm.SetState<FsmStateWalkEnemy>();
                 return;

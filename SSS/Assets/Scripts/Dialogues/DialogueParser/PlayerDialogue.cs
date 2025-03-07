@@ -13,12 +13,12 @@ public class PlayerDialogue : DialogueParser
     {
         base.Awake();
         LoadAndParseDialogueAndShowFirstPhrase();
-
+        /*
         ScenarioScript scenarioScript = GameObject.Find("ScenarioScript").GetComponent<ScenarioScript>(); // на уровнях будут дочерние скрипты от данного класса, для конечных уровней
         if (scenarioScript)
         {
             scenarioScript.ScriptCurrentDialogue = this;
-        }
+        }*/
 
         //onDialogueStarted?.Invoke(this); // подписываемся в LevelNScenario
     }

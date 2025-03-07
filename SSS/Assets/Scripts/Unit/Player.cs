@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : Unit
 {
+
     private Coroutine _zeroizeKillComboTicksCoroutine;
     private Coroutine _recoverStaminaPointCoroutine;
     private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
@@ -22,12 +23,15 @@ public class Player : Unit
     [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
     [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
 
+    public readonly Vector3 localPositionCamera = new Vector3(0.26f, 1.31f, -10f); // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
+
     public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; // 
 
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
+    public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
     public float timeZeroizeKillComboTicks; // время для сбрасывания текущего комбо за убийства
     public Camera mainCamera; // Ссылка на камеру
@@ -55,7 +59,6 @@ public class Player : Unit
             {
                 _currentExperience -= experienceToNextLevel; // Вычитаем опыт, необходимый для повышения
                 CurrentLevel++; // Повышаем уровень
-                if (CurrentLevel % 5 == 0) _countAccessToUpInSchool++;
                 ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage, true);
             }
 
@@ -83,6 +86,7 @@ public class Player : Unit
         {
             _currentLevel = value;
 
+            if (_currentLevel % 5 == 0) CountAccessToUpInSchool++;
             // Вызываем событие, если есть подписчики
             OnLevelChanged?.Invoke(_currentLevel);
         }
@@ -169,13 +173,12 @@ public class Player : Unit
     void Update()
     {
         //Debug.Log(_fsm.StateCurrent);
-        _fsm.Update();
+        if (areUpdatingFunctionsEnabled) _fsm.Update();
     }
 
     private void FixedUpdate()
     {
-
-        _fsm.FixedUpdate();
+        if (areUpdatingFunctionsEnabled) _fsm.FixedUpdate();
     }
 
    
@@ -241,7 +244,6 @@ public class Player : Unit
 
     private void ChangeStaminaBar(int currentStamina)
     {
-        Debug.Log(currentStamina);
         if (_rectTransformStaminaBar.childCount != 0)
         {
             // Получаем количество дочерних объектов
