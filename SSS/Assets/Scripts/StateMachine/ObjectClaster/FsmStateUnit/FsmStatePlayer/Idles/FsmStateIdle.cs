@@ -28,12 +28,13 @@ public class FsmStateIdle : FsmStatePlayer
 
     private void SetStateWalk()
     {
+        Debug.Log("Shit ibo");
         fsmPlayer.SetState<FsmStateWalk>();
     }
 
     public override void OnDestroy()
     {
-        OnSwipeEnded += SetStateWalk;
+        OnSwipeEnded -= SetStateWalk;
     }
 }
 

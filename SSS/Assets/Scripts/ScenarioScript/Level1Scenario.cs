@@ -53,9 +53,23 @@ public class Level1Scenario : ScenarioScript
             case "Level1/Dialogue1":
                 SpawnFirstEnemyAndIncreaseReward(_enemyPrefub, _transformPointSpawnFirstEnemy.position);
                 break;
+            case "Level1/Dialogue2":
+                JustTimeWait(3f, "waitTimeAfterFirstAmmunitionBue");
+                break;
         }
         
     }
+
+    protected override void TimerFinished(string markerTimeWait)
+    {
+        switch (markerTimeWait)
+        {
+            case "waitTimeAfterFirstAmmunitionBue":
+                Debug.Log("Study was finished");
+                break;
+        }
+    }
+
     protected override void UnitWasKilled(Unit unit)
     {
         // увы, нельзя использовать switch-case с указанием в case не константы (например case _scriptFirstEnemyForKill:)
@@ -70,16 +84,19 @@ public class Level1Scenario : ScenarioScript
 
     }
 
-    protected override void EquipmentWasSold(Equipment equipment) 
+    protected override void EquipmentWasSold(Equipment equipment)
     {
         if (equipment.isEquipmentASpell)
         {
             MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f);
             TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
         }
+        else
+        {
+            StartDialogue("Level1/Dialogue2");
 
-        else Debug.Log("Study was finished");
-        
+        }
+
     }
 
 

@@ -1644,6 +1644,7 @@ MonoBehaviour:
   spellPanelTransform: {fileID: 3749833563227270942}
   ammunitionPanelTransform: {fileID: 5582673636017912220}
   isGrounded: 1
+  areUpdatingFunctionsEnabled: 1
   timeRecoverStaminaPoint: 0
   timeZeroizeKillComboTicks: 0
   mainCamera: {fileID: 5807931541085618552}
@@ -2762,7 +2763,7 @@ GameObject:
   - component: {fileID: 5445259173051900460}
   - component: {fileID: 6126932257737207703}
   m_Layer: 0
-  m_Name: ParametersBar
+  m_Name: ParametersBars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

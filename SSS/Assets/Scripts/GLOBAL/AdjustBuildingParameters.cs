@@ -8,15 +8,15 @@ public static class AdjustBuildingParameters : object
     public static readonly Dictionary<string, Dictionary<string, object>> buildingParameters = new Dictionary<string, Dictionary<string, object>>()
     {
         // »нициализируем словарь при объ€влении
-        { "School", new Dictionary<string, object>() {
-            { "_timeForUpdateAssortiment", 15f },
-            { "folderImage", "Spells/" },
-            { "_nameTargetEquipmentPanelPlayer", "SpellPanel" },
+        { C.DK.School, new Dictionary<string, object>() {
+            { C.DK.TimeForUpdateAssortiment, 15f },
+            { C.DK.FolderImagesOfEquipment, C.DK.FolderImagesForSpells },
+            { C.DK.NameTargetEquipmentPanelPlayer, C.DK.SpellPanel },
         } },
-        { "Treasury", new Dictionary<string, object>() {
-            { "_timeForUpdateAssortiment", 15f },
-            { "folderImage", "Ammunition/" },
-            { "_nameTargetEquipmentPanelPlayer", "AmmunitionPanel" },
+        { C.DK.Treasury, new Dictionary<string, object>() {
+            { C.DK.TimeForUpdateAssortiment, 15f },
+            { C.DK.FolderImagesOfEquipment, C.DK.FolderImagesForAmmunition },
+            { C.DK.NameTargetEquipmentPanelPlayer, C.DK.AmmunitionPanel },
         } },
     };
 

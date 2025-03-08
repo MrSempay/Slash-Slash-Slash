@@ -10,7 +10,7 @@ public class FsmStateDoorClosed : FsmStateDoor
     public override void Enter()
     {
         Debug.Log("Closed state [ENTER]");
-
+        door.selfCollider.enabled = true;
 
     }
 

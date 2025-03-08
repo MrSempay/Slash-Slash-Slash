@@ -36,6 +36,7 @@ public class FsmStatePlayer : FsmStateUnit
             }
             else if (touch.phase == TouchPhase.Ended)
             {
+                Debug.Log("SHITTT???");
                 player.endTouchPosition = touch.position;
                 if (fsmPlayer.StateCurrent.GetType() == typeof(FsmStateWalk)) HandleSwipe(player.endTouchPosition - player.startTouchPosition);
                 else fsmPlayer.SetState<FsmStateWalk>();
@@ -57,10 +58,13 @@ public class FsmStatePlayer : FsmStateUnit
                 player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
                 // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
                 // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-                OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-                HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-                fsmPlayer.SetState<FsmStateWalk>();
-                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) player.CurrentStamina--; // чтоб просто при кликаньи на месте выносливость не тратилась
+                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+                {
+                    HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+                    OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
+                    fsmPlayer.SetState<FsmStateWalk>();
+                    player.CurrentStamina--; 
+                }
             }
         }
         if ((player.lookingRight == player.rb.linearVelocityX < 0) && Mathf.Abs(player.rb.linearVelocityX) > 0.01) // добавили некоторый treshhold для нивелирования небольшого заноса от CompositeCollider

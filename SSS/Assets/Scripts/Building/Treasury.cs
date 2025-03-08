@@ -5,7 +5,7 @@ using static AdjustEquipmentParameters;
 
 public class Treasury : Building
 {
-    public new event Action<List<Equipment>> onUpdateAssortment;
+    public new event Action<List<Equipment>, Building> onUpdateAssortment;
 
     protected override void Awake()
     {
@@ -16,7 +16,7 @@ public class Treasury : Building
     protected override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
         List<EquipmentChance> randomCategoryAndRarityTypesOfEquipment = GenerateItems(rectTransformEquipmentPlaces.childCount);
-        onUpdateAssortment?.Invoke(null);
+        onUpdateAssortment?.Invoke(null, this);
         int i = 0;
         foreach (Equipment equipment in equipmentInBuilding)
         {
@@ -40,7 +40,7 @@ public class Treasury : Building
 
             // Ќј—“–ј»¬ј≈ћ  ќћѕќЌ≈Ќ“ SpriteRenderer ” Ё «≈ћѕЋя–ј —Ќј–я∆≈Ќ»я
             SpriteRenderer spriteRenderer = newEquipment.GetComponent<SpriteRenderer>();
-            string fullPath = folderImage + randomEquipmentName;
+            string fullPath = folderImagesOfEquipment + randomEquipmentName;
             Sprite spellSprite = Resources.Load<Sprite>(fullPath);
             spriteRenderer.sprite = spellSprite;
 
@@ -63,7 +63,7 @@ public class Treasury : Building
             i++;
 
         }
-        onUpdateAssortment?.Invoke(equipmentInBuilding); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
+        onUpdateAssortment?.Invoke(equipmentInBuilding, this); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
     }
 
 

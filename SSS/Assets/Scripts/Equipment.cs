@@ -23,7 +23,7 @@ public class Equipment : MonoBehaviour
     public BoxCollider2D selfCollider;
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
     public event Action<Equipment> onEquipmentWasSold;         // экземл€р(?) функции/сигнала(?)
-
+    public event Action<List<Equipment>> onUpdateAssortment;
     new public RectTransform transform;
 
     public bool WasSold
@@ -32,7 +32,10 @@ public class Equipment : MonoBehaviour
         set
         {
             _wasSold = value;
-            onEquipmentWasSold?.Invoke(this); // подписываемс€ в скрипте ScenarioScript чтоб знать, когда игрок купил предмет/заклинание
+            if (value)
+            {
+                onEquipmentWasSold?.Invoke(this); // подписываемс€ в скрипте ScenarioScript чтоб знать, когда игрок купил предмет/заклинание
+            }
         }
     }
 
@@ -99,7 +102,7 @@ public class Equipment : MonoBehaviour
             transform.localPosition = new Vector3(0, -0.5f, -1);
             //Debug.Log(this);
             if (BuildingWhereEquipmentIs) BuildingWhereEquipmentIs.equipmentInBuilding.Remove(this); // собственно удал€ем из списка снар€жени€ в здании это снар€жение только
-                                                                                                           // если оно находитс€ в здании
+                                                                                                     // если оно находитс€ в здании
 
             return true;
         }

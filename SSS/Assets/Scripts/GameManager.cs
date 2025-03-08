@@ -1,12 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static DialogueArea;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     private string _nameCurrentScene;
     private string _nameTargetScene;
-    
+    private string _pathToFolderWithPrefubs = "Prefabs/DialogueWindowForPlayer";
+    private GameObject _prefubPlayerDialogue;
+
+    public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
+    public event DialogueStarted onDialogueStarted;         // экземляр(?) функции/сигнала(?)
+
     public string nameDialogueCurrent;
 
     // при первом обращении к этому свойству (а более не к чему в начале) создастся экземпляр класса GlobalGameScript, запишется в _instance и вернёт ссылку на этот
@@ -51,6 +57,7 @@ public class GameManager : MonoBehaviour
         // Игнорируем столкновения между слоем "Enemy" и самим собой. Происходит игнорирование также всех зон/коллайдеров для данного слоя (слой можно назначить как для родительского,
         // так и для всех объектов. Если у объекта изменить слой у одного из дочерних элементов, будет происходить детекция коллизий коллайдеров и зон только для этого элемента
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
+        _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
     }
 
     // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
@@ -73,5 +80,14 @@ public class GameManager : MonoBehaviour
     {
         _nameCurrentScene = _nameTargetScene; // по идее это поле нам нужно чтоб просто находить диалоги на целевой сцене. К примеру _nameCurrentScene будет указывать на папку диалогов
         SceneManager.LoadScene(_nameTargetScene);
+    }
+    public void StartDialogue(string nameDialogueWithFolder)
+    {
+        nameDialogueCurrent = nameDialogueWithFolder; // Level1/Dialogue1 - пример
+
+        RectTransform rectTransformPositionDialogue = GameObject.Find("PositionForDialogueWindow").GetComponent<RectTransform>();
+        RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
+        PlayerDialogue sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
+        onDialogueStarted?.Invoke(sciptPlayerDialogue);
     }
 }

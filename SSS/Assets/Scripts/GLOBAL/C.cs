@@ -8,6 +8,25 @@ public class C
     // ключи для словарей (DectionaryKeys)
     public static class DK
     {
+        // названия зданий
+
+        public const string School = "School";
+        public const string Treasury = "Treasury";
+
+        // параметры зданий
+
+        public const string TimeForUpdateAssortiment = "timeForUpdateAssortiment";
+        public const string FolderImagesOfEquipment = "folderImagesOfEquipment";
+        public const string NameTargetEquipmentPanelPlayer = "nameTargetEquipmentPanelPlayer";
+                // значения параметров зданий
+                public const string SpellPanel = "SpellPanel";
+                public const string AmmunitionPanel = "AmmunitionPanel";
+
+
+        // пути для файлов/папок
+        public const string FolderImagesForSpells = "Images/Spells/";
+        public const string FolderImagesForAmmunition = "Images/Ammunition/";
+
         // Категории предметов
         public const string Weapon = "Weapon";
         public const string Armor = "Armor";

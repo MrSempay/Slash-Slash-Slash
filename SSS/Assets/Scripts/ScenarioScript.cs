@@ -15,6 +15,7 @@ public class ScenarioScript : MonoBehaviour
     private PlayerDialogue _scriptCurrentDialogue;
     private Coroutine _moveCameraCoroutine;
     private Coroutine _moveObjectCoroutine;
+    private Coroutine _justTimeWaitCoroutine;
     private Vector3 _velocity = Vector3.zero; // Текущая скорость
 
     protected Transform transformPlayer;
@@ -58,53 +59,64 @@ public class ScenarioScript : MonoBehaviour
 
         cameraPlayer = GameObject.Find("CameraPlayer").GetComponent<Camera>();
 
-        if (transformDialogueAreas)
-        {
-            foreach (Transform transformDialogueArea in transformDialogueAreas)
-            {
-                transformDialogueArea.gameObject.GetComponent<DialogueArea>().onDialogueStarted += DialogueWasStarted;
-            }
-        }
+        GameManager.Instance.onDialogueStarted += DialogueWasStarted;
     }
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
     protected virtual void DialogueFinished(string nameDialogueWithFolder) { } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit) { }
+    protected virtual void TimerFinished(string markerTimeWait) { }
     protected virtual void DialogueWasStarted(PlayerDialogue playerDialogue)
     {
         ScriptCurrentDialogue = playerDialogue;
     }
     protected virtual void MovingCameraPlayerWasFinished()
     {
-        DeblockAnyUpdateFunctions();
+        SetStateIdleToPlayerAndBlockAnyUpdateFunctions(false);
     }
     protected virtual void MovingObjectWasFinished(GameObject obj) { }
 
-    private List<Equipment> _equipmentInBuildingFromLastIteration = new List<Equipment>(); // просто переменная для временного хранения ссылок на снаряжение из предыдущей итерации его обновления в здании
-    protected virtual void AssortmentInBuildingWasUpdated(List<Equipment> equipmentInBuilding)
+    // по идее кучу кода снизу можно было бы заменить на просто эмуляцию сигнала обновления ассортимента в свойстве, которое бы обозначало тот самый список с текущим снаряжением в здании
+    // p.s. - нет, нельзя, свойство, как и следовало ожидать, триггерится токмо на присвоение целого объекта: NekoeSvoistvo = new List<Equipment>(); NekoeSvoistvo = null.
+    // Впрочем, решение было найдено: создавать во время спавна нового снаряжения отдельный локальный массив, заполнять его и уже потом присваивать его нашему свойству
+
+
+    private Dictionary<Building, List<Equipment>> _buildingAndEquipmentInBuildingFromLastIteration = new Dictionary<Building, List<Equipment>>(); 
+                                                                    // просто переменная для временного хранения ссылок на снаряжение из предыдущей итерации его обновления в здании
+                                                                    // чтоб потом можно было отписаться от прослушивания сигналов для данного снаряжения
+    protected virtual void AssortmentInBuildingWasUpdated(List<Equipment> equipmentInBuilding, Building building)
     {
         // короче, нижестоящий if придуман лишь для того, чтоб отписываться от сигналов предыдущей партии снаряжения в зданиях при обновлении ассортимента. При каждом обновлении
         // ассортимента мы до того, как удалили предыдущую партию, эмулируем данный сигнал, передавая в него null, что является флагом того, что нам нужно отписаться от событий
         // снаряжения из предыдущей партии (снаряжение из предыдущей партии хранится в переменной _equipmentInBuildingFromLastIteration, которая при каждой эмуляции сигнала 
         // с параметром equipmentInBuilding не равным нулю перезаписывается на, собственно, значение параметра equipmentInBuilding)
+
         if (equipmentInBuilding == null)
         {
-            foreach (Equipment equipment in _equipmentInBuildingFromLastIteration)
+            if (_buildingAndEquipmentInBuildingFromLastIteration.ContainsKey(building))
             {
-                if (equipment) equipment.onEquipmentWasSold -= EquipmentWasSold;
+                foreach (var fieldBuildingAndHisEquipmntFromLastIteration in _buildingAndEquipmentInBuildingFromLastIteration[building])
+                {
+                    if (fieldBuildingAndHisEquipmntFromLastIteration != null) // если это снаряжение ещё не удалено (на всякий случай, по идее такого и не должно быть, удаляем после данной функции)
+                    {
+                        fieldBuildingAndHisEquipmntFromLastIteration.onEquipmentWasSold -= EquipmentWasSold;
+                    }
+                }
             }
-            _equipmentInBuildingFromLastIteration = new List<Equipment>();
             return;
         }
+        //Debug.Log(equipmentInBuilding.Count);
 
         foreach (Equipment equipment in equipmentInBuilding)
         {
             equipment.onEquipmentWasSold += EquipmentWasSold;
+            //Debug.Log(equipment);
         }
-        _equipmentInBuildingFromLastIteration = equipmentInBuilding;
+        _buildingAndEquipmentInBuildingFromLastIteration[building] = new List<Equipment>(equipmentInBuilding);
+        
     }
-    protected virtual void EquipmentWasSold(Equipment equipment) { }
+    protected virtual void EquipmentWasSold(Equipment equipment) { Debug.Log("Study was finished"); }
 
 
 
@@ -119,24 +131,18 @@ public class ScenarioScript : MonoBehaviour
 
     protected virtual void StartDialogue(string nameDialogue) // взять образец из зоны диалога
     {
-
+        GameManager.Instance.StartDialogue(nameDialogue);
     }
 
     protected virtual GameObject SpawnObjectAtTargetPosition(GameObject someObject, Vector3 targetPosition) // может стоить для каких-нибудь объектов добавить функцию, чтоб вызывать при таком спавне
     {
         return Instantiate(someObject, targetPosition, Quaternion.identity);
     }
-    protected virtual void SetStateIdleToPlayerAndBlockAnyUpdateFunctions() 
+    protected virtual void SetStateIdleToPlayerAndBlockAnyUpdateFunctions(bool isSet) 
     {
         scriptPlayer._fsm.SetState<FsmStateIdle>();
-        scriptPlayer.areUpdatingFunctionsEnabled = false;
+        scriptPlayer.areUpdatingFunctionsEnabled = !isSet;
     }
-    protected virtual void DeblockAnyUpdateFunctions() 
-    {
-        scriptPlayer.areUpdatingFunctionsEnabled = true;
-    }
-
-
     protected virtual void MovingObjectToPoint(GameObject someObject, Vector3 targetPoint, float speed) 
     {
         Transform transformObject = someObject.transform;
@@ -145,12 +151,16 @@ public class ScenarioScript : MonoBehaviour
     protected virtual void MovingCameraPlayerToPoint(Camera cameraPlayer, Transform targetTransform, float speed) 
     {
 
-        SetStateIdleToPlayerAndBlockAnyUpdateFunctions();
+        SetStateIdleToPlayerAndBlockAnyUpdateFunctions(true);
         Transform transformCameraPlayer = cameraPlayer.transform;
 
         transformCameraPlayer.SetParent(null);
         _moveCameraCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, MoveCameraPlayerWithSpeedToPoint(transformCameraPlayer, targetTransform, speed));
 
+    }
+    protected virtual void JustTimeWait(float timeWait, string markerTimeWait) 
+    {
+        _justTimeWaitCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimeWait(timeWait, markerTimeWait));
     }
 
 
@@ -158,11 +168,11 @@ public class ScenarioScript : MonoBehaviour
 
     IEnumerator MoveObjectWithSpeedToPoint(Transform transformMovingObject, Vector3 targetPoint, float speed)
     {
-        float distanceTreshold = 0.1f;
+        float distanceTreshold = 0.01f;
         while (Vector3.Distance(transformMovingObject.position, targetPoint) > distanceTreshold)
         {
-            transformMovingObject.position = Vector3.SmoothDamp(transformMovingObject.position, targetPoint, ref _velocity, speed);
-            yield return null; // Ждем следующий кадр
+            transformMovingObject.position = Vector3.MoveTowards(transformMovingObject.position, targetPoint, speed * Time.deltaTime);
+            yield return null;
         }
 
         // Останавливаем корутину и устанавливаем точную позицию
@@ -191,6 +201,11 @@ public class ScenarioScript : MonoBehaviour
         transformCameraPlayer.localPosition = scriptPlayer.localPositionCamera;
         MovingCameraPlayerWasFinished();
     }
+    IEnumerator TimeWait(float waitTime, string markerTimeWait)
+    {
+        yield return new WaitForSeconds(waitTime);
+        TimerFinished(markerTimeWait);
+    }
 
 
     protected virtual void OnDestroy()
@@ -203,8 +218,13 @@ public class ScenarioScript : MonoBehaviour
         {
             CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _moveObjectCoroutine);
         }
+        if (_moveObjectCoroutine != null)
+        {
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _justTimeWaitCoroutine);
+        }
         _moveCameraCoroutine = null;
         _moveObjectCoroutine = null;
+        _justTimeWaitCoroutine = null;
     }
 
 

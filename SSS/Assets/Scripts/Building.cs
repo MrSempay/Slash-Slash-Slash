@@ -14,9 +14,9 @@ public class Building : MonoBehaviour
 
     protected string nameOfObject;
 
-    [NonSerialized] public string _nameTargetEquipmentPanelPlayer;
-    [NonSerialized] public float _timeForUpdateAssortiment;
-    [NonSerialized] public string folderImage;  // ќтносительный путь к папке с изображени€ми из папки Assets/Resources
+    [NonSerialized] public string nameTargetEquipmentPanelPlayer;
+    [NonSerialized] public float timeForUpdateAssortiment;
+    [NonSerialized] public string folderImagesOfEquipment;  // ќтносительный путь к папке с изображени€ми из папки Assets/Resources
     [NonSerialized] public GameObject entirePanel;
     [NonSerialized] public GameObject buttonEnter;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
@@ -25,36 +25,34 @@ public class Building : MonoBehaviour
     public GameObject prefubOfEquipment;
     public bool buttonEnterWasPressedToEnter = false;
 
-    public event Action<List<Equipment>> onUpdateAssortment;
+    public event Action<List<Equipment>, Building> onUpdateAssortment;
+
+
 
     public bool IsAroundBuilding
     {
         get { return _isAroundBuilding; }
         set { _isAroundBuilding = value; }
-        /*{
-            _isAroundBuilding = value;
-            if ( _fsm.StateCurrent?.GetType() != typeof(FsmStateBuildingDestroyed))
-            {
-                buttonEnter.SetActive(value);
-            }
-            if (_fsm.StateCurrent?.GetType() == typeof(FsmStateBuildingOpened) && value == false)
-            {
-                _fsm.SetState<FsmStateBuildingNormal>();
-            }
-        } */
+    }
+    
+    public List<Equipment> NekoeSvoistvo
+    {
+        get { return equipmentInBuilding; }
+        set { equipmentInBuilding = value;
+            Debug.Log("ћџ «ƒ≈———————№№№№№№№№№№№№№№№       " + value);
+        }
     }
 
 
     protected virtual void Awake()
     {
+
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
         //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
 
-        rectTransformTargetEquipmentPanelPlayer = GameObject.Find(_nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
+        rectTransformTargetEquipmentPanelPlayer = GameObject.Find(nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
         entirePanel = transform.Find("EntirePanel")?.gameObject; // »спользуем ?. дл€ безопасного доступа (если не найдено)
         buttonEnter = transform.Find("CanvasButtonEnter")?.gameObject;
-        RectTransform rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
-        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
 
   
         
@@ -69,6 +67,8 @@ public class Building : MonoBehaviour
 
     void Start()
     {
+        RectTransform rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
+        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
         _fsm.SetState<FsmStateBuildingNormal>();
     }
 
@@ -99,13 +99,13 @@ public class Building : MonoBehaviour
         while (true)
         {
             UpdateAssortmentInBuilding(rectTransformEquipmentPlaces);
-            yield return new WaitForSeconds(_timeForUpdateAssortiment); // ∆дем 15 секунд
+            yield return new WaitForSeconds(timeForUpdateAssortiment); // ∆дем 15 секунд
         }
     }
 
     protected virtual void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
-        onUpdateAssortment?.Invoke(null); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда отписыватьс€ от прослушивани€ событи€ прошлой партии ассортимента, пока
+        onUpdateAssortment?.Invoke(null, this); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда отписыватьс€ от прослушивани€ событи€ прошлой партии ассортимента, пока
                                           // та ещЄ не была удалена
         foreach (Equipment equipment in equipmentInBuilding)
         {
@@ -129,7 +129,7 @@ public class Building : MonoBehaviour
 
             // Ќј—“–ј»¬ј≈ћ  ќћѕќЌ≈Ќ“ SpriteRenderer ” Ё «≈ћѕЋя–ј —Ќј–я∆≈Ќ»я
             SpriteRenderer spriteRenderer = newEquipment.GetComponent<SpriteRenderer>();
-            string fullPath = folderImage + randomEquipmentName;
+            string fullPath = folderImagesOfEquipment + randomEquipmentName;
             Sprite spellSprite = Resources.Load<Sprite>(fullPath);
             spriteRenderer.sprite = spellSprite;
 
@@ -148,7 +148,7 @@ public class Building : MonoBehaviour
             scriptOfPlace.Equipment = scriptOfEquipment;
             scriptOfPlace.isBuildingPlace = true;
         }
-        onUpdateAssortment?.Invoke(equipmentInBuilding); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
+        onUpdateAssortment?.Invoke(equipmentInBuilding, this); // подписываемс€ на событие в ScenarioScript, чтоб знать, когда был обновлЄн ассортимент в здании
     }
 
     public void EnterToBuilding()

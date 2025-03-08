@@ -252,7 +252,7 @@ public abstract class Unit : MonoBehaviour
                         ? currentPropertyValue + (baseParameterValue * (currentPropertyValue / (maxFieldValue - (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100))
                         : currentPropertyValue - (baseParameterValue * (currentPropertyValue / (maxFieldValue + (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100));
 
-                Debug.Log(assigningCurrentPropertyValue);
+                //Debug.Log(assigningCurrentPropertyValue);
                 object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
                 currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству
             }

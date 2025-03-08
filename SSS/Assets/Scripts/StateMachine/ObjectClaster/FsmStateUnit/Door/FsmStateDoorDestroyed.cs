@@ -18,6 +18,7 @@ public class FsmStateDoorDestroyed : FsmStateDoor
     {
         Debug.Log("Destroyed state [ENTER]");
         door.selfCollider.enabled = false;
+        door.enterButton.SetActive(false);
     }
 
     public override void Exit()
