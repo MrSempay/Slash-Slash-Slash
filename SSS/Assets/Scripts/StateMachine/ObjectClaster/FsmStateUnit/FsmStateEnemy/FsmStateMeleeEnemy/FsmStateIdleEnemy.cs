@@ -12,7 +12,7 @@ public class FsmStateIdleEnemy : FsmStateEnemy
     public override void Enter()
     {
         Debug.Log("Idle Enemy state [ENTER]");
-
+        enemy.animator.Play("EnemyIdle");
     }
 
     public override void Exit()

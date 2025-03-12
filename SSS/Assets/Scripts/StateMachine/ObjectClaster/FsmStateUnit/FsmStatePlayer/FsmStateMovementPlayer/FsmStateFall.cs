@@ -19,6 +19,7 @@ public class FsmStateFall : FsmStateMovementPlayer
     public override void Enter()
     {
         Debug.Log("Fall state [ENTER]");
+        player.animator.Play("PlayerFall");
 
         // animator.Play("fall");
     }

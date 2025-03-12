@@ -9,7 +9,7 @@ public static class AdjustUnitParameters
         {
             C.DK.Player, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 10000 },
+                { C.DK.healthMax, 250 },
                 { C.DK.staminaMax, 2 },
                 { C.DK.damageReduction, 100 },
                 { C.DK.speed, 2 },
@@ -37,18 +37,19 @@ public static class AdjustUnitParameters
             {
                 { C.DK.healthMax, 150 },
                 { C.DK.damageReduction, 150 },
-                { C.DK.speed, 4 },
+                { C.DK.speed, 8 },
                 { C.DK.jumpForce, 14 },
                 { C.DK.moneyFromKill, 50 },
                 { C.DK.experienceFromKill, 20 },
                 { C.DK.som, 14 },
-                { C.DK.damage, 5 }
+                { C.DK.damage, 5 },
+                { C.DK.callDownMeleeAttack, 0.5f }
             }
         },
         {
             C.DK.Door, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 15000 }
+                { C.DK.healthMax, 500 }
             }
         }
         };

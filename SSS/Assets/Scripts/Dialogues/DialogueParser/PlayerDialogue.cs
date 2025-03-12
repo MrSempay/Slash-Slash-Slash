@@ -32,7 +32,7 @@ public class PlayerDialogue : DialogueParser
     protected override void FinishDialogue()
     {
         base.FinishDialogue();
-        Destroy(gameObject); // собсна если мы в диалоговой сцене, то переходим на целевую
+        Destroy(gameObject); 
     }
 
 }

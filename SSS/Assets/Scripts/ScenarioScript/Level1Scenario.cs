@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Level1Scenario : ScenarioScript
@@ -9,11 +11,14 @@ public class Level1Scenario : ScenarioScript
     private Unit _scriptFirstEnemyForKill;
     private float _moneyFromKillFirstEnemy = 250;
     private float _experienceFromKillFirstEnemy = 1500;
+    private bool _firstBueSpell = true;
+    private bool _firstBueAmmunition = true;
 
     [SerializeField] private Transform _transformPointSpawnFirstEnemy;
     [SerializeField] private Transform _transformPointTeleportSchool;
     [SerializeField] private Transform _transformPointTeleportTreasury;
     [SerializeField] private GameObject _enemyPrefub;
+    [SerializeField] private LevelBuildScript _levelBuildScript;
 
     public GameObject school;
     public GameObject treasury;
@@ -22,6 +27,8 @@ public class Level1Scenario : ScenarioScript
     protected override void Awake()
     {
         base.Awake();
+        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        Debug.Log(_transformPointSpawnFirstEnemy);
         _transformSchool = school.GetComponent<Transform>();
         _scriptSchool = school.GetComponent<School>();
 
@@ -38,16 +45,12 @@ public class Level1Scenario : ScenarioScript
     }
 
 
-    void Update()
-    {
-        
-    }
-
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
     protected override void DialogueFinished(string nameDialogueWithFolder)
     {
+        base.DialogueFinished(nameDialogueWithFolder);
         switch (nameDialogueWithFolder)
         {
             case "Level1/Dialogue1":
@@ -62,23 +65,33 @@ public class Level1Scenario : ScenarioScript
 
     protected override void TimerFinished(string markerTimeWait)
     {
+        base.TimerFinished(markerTimeWait);
         switch (markerTimeWait)
         {
             case "waitTimeAfterFirstAmmunitionBue":
                 Debug.Log("Study was finished");
+                StartSpawnEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 }, 
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } });
+
+                break;
+            case "123":
+                MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
+                                                                               // MovingCameraPlayerToPoint и ждём 1 кадр)
+                TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                 break;
         }
     }
 
     protected override void UnitWasKilled(Unit unit)
     {
+        base.UnitWasKilled(unit);
         // увы, нельзя использовать switch-case с указанием в case не константы (например case _scriptFirstEnemyForKill:)
         if (unit == _scriptFirstEnemyForKill)
         {
             unit.onUnitWasKilled -= UnitWasKilled;
-            MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
-                                                                           // MovingCameraPlayerToPoint и ждём 1 кадр)
-            TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
+            JustTimeWait(2f, "123");
+
 
         }
 
@@ -86,19 +99,30 @@ public class Level1Scenario : ScenarioScript
 
     protected override void EquipmentWasSold(Equipment equipment)
     {
+        base.EquipmentWasSold(equipment);
         if (equipment.isEquipmentASpell)
         {
-            MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f);
-            TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
+            if (_firstBueSpell)
+            {
+                MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f);
+                TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
+                _firstBueSpell = false;
+            }
         }
         else
         {
-            StartDialogue("Level1/Dialogue2");
-
+            if (_firstBueAmmunition)
+            {
+                StartDialogue("Level1/Dialogue2");
+                _firstBueAmmunition = false;
+            }
         }
 
     }
 
+    void Update()
+    {
+    }
 
 
     /* ############################# БЛОК ФУНКЦИЙ-РЕАКЦИЙ, ДВИГАЮЩИХ СЮЖЕТ ТАК ИЛИ ИНАЧЕ ############################# */
@@ -112,6 +136,11 @@ public class Level1Scenario : ScenarioScript
         _scriptFirstEnemyForKill.moneyFromKill = _moneyFromKillFirstEnemy;
         _scriptFirstEnemyForKill.experienceFromKill = _experienceFromKillFirstEnemy;
         return enemyObj;
+    }
+
+    private void StartSpawnEnemies(Dictionary<Transform, int> targetPointsForEnemy)
+    {
+        _levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
     }
 
 

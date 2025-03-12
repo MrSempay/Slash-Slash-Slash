@@ -109,6 +109,11 @@ public class Equipment : MonoBehaviour
         return false;
     }
 
+    public virtual void OnDestroy()
+    {
+        _fsm.StateCurrent?.OnDestroy();
+    }
+
 
 
 }

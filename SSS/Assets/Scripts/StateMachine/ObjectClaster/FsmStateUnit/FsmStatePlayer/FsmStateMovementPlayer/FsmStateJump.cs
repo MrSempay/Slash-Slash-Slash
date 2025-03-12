@@ -16,7 +16,7 @@ public class FsmStateJump : FsmStateMovementPlayer
         Debug.Log("Jump state [ENTER]");
         player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);
         player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
-        //player.isGrounded = false; 
+        player.animator.Play("PlayerJump");
 
     }
 

@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
             return;
         }
         playMenu.SetActive(!playMenu.activeSelf);
+        Time.timeScale = playMenu.activeSelf? 0 : 1;
     }
 
     private void ChangeLevelTextUI(int level)

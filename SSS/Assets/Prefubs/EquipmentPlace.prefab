@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5623034428365794605, guid: 084e89c14dc8066419892d6178273d90, type: 3}
+  m_Sprite: {fileID: 388057999756033245, guid: 8bfa7db3eb83bfc4e94763db582f5621, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameOfEquipment: {fileID: 5609743253848494842}
   costOfEquipment: {fileID: 2853885846529086191}
+  previousEquipment: {fileID: 0}
   isBuildingPlace: 0
 --- !u!1 &5798179383207275193
 GameObject:

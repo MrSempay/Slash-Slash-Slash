@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static Unit;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -16,7 +17,10 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private Image _healthBarFilling;
     
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
+    [NonSerialized] public GameObject parametersBars;
 
+
+    public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public Dictionary<string, object> unitParameters;
@@ -58,6 +62,10 @@ public abstract class Unit : MonoBehaviour
         baseParametersValues = new Dictionary<string, object>(AdjustUnitParameters.unitParameters[nameOfUnit]);
         CurrentHealth = healthMax;
         _fsm = new Fsm();
+
+        parametersBars = GameObject.Find("ParametersBars");
+
+        selfSprite = GetComponent<SpriteRenderer>();
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
         // при их создании. Вообще может было бы напрямую обращаться в таком случае к AdjustUnitParameters.GetParameter, но пока что оставим этот дубль словаря (хз зачем)
         /*healthMax = (float) unitParameters["Health"];
@@ -96,8 +104,9 @@ public abstract class Unit : MonoBehaviour
             }
         }
         CurrentHealth = 0;
+        parametersBars.SetActive(false); // при смерте отключает все полоски здоровья/стамины прочего
         onUnitWasKilled?.Invoke(this);
-        Destroy(gameObject); // Уничтожаем объект
+        //Destroy(gameObject); // Уничтожаем объект
     }
 
 
@@ -277,5 +286,9 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money) { }
 
+    public virtual void OnDestroy()
+    {
+        _fsm.StateCurrent?.OnDestroy();
+    }
 
 }

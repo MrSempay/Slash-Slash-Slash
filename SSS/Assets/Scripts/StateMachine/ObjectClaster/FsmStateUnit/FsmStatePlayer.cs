@@ -61,8 +61,7 @@ public class FsmStatePlayer : FsmStateUnit
                 if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
                 {
                     HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-                    OnSwipeEnded?.Invoke(); // на это пока что подпишемс€ только в состо€нии FsmStateIdle 
-                    fsmPlayer.SetState<FsmStateWalk>();
+
                     player.CurrentStamina--; 
                 }
             }
@@ -105,6 +104,8 @@ public class FsmStatePlayer : FsmStateUnit
         //rb.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
         //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
         player.rb.linearVelocityX = -player.speed * 10;
+        OnSwipeEnded?.Invoke(); // на это пока что подпишемс€ только в состо€нии FsmStateIdle 
+        fsmPlayer.SetState<FsmStateWalk>();
     }
 
     private void MoveRight()
@@ -112,6 +113,8 @@ public class FsmStatePlayer : FsmStateUnit
         //rb.AddForce(Vector2.right * speed, ForceMode2D.Impulse); // в теории можно сделать и импульсом перемещение, но тогда он будет накапливатьс€ при многочисленных свайпах.
         //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
         player.rb.linearVelocityX = player.speed * 10;
+        OnSwipeEnded?.Invoke(); // на это пока что подпишемс€ только в состо€нии FsmStateIdle 
+        fsmPlayer.SetState<FsmStateWalk>();
     }
 
     public void IsAtSpecifiedPosition()

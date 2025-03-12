@@ -2,7 +2,6 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -181,6 +180,7 @@ public class Building : MonoBehaviour
 
     public virtual void OnDestroy()
     {
+        _fsm.StateCurrent?.OnDestroy();
         if (_coroutineUpdateAssortimentInBuilding != null)
         {
             CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineUpdateAssortimentInBuilding);

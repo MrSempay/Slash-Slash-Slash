@@ -10,7 +10,7 @@ public class ScenarioScript : MonoBehaviour
 {
     // ибо
 
-    private static ScenarioScript _instance;
+    private ScenarioScript _instance;
 
     private PlayerDialogue _scriptCurrentDialogue;
     private Coroutine _moveCameraCoroutine;
@@ -33,6 +33,7 @@ public class ScenarioScript : MonoBehaviour
         {
             if (_scriptCurrentDialogue != null) // Проверяем, что _scriptCurrentDialogue не null
             {
+                Debug.Log("JebmiyVRot");
                 _scriptCurrentDialogue.onDialogueWasFinished -= DialogueFinished; // Отписываемся от предыдущего объекта
             }
 
@@ -46,13 +47,13 @@ public class ScenarioScript : MonoBehaviour
     }
 
     protected virtual void Awake()
-    {
+    {/*
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        _instance = this;
+        _instance = this;*/
 
         transformPlayer = player.GetComponent<Transform>();
         scriptPlayer = player.GetComponent<Player>();
@@ -60,13 +61,28 @@ public class ScenarioScript : MonoBehaviour
         cameraPlayer = GameObject.Find("CameraPlayer").GetComponent<Camera>();
 
         GameManager.Instance.onDialogueStarted += DialogueWasStarted;
+        scriptPlayer.onUnitWasKilled += UnitWasKilled;
     }
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
-    protected virtual void DialogueFinished(string nameDialogueWithFolder) { } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
-    protected virtual void UnitWasKilled(Unit unit) { }
-    protected virtual void TimerFinished(string markerTimeWait) { }
+    protected virtual void DialogueFinished(string nameDialogueWithFolder) { ScriptCurrentDialogue = null; } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
+    protected virtual void UnitWasKilled(Unit unit)
+    {
+        if (unit.nameOfUnit == C.DK.Player)
+        {
+            JustTimeWait(2, "timeAfterPlayerDeathBeforeAdvertisement");
+        }
+    }
+    protected virtual void TimerFinished(string markerTimeWait)
+    {
+        switch (markerTimeWait)
+        {
+            case "timeAfterPlayerDeathBeforeAdvertisement":
+                scriptPlayer.interstitialAds.ShowAd();
+                break;
+        }
+    }
     protected virtual void DialogueWasStarted(PlayerDialogue playerDialogue)
     {
         ScriptCurrentDialogue = playerDialogue;
@@ -225,6 +241,8 @@ public class ScenarioScript : MonoBehaviour
         _moveCameraCoroutine = null;
         _moveObjectCoroutine = null;
         _justTimeWaitCoroutine = null;
+        GameManager.Instance.onDialogueStarted -= DialogueWasStarted;
+        scriptPlayer.onUnitWasKilled -= UnitWasKilled;
     }
 
 

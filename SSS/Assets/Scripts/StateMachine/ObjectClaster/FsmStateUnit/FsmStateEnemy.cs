@@ -12,11 +12,11 @@ public class FsmStateEnemy : FsmStateUnit
 
     private float rotationThreshold = 1.0f; // Допустимое отклонение от целевого угла
     private Vector3 baseUpOffsetForStartPointFindingPath = new Vector3 (0, 0.5f, 0); // дополгнительное "поднимание вверх" конечной и стартовой точки для поиска пути (чтоб был запас по отрицательному
-                                                               // углу при детекции провалов
+                                                                                     // углу при детекции провалов
     private Coroutine constraintTimeFlipXCoroutine;
     private bool canFlipByTimeDeley;
 
-    protected readonly object _lock = new object();
+    protected readonly object _lock = new();
 
     public Fsm fsmEnemy;
     public Enemy enemy;
@@ -41,7 +41,7 @@ public class FsmStateEnemy : FsmStateUnit
     //Рассчитывает, отрисовывает путь. Меняет направление взгляда персонажа, смещает все детекторы, двигает по оси х.
     public void CalculateDrawPathChangeDirectionAndMove()
     {
-        Debug.Log(path.corners.Length);
+        //Debug.Log(path.corners.Length);
         FixingFuckingBuggingRotation();
         if (constraintTimeFlipXCoroutine == null)
         {
@@ -53,6 +53,7 @@ public class FsmStateEnemy : FsmStateUnit
         if (Mathf.Abs(enemy.transform.position.x - enemy.currentTargetTransform.position.x) > 0.1f)
         {
             //Debug.Log("Emmm???1");
+            //Debug.Log(enemy.currentTargetTransform);
             enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.currentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
             //Debug.Log(path.corners.Length);
             //enemy.agent.destination = enemy.playerTransform.position;
@@ -110,7 +111,7 @@ public class FsmStateEnemy : FsmStateUnit
     // двигаем персонажа по пути
     void MoveTowardsTarget()
     {
-        //Debug.Log("Emmm???4");
+        Debug.Log("Emmm???4");
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
         //Debug.Log(direction);
         //Debug.Log(enemy.speed);

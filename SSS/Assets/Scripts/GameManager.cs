@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     private string _nameCurrentScene;
     private string _nameTargetScene;
-    private string _pathToFolderWithPrefubs = "Prefabs/DialogueWindowForPlayer";
+    private string _pathToFolderWithPrefubs = C.DK.PrefabDialogueWindowForPlayer;
     private GameObject _prefubPlayerDialogue;
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции

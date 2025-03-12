@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Unit
 {
 
     [SerializeField] private Player player;
-    [SerializeField] private CircleCollider2D selfEnemyCollider;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Transform playerTransform; // компонент Transform игрока (чтоб позицию его знать для навигации)
@@ -19,9 +19,14 @@ public class Enemy : Unit
     [NonSerialized] public Vector2 nextPointInPath; // Текущая целевая позиция (вторая точка в пути)
     [NonSerialized] public Transform currentTargetTransform; // Текущая целевая позиция (вторая точка в пути)
     [NonSerialized] public float arrivalThreshold = 0.1f; // Расстояние, при котором считаем, что достигли цели
+    [NonSerialized] public float callDownMeleeAttack; // Ссылка на скрипт детектора пола
     [NonSerialized] public int currentCornerIndex; // Индекс текущего угла в пути
     [NonSerialized] public bool isPathValid; // Флаг, указывающий, что путь валиден
+    [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
 
+
+    public CapsuleCollider2D selfEnemyCollider;
+    public FuckingBuggingRotationForBody fuck;
     public bool isInstancedByLevel = false; // Флаг, указывающий, что враг был заспавнен скриптом спавна на уроне, а не добавлен на сцену вручную
     public bool isGrounded = false; // Проверка, находится ли кубик на земле
     public TriggerArea triggerAreaScript; // Скрипт зоны для погони (триггер)
@@ -39,14 +44,13 @@ public class Enemy : Unit
 
 
 
-
     protected override void Awake()
     {
         base.Awake();
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM
         GameObject myObject = GameObject.Find("Player"); //Ищем объект с именем "Player" на сцене
         playerTransform = myObject.GetComponent<Transform>();
-        selfSprite = GetComponent<SpriteRenderer>();
+        selfSprite = fuck.gameObject.GetComponent<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
         lineRenderer = GetComponent<LineRenderer>(); // Получаем компонент LineRenderer
         rb = GetComponent<Rigidbody2D>();
@@ -74,6 +78,7 @@ public class Enemy : Unit
         _fsm.AddState(new FsmStateWalkEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateJumpEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateFallEnemy(_fsm, gameObject));
+        _fsm.AddState(new FsmStateDiedEnemy(_fsm, gameObject));
 
 
 
@@ -111,8 +116,9 @@ public class Enemy : Unit
         _fsm.FixedUpdate();
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();  
         attackAreaScript.isPlayerOrAlliesInAttackArea -= PlayerOrAlliesInAttackArea;
         triggerAreaScript.OnPlayerEnteredTriggerArea -= FollowPlayer;
     }
@@ -137,5 +143,11 @@ public class Enemy : Unit
         currentTargetTransform = playerTransform;
     }
 
+    public override void Die(Unit unitFromWhoWasGottenDamage = null)
+    {
+        base.Die(unitFromWhoWasGottenDamage);
+        _fsm.SetState<FsmStateDiedEnemy>();
+        //Destroy(gameObject); // Уничтожаем объект
+    }
 
 }

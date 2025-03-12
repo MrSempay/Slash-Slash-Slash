@@ -12,6 +12,7 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
     public override void Enter()
     {
         Debug.Log("Translating Equipment state [ENTER]");
+        player.animator.Play("PlayerIdle");
     }
 
     public override void Exit()

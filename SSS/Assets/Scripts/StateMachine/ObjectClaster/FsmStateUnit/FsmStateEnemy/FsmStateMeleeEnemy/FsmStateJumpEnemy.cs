@@ -1,4 +1,3 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class FsmStateJumpEnemy : FsmStateEnemy
@@ -15,6 +14,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
         enemy.rb.linearVelocity = new Vector2(enemy.rb.linearVelocity.x, 0);
         enemy.rb.AddForce(Vector2.up * enemy.jumpForce, ForceMode2D.Impulse);
         timeInJumpState = 0f;
+        enemy.animator.Play("EnemyJump");
     }
 
     public override void Exit()

@@ -7,12 +7,16 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Door : Unit
 {
-    private readonly Vector3 _startPositionOfEnterButton = new Vector3(-0.85f, 1.31f, 0);
+    private Vector3 _startPositionOfEnterButton;
 
     private bool _doorIsOpened;
     private Transform _transformEnterButton;
     
     [SerializeField] private AreaButtonEnter _scriptAreaEnterButton;
+
+
+    [SerializeField] public Sprite spriteDoorOpened;
+    [SerializeField] public Sprite spriteDoorClosed;
 
     public GameObject enterButton;
     public float health;
@@ -36,6 +40,13 @@ public class Door : Unit
     {
         nameOfUnit = "Door";
         base.Awake();
+
+        //Sprite spriteDoorOpened = Resources.LoadAll<Sprite>("Images/Door/TrsMain")[2];
+        //Sprite spriteDoorClosed = Resources.Load<Sprite>(C.DK.ImageDoorClosed);
+
+        selfSprite.sprite = spriteDoorOpened;
+
+        _startPositionOfEnterButton = enterButton.transform.localPosition;
 
         _scriptAreaEnterButton.onPlayerEnteredEnterButtonArea += SetActiveEnterButton;
 
@@ -64,6 +75,12 @@ public class Door : Unit
     public void OpenOrCloseDoor()
     {
         DoorIsOpened = !DoorIsOpened;
+    }
+
+    public override void Die(Unit unitFromWhoWasGottenDamage = null)
+    {
+        base.Die(unitFromWhoWasGottenDamage);
+        Destroy(gameObject);
     }
 
 }

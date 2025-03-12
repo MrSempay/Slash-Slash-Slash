@@ -26,6 +26,9 @@ public class C
         // пути для файлов/папок
         public const string FolderImagesForSpells = "Images/Spells/";
         public const string FolderImagesForAmmunition = "Images/Ammunition/";
+        public const string ImageDoorOpened = "Images/Door/DoorOpened";
+        public const string ImageDoorClosed = "Images/Door/DoorClosed";
+        public const string PrefabDialogueWindowForPlayer = "Prefabs/DialogueWindowForPlayer";
 
         // Категории предметов
         public const string Weapon = "Weapon";
@@ -72,6 +75,7 @@ public class C
 
         // Параметры юнитов
         public const string healthMax = "healthMax";
+        public const string callDownMeleeAttack = "callDownMeleeAttack";
         public const string timeRecoverStaminaPoint = "timeRecoverStaminaPoint";
         public const string timeZeroizeKillComboTicks = "timeZeroizeKillComboTicks";
         public const string staminaMax = "staminaMax";
@@ -94,6 +98,7 @@ public class C
     public static class NameScene
     {
         public const string SceneDialogue = "SceneDialogue";
+        public const string Level1 = "Level1";
         public const string SampleScene = "SampleScene";
         public const string MainMenu = "MainMenu";
     }

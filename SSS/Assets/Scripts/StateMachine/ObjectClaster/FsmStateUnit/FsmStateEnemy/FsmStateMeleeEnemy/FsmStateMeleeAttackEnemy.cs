@@ -3,6 +3,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 {
@@ -18,6 +19,8 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
         Debug.Log("Melee attack state [ENTER]");
         attackUnitByTimeCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, AttackUnitByTime());
         enemy.rb.linearVelocityX = 0;
+        enemy.animator.Play("MeleeEnemyAttack");
+
     }
 
     public override void Exit()
@@ -35,16 +38,18 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
     {
         while (true)
         {
-            //Debug.Log("WeAre HERE");
+            //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
+            //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+            yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
             List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
-            //lock (_lock)
+                                                            //lock (_lock)
             {
                 //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
                 for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
                 {
                     if (i < enemy.listOfUnitsInAttackArea.Count)
                     {
-                        if (enemy.listOfUnitsInAttackArea[i]) enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage);
+                        if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage); }
                         else unitsToRemove.Add(enemy.listOfUnitsInAttackArea[i]); // Добавляем в список на удаление
                     }
                 }
@@ -55,10 +60,16 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
                     enemy.listOfUnitsInAttackArea.Remove(unitToRemove);
                 }
             }
-            
             if (enemy.listOfUnitsInAttackArea.Count == 0) fsmEnemy.SetState<FsmStateWalkEnemy>();
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
         }
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
+        attackUnitByTimeCoroutine = null;
     }
 }

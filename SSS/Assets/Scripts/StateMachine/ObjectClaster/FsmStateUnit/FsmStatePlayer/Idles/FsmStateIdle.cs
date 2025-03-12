@@ -13,6 +13,7 @@ public class FsmStateIdle : FsmStatePlayer
     {
         Debug.Log("Idle state [ENTER]");
         player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
+        player.animator.Play("PlayerIdle");
     }
 
     public override void Exit()
@@ -34,6 +35,7 @@ public class FsmStateIdle : FsmStatePlayer
 
     public override void OnDestroy()
     {
+        base.OnDestroy();
         OnSwipeEnded -= SetStateWalk;
     }
 }

@@ -127,6 +127,7 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
 -define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
+-define:LEVELPLAY_DEPENDENCIES_INSTALLED
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.37f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
@@ -444,11 +445,17 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VisualScripting.State.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VisualStudio.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.37f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.37f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.37f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/Move_Player.cs"
+"Assets/Scripts/AdvertisingIntegration/AdsInitializer.cs"
+"Assets/Scripts/AdvertisingIntegration/BannerAds.cs"
+"Assets/Scripts/AdvertisingIntegration/InterstitialAds.cs"
+"Assets/Scripts/AdvertisingIntegration/RewardedAds.cs"
 "Assets/Scripts/Building.cs"
 "Assets/Scripts/Building/School.cs"
 "Assets/Scripts/Building/Treasury.cs"
@@ -467,6 +474,7 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/GLOBAL/AdjustBuildingParameters.cs"
 "Assets/Scripts/GLOBAL/AdjustEquipmentParameters.cs"
+"Assets/Scripts/GLOBAL/AdjustLevelParameters.cs"
 "Assets/Scripts/GLOBAL/AdjustUnitParameters.cs"
 "Assets/Scripts/GLOBAL/C.cs"
 "Assets/Scripts/GLOBAL/StaticClassForAdditionalFunctions.cs"
@@ -493,6 +501,7 @@
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/Door/FsmStateDoorOpened.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateDoor.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateEnemy.cs"
+"Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateEnemy/FsmStateMeleeEnemy/FsmStateDiedEnemy.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateEnemy/FsmStateMeleeEnemy/FsmStateFallEnemy.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateEnemy/FsmStateMeleeEnemy/FsmStateIdleEnemy.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStateEnemy/FsmStateMeleeEnemy/FsmStateJumpEnemy.cs"
@@ -503,6 +512,7 @@
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/FsmStateMovementPlayer/FsmStateFall.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/FsmStateMovementPlayer/FsmStateJump.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/FsmStateMovementPlayer/FsmStateWalk.cs"
+"Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/Idles/FsmStateDied.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/Idles/FsmStateIdle.cs"
 "Assets/Scripts/StateMachine/ObjectClaster/FsmStateUnit/FsmStatePlayer/Idles/FsmStateTranslatingEquipment.cs"
 "Assets/Scripts/TestingFallZone.cs"
@@ -519,6 +529,7 @@
 "Assets/Scripts/Unit/Enemy.cs"
 "Assets/Scripts/Unit/Enemy/AreaDetectors/PitDetector.cs"
 "Assets/Scripts/Unit/Enemy/AreaDetectors/TriggerArea.cs"
+"Assets/Scripts/Unit/Enemy/FuckingBuggingRotationForBody.cs"
 "Assets/Scripts/Unit/Enemy/MeleeEnemy.cs"
 "Assets/Scripts/Unit/Player.cs"
 "Assets/Scripts/Unit/Player/AreaDetectors/AttackAreaPlayer.cs"

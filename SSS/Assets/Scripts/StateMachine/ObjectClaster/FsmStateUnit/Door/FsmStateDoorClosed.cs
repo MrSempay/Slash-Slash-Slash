@@ -11,6 +11,7 @@ public class FsmStateDoorClosed : FsmStateDoor
     {
         Debug.Log("Closed state [ENTER]");
         door.selfCollider.enabled = true;
+        door.selfSprite.sprite = door.spriteDoorClosed;
 
     }
 

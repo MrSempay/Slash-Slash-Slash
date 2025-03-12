@@ -23,6 +23,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
         Debug.Log("Walk state [ENTER]");
         enemy.currentCornerIndex = 1; // Начинаем со второй точки (индекс 1)
         enemy.isPathValid = false; // Сбрасываем флаг валидности пути при входе
+        enemy.animator.Play("EnemyWalk");
     }
 
     public override void Exit()

@@ -151,6 +151,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -160,10 +173,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -180,12 +193,12 @@ TextureImporter:
       name: Knight_atack_1
       rect:
         serializedVersion: 2
-        x: 288
+        x: 128
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -202,12 +215,12 @@ TextureImporter:
       name: Knight_atack_2
       rect:
         serializedVersion: 2
-        x: 576
+        x: 256
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -224,12 +237,12 @@ TextureImporter:
       name: Knight_atack_3
       rect:
         serializedVersion: 2
-        x: 864
+        x: 384
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -246,12 +259,12 @@ TextureImporter:
       name: Knight_atack_4
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 512
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -268,12 +281,12 @@ TextureImporter:
       name: Knight_atack_5
       rect:
         serializedVersion: 2
-        x: 1440
+        x: 640
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -290,12 +303,12 @@ TextureImporter:
       name: Knight_atack_6
       rect:
         serializedVersion: 2
-        x: 1728
+        x: 768
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -312,12 +325,12 @@ TextureImporter:
       name: Knight_atack_7
       rect:
         serializedVersion: 2
-        x: 2016
+        x: 896
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -334,12 +347,12 @@ TextureImporter:
       name: Knight_atack_8
       rect:
         serializedVersion: 2
-        x: 2304
+        x: 1024
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -356,12 +369,12 @@ TextureImporter:
       name: Knight_atack_10
       rect:
         serializedVersion: 2
-        x: 2880
+        x: 1280
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -378,12 +391,12 @@ TextureImporter:
       name: Knight_atack_9
       rect:
         serializedVersion: 2
-        x: 2592
+        x: 1152
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -400,12 +413,12 @@ TextureImporter:
       name: Knight_atack_11
       rect:
         serializedVersion: 2
-        x: 3168
+        x: 1408
         y: 0
-        width: 288
-        height: 128
+        width: 128
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -436,11 +449,6 @@ TextureImporter:
       Knight_atack_1: -1030361304404809134
       Knight_atack_10: 8071311777777558201
       Knight_atack_11: -4933763436506512498
-      Knight_atack_12: -3547006905854083458
-      Knight_atack_13: 7694503269066388590
-      Knight_atack_14: -6931394762954451736
-      Knight_atack_15: 164627747
-      Knight_atack_16: -556700544
       Knight_atack_2: -3787742483707413686
       Knight_atack_3: 3154108456949594810
       Knight_atack_4: 887788747633879970

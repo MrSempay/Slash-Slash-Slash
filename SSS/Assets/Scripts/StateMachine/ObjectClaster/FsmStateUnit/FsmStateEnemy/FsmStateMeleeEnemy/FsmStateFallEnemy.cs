@@ -11,20 +11,22 @@ public class FsmStateFallEnemy : FsmStateEnemy
     public FsmStateFallEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
         // Здесь у нас то, что определяется единожды при создании объекта состояния
+        enemy.fuck.onEnemyLandingAnimationFinished += SetStateIdleOrWalk;
 
-        
+
     }
 
     public override void Enter()
     {
         Debug.Log("Fall state [ENTER]");
         Reset();
-        // animator.Play("fall");
+        enemy.animator.Play("EnemyFall");
     }
 
     public override void Exit()
     {
         Debug.Log("Fall state [EXIT]");
+        // animator.Play("fall");
     }
 
     public override void Update()
@@ -44,12 +46,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
         CalculateDrawPathChangeDirectionAndMove();
         if (GetFloor(onFloor))
         {
-            if (enemy.currentTargetTransform != null)
-            {
-                fsm.SetState<FsmStateWalkEnemy>();
-                return;
-            }
-            fsm.SetState<FsmStateIdleEnemy>();
+            enemy.animator.Play("EnemyLanding");
         }
 
     }
@@ -59,6 +56,21 @@ public class FsmStateFallEnemy : FsmStateEnemy
         timeElapsed = 0f;
     }
 
+    private void SetStateIdleOrWalk()
+    {
+        if (enemy.currentTargetTransform != null)
+        {
+            fsm.SetState<FsmStateWalkEnemy>();
+            return;
+        }
+        fsm.SetState<FsmStateIdleEnemy>();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        enemy.fuck.onEnemyLandingAnimationFinished -= SetStateIdleOrWalk;
+    }
 
 
 }

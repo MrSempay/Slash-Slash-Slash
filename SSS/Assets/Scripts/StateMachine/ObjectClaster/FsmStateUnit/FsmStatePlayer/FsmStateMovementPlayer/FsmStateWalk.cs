@@ -14,7 +14,9 @@ public class FsmStateWalk : FsmStateMovementPlayer
     {
         Debug.Log("Walk state [ENTER]");
         HandleSwipe(player.endTouchPosition - player.startTouchPosition); // по идее любой вход в данное состояние подразумевает, что свайп был сделан в состоянии покоя и мы
-        // далее работает с полями объекта, которые уже были изменены в ходе этого свайпа. Далее в FixedUpdate мы мониторим факт дальнеших свайпов
+                                                                          // далее работает с полями объекта, которые уже были изменены в ходе этого свайпа. Далее в FixedUpdate
+                                                                          // мы мониторим факт дальнеших свайпов
+        player.animator.Play("PlayerAttack");
     }
 
     public override void Exit()

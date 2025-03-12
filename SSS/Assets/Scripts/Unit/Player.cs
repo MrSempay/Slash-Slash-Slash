@@ -22,14 +22,15 @@ public class Player : Unit
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
     [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
     [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
+    [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
 
-    public readonly Vector3 localPositionCamera = new Vector3(0.26f, 1.31f, -10f); // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
-
+    public InterstitialAds interstitialAds;
     public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; // 
 
+    public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
@@ -147,6 +148,7 @@ public class Player : Unit
         CurrentStamina = staminaMax;
         rb = GetComponent<Rigidbody2D>();
         selfSprite = GetComponent<SpriteRenderer>();
+        localPositionCamera = mainCamera.gameObject.GetComponent<Transform>().localPosition;
 
         foreach (RectTransform spellTransform in spellPanelTransform)
         {
@@ -158,6 +160,7 @@ public class Player : Unit
         _fsm.AddState(new FsmStateWalk(_fsm, gameObject));
         _fsm.AddState(new FsmStateJump(_fsm, gameObject));
         _fsm.AddState(new FsmStateFall(_fsm, gameObject));
+        _fsm.AddState(new FsmStateDied(_fsm, gameObject));
         _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
 
 
@@ -263,10 +266,17 @@ public class Player : Unit
             newStaminaPoint.GetComponent<RectTransform>().SetParent(_rectTransformStaminaBar, false);
         }
     }
-
-    private void OnDestroy()
+    public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
+        base.Die(unitFromWhoWasGottenDamage);
+        _fsm.SetState<FsmStateDied>();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);
     }
+
 
 }

@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7862149607927531624, guid: 1d53b45a175ecc34c8f66555db6c3360, type: 3}
+  m_Sprite: {fileID: 8586885197115800619, guid: 8bfa7db3eb83bfc4e94763db582f5621, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.21, y: -1.68}
+  m_AnchoredPosition: {x: -4.06, y: -1.57}
   m_SizeDelta: {x: 1.77, y: 0.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8963612925418201115
@@ -320,8 +320,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1640075186043350927}
-  - {fileID: 2415465445586548487}
   - {fileID: 2058516277688071411}
+  - {fileID: 2415465445586548487}
   - {fileID: 7317240196801800348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -351,7 +351,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 25
   m_TargetDisplay: 0
 --- !u!114 &2515733358695136109
 MonoBehaviour:
