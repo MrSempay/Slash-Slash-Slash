@@ -1,0 +1,54 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "New action map",
+            "id": "06d28933-3ed8-4360-bc20-d129c15dbbce",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "27338b6f-11ea-472f-a09d-415879fdb97e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UpClick",
+                    "type": "Button",
+                    "id": "0367dd87-cb26-482a-931e-bd3558bd375e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3632064a-9476-4f31-b13e-a7d2c785879e",
+                    "path": "<Sensor>/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b90e9459-d1f6-484b-af97-ff069ec49969",
+                    "path": "<Sensor>/{SecondaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

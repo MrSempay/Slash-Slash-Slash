@@ -59,10 +59,10 @@ public class PlaceForEquipment : MonoBehaviour
                     //Debug.Log(previousEquipment);
                     if (previousEquipment)
                     {
-                        Debug.Log("Shit Here?");
+                        //Debug.Log("Shit Here?");
                         if (!previousEquipment.isEquipmentASpell)
                         {
-                            Debug.Log("Shit Here?");
+                            //Debug.Log("Shit Here?");
                             Ammunition ammunition = (Ammunition)previousEquipment;
                             /*Dictionary<string, float> decreasingUnitParametersByAmmunition;
                             foreach (var increasedParameter in increasedParametersValuesByEquipmentInThisPlace)

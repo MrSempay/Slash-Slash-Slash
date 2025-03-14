@@ -18,6 +18,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
         Debug.Log("Equipment At Player state [ENTER]");
         equipment.BuildingWhereEquipmentIs = null; // по умолчанию будем считать, что мы снаряжение вытащили из здания. Менять этот параметр пока что будем в состоянии FsmStateEquipmentAtPlayer
         equipment.transform.localPosition = equipment.startLocalPosition;
+        equipment.selfSprite.sortingOrder = 21; // выше всех UI-элементов, кроме диалога, по идее
         if (!equipment.WasSold) // не устанавливаем WasSold в true, если снаряжение уже у нас типа в инвентаре
         {
             equipment.WasSold = true;
@@ -42,6 +43,31 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
             equipment.BuildingWhereEquipmentIs.equipmentInBuilding.Add(equipment);
             fsm.SetState<FsmStateEquipmentInsideShop>();
         }
+
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
+                    _coroutineDeleyBeforeSelectedState = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeSelectedState());
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                // где бы мы не отпустили кнопку, если мы всё ещё не выделили наше снаряжение, отменяем попытку выделения его.
+                CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
+                _coroutineDeleyBeforeSelectedState = null;
+                if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
+                {
+                    if (equipment.isEquipmentASpell) // у любого снаряжения есть флаг, является ли это снаряжение спелом или аммуницией. Если спел, то вызываем функцию по касту спела
+                        AdjustEquipmentParameters.CallSpellByName((Spell)equipment);
+                }
+            }
+            return;
+        }
+
 
         if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
         {

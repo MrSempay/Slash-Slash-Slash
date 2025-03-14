@@ -80,6 +80,7 @@ public class Door : Unit
     public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
         base.Die(unitFromWhoWasGottenDamage);
+
         Destroy(gameObject);
     }
 

@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\AttackArea.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Assets\Scripts\Unit\Player\AreaDetectors\AttackAreaPlayer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorOpened.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueArea.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad\DataWrapperUnit.cs" />
     <Compile Include="Assets\Scripts\CoroutineManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Player.cs" />

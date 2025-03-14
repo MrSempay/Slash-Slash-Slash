@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackAreaEnemy : MonoBehaviour
+public class AttackArea : MonoBehaviour
 {
     public delegate void UnitEnterAttackArea(bool isUnitInArea, Unit unit); // шаблон функции
     public event UnitEnterAttackArea isPlayerOrAlliesInAttackArea;         // экземляр(?) функции/сигнала(?)
@@ -27,7 +27,7 @@ public class AttackAreaEnemy : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         // подписываемся в FsmStateWalkEnemy
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) isPlayerOrAlliesInAttackArea?.Invoke(false, other.gameObject.GetComponent<Unit>());
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) { isPlayerOrAlliesInAttackArea?.Invoke(false, other.gameObject.GetComponent<Unit>()); Debug.Log("IBOOOOOOOOOOOOO;;;");  }
         // на данный момент подписаны в FsmStateWalk
         if (other.gameObject.CompareTag("Enemy")) isEnemyInAttackArea?.Invoke(false, other.gameObject.GetComponentInParent<Unit>());
     }

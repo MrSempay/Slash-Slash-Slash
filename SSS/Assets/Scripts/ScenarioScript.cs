@@ -33,7 +33,6 @@ public class ScenarioScript : MonoBehaviour
         {
             if (_scriptCurrentDialogue != null) // Проверяем, что _scriptCurrentDialogue не null
             {
-                Debug.Log("JebmiyVRot");
                 _scriptCurrentDialogue.onDialogueWasFinished -= DialogueFinished; // Отписываемся от предыдущего объекта
             }
 

@@ -19,7 +19,7 @@ public class Enemy : Unit
     [NonSerialized] public Vector2 nextPointInPath; // Текущая целевая позиция (вторая точка в пути)
     [NonSerialized] public Transform currentTargetTransform; // Текущая целевая позиция (вторая точка в пути)
     [NonSerialized] public float arrivalThreshold = 0.1f; // Расстояние, при котором считаем, что достигли цели
-    [NonSerialized] public float callDownMeleeAttack; // Ссылка на скрипт детектора пола
+    [NonSerialized] public float callDownMeleeAttack;
     [NonSerialized] public int currentCornerIndex; // Индекс текущего угла в пути
     [NonSerialized] public bool isPathValid; // Флаг, указывающий, что путь валиден
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
@@ -28,15 +28,13 @@ public class Enemy : Unit
     public CapsuleCollider2D selfEnemyCollider;
     public FuckingBuggingRotationForBody fuck;
     public bool isInstancedByLevel = false; // Флаг, указывающий, что враг был заспавнен скриптом спавна на уроне, а не добавлен на сцену вручную
-    public bool isGrounded = false; // Проверка, находится ли кубик на земле
     public TriggerArea triggerAreaScript; // Скрипт зоны для погони (триггер)
     public PitDetector pitDetectorScript; // Скрипт зоны детекции ямок 
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public Transform pitDetectorTransform; // Компонент трансформ зоны для детекции ямок (далее при смене направления движения будем позицию менять (отзеркаливать)) 
     public Transform objForRotate;
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
-    public string typeOfEnemy; // Ссылка на скрипт детектора пола
-    public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
+    public AttackArea attackAreaScript; // Скрипт зоны для атаки
     public List<Unit> listOfUnitsInAttackArea = new List<Unit>();
 
 
@@ -48,12 +46,15 @@ public class Enemy : Unit
     {
         base.Awake();
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM
-        GameObject myObject = GameObject.Find("Player"); //Ищем объект с именем "Player" на сцене
-        playerTransform = myObject.GetComponent<Transform>();
+        GameObject playerObject = GameObject.Find("Player"); //Ищем объект с именем "Player" на сцене
+        if (playerObject) playerTransform = playerObject.GetComponent<Transform>();
         selfSprite = fuck.gameObject.GetComponent<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
         lineRenderer = GetComponent<LineRenderer>(); // Получаем компонент LineRenderer
         rb = GetComponent<Rigidbody2D>();
+
+        Transform transformParametersBars = fuck.transform.Find("ParametersBars");
+        if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;
 
         // блок ниже - убираем детекцию коллизий между коллайдером каждого экземпляра классов, наследуемых от Enemy и Player
         if (playerTransform != null)

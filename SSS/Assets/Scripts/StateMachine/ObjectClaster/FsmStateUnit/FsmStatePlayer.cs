@@ -32,14 +32,26 @@ public class FsmStatePlayer : FsmStateUnit
 
             if (touch.phase == TouchPhase.Began)
             {
-                player.startTouchPosition = touch.position;
+                player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
+                player.startTouchPosition.z = 0;
+                player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
             }
             else if (touch.phase == TouchPhase.Ended)
             {
-                Debug.Log("SHITTT???");
-                player.endTouchPosition = touch.position;
-                if (fsmPlayer.StateCurrent.GetType() == typeof(FsmStateWalk)) HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-                else fsmPlayer.SetState<FsmStateWalk>();
+                if (player.CurrentStamina > 0)
+                {
+                    player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
+                    player.endTouchPosition.z = 0;
+                    player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
+                    // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
+                    // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
+                    if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+                    {
+                        HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+
+                        player.CurrentStamina--;
+                    }
+                }
             }
         }
         // Для ПК (с использованием мыши)

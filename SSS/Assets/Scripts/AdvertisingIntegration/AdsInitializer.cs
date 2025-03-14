@@ -9,7 +9,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     [SerializeField] string androidGameID = "5812008";
     [SerializeField] string iOSGameID = "5812009";
-    [SerializeField] bool testMode = true;
+    [SerializeField] bool testMode = false;
     [SerializeField] private TextMeshProUGUI currentComboUI;
     private string gameID;
 

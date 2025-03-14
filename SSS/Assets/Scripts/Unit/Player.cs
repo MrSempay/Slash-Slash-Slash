@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 public class Player : Unit
 {
 
@@ -25,13 +27,12 @@ public class Player : Unit
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
 
     public InterstitialAds interstitialAds;
-    public AttackAreaEnemy attackAreaScript; // Скрипт зоны для атаки
+    public AttackArea attackAreaScript; // Скрипт зоны для атаки
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; // 
 
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
-    public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
     public float timeZeroizeKillComboTicks; // время для сбрасывания текущего комбо за убийства

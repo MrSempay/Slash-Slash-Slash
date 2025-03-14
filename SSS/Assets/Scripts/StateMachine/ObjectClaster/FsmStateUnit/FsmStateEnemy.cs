@@ -111,7 +111,7 @@ public class FsmStateEnemy : FsmStateUnit
     // двигаем персонажа по пути
     void MoveTowardsTarget()
     {
-        Debug.Log("Emmm???4");
+        //Debug.Log("Emmm???4");
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
         //Debug.Log(direction);
         //Debug.Log(enemy.speed);

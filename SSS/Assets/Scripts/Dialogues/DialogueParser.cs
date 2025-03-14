@@ -53,6 +53,22 @@ public class DialogueParser : MonoBehaviour
             FinishDialogue();
 
         }
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (_currentIndexDialogue < dialogueLines.Count)
+                {
+                    DisplayDialogue(_currentIndexDialogue);
+                    _currentIndexDialogue++;
+                    return;
+                }
+                FinishDialogue();
+            }
+
+        }
     }
 
     public void LoadAndParseDialogueAndShowFirstPhrase()

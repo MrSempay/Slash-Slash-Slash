@@ -27,8 +27,6 @@ public class Level1Scenario : ScenarioScript
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        Debug.Log(_transformPointSpawnFirstEnemy);
         _transformSchool = school.GetComponent<Transform>();
         _scriptSchool = school.GetComponent<School>();
 
@@ -70,12 +68,12 @@ public class Level1Scenario : ScenarioScript
         {
             case "waitTimeAfterFirstAmmunitionBue":
                 Debug.Log("Study was finished");
-                StartSpawnEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 }, 
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } });
+                StartSpawnEnemies(new Dictionary<Transform, int>() { { transformPlayer, 25 }, 
+                                                                     { _transformSchool, 25 },
+                                                                     { _transformTreasury, 25 } });
 
                 break;
-            case "123":
+            case "waitTimeAfterFirstEnemyKill":
                 MovingCameraPlayerToPoint(cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
                                                                                // MovingCameraPlayerToPoint и ждём 1 кадр)
                 TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
@@ -90,7 +88,7 @@ public class Level1Scenario : ScenarioScript
         if (unit == _scriptFirstEnemyForKill)
         {
             unit.onUnitWasKilled -= UnitWasKilled;
-            JustTimeWait(2f, "123");
+            JustTimeWait(2f, "waitTimeAfterFirstEnemyKill");
 
 
         }

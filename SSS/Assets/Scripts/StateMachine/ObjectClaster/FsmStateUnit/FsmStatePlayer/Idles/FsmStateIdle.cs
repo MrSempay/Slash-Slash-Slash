@@ -29,7 +29,7 @@ public class FsmStateIdle : FsmStatePlayer
 
     private void SetStateWalk()
     {
-        Debug.Log("Shit ibo");
+        //Debug.Log("Shit ibo");
         fsmPlayer.SetState<FsmStateWalk>();
     }
 

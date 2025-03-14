@@ -23,8 +23,10 @@ public abstract class Unit : MonoBehaviour
     public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
+    public bool isAlive = true; // Флаг, жив ли юнит
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
+    public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Fsm _fsm;
     public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
     public event Action<float> OnHealthChanged;       // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
@@ -63,7 +65,8 @@ public abstract class Unit : MonoBehaviour
         CurrentHealth = healthMax;
         _fsm = new Fsm();
 
-        parametersBars = GameObject.Find("ParametersBars");
+        Transform transformParametersBars = transform.Find("ParametersBars");
+        if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;
 
         selfSprite = GetComponent<SpriteRenderer>();
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
@@ -83,30 +86,36 @@ public abstract class Unit : MonoBehaviour
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
     public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
     {
-        CurrentHealth -= damageSize; // Уменьшаем здоровье
-
-        if (CurrentHealth <= 0)
+        if (isAlive)
         {
-            Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
+            CurrentHealth -= damageSize; // Уменьшаем здоровье
+
+            if (CurrentHealth <= 0)
+            {
+                Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
+            }
         }
     }
 
     // по идее надо изменить на private, но оставим так для мгновенной смерти из спела SomeSpell1
     public virtual void Die(Unit unitFromWhoWasGottenDamage = null)
     {
-        Debug.Log(gameObject.name + " уничтожен!");
-        if (unitFromWhoWasGottenDamage)
+        if (isAlive)
         {
-            if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
-                                                                            // с помощью какого-нибудь интерфейса
+            Debug.Log(gameObject.name + " уничтожен!");
+            if (unitFromWhoWasGottenDamage)
             {
-                unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(experienceFromKill, moneyFromKill);
+                if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
+                                                                                // с помощью какого-нибудь интерфейса
+                {
+                    unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(experienceFromKill, moneyFromKill);
+                }
             }
+            CurrentHealth = 0;
+            parametersBars.SetActive(false); // при смерте отключает все полоски здоровья/стамины прочего
+            onUnitWasKilled?.Invoke(this);
+            //Destroy(gameObject); // Уничтожаем объект
         }
-        CurrentHealth = 0;
-        parametersBars.SetActive(false); // при смерте отключает все полоски здоровья/стамины прочего
-        onUnitWasKilled?.Invoke(this);
-        //Destroy(gameObject); // Уничтожаем объект
     }
 
 
@@ -246,9 +255,9 @@ public abstract class Unit : MonoBehaviour
         PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
         FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
 
-        Debug.Log(nameOfCurrentProperty);
-        Debug.Log(currentPropertyInfo);
-        Debug.Log(currentPropertyInfo.CanWrite);
+        //Debug.Log(nameOfCurrentProperty);
+        //Debug.Log(currentPropertyInfo);
+        //Debug.Log(currentPropertyInfo.CanWrite);
         if (currentPropertyInfo != null && currentPropertyInfo.CanWrite) //Убедимся, что свойство существует и доступно для записи
         {
             // Пытаемся преобразовать значение к типу свойства 
