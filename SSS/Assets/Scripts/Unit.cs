@@ -41,7 +41,7 @@ public abstract class Unit : MonoBehaviour
     public float moneyFromKill; // деньги за убийство юнита
     public float experienceFromKill; // опыт за убийство юнита
 
-    public float CurrentHealth
+    public virtual float CurrentHealth
     {
         get { return _healthCurrent; }
         set
@@ -198,20 +198,6 @@ public abstract class Unit : MonoBehaviour
                     double baseValueDouble = Convert.ToDouble(baseValueObject);
                     double parameterIncreasingDouble = Convert.ToDouble(parameterIncreasing);
 
-                    /*if (parameterName == "healthMax")
-                    {
-                        FieldInfo fieldInfoOfCurrentValue = type.GetField(parameterName);
-                        CurrentHealth = isIncreasing
-                            ? CurrentHealth + (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100))
-                            : CurrentHealth - (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100));
-                    }
-                    if (parameterName == "staminaMax")
-                    {
-                        CurrentHealth = isIncreasing
-                            ? CurrentHealth + (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100))
-                            : CurrentHealth - (baseValue * (CurrentHealth / healthMax) * (parameterIncreasing / 100));
-                    }*/
-
                     double increasedValue = isIncreasing
                         ? Convert.ToDouble(fieldInfo.GetValue(this)) + (baseValueDouble * (parameterIncreasingDouble / 100))
                         : Convert.ToDouble(fieldInfo.GetValue(this)) - (baseValueDouble * (parameterIncreasingDouble / 100));
@@ -222,8 +208,8 @@ public abstract class Unit : MonoBehaviour
 
                     fieldInfo.SetValue(this, convertedValue);
                     if (parameterName == C.DK.healthMax || parameterName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
-                                                                                       // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
-                                                                                       // текущее значение параметра
+                                                                                             // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
+                                                                                             // текущее значение параметра
                         AdjustCurrentParametersValues(parameterName, isIncreasing, parameterIncreasing, baseValueDouble);
                     // 5. Присваиваем значение полю
                 }

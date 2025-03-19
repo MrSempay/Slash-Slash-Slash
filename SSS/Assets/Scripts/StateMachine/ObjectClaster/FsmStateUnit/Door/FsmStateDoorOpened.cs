@@ -24,10 +24,6 @@ public class FsmStateDoorOpened : FsmStateDoor
     public override void Update()
     {
         base.Update();
-        if (door.health <= 0)
-        {
-            fsmDoor.SetState<FsmStateDoorDestroyed>();
-        }
     }
 
 }

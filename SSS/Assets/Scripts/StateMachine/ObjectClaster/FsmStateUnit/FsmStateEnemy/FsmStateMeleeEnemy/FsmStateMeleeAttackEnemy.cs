@@ -7,69 +7,97 @@ using Unity.VisualScripting;
 
 public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 {
-    private Coroutine attackUnitByTimeCoroutine;
+    //private Coroutine attackUnitByTimeCoroutine;
 
     public FsmStateMeleeAttackEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += AttackUnit;
     }
 
 
     public override void Enter()
     {
         Debug.Log("Melee attack state [ENTER]");
-        attackUnitByTimeCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, AttackUnitByTime());
         enemy.rb.linearVelocityX = 0;
-        enemy.animator.Play("MeleeEnemyAttack");
+        enemy.animator.Play("MeleeEnemyAttack", -1, 0f);
+        //enemy.animator.Play("MeleeEnemyAttack"); Этот вариант какого-то чёрта не работает. Всегда нужно начинать анимацию атаки с времени 0f, иначе оно багается и переходит в Walk
+
+        //attackUnitByTimeCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, AttackUnitByTime());
 
     }
 
     public override void Exit()
     {
         Debug.Log("Melee attack state [EXIT]");
-        CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
-        attackUnitByTimeCoroutine = null;
+        //CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
+        //attackUnitByTimeCoroutine = null;
     }
 
     public override void Update()
     {
         base.Update();
     }
-    private IEnumerator AttackUnitByTime()
-    {
-        while (true)
-        {
-            //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
-            //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-            yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
-            List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
-                                                            //lock (_lock)
-            {
-                //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
-                for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
-                {
-                    if (i < enemy.listOfUnitsInAttackArea.Count)
-                    {
-                        if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage); }
-                        else unitsToRemove.Add(enemy.listOfUnitsInAttackArea[i]); // Добавляем в список на удаление
-                    }
-                }
+    //private IEnumerator AttackUnitByTime()
+    //{
+    //    while (true)
+    //    {
+    //        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 1.5);
+    //        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+    //        yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
+    //        List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
+    //                                                        //lock (_lock)
+    //        {
+    //            //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
+    //            for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
+    //            {
+    //                if (i < enemy.listOfUnitsInAttackArea.Count)
+    //                {
+    //                    if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage); }
+    //                    else unitsToRemove.Add(enemy.listOfUnitsInAttackArea[i]); // Добавляем в список на удаление
+    //                }
+    //            }
 
-                // Удаляем все юниты, которые нужно удалить, после завершения цикла
-                foreach (Unit unitToRemove in unitsToRemove)
+    //            // Удаляем все юниты, которые нужно удалить, после завершения цикла
+    //            foreach (Unit unitToRemove in unitsToRemove)
+    //            {
+    //                enemy.listOfUnitsInAttackArea.Remove(unitToRemove);
+    //            }
+    //        }
+    //        if (enemy.listOfUnitsInAttackArea.Count == 0) fsmEnemy.SetState<FsmStateWalkEnemy>();
+
+    //        yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
+    //    }
+    //}
+
+    private void AttackUnit()
+    {
+        List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
+                                                     //lock (_lock)
+        {
+            //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
+            for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
+            {
+                if (i < enemy.listOfUnitsInAttackArea.Count)
                 {
-                    enemy.listOfUnitsInAttackArea.Remove(unitToRemove);
+                    if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage); }
+                    else unitsToRemove.Add(enemy.listOfUnitsInAttackArea[i]); // Добавляем в список на удаление
                 }
             }
-            if (enemy.listOfUnitsInAttackArea.Count == 0) fsmEnemy.SetState<FsmStateWalkEnemy>();
 
-            yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
+            // Удаляем все юниты, которые нужно удалить, после завершения цикла
+            foreach (Unit unitToRemove in unitsToRemove)
+            {
+                enemy.listOfUnitsInAttackArea.Remove(unitToRemove);
+            }
         }
+        if (enemy.listOfUnitsInAttackArea.Count == 0) fsmEnemy.SetState<FsmStateWalkEnemy>();
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
-        CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
-        attackUnitByTimeCoroutine = null;
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= AttackUnit;
+        //CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
+        //attackUnitByTimeCoroutine = null;
     }
 }

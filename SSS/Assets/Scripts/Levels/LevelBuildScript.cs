@@ -91,9 +91,12 @@ public class LevelBuildScript : MonoBehaviour
                 spawnEnemyByTimerCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, SpawnEnemyByTimer());
             }
         }
+
     }
     void Start()
     {
+        //SettingsMenu.Instance.Awake();
+
 
     }
 

@@ -64,6 +64,9 @@
     <Compile Include="Assets\Scripts\DebugExtension.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustLevelParameters.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript.cs" />
+    <Compile Include="Assets\Scripts\UI\ToggleFixedOneWay.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\TransformIntPair.cs" />
     <Compile Include="Assets\Scripts\FsmState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer.cs" />
@@ -78,6 +81,8 @@
     <Compile Include="Assets\Scripts\GLOBAL\AdjustEquipmentParameters.cs" />
     <Compile Include="Assets\Scripts\TestingFallZone.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad\DataWrapperSettings.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IReadOnlyEventBus.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustBuildingParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateJump.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\UI\ToggleFixed.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
     <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript\Level1Scenario.cs" />
@@ -114,7 +120,6 @@
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="Assets\Scripts\Equipment\Spell.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
     <Compile Include="Assets\Scripts\Unit\Door.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IControlLifeCicleFunctions.cs" />
     <Compile Include="Assets\Scripts\Building\Treasury.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\PitDetector.cs" />
     <Compile Include="Assets\Scripts\Building\School.cs" />
@@ -143,6 +149,7 @@
     <Compile Include="Assets\Scripts\Equipment\Ammunition.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
+    <Compile Include="Assets\Scripts\EventBus.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuildScript.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringStringWeaponInfoDictionaryPair.cs" />

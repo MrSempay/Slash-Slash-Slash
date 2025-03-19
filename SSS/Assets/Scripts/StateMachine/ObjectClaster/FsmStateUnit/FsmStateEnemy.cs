@@ -160,7 +160,7 @@ public class FsmStateEnemy : FsmStateUnit
     // прыгаем. Вызывается либо если угол наклона прямой пути больше 45 градусов или была обнаружена яма (эмулируется сигнал из PitDetector)
     protected void Jump(bool jumpOfPit)
     {
-        if (enemy.isGrounded) { // Если мы на земле
+        if (enemy.isGrounded && enemy.isAlive) { // Если мы на земле и живы (какого-то чёрта срабатывает детектор провалов при отключении selfCollider после смерти)
             if (path.corners.Length > 1 && enemy.currentCornerIndex < path.corners.Length) { // вот на ровном месте оно почему-то тут выдаёт 0 иногда 0_0
                 //Debug.Log(enemy.currentCornerIndex - 1);
                 //Debug.Log(enemy.currentCornerIndex);

@@ -10,6 +10,9 @@ public class Player : Unit
     private Coroutine _zeroizeKillComboTicksCoroutine;
     private Coroutine _recoverStaminaPointCoroutine;
     private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
+    private bool _hasVibratedByFallHealth = false; // флаг, маркерующий, была ли сделана вибрация при пересечении порога ХП в 15%
+    private float _fractionCurrentHealthToVibrate = 0.15f; // порог здоровья, при пересечении которого начинаем вибрировать
+    private Transform _mainCameraTransform; // компонент Transform камеры игрока
 
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
     [SerializeField] private float _currentExperience = 0;
@@ -137,6 +140,23 @@ public class Player : Unit
             ChangeStaminaBar(_currentStamina);
         }
     }
+    public override float CurrentHealth
+    {
+        get { return base.CurrentHealth; }
+        set
+        {
+            base.CurrentHealth = value;
+            if (value / healthMax <= _fractionCurrentHealthToVibrate && !_hasVibratedByFallHealth)  // начинаем вибрировать в случае, если ХП меньше 15%
+            {
+                StaticClassForAdditionalFunctions.Vibrate();
+                _hasVibratedByFallHealth = true; // Устанавливаем флаг, чтобы не вибрировать снова
+            }
+            else if (value / healthMax > _fractionCurrentHealthToVibrate)
+            {
+                _hasVibratedByFallHealth = false; // Сбрасываем флаг, когда здоровье восстанавливается
+            }
+        }
+    }
 
 
 
@@ -149,7 +169,10 @@ public class Player : Unit
         CurrentStamina = staminaMax;
         rb = GetComponent<Rigidbody2D>();
         selfSprite = GetComponent<SpriteRenderer>();
-        localPositionCamera = mainCamera.gameObject.GetComponent<Transform>().localPosition;
+        _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();
+        EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
+
+        localPositionCamera = _mainCameraTransform.localPosition;
 
         foreach (RectTransform spellTransform in spellPanelTransform)
         {
@@ -178,6 +201,10 @@ public class Player : Unit
     {
         //Debug.Log(_fsm.StateCurrent);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
+    }
+    void asd(bool asd)
+    {
+     
     }
 
     private void FixedUpdate()
@@ -246,6 +273,18 @@ public class Player : Unit
         }
     } */
 
+    private void DoorDestroyedOrRepeired(bool isDoorDestroyed)
+    {
+        if (isDoorDestroyed) ShakeCamera(_mainCameraTransform, localPositionCamera);
+    }
+
+    public override void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
+    {
+        ShakeCamera(_mainCameraTransform, localPositionCamera);
+        base.GetDamage(damageSize, unitFromWhoWasGottenDamage);
+    }
+
+
     private void ChangeStaminaBar(int currentStamina)
     {
         if (_rectTransformStaminaBar.childCount != 0)
@@ -258,7 +297,7 @@ public class Player : Unit
             {
                 // Получаем дочерний объект
                 Transform child = _rectTransformStaminaBar.GetChild(i);
-                Destroy(child.gameObject); // Используем Destroy во время выполнения игры
+                Destroy(child.gameObject); // Используем Destroy во время выполнения игры 
             }
         }
         for (int i = 0; i < currentStamina; i++)
@@ -267,6 +306,41 @@ public class Player : Unit
             newStaminaPoint.GetComponent<RectTransform>().SetParent(_rectTransformStaminaBar, false);
         }
     }
+
+    public void ShakeCamera(Transform mainCameraTransform, Vector3 initialLocalPositionCamera)
+    {
+        StartCoroutine(ShakeCoroutine(mainCameraTransform, initialLocalPositionCamera));
+    }
+
+    IEnumerator ShakeCoroutine(Transform mainCameraTransform, Vector3 initialLocalPositionCamera)
+    {
+        float elapsed = 0.0f;
+
+
+        float shakeDuration = 0.7f; // Длительность тряски
+        float shakeMagnitude = 0.1f; // Интенсивность тряски
+        float dampingSpeed = 1.0f; // Скорость затухания
+
+        while (elapsed < shakeDuration)
+        {
+            // Генерируем случайное смещение в пределах сферы
+            float x = UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
+            float y = UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
+
+            mainCameraTransform.localPosition = initialLocalPositionCamera + new Vector3(x, y, 0);
+
+            elapsed += Time.deltaTime;
+
+            //Затухание: Уменьшаем величину тряски со временем
+            shakeMagnitude = Mathf.Lerp(shakeMagnitude, 0, elapsed / shakeDuration);
+            yield return null;
+        }
+
+        mainCameraTransform.localPosition = initialLocalPositionCamera; // Возвращаем камеру в исходную позицию
+    }
+
+
+
     public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
         base.Die(unitFromWhoWasGottenDamage);

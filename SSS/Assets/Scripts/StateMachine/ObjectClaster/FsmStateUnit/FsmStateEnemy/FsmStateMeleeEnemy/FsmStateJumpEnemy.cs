@@ -10,7 +10,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
 
     public override void Enter()
     {
-        Debug.Log("Walk state [ENTER]");
+        Debug.Log("Jump state [ENTER]");
         enemy.rb.linearVelocity = new Vector2(enemy.rb.linearVelocity.x, 0);
         enemy.rb.AddForce(Vector2.up * enemy.jumpForce, ForceMode2D.Impulse);
         timeInJumpState = 0f;

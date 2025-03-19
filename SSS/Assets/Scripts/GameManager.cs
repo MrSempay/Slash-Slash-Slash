@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public event DialogueStarted onDialogueStarted;         // экземляр(?) функции/сигнала(?)
 
     public string nameDialogueCurrent;
+    public DataWrapperSettings dataWrapperSettings = new(); // оболочка настроек для последующей загрузки сохранённых настроек. При каждом сохранении настроек перезаписываем
+                                                            // данное поле
+
 
     // при первом обращении к этому свойству (а более не к чему в начале) создастся экземпляр класса GlobalGameScript, запишется в _instance и вернёт ссылку на этот
     // экземпляр. При повторных обращениях будет возвращать ссылку на этот же экземпляр (у нас ибо static поле _instance, применится ко всему классу), static же для
@@ -25,7 +28,6 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            
             if (_instance == null)
             {
                 var obj = new GameObject("GameManager");
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+        SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
     }
 
     void Start()
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
         // так и для всех объектов. Если у объекта изменить слой у одного из дочерних элементов, будет происходить детекция коллизий коллайдеров и зон только для этого элемента
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
         _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
+        SaveLoadManager.Instance.LoadSettingsFromFile();
     }
 
     // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
@@ -89,5 +93,10 @@ public class GameManager : MonoBehaviour
         RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
         PlayerDialogue sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
+    }
+
+    public void PauseGame(bool setPause)
+    {
+        Time.timeScale = setPause ? 0 : 1;
     }
 }

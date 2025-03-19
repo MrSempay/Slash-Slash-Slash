@@ -155,7 +155,9 @@ MonoBehaviour:
   _healthBarFilling: {fileID: 7612582654860088110}
   animator: {fileID: 0}
   lookingRight: 1
+  isAlive: 1
   nameOfUnit: Door
+  isGrounded: 1
   healthMax: 0
   damageReduction: 0
   jumpForce: 0
@@ -167,7 +169,6 @@ MonoBehaviour:
   spriteDoorOpened: {fileID: 21300000, guid: 8e91706835f3cb74687dc1c627b51662, type: 2}
   spriteDoorClosed: {fileID: 21300000, guid: afd6eea7f22319d42b54d5150baa5c45, type: 2}
   enterButton: {fileID: 7831559167537317433}
-  health: 0
   selfCollider: {fileID: 0}
 --- !u!50 &951683522197569480
 Rigidbody2D:
@@ -262,7 +263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6620621745411573659, guid: 8bfa7db3eb83bfc4e94763db582f5621, type: 3}
+  m_Sprite: {fileID: 1080825480604336155, guid: 8bfa7db3eb83bfc4e94763db582f5621, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -437,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7376173356521336026
 RectTransform:
   m_ObjectHideFlags: 0

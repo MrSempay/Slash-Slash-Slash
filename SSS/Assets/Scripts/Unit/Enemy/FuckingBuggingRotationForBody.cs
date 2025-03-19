@@ -9,12 +9,19 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class FuckingBuggingRotationForBody : MonoBehaviour
 {
-    public event Action onEnemyLandingAnimationFinished;       // Событие для изменения количества прокачки в школе 
+    public event Action onEnemyLandingAnimationFinished;  // Событие для определения, закончилась ли анимация преземления в состоянии FsmStateFallEnemy
+    public event Action onAttackAnimationAtRightPointForGetDamage;  // Событие для определения, в нужном ли месте анимация атаки и требуется ли наносить урон.
 
     // Этот метод будет вызван Animation Event в конце анимации
     public void EnemyLandingAnimationFinished()
     {
-        onEnemyLandingAnimationFinished?.Invoke();
+        onEnemyLandingAnimationFinished?.Invoke(); // подписываемся, вроде, в объекте состояния FsmStateFallEnemy
         Debug.Log("EnemyLanding animation finished!");
+    }
+    // Этот метод будет вызван Animation Event в определённом месте анимации атаки, которое посчитали подходящим для нанесения урона.
+    public void AttackAnimationAtRightPointForGetDamage()
+    {
+        onAttackAnimationAtRightPointForGetDamage?.Invoke(); // подписываемся в состоянии FsmStateMeleeAttacklEnemy
+        Debug.Log("MeleeEnemyAttack animation at right point!");
     }
 }

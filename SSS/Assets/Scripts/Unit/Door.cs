@@ -19,8 +19,21 @@ public class Door : Unit
     [SerializeField] public Sprite spriteDoorClosed;
 
     public GameObject enterButton;
-    public float health;
-    public BoxCollider2D selfCollider; 
+    public BoxCollider2D selfCollider;
+
+
+    public override float CurrentHealth
+    {
+        get { return base.CurrentHealth; }
+        set
+        {
+            base.CurrentHealth = value;
+            if (value <= 0)
+            {
+                _fsm.SetState<FsmStateDoorDestroyed>();
+            }
+        }
+    }
 
     public bool DoorIsOpened
     {

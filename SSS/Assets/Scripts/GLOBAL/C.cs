@@ -28,7 +28,8 @@ public class C
         public const string FolderImagesForAmmunition = "Images/Ammunition/";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefabDialogueWindowForPlayer = "Prefabs/DialogueWindowForPlayer";
+        public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
+        public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
 
         // Категории предметов
         public const string Weapon = "Weapon";
