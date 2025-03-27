@@ -12,12 +12,12 @@
         },
         {
             "selfName": "Russian",
-            "IsToggled": true,
+            "IsToggled": false,
             "currentLanguage": 0
         },
         {
             "selfName": "English",
-            "IsToggled": false,
+            "IsToggled": true,
             "currentLanguage": 0
         },
         {
@@ -47,34 +47,34 @@
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
-            "IsToggled": false,
+            "IsToggled": true,
             "currentLanguage": 0
         },
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
-            "IsToggled": true,
+            "IsToggled": false,
             "currentLanguage": 0
         }
     ],
     "allSlidersData": [
         {
-            "selfName": "",
-            "CurrentValue": 0.0
+            "selfName": "ParameterVolumMusic",
+            "CurrentValue": 0.5095533728599548
         },
         {
-            "selfName": "",
-            "CurrentValue": 0.0
+            "selfName": "ParameterVolumEffects",
+            "CurrentValue": 0.5479496717453003
         },
         {
-            "selfName": "",
-            "CurrentValue": 0.0
+            "selfName": "ParameterBrightness",
+            "CurrentValue": 0.5482114553451538
         }
     ],
     "allChoseListsData": [
         {
-            "selfName": "",
-            "CurrentTextValue": "",
-            "_indexCurrentString": 0
+            "selfName": "ParameterOrientation",
+            "CurrentTextValue": "Horizontal",
+            "_indexCurrentString": 1
         }
     ]
 }
