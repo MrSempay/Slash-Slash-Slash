@@ -96,7 +96,6 @@ public class LevelBuildScript : MonoBehaviour
     void Start()
     {
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
-        Debug.Log(GameObject.Find("SettingsMenu"));
         allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
         SaveLoadManager.Instance.ImplementStoredSettings(); // чтоб настройки применялись при загрузке сцены сразу, а не после открытия меню настроек
     }
