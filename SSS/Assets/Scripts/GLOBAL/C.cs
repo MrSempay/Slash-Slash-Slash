@@ -30,6 +30,7 @@ public class C
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
+        public const string IboPostProcessProfile = "IboPostProcessProfile";
 
         // Категории предметов
         public const string Weapon = "Weapon";
@@ -94,6 +95,24 @@ public class C
         public const string CurrentMoney = "CurrentMoney"; // Это исключение, так как строка начинается с заглавной
         public const string som = "som";
 
+        // названия настроек
+
+        public const string ParameterOrientation = "ParameterOrientation";
+
+        // параметры настроек
+
+        public const string listChosing = "listChosing";
+
+    }
+
+    // строковые значения полей
+
+    public static class Values
+    {
+        // значения настроек
+
+        public const string orientationHorizontal = "Horizontal";
+        public const string orientationVertical = "Vertical";
     }
 
     public static class NameScene
@@ -102,5 +121,10 @@ public class C
         public const string Level1 = "Level1";
         public const string SampleScene = "SampleScene";
         public const string MainMenu = "MainMenu";
+    }
+    public static class Prefixes
+    {
+        public const string PrefixTrigger = "Trigger";
+
     }
 }

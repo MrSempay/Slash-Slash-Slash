@@ -34,6 +34,7 @@ public class Player : Unit
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; // 
+    [SerializeField] public text texxt; //   
 
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
@@ -163,7 +164,7 @@ public class Player : Unit
     protected override void Awake()
     {
 
-        // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM
+        // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM 
         nameOfUnit = "Player";
         base.Awake();
         CurrentStamina = staminaMax;
@@ -173,7 +174,6 @@ public class Player : Unit
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
 
         localPositionCamera = _mainCameraTransform.localPosition;
-
         foreach (RectTransform spellTransform in spellPanelTransform)
         {
 
@@ -191,6 +191,7 @@ public class Player : Unit
     }
     protected override void Start()
     {
+        texxt.Text = "Greeting";
         base.Start();
         _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
         _fsm.SetState<FsmStateIdle>();
@@ -199,7 +200,7 @@ public class Player : Unit
 
     void Update()
     {
-        //Debug.Log(_fsm.StateCurrent);
+        //Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
     }
     void asd(bool asd)

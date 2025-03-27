@@ -1,40 +1,80 @@
 {
     "allTogglesData": [
         {
-            "nameToggle": "",
-            "IsToggled": false
+            "selfName": "ToggleParameterCameraShaking",
+            "IsToggled": true,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "ToggleParameterVibration",
+            "IsToggled": true,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "Russian",
+            "IsToggled": true,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "English",
+            "IsToggled": false,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "Spanish",
+            "IsToggled": false,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "ToggleOneWayText (3)",
+            "IsToggled": false,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": true
+            "selfName": "ToggleOneWayText (4)",
+            "IsToggled": false,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": false
+            "selfName": "ToggleGameOfSettingsMenu",
+            "IsToggled": false,
+            "currentLanguage": 0
         },
         {
-            "nameToggle": "",
-            "IsToggled": false
+            "selfName": "ToggleSonicOfSettingsMenu",
+            "IsToggled": false,
+            "currentLanguage": 0
+        },
+        {
+            "selfName": "ToggleVideoOfSettingsMenu",
+            "IsToggled": false,
+            "currentLanguage": 0
+        },
+        {
+            "selfName": "ToggleLanguageOfSettingsMenu",
+            "IsToggled": true,
+            "currentLanguage": 0
+        }
+    ],
+    "allSlidersData": [
+        {
+            "selfName": "",
+            "CurrentValue": 0.0
+        },
+        {
+            "selfName": "",
+            "CurrentValue": 0.0
+        },
+        {
+            "selfName": "",
+            "CurrentValue": 0.0
+        }
+    ],
+    "allChoseListsData": [
+        {
+            "selfName": "",
+            "CurrentTextValue": "",
+            "_indexCurrentString": 0
         }
     ]
 }

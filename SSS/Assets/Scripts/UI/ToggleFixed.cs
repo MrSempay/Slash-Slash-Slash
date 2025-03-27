@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class ToggleFixed : MonoBehaviour, IControlLifeCicleFunctions
+using static StaticClassForAdditionalFunctions;
+public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
 {
     private bool _isToggled = false;
     private string _nameInvokingFunction;
@@ -12,8 +12,9 @@ public class ToggleFixed : MonoBehaviour, IControlLifeCicleFunctions
 
     [SerializeField] private Color _colorToggledSprite;
     [SerializeField] private bool _shouldBeToggledAtStart = false;
-    [SerializeField] private bool _justCheckMark = false;
-    
+    [SerializeField] private bool _justCheckMark = false; // влияет тупо на изображение нашего тумблера. Если установлено в true, то это будет просто галка
+
+    public string selfName;
     public bool awakeWasCalledAlready { get; set; }
     public bool IsToggled
     {   get { return _isToggled; }
@@ -23,17 +24,33 @@ public class ToggleFixed : MonoBehaviour, IControlLifeCicleFunctions
             ControllVisualizationToggle(_isToggled);
 
             object[] parameters = new object[] { value, (RectTransform)transform };
-            StaticClassForAdditionalFunctions.CallFunctionByName(_nameInvokingFunction, EventBus.Instance, parameters); // вызываем функцию по имени, эмулирующую сигнал в шине событий
+            if (value)
+            {
+                if (this.GetType() == typeof(ToggleFixedOneWay)) // если это тумблер для вжатия в одну сторону, то мы проверяем, не находится ли он в группе тумблеров,
+                                                                 // где одновременно вжат может быть только один
+                {
+                    TogglesGroup toggleGroup = transform.parent.gameObject.GetComponent<TogglesGroup>();
+                    if (toggleGroup != null) // если это так (родительский элемент олицетворяет группу тумблеров, где вжат может быть только один)
+                    {
+                        toggleGroup.Awake(); // чтоб группа тумблеров была точно инициализированна, ибо обращаемся мы к ней часто из Awake одного из подотчётных тумблеров
+                        toggleGroup.ControllOnlyOneToggledToggle((ToggleFixedOneWay)this); // контролируем вжатие только текущего тумблера. Остальные отожмутся 
+                        toggleGroup.InvokeGroupFunction(this); // там уже мы вызываем функцию (эмулируем сигнал) для группы тумблеров, если такая функция есть
+
+                    }
+                }
+            }
+            CallFunctionByName(_nameInvokingFunction, EventBus.Instance, parameters); // вызываем функцию по имени, эмулирующую сигнал в шине событий 
         }
     }
     public void Awake()
     {
+        Debug.Log(_shouldBeToggledAtStart);
+        Debug.Log(gameObject.name);
         if (!awakeWasCalledAlready) {
-
+            selfName = name;
             awakeWasCalledAlready = true;
 
             _selfSprite = GetComponent<Image>();
-            Debug.Log(gameObject.name);
 
             if (_justCheckMark)
             {
@@ -51,7 +68,6 @@ public class ToggleFixed : MonoBehaviour, IControlLifeCicleFunctions
             _nameInvokingFunction = "Trigger" + name;
 
 
-            Debug.Log(_nameInvokingFunction);
             if (_shouldBeToggledAtStart) // пусть всегда в самом начале тумблер, если он должен быть нажат, вызывает привязанный к нему метод. Если кнопка не должна быть прожата
             {                            // в начале, то просто ничего не делаем
                 IsToggled = true;

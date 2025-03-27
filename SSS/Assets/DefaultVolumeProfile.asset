@@ -266,7 +266,7 @@ MonoBehaviour:
     m_Value: 100
   redOutGreenIn:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -2
   redOutBlueIn:
     m_OverrideState: 1
     m_Value: 0
@@ -524,10 +524,10 @@ MonoBehaviour:
     m_Value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.02816902}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.014084507}
 --- !u!114 &1247868777620691934
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -651,6 +651,24 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &3627858557009091968
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd470a96e8fcac43930615944816d4f, type: 3}
+  m_Name: NewPostProcessEffectVolumeComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  <displayName>k__BackingField: NewPostProcessEffect
+  intensity:
+    <debugId>k__BackingField: intensity
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &5762530381802164056
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -770,7 +788,7 @@ MonoBehaviour:
     m_Value: 0
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.61
   rounded:
     m_OverrideState: 1
     m_Value: 0

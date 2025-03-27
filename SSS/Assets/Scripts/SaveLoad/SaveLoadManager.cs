@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using static DataWrapperSettings;
 using static StaticClassForAdditionalFunctions;
+using UnityEngine.UI;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -105,7 +106,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             // объект с массивами оболочек различных параметров настроек (тумблера/кнопки/ползунки) создаётся в GameManager - .Instance.dataWrapperSettings
 
-            FindAllTogglesInSettingsMenu(); // эта штука как раз записывает данные о тумблерах в GameManager.Instance.dataWrapperSettings.allTogglesData
+            FindAndStoreAllInfoInSettingsMenu(); // эта штука как раз записывает данные о тумблерах в GameManager.Instance.dataWrapperSettings.allTogglesData
 
             string json = JsonUtility.ToJson(GameManager.Instance.dataWrapperSettings, prettyPrint: true);
 
@@ -120,13 +121,54 @@ public class SaveLoadManager : MonoBehaviour
     }
 
     // функция записывает значения всех тумблеров меню настроек в список нашей оболочки для сохранения настроек тумблеров GameManager.Instance.dataWrapperSettings.allTogglesData 
-    private void FindAllTogglesInSettingsMenu()
+    private void FindAndStoreAllInfoInSettingsMenu()
     {
         GameManager.Instance.dataWrapperSettings.allTogglesData = new();
 
         GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings)); // родительский RectTransform окон с настройками
         GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.toggleGroup)); // родительский RectTransform нижней группы тумблеров
+
+        GameManager.Instance.dataWrapperSettings.allSlidersData = new();
+
+        GameManager.Instance.dataWrapperSettings.allSlidersData.AddRange(FindAndStoreAllSlidersInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
+        
+        GameManager.Instance.dataWrapperSettings.allChoseListsData = new();
+
+        GameManager.Instance.dataWrapperSettings.allChoseListsData.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
     }
+
+    public void LoadSettingsFromFile()
+    {
+        if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json"))
+        {
+            string json = File.ReadAllText("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json");
+
+            if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
+            {
+                try
+                {
+                    GameManager.Instance.dataWrapperSettings = JsonUtility.FromJson<DataWrapperSettings>(json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Error parsing JSON: " + e.Message);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("DataSettings.json is empty. Creating new DataWrapperSettings.");
+            }
+        }
+    }
+
+    public void ImplementStoredSettings()
+    {
+        ImplementStoredSettingsToggle();
+        ImplementStoredSettingsSliders();
+        ImplementStoredSettingsChoseLists();
+    }
+
+
 
     private List<DataWrapperToggle> FindAndStoreAllTogglesInGivenRectTransformRecursivly(RectTransform rootRectTransform)
     {
@@ -155,31 +197,6 @@ public class SaveLoadManager : MonoBehaviour
 
         }
         return toggles;
-    }
-
-
-    public void LoadSettingsFromFile()
-    {
-        if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json"))
-        {
-            string json = File.ReadAllText("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json");
-
-            if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
-            {
-                try
-                {
-                    GameManager.Instance.dataWrapperSettings = JsonUtility.FromJson<DataWrapperSettings>(json);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogWarning("Error parsing JSON: " + e.Message);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("DataSettings.json is empty. Creating new DataWrapperSettings.");
-            }
-        }
     }
 
     public void ImplementStoredSettingsToggle()
@@ -211,7 +228,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         foreach (RectTransform childRectTransform in rootRectTransform)
         {
-            if (childRectTransform.gameObject.name == wrapToggle.nameToggle)
+            if (childRectTransform.gameObject.name == wrapToggle.selfName)
             {
                 ToggleFixed scriptToggle = childRectTransform.GetComponent<ToggleFixed>(); // если имена совпадают, то в любом случае на объекте должен быть ToggleFixed
 
@@ -230,8 +247,136 @@ public class SaveLoadManager : MonoBehaviour
 
         }
     }
+    
 
 
+    private List<DataWrapperSlider> FindAndStoreAllSlidersInGivenRectTransformRecursivly(RectTransform rootRectTransform)
+    {
+        List<DataWrapperSlider> sliders = new List<DataWrapperSlider>();
+        foreach (RectTransform childRectTransform in rootRectTransform)
+        {
+            ParameterSlider scriptSlider = childRectTransform.GetComponent<ParameterSlider>();
+            if (scriptSlider != null)
+            {
+                DataWrapperSlider wrapperSlider = new DataWrapperSlider();
+                Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapperSlider);
+                Dictionary<string, object> fieldsAndPropertiesOfScriptSlider = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, scriptSlider);
+                AssignParametersAndProperties(fieldsAndPropertiesOfScriptSlider, wrapperSlider);
+                sliders.Add(wrapperSlider);
+                continue; 
+            }
+            if (childRectTransform.childCount > 0)
+            {
+                sliders.AddRange(FindAndStoreAllSlidersInGivenRectTransformRecursivly(childRectTransform));
+            }
+
+        }
+        return sliders;
+    }
+
+    public void ImplementStoredSettingsSliders()
+    {
+        {
+            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            {
+                foreach (DataWrapperSlider wrapSlider in GameManager.Instance.dataWrapperSettings.allSlidersData)
+                {
+                    foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
+                    {
+                        Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapSlider);
+                        FindAndImplementAllSlidersInGivenRectTransformRecursivly(rootRectTransform, wrapSlider, fieldsAndPropertiesOfWrapper);
+                    }
+                }
+            }
+        }
+    }
+
+    private void FindAndImplementAllSlidersInGivenRectTransformRecursivly(RectTransform rootRectTransform, DataWrapperSlider wrapSlider, Dictionary<string, object> fieldsAndPropertiesOfWrapper)
+    {
+        foreach (RectTransform childRectTransform in rootRectTransform)
+        {
+            if (childRectTransform.gameObject.name == wrapSlider.selfName)
+            {
+                ParameterSlider scriptSlider = childRectTransform.GetComponent<ParameterSlider>();
+                scriptSlider.Awake(); // дабы если на данный момент объекты будут не активны, то мы бы их инициализировали 
+                AssignParametersAndProperties(fieldsAndPropertiesOfWrapper, scriptSlider);
+
+                continue;
+            }
+            if (childRectTransform.childCount > 0)
+            {
+                // если текущий объект не оказался тумблером и у него есть дочерние элементы, то будем искать тумблеры в них
+                FindAndImplementAllSlidersInGivenRectTransformRecursivly(childRectTransform, wrapSlider, fieldsAndPropertiesOfWrapper);
+            }
+
+        }
+    }
+
+
+    private List<DataWrapperChoseList> FindAndStoreAllChoseListsInGivenRectTransformRecursivly(RectTransform rootRectTransform)
+    {
+        List<DataWrapperChoseList> choseLists = new List<DataWrapperChoseList>();
+        foreach (RectTransform childRectTransform in rootRectTransform)
+        {
+            ParameterChoseList scriptChoseList = childRectTransform.GetComponent<ParameterChoseList>();
+            if (scriptChoseList != null)
+            {
+                Debug.Log(scriptChoseList.CurrentTextValue);
+                DataWrapperChoseList wrapper = new DataWrapperChoseList();
+                Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
+                Dictionary<string, object> fieldsAndPropertiesOfScriptSlider = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, scriptChoseList);
+                AssignParametersAndProperties(fieldsAndPropertiesOfScriptSlider, wrapper);
+                choseLists.Add(wrapper);
+                continue; 
+            }
+            if (childRectTransform.childCount > 0)
+            {
+                choseLists.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(childRectTransform));
+            }
+
+        }
+        return choseLists;
+    }
+
+    public void ImplementStoredSettingsChoseLists()
+    {
+        {
+            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            {
+                foreach (DataWrapperChoseList wrapChoseList in GameManager.Instance.dataWrapperSettings.allChoseListsData)
+                {
+                    foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
+                    {
+                        Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapChoseList);
+                        FindAndImplementAllSlidersInGivenRectTransformRecursivly(rootRectTransform, wrapChoseList, fieldsAndPropertiesOfWrapper);
+                    }
+                }
+            }
+        }
+    }
+
+    private void FindAndImplementAllSlidersInGivenRectTransformRecursivly(RectTransform rootRectTransform, DataWrapperChoseList wrapSlider, Dictionary<string, object> fieldsAndPropertiesOfWrapper)
+    {
+        foreach (RectTransform childRectTransform in rootRectTransform)
+        {
+            if (childRectTransform.gameObject.name == wrapSlider.selfName)
+            {
+                ParameterChoseList scriptChoseList = childRectTransform.GetComponent<ParameterChoseList>();
+                scriptChoseList.Awake(); // дабы если на данный момент объекты будут не активны, то мы бы их инициализировали 
+                AssignParametersAndProperties(fieldsAndPropertiesOfWrapper, scriptChoseList);
+
+                continue;
+            }
+            if (childRectTransform.childCount > 0)
+            {
+                // если текущий объект не оказался тумблером и у него есть дочерние элементы, то будем искать тумблеры в них
+                FindAndImplementAllSlidersInGivenRectTransformRecursivly(childRectTransform, wrapSlider, fieldsAndPropertiesOfWrapper);
+            }
+
+        }
+    }
+        
+    
     public void LoadGame()
     {
         Debug.Log("Game was loaded!");

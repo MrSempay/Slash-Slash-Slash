@@ -12,6 +12,8 @@ using static UnityEngine.LightTransport.IProbeIntegrator;
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
 public static class StaticClassForAdditionalFunctions : object
 {
+    public enum ENUM { English, Russian, Spanish, Horizontal, Vertical }
+
     // Рассчитывает угол наклона прямой между двумя точками
     public static float GetAngle(Vector2 point1, Vector2 point2)
     {
@@ -105,7 +107,6 @@ public static class StaticClassForAdditionalFunctions : object
         }
 
         Type type = objectForAssigning.GetType(); // Получаем тип текущего класса
-        Debug.Log(type);
 
         foreach (var kvp in objectsParameters)
         {
@@ -287,17 +288,27 @@ public static class StaticClassForAdditionalFunctions : object
 
     public static void CallFunctionByName(string nameFunction, object objectWhereShouldBeFunction, params object[] parameters) // в качестве objectWhereShouldBeFunction передаём любой скрипт
     {
+        //Debug.Log(objectWhereShouldBeFunction);
+        //Debug.Log(nameFunction);
+        //Debug.Log(parameters);
         var methodInfo = objectWhereShouldBeFunction.GetType().GetMethod(nameFunction);
         if (methodInfo != null)
         {
             // Проверяем, передан ли массив параметров
-            if (parameters == null)
+            try
             {
-                methodInfo.Invoke(objectWhereShouldBeFunction, null); // Если массив не передан, вызываем метод без параметров
+                if (parameters == null)
+                {
+                    methodInfo.Invoke(objectWhereShouldBeFunction, null); // Если массив не передан, вызываем метод без параметров
+                }
+                else
+                {
+                    methodInfo.Invoke(objectWhereShouldBeFunction, parameters); // Если массив передан, вызываем метод с параметрами
+                }
             }
-            else
-            {
-                methodInfo.Invoke(objectWhereShouldBeFunction, parameters); // Если массив передан, вызываем метод с параметрами
+            catch (Exception e)
+            { 
+
             }
         }
         else

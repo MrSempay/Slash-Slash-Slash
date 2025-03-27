@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     }
     public void OpenOrClosePlayMenu()
     {
-        Debug.Log(settingsMenu.activeSelf);
+        //Debug.Log(settingsMenu.activeSelf);
         GameManager.Instance.PauseGame(!(playMenu.activeSelf || settingsMenu.activeSelf)); // если ни одна менюшка не активна, то значит нужна пауза, иначе снимаем её
 
         if (settingsMenu.activeSelf)
