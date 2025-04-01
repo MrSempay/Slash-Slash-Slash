@@ -10,8 +10,8 @@ public class PlaceForEquipment : MonoBehaviour
     private Equipment _equipment; // снар€жение в данном месте дл€ снар€жени€
     private Dictionary<string, float> increasedParametersValuesByEquipmentInThisPlace; // снар€жение в данном месте дл€ снар€жени€
 
-    [SerializeField] private TextMeshProUGUI nameOfEquipment;
-    [SerializeField] private TextMeshProUGUI costOfEquipment;
+    [SerializeField] private TextEdit nameOfEquipment;
+    [SerializeField] private TextEdit costOfEquipment;
     public Equipment previousEquipment;
 
     public bool isBuildingPlace = false; // флаг дл€ детекции, находитс€ ли это место в здании
@@ -110,8 +110,11 @@ public class PlaceForEquipment : MonoBehaviour
     // создать отдельно пол€ дл€ стоимости и наименовани€ (а можно и просто стоимости) и засунуть туда эмул€цию данного сигнала, чтоб при любом изменении цены у нас вызывалась данна€ функци€
     private void ChangeNameAndCostEquipment(string name, int cost)
     {
-        nameOfEquipment.text = name;
-        costOfEquipment.text = "Cost: " + cost;
+        nameOfEquipment.Awake();
+        costOfEquipment.Awake();
+
+        nameOfEquipment.Text = name;
+        costOfEquipment.SetNotLocalizableText(cost.ToString());
     }
 
     private void OnDestroy()

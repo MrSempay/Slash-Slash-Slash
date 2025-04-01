@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8300492d660cc5c42bfa6240d50c5fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfEquipment: {fileID: 5609743253848494842}
-  costOfEquipment: {fileID: 2853885846529086191}
+  nameOfEquipment: {fileID: 7649985555203383319}
+  costOfEquipment: {fileID: 8069037950714616066}
   previousEquipment: {fileID: 0}
   isBuildingPlace: 0
 --- !u!1 &5798179383207275193
@@ -151,9 +151,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2027101049271402188}
   - component: {fileID: 7463254273334601105}
+  - component: {fileID: 8069037950714616066}
   - component: {fileID: 2853885846529086191}
   m_Layer: 5
-  m_Name: CostOfEquipment
+  m_Name: 'Cost:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,6 +187,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5798179383207275193}
   m_CullTransparentMesh: 1
+--- !u!114 &8069037950714616066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798179383207275193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aa41c22ec1e3f43b864a6ba5bdbb5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseLocalizationKey: 
+  additionalLocalizationKey: 
+  notLocalizableText: 
 --- !u!114 &2853885846529086191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,9 +303,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3276120692896749067}
   - component: {fileID: 4150265801280587490}
+  - component: {fileID: 7649985555203383319}
   - component: {fileID: 5609743253848494842}
   m_Layer: 5
-  m_Name: NameOfEquipment
+  m_Name: 'Name:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,6 +339,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7055073262783804548}
   m_CullTransparentMesh: 1
+--- !u!114 &7649985555203383319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7055073262783804548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aa41c22ec1e3f43b864a6ba5bdbb5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseLocalizationKey: 
+  additionalLocalizationKey: 
+  notLocalizableText: 
 --- !u!114 &5609743253848494842
 MonoBehaviour:
   m_ObjectHideFlags: 0

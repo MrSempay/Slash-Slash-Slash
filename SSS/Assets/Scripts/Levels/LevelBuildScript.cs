@@ -32,6 +32,8 @@ public class LevelBuildScript : MonoBehaviour
     private int numberOfSpawnIteration = 0; // чтоб знали, насколько усиливать врагов на текущей итерации
     private List<Transform> targetTransformsForRandom;
 
+    [NonSerialized] public string nameOfMainMusicTeam = "STAND";
+
     public Dictionary<Transform, int> TargetPointsForEnemy
     {
         get { return targetPointsForEnemy; }
@@ -72,9 +74,11 @@ public class LevelBuildScript : MonoBehaviour
         {
             {playerTransform, 15},
             {schoolTransform, 20},
-            {treasuryTransform, 8}
+            {treasuryTransform, 8} 
         }; */
         //OnValidate();
+
+
         // получаем компоненты transform у точек для спавна
         spawnPointsTransforms = new List<Transform>();
         clusterSpawnPointsTransform = GameObject.Find("SpawnPoints").transform;
@@ -98,6 +102,7 @@ public class LevelBuildScript : MonoBehaviour
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
         SaveLoadManager.Instance.ImplementStoredSettings(); // чтоб настройки применялись при загрузке сцены сразу, а не после открытия меню настроек 
+        AudioManager.Instance.StartMusic(nameOfMainMusicTeam);
     }
 
     // Update is called once per frame

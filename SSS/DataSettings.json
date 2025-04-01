@@ -7,17 +7,17 @@
         },
         {
             "selfName": "ToggleParameterVibration",
-            "IsToggled": true,
-            "currentLanguage": 0
-        },
-        {
-            "selfName": "Russian",
             "IsToggled": false,
             "currentLanguage": 0
         },
         {
-            "selfName": "English",
+            "selfName": "Russian",
             "IsToggled": true,
+            "currentLanguage": 0
+        },
+        {
+            "selfName": "English",
+            "IsToggled": false,
             "currentLanguage": 0
         },
         {
@@ -42,12 +42,12 @@
         },
         {
             "selfName": "ToggleSonicOfSettingsMenu",
-            "IsToggled": false,
+            "IsToggled": true,
             "currentLanguage": 0
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
-            "IsToggled": true,
+            "IsToggled": false,
             "currentLanguage": 0
         },
         {
@@ -59,22 +59,22 @@
     "allSlidersData": [
         {
             "selfName": "ParameterVolumMusic",
-            "CurrentValue": 0.5095533728599548
+            "CurrentValue": 0.0
         },
         {
             "selfName": "ParameterVolumEffects",
-            "CurrentValue": 0.5479496717453003
+            "CurrentValue": 1.0
         },
         {
             "selfName": "ParameterBrightness",
-            "CurrentValue": 0.5482114553451538
+            "CurrentValue": 1.0
         }
     ],
     "allChoseListsData": [
         {
             "selfName": "ParameterOrientation",
             "CurrentTextValue": "Horizontal",
-            "_indexCurrentString": 1
+            "_indexCurrentString": 0
         }
     ]
 }

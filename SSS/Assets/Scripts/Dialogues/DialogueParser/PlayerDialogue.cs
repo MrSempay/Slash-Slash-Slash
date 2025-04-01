@@ -12,7 +12,7 @@ public class PlayerDialogue : DialogueParser
     protected override void Awake()
     {
         base.Awake();
-        LoadAndParseDialogueAndShowFirstPhrase();
+        LoadAndParseDialogueAndShowPhrase();
         /*
         ScenarioScript scenarioScript = GameObject.Find("ScenarioScript").GetComponent<ScenarioScript>(); // на уровнях будут дочерние скрипты от данного класса, для конечных уровней
         if (scenarioScript)

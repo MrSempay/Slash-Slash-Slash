@@ -12,7 +12,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     private string _currentTextValue;
     private string _nameInvokingFunction;
 
-    [SerializeField] private TextMeshProUGUI _textMeshButton;
+    [SerializeField] private TextEdit _textButton;
     
     [NonSerialized] public int _indexCurrentString = 0;
 
@@ -28,19 +28,19 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         set
         {
             _currentTextValue = value;
-            _textMeshButton.text = _baseStringOfText + value; // типа чтоб какую-нибудь приставку могли писать, а изменять только смысловое слово, по типу:
+            _textButton.Text = value; // типа чтоб какую-нибудь приставку могли писать, а изменять только смысловое слово, по типу:
                                                               // "ENUM: " + "Horizontal"
         }
     }
 
     public void Awake()
     {
-        Debug.Log("3");
+        //Debug.Log("3");
         if (!awakeWasCalledAlready)
         {
-            Debug.Log("1");
+            _textButton.Awake();
+            //Debug.Log("1");
             selfName = gameObject.name;
-            _baseStringOfText = _textMeshButton.text;
             StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustSettingsParameters.settingsParameters[selfName], this);
             _nameInvokingFunction = C.Prefixes.PrefixTrigger + selfName;
             SetValue();
@@ -56,7 +56,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
 
     public void SetValue()
     {
-        Debug.Log("2");
+        //Debug.Log("2");
         CurrentTextValue = listChosing[_indexCurrentString].ToString();
 
         object[] parameters = new object[] { listChosing[_indexCurrentString], (RectTransform)transform };

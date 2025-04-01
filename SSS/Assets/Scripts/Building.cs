@@ -132,9 +132,11 @@ public class Building : MonoBehaviour
             Sprite spellSprite = Resources.Load<Sprite>(fullPath);
             spriteRenderer.sprite = spellSprite;
 
+
             // ÍÀÑÒĞÀÈÂÀÅÌ ÊÎÌÏÎÍÅÍÒ Equipment (ÑÎÁÑÍÀ ÅÃÎ ÑÊĞÈÏÒ) Ó İÊÇÅÌÏËßĞÀ ÑÍÀĞßÆÅÍÈß
             Equipment scriptOfEquipment = newEquipment.GetComponent<Equipment>();
             scriptOfEquipment.equipmentName = randomEquipmentName;
+            scriptOfEquipment.sprite = spellSprite;
             scriptOfEquipment.isEquipmentASpell = true; // ïîêà ÷òî äëÿ ñïåëîâ òîëüêî
             scriptOfEquipment.startLocalPosition = newEquipmentRectTransform.localPosition;
             scriptOfEquipment.BuildingWhereEquipmentIs = this;

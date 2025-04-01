@@ -12,12 +12,14 @@ public class Equipment : MonoBehaviour
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
     [NonSerialized] public SpriteRenderer selfSprite; // свой спрайт
+    [NonSerialized] public Sprite sprite; // свой спрайт
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public Player player;
     [NonSerialized] public int cost;
     [NonSerialized] public bool isEquipmentASpell;
     [NonSerialized] public string equipmentName;
+    [NonSerialized] public Animator animator;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
 
     public BoxCollider2D selfCollider;
@@ -57,24 +59,59 @@ public class Equipment : MonoBehaviour
         transform = GetComponent<RectTransform>();
         player = GameObject.Find("Player").GetComponent<Player>();
         selfSprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();    
 
         _fsm = new Fsm();
 
         _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
         _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
         _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
-        
+
+
+        //animator.Play(equipmentName);
     }
     protected virtual void Start()
     {
+        if (AnimationExists(equipmentName))
+        {
+            animator.Play(equipmentName); // Воспроизводим анимацию
+        }
+        else
+        {
+            Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+            Debug.Log(sprite);
+            Debug.Log(selfSprite);
+            Debug.Log(selfSprite.sprite);
+            selfSprite.sprite = sprite;
+            Debug.Log(selfSprite.sprite);
+        }
         if (BuildingWhereEquipmentIs) ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала
         _fsm.SetState<FsmStateEquipmentInsideShop>();
+
+
     }
 
-
-    private void Update()
+    protected virtual void Update()
     {
         _fsm.Update();
+        Debug.Log(sprite);
+        if (selfSprite.sprite == null)
+        {
+            selfSprite.sprite = sprite;
+        }
+    }
+
+    // Функция для проверки существования анимации в AnimatorController
+    private bool AnimationExists(string animationName)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == animationName)
+            {
+                return true; // Анимация найдена
+            }
+        }
+        return false; // Анимация не найдена
     }
 
     private void FixedUpdate()
@@ -99,7 +136,7 @@ public class Equipment : MonoBehaviour
             transform.anchorMin = new Vector2(0.5f, 0.5f);
             transform.anchorMax = new Vector2(0.5f, 0.5f);
             transform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
-            transform.localPosition = new Vector3(0, -0.5f, -1);
+            transform.localPosition = new Vector3(0, 0, 0);
             //Debug.Log(this);
             if (BuildingWhereEquipmentIs) BuildingWhereEquipmentIs.equipmentInBuilding.Remove(this); // собственно удаляем из списка снаряжения в здании это снаряжение только
                                                                                                      // если оно находится в здании
@@ -112,6 +149,11 @@ public class Equipment : MonoBehaviour
     public virtual void OnDestroy()
     {
         _fsm.StateCurrent?.OnDestroy();
+    }
+    public virtual void OnEnable()
+    {
+        //Debug.Log(equipmentName);
+
     }
 
 

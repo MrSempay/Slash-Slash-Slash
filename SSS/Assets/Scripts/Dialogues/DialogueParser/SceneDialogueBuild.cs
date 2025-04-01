@@ -6,7 +6,7 @@ public class SceneDialogueBuild : DialogueParser
     protected override void Awake()
     {
         base.Awake();
-        LoadAndParseDialogueAndShowFirstPhrase();
+        LoadAndParseDialogueAndShowPhrase();
 
     }
 

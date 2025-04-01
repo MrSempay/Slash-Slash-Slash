@@ -39,6 +39,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
             {
                 var obj = new GameObject("EventBas");
                 _instance = obj.AddComponent<EventBus>();
+                DontDestroyOnLoad(obj);
+
             }
             return _instance;
         }
@@ -52,6 +54,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
             return;
         }
         _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public UnityEvent<bool> DoorWasDestroyed { get; } = new();

@@ -1,0 +1,80 @@
+using System.Xml;
+using TMPro;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+
+public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFunctions
+{
+    private TextMeshProUGUI textComponent;
+
+    public string baseLocalizationKey = "";
+    public string additionalLocalizationKey = "";
+    public string notLocalizableText = "";
+
+    public bool awakeWasCalledAlready { get; set; }
+
+    public void Awake()
+    {
+        if (!awakeWasCalledAlready)
+        {
+            textComponent = gameObject.GetComponent<TextMeshProUGUI>();
+            baseLocalizationKey = gameObject.name;
+            Text = "";
+            awakeWasCalledAlready = true;
+        }
+    }
+    private void Start()
+    {
+
+    }
+
+    // по идее этому свойству мы должны присваивать не сам текст, а ключ его локализации, по нему уже само свойство будет находить нужную строку 
+    public string Text
+    {
+        get { return additionalLocalizationKey; }
+        set
+        {
+            additionalLocalizationKey = value; 
+            string baseText = LocalizationManager.Instance.GetText(baseLocalizationKey);
+            if (baseText == "")
+            {   
+                //Debug.Log("ћƒјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјј");
+                //Debug.Log(value);
+                //Debug.Log(textComponent);
+                textComponent.text = LocalizationManager.Instance.GetText(value);
+            }
+            else
+            {
+                string settingValue = LocalizationManager.Instance.GetText(value);
+                if (settingValue != "")
+                {
+                Debug.Log("ћƒјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјј");
+                Debug.Log(value);
+                Debug.Log(textComponent);
+                Debug.Log(textComponent.text);
+                Debug.Log(LocalizationManager.Instance.GetText(value));
+                    textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey) + " " + LocalizationManager.Instance.GetText(value);
+                }
+                else
+                {
+                    textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey);
+                }
+            }
+        }
+    }
+
+    public void UpdateText()
+    {
+        //Debug.Log("SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+        //Debug.Log(additionalLocalizationKey);
+        Text = additionalLocalizationKey;
+        if (notLocalizableText != "") textComponent.text += " " + notLocalizableText;
+    }
+    public void SetNotLocalizableText(string text)
+    {
+        //Debug.Log("SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+        //Debug.Log(additionalLocalizationKey);
+        notLocalizableText = text;
+        UpdateText();
+    }
+}

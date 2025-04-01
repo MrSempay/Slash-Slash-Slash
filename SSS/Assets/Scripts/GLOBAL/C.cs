@@ -91,6 +91,7 @@ public class C
         public const string increasingGettingMoneyByKillComboTickPercentage = "increasingGettingMoneyByKillComboTickPercentage";
         public const string increasingParametersByLevelUpPercentage = "increasingParametersByLevelUpPercentage";
         public const string damage = "damage";
+        public const string nameSoundGettingDamage = "nameSoundGettingDamage";
         public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Это исключение, так как строка начинается с заглавной (все свойства будут такими)
         public const string CurrentMoney = "CurrentMoney"; // Это исключение, так как строка начинается с заглавной
         public const string som = "som";

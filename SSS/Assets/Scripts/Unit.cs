@@ -26,6 +26,7 @@ public abstract class Unit : MonoBehaviour
     public bool isAlive = true; // Флаг, жив ли юнит
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
+    public string nameSoundGettingDamage;
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public Fsm _fsm;
     public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
@@ -89,6 +90,7 @@ public abstract class Unit : MonoBehaviour
         if (isAlive)
         {
             CurrentHealth -= damageSize; // Уменьшаем здоровье
+            AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
 
             if (CurrentHealth <= 0)
             {
@@ -258,7 +260,7 @@ public abstract class Unit : MonoBehaviour
 
                 //Debug.Log(assigningCurrentPropertyValue);
                 object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
-                currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству
+                currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству 
             }
             catch (InvalidCastException e)
             {

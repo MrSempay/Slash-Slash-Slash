@@ -17138,6 +17138,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1312705410025307374, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_Name
+      value: Spanish
+      objectReference: {fileID: 0}
     - target: {fileID: 1332102174858262321, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: _justCheckMark
       value: 0
@@ -17242,6 +17246,10 @@ PrefabInstance:
       propertyPath: interstitialAds
       value: 
       objectReference: {fileID: 1061735923}
+    - target: {fileID: 4384362085585208330, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_Name
+      value: Russian
+      objectReference: {fileID: 0}
     - target: {fileID: 4405538553600016952, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_Name
       value: Player
@@ -17334,6 +17342,10 @@ PrefabInstance:
       propertyPath: _colorToggledSprite.r
       value: 0.39215687
       objectReference: {fileID: 0}
+    - target: {fileID: 5921168650510245652, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_text
+      value: 'Money: '
+      objectReference: {fileID: 0}
     - target: {fileID: 6627473865986231975, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -17385,6 +17397,14 @@ PrefabInstance:
     - target: {fileID: 6887405281521633751, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415767223687663834, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_Name
+      value: 'Money:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692013845233251093, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_Name
+      value: English
       objectReference: {fileID: 0}
     - target: {fileID: 7756711712758529465, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_RaycastTarget
@@ -29281,6 +29301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseLocalizationKey: 
   additionalLocalizationKey: 
+  notLocalizableText: 
 --- !u!1 &1426387296
 GameObject:
   m_ObjectHideFlags: 0

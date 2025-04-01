@@ -1,11 +1,22 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [NonSerialized] public string nameOfMainMusicTeam = "Project_1";
+
     private void Awake()
     {
         GameManager.Instance.Initialize();
+    }
+    private void Start()
+    {
+        SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
+        allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
+        SaveLoadManager.Instance.ImplementStoredSettings();
+        //Debug.Log("Это чё за ебунячая параша?");
+        AudioManager.Instance.StartMusic(nameOfMainMusicTeam);
     }
 
     public void StartGame()

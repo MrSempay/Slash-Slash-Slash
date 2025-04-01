@@ -42,7 +42,7 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
     {
         //Debug.Log(_slider);
         //Debug.Log(_slider.value);
-        Debug.Log(CurrentValue);
+        //Debug.Log(CurrentValue);
         CurrentValue = _slider.value;
     }
 }

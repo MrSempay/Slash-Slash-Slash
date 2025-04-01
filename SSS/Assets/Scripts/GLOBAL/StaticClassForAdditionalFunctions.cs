@@ -261,10 +261,13 @@ public static class StaticClassForAdditionalFunctions : object
     {
         // Проверяем, поддерживает ли устройство вибрацию.
         // Это не всегда необходимо, но может предотвратить ошибки на некоторых платформах.
-                //Debug.Log("Ibo");
-        #if UNITY_ANDROID && !UNITY_EDITOR
-                Handheld.Vibrate(); // Вызываем вибрацию
-        #endif
+        //Debug.Log("Ibo");
+        if (GameManager.Instance.currentSettings.vibrationOn)
+        {
+            #if UNITY_ANDROID && !UNITY_EDITOR
+                  Handheld.Vibrate(); // Вызываем вибрацию
+            #endif
+        }
     }
 
     public static void VibrateForDuration(long milliseconds)

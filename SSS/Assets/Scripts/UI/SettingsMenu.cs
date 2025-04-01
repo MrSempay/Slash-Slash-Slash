@@ -71,6 +71,9 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             EventBus.Instance.ValueVibrationWasChanged.AddListener(ValueVibrationWasChanged);
             EventBus.Instance.ValueVolumEffectsWasChanged.AddListener(ValueVolumEffectsWasChanged);
             EventBus.Instance.ValueVolumMusicWasChanged.AddListener(ValueVolumMusicWasChanged);
+
+
+            awakeWasCalledAlready = true;
         }
     }
     void Start()
@@ -101,20 +104,20 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
 
     private void ValueVolumMusicWasChanged(float value, RectTransform rectTransformToggle)
     {
-        if (GameManager.Instance.currentSettings.volumeMusic != value)
-            GameManager.Instance.currentSettings.volumeMusic = value;
+        if (GameManager.Instance.currentSettings.VolumeMusic != value)
+            GameManager.Instance.currentSettings.VolumeMusic = value;
     }
     private void ValueVolumEffectsWasChanged(float value, RectTransform rectTransformToggle)
     {
-        if (GameManager.Instance.currentSettings.volumeEffects != value)
-            GameManager.Instance.currentSettings.volumeEffects = value;
+        if (GameManager.Instance.currentSettings.VolumeEffects != value)
+            GameManager.Instance.currentSettings.VolumeEffects = value;
     }
     private void ValueBrightnessWasChanged(float value, RectTransform rectTransformToggle)
     {
-            Debug.Log(value);
+            //Debug.Log(value);
         if (GameManager.Instance.currentSettings.VolumeBrightness != value)
         {
-            Debug.Log(value);
+            //Debug.Log(value);
             GameManager.Instance.currentSettings.VolumeBrightness = value;
         }
     }

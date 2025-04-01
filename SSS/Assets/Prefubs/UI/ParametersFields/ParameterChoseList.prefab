@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5222570201717283429}
   - component: {fileID: 1835354152818920239}
+  - component: {fileID: 8773414463848027673}
   - component: {fileID: 2445554206650812913}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +46,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3383343092191934801}
   m_CullTransparentMesh: 1
+--- !u!114 &8773414463848027673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383343092191934801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aa41c22ec1e3f43b864a6ba5bdbb5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseLocalizationKey: 
+  additionalLocalizationKey: 
 --- !u!114 &2445554206650812913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11578a2acbd4de4e8af8c83488eb6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 4884751416970439436}
-  _textMeshButton: {fileID: 2445554206650812913}
-  listChosing: []
+  _textButton: {fileID: 8773414463848027673}
+  _baseStringOfText: 
   selfName: 

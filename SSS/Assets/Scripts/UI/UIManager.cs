@@ -5,11 +5,11 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject playMenu;
     [SerializeField] private GameObject settingsMenu;
-    [SerializeField] private TextMeshProUGUI currentLevelUI;
-    [SerializeField] private TextMeshProUGUI currentLevelUpUI;
-    [SerializeField] private TextMeshProUGUI currentComboUI;
-    [SerializeField] private TextMeshProUGUI currentMoneyUI;
-    [SerializeField] private TextMeshProUGUI currentExperienceUI;
+    [SerializeField] private TextEdit currentLevelUI;
+    [SerializeField] private TextEdit currentLevelUpUI;
+    [SerializeField] private TextEdit currentComboUI;
+    [SerializeField] private TextEdit currentMoneyUI;
+    [SerializeField] private TextEdit currentExperienceUI;
     [SerializeField] private Player player;
 
     public void Awake()
@@ -35,27 +35,27 @@ public class UIManager : MonoBehaviour
 
     private void ChangeLevelTextUI(int level)
     {
-        currentLevelUI.text = "Level: " + level.ToString();
+        currentLevelUI.SetNotLocalizableText(level.ToString());
     }
     
     private void ChangeLevelUpTextUI(int levelUp)
     {
-        currentLevelUpUI.text = "Up lvl: " + levelUp.ToString();
+        currentLevelUpUI.SetNotLocalizableText(levelUp.ToString());
     }
 
     private void ChangeMoneyTextUI(float money)
     {
-        currentMoneyUI.text = "Money: " + money.ToString();
+        currentMoneyUI.SetNotLocalizableText(money.ToString());
     }
 
     private void ChangeExperienceTextUI(float experience)
     {
-        currentExperienceUI.text = "Expe: " + experience.ToString() + "/" + player.experienceToNextLevel;
+        currentExperienceUI.SetNotLocalizableText(experience.ToString() + "/" + player.experienceToNextLevel.ToString());
     }
     
     private void ChangeComboTextUI(int combo)
     {
-        currentComboUI.text = "Combo: " + combo.ToString();
+        currentComboUI.SetNotLocalizableText(combo.ToString());
     }
 
     private void OnDestroy()

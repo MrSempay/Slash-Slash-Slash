@@ -34,8 +34,8 @@ public class Treasury : Building
             // ÍÀÑÒĞÀÈÂÀÅÌ ÊÎÌÏÎÍÅÍÒ RectTransform Ó İÊÇÅÌÏËßĞÀ ÑÍÀĞßÆÅÍÈß
             newEquipmentRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             newEquipmentRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            newEquipmentRectTransform.anchoredPosition = Vector2.zero; // Óñòàíàâëèâàåì ñìåùåíèå îòíîñèòåëüíî ÿêîğåé â (0, 0)
-            newEquipmentRectTransform.localPosition = new Vector3(0, -0.5f, -1);
+            newEquipmentRectTransform.anchoredPosition = Vector2.zero; // Óñòàíàâëèâàåì ñìåùåíèå îòíîñèòåëüíî ÿêîğåé â (0, 0) 
+            newEquipmentRectTransform.localPosition = new Vector3(0, 0, 0);
             newEquipmentRectTransform.name = randomEquipmentName;
 
             // ÍÀÑÒĞÀÈÂÀÅÌ ÊÎÌÏÎÍÅÍÒ SpriteRenderer Ó İÊÇÅÌÏËßĞÀ ÑÍÀĞßÆÅÍÈß
@@ -47,12 +47,14 @@ public class Treasury : Building
             // ÍÀÑÒĞÀÈÂÀÅÌ ÊÎÌÏÎÍÅÍÒ Equipment (ÑÎÁÑÍÀ ÅÃÎ ÑÊĞÈÏÒ) Ó İÊÇÅÌÏËßĞÀ ÑÍÀĞßÆÅÍÈß
             Ammunition scriptOfEquipment = newEquipment.GetComponent<Ammunition>();
             scriptOfEquipment.equipmentName = randomEquipmentName;
+            scriptOfEquipment.sprite = spellSprite;
             scriptOfEquipment.isEquipmentASpell = false; // ïîêà ÷òî äëÿ ñïåëîâ òîëüêî
             scriptOfEquipment.startLocalPosition = newEquipmentRectTransform.localPosition;
             scriptOfEquipment.BuildingWhereEquipmentIs = this;
             scriptOfEquipment.rectTransformTargetEquipmentPanelPlayer = rectTransformTargetEquipmentPanelPlayer;
             scriptOfEquipment.transformCurrentEquipmentPlace = placeForEquipment;
             scriptOfEquipment.categoryAndRarityTypesOfEquipment = randomCategoryAndRarityTypesOfEquipment[i];
+
 
             // ÈÇÌÅÍßÅÌ ÏÀĞÀÌÅÒĞÛ ÇÄÀÍÈß ÏĞÈ ÄÎÁÀÂËÅÍÈÈ Â ÍÅÃÎ ÍÎÂÎÃÎ ÑÍÀĞßÆÅÍÈß
             equipmentInBuilding.Add(scriptOfEquipment);

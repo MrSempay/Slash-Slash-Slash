@@ -31,13 +31,16 @@ public class Player : Unit
 
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
+    public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; // 
-    [SerializeField] public text texxt; //   
+    //[SerializeField] public TextEdit texxt; //   
 
+    public List<Enemy> nearEnemies = new();
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
+    public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
     public float timeZeroizeKillComboTicks; // время для сбрасывания текущего комбо за убийства
     public Camera mainCamera; // Ссылка на камеру
@@ -173,6 +176,15 @@ public class Player : Unit
         _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
 
+        nearAreaDetector.isEnemyNear += EnemyNear;
+
+        // для простановки начального аддитивного текста в текстовых полях UI
+        CurrentExperience = CurrentExperience;
+        CurrentKillCombo = CurrentKillCombo;
+        CurrentLevel = CurrentLevel;
+        CurrentMoney = CurrentMoney;
+        CountAccessToUpInSchool = CountAccessToUpInSchool;
+
         localPositionCamera = _mainCameraTransform.localPosition;
         foreach (RectTransform spellTransform in spellPanelTransform)
         {
@@ -191,7 +203,7 @@ public class Player : Unit
     }
     protected override void Start()
     {
-        texxt.Text = "Greeting";
+        //texxt.Text = "Greeting";
         base.Start();
         _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
         _fsm.SetState<FsmStateIdle>();
@@ -310,7 +322,10 @@ public class Player : Unit
 
     public void ShakeCamera(Transform mainCameraTransform, Vector3 initialLocalPositionCamera)
     {
-        StartCoroutine(ShakeCoroutine(mainCameraTransform, initialLocalPositionCamera));
+        if (GameManager.Instance.currentSettings.cameraShakingOn)
+        {
+            StartCoroutine(ShakeCoroutine(mainCameraTransform, initialLocalPositionCamera));
+        }
     }
 
     IEnumerator ShakeCoroutine(Transform mainCameraTransform, Vector3 initialLocalPositionCamera)
@@ -340,6 +355,31 @@ public class Player : Unit
         mainCameraTransform.localPosition = initialLocalPositionCamera; // Возвращаем камеру в исходную позицию
     }
 
+    private void EnemyNear(bool isNear, Enemy enemy)
+    {
+        if (isNear)
+        {
+            nearEnemies.Add(enemy);
+            isEnemyNear = true;
+            if (_fsm.StateCurrent.GetType() == typeof(FsmStateWalk))
+            {
+                animator.Play("PlayerAttack");
+            }
+        }
+        else
+        {
+            nearEnemies.Remove(enemy);
+            if (nearEnemies.Count == 0)
+            {
+                isEnemyNear = false;
+                if (_fsm.StateCurrent.GetType() == typeof(FsmStateWalk))
+                {
+                    animator.Play("PlayerWalkAggressive");
+                }
+            }
+        }
+    }
+
 
 
     public override void Die(Unit unitFromWhoWasGottenDamage = null)
@@ -351,6 +391,7 @@ public class Player : Unit
     public override void OnDestroy()
     {
         base.OnDestroy();
+        nearAreaDetector.isEnemyNear -= EnemyNear;
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);
     }
 

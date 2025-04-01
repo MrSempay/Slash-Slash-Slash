@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
 using UnityEngine.UI;
+using System.Collections;
+using static StaticClassForAdditionalFunctions;
 
 public class DialogueParser : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class DialogueParser : MonoBehaviour
     private string _nameIconsUnitFolder = "Dialogues/IconsUnit/"; // Имя папки с диалогами
     private int _currentIndexDialogue = 0; // Имя папки с диалогами
     private string _nameDialogueFileWithParentFolder; // Имя файла без расширения и без папки Dialogues 
+    private Coroutine _slowAppearingTextByCharacterCoroutine; // Имя файла без расширения и без папки Dialogues 
+    private float _typeSpeed = 0.05f; // Имя файла без расширения и без папки Dialogues 
+    private int _currentCharacterPosition = 0;
 
 
     [SerializeField] private Image spriteRendererIconUnit;
@@ -23,6 +28,7 @@ public class DialogueParser : MonoBehaviour
     public delegate void DialogueWasFinished(string nameDialogue); // шаблон функции
     public event DialogueWasFinished onDialogueWasFinished;         // экземляр(?) функции/сигнала(?)
 
+
     [System.Serializable]
     public class DialogueLine
     {
@@ -33,6 +39,7 @@ public class DialogueParser : MonoBehaviour
 
     protected virtual void Awake()
     {
+        LocalizationManager.Instance.OnLanguageWasChanged += UpdateDialogueText;
     }
 
     protected virtual void Start()
@@ -42,39 +49,65 @@ public class DialogueParser : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Time.timeScale > 0) // если не пауза
         {
-            if (_currentIndexDialogue < dialogueLines.Count)
+            //Debug.Log("Обнаружен коллайдер: " + gameObject.name);
+            if (Input.GetMouseButtonDown(0))
             {
-                DisplayDialogue(_currentIndexDialogue);
-                _currentIndexDialogue++;
-                return;
-            }
-            FinishDialogue();
+                Collider2D[] hits = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.05f);
 
-        }
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
+                //Визуализация круга обнаружения (отображается только в редакторе)
+                DebugExtension.DebugCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, Color.red, 0.5f, false, 0.5f);
 
-            if (touch.phase == TouchPhase.Began)
-            {
+                // Перебираем все найденные коллайдеры
+                foreach (Collider2D hit in hits)
+                {
+                    //Debug.Log("Обнаружен коллайдер: " + hit.gameObject.name);
+
+                    GameObject placeEquipment = hit.gameObject; // Получаем GameObject
+                    if (placeEquipment.name == "ButtonMenu")
+                    {
+                        Debug.Log("НАШЛИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИИ " + placeEquipment.name);
+                        return;
+                        //return placeEquipment.GetComponent<RectTransform>(); // Возвращаем RectTransform, если нашли
+                    }
+                }
                 if (_currentIndexDialogue < dialogueLines.Count)
                 {
+                    _currentCharacterPosition = 0;
                     DisplayDialogue(_currentIndexDialogue);
                     _currentIndexDialogue++;
                     return;
                 }
                 FinishDialogue();
             }
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
 
+                if (touch.phase == TouchPhase.Began)
+                {
+                    if (_currentIndexDialogue < dialogueLines.Count)
+                    {
+                        _currentCharacterPosition = 0;
+                        DisplayDialogue(_currentIndexDialogue);
+                        _currentIndexDialogue++;
+                        return;
+                    }
+                    FinishDialogue();
+                }
+
+            }
         }
     }
 
-    public void LoadAndParseDialogueAndShowFirstPhrase()
+    public void LoadAndParseDialogueAndShowPhrase()
     {
+        dialogueLines.Clear();
+
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
-        string fullPathToDialogueFile = _nameDialogueFolder + _nameDialogueFileWithParentFolder;
+        string fullPathToDialogueFile = _nameDialogueFolder + LocalizationManager.Instance.currentLanguage + "/" + _nameDialogueFileWithParentFolder;
+        Debug.Log(fullPathToDialogueFile);
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)
@@ -113,8 +146,14 @@ public class DialogueParser : MonoBehaviour
                 Debug.LogWarning("Invalid dialogue line: " + line);
             }
         }
-        DisplayDialogue(0);
+        DisplayDialogue(_currentIndexDialogue);
         _currentIndexDialogue++;
+    }
+
+    private void UpdateDialogueText(ENUM language)
+    {
+        _currentIndexDialogue--;
+        LoadAndParseDialogueAndShowPhrase();
     }
 
     // метод для отображения диалога 
@@ -122,26 +161,51 @@ public class DialogueParser : MonoBehaviour
     {
         if (index >= 0 && index < dialogueLines.Count)
         {
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _slowAppearingTextByCharacterCoroutine);
 
             string fullPathToIcon = _nameIconsUnitFolder + dialogueLines[index].characterName;
             Sprite iconUnit = Resources.Load<Sprite>(fullPathToIcon);
             spriteRendererIconUnit.sprite = iconUnit;
 
-            _textMeshProUnitPhrase.text = dialogueLines[index].dialogueText;
+            //_textMeshProUnitPhrase.text = dialogueLines[index].dialogueText; 
+            //Debug.Log(_currentCharacterPosition);
+            _slowAppearingTextByCharacterCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, WriteTextByCharacter(dialogueLines[index].dialogueText));
             _textMeshProUnitName.text = dialogueLines[index].characterName;
-            if (index > 0)
+            if (Time.timeScale > 0) // чтоб при паузе за зря не менялось расположение иконки персонажа при смене языка
             {
-                if (dialogueLines[index].characterName != dialogueLines[index - 1].characterName)
+                if (index > 0)
                 {
-                    rectTransformNameUnit.localPosition = new Vector3(rectTransformNameUnit.localPosition.x * (-1), rectTransformNameUnit.localPosition.y, rectTransformNameUnit.localPosition.z);
-                    rectTransformUnitIcon.localPosition = new Vector3(rectTransformUnitIcon.localPosition.x * (-1), rectTransformUnitIcon.localPosition.y, rectTransformUnitIcon.localPosition.z);
+                    if (dialogueLines[index].characterName != dialogueLines[index - 1].characterName)
+                    {
+                        Debug.Log("Shit?");
+                        rectTransformNameUnit.localPosition = new Vector3(rectTransformNameUnit.localPosition.x * (-1), rectTransformNameUnit.localPosition.y, rectTransformNameUnit.localPosition.z);
+                        rectTransformUnitIcon.localPosition = new Vector3(rectTransformUnitIcon.localPosition.x * (-1), rectTransformUnitIcon.localPosition.y, rectTransformUnitIcon.localPosition.z);
+                    }
                 }
             }
-
         }
         else
         {
             Debug.LogWarning("Dialogue index out of range.");
+        }
+    }
+
+    IEnumerator WriteTextByCharacter(string text)
+    {
+        _textMeshProUnitPhrase.text = ""; // Очищаем текст перед началом
+       
+        for (int i = 0; i < _currentCharacterPosition; i++)
+        {
+            if (_currentCharacterPosition < text.Length) // бывают ситуации, когда текст другого языка короче по символам, чем текст на предыдущем языке, чтоб не выйти за рамки
+                                                         // строки, добавляем эту проверку
+                _textMeshProUnitPhrase.text += text[i]; // Добавляем символ к тексту
+        }
+        
+        for (int i = _currentCharacterPosition; i < text.Length; i++)
+        {
+            yield return new WaitForSeconds(_typeSpeed); // Ждем заданное время
+            _textMeshProUnitPhrase.text += text[i]; // Добавляем символ к тексту
+            _currentCharacterPosition = i;
         }
     }
 
@@ -150,5 +214,14 @@ public class DialogueParser : MonoBehaviour
         onDialogueWasFinished?.Invoke(_nameDialogueFileWithParentFolder);
     }
 
+    protected virtual void OnDestroy()
+    {
+        LocalizationManager.Instance.OnLanguageWasChanged -= UpdateDialogueText;
+        if (_slowAppearingTextByCharacterCoroutine != null)
+        {
+            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _slowAppearingTextByCharacterCoroutine);
+            _slowAppearingTextByCharacterCoroutine = null;
+        }
+    }
 
 }

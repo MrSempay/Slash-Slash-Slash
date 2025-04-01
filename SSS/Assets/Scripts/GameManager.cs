@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
             get { return language; }
             set
             {
-                Debug.Log(value);
+                //Debug.Log(value);
                 language = value;
                 GameManager.Instance.localizationManager.SetLanguage(value);
             }
@@ -88,11 +88,29 @@ public class GameManager : MonoBehaviour
                 _liftGammaGain.gain.value = new Vector4(-0.25f + value, -0.25f + value, -0.25f + value, -0.25f + value); // да, магические константы
             }
         }
+        public float VolumeMusic
+        {
+            get { return volumeMusic; }
+            set
+            {
+                volumeMusic = value;
+                AudioManager.Instance._audioMusicComponent.volume = value;
+            }
+        }
+        public float VolumeEffects
+        {
+            get { return volumeEffects; }
+            set
+            {
+                volumeEffects = value;
+                AudioManager.Instance._audioEffectsComponent.volume = value;
+            }
+        }
 
         // Приватный конструктор - запрещает создание экземпляров класса извне
         private CurrentSettings()
         {
-            Debug.Log(this);
+            //Debug.Log(this);
             // Инициализация синглтона (если необходимо)
         }
     } // вообще надо придумать, как изначально установить всю визуализацию в эти настройки по умолчанию
@@ -142,6 +160,8 @@ public class GameManager : MonoBehaviour
             currentSettings._liftGammaGain = liftGammaGain;
         }
         SaveLoadManager.Instance.LoadSettingsFromFile();
+        AudioManager.Instance.Initialize();
+
     }
 
     void Start()
@@ -180,7 +200,7 @@ public class GameManager : MonoBehaviour
 
         RectTransform rectTransformPositionDialogue = GameObject.Find("PositionForDialogueWindow").GetComponent<RectTransform>();
         RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
-        Debug.Log(_prefubPlayerDialogue);
+        //Debug.Log(_prefubPlayerDialogue);
         PlayerDialogue sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
     }
