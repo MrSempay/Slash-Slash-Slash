@@ -20,7 +20,7 @@ public class DataWrapperSettings
     public class DataWrapperToggle : Wrapper
     {
         public bool IsToggled;
-        public ENUM currentLanguage;
+        //public ENUM currentLanguage;
 
         // вроде пока что через конструктор ничего не определяем, используем рефлексию
         public DataWrapperToggle(string nameToggleOrHisParentParam = null, bool isToggledParam = false)
@@ -40,6 +40,7 @@ public class DataWrapperSettings
     public class DataWrapperChoseList : Wrapper
     {
         public string CurrentTextValue;
+        public ENUM CurrentValue;
         public int _indexCurrentString;
     }
 

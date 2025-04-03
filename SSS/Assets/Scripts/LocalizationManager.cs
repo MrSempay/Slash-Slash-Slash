@@ -138,6 +138,16 @@ public class LocalizationManager
             { ENUM.Russian, "Цена:" },
             { ENUM.Spanish, "muda-da?" }
         });
+        localization.Add("Style Rank:", new Dictionary<ENUM, string>() {
+            { ENUM.English, "Style rank:" },
+            { ENUM.Russian, "Ранг стиля:" },
+            { ENUM.Spanish, "muda-da?" }
+        });
+        localization.Add("Score:", new Dictionary<ENUM, string>() {
+            { ENUM.English, "Score:" },
+            { ENUM.Russian, "Очки:" },
+            { ENUM.Spanish, "muda-da?" }
+        });
     }
 
     public string GetText(string key)

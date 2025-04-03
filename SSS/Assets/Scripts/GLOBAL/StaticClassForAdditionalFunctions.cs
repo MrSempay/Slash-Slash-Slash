@@ -319,4 +319,17 @@ public static class StaticClassForAdditionalFunctions : object
             Debug.Log($"Method '{nameFunction}' not found in type '{objectWhereShouldBeFunction.GetType().FullName}'");
         }
     }
+
+    public static bool AnimationExists(string animationName, Animator animator)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == animationName)
+            {
+                return true; // Анимация найдена
+            }
+        }
+        return false; // Анимация не найдена
+    }
+
 }

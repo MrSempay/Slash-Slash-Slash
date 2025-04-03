@@ -161,7 +161,10 @@ public class DialogueParser : MonoBehaviour
     {
         if (index >= 0 && index < dialogueLines.Count)
         {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _slowAppearingTextByCharacterCoroutine);
+            if (_slowAppearingTextByCharacterCoroutine != null)
+            {
+                CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _slowAppearingTextByCharacterCoroutine);
+            }
 
             string fullPathToIcon = _nameIconsUnitFolder + dialogueLines[index].characterName;
             Sprite iconUnit = Resources.Load<Sprite>(fullPathToIcon);
@@ -196,7 +199,7 @@ public class DialogueParser : MonoBehaviour
        
         for (int i = 0; i < _currentCharacterPosition; i++)
         {
-            if (_currentCharacterPosition < text.Length) // бывают ситуации, когда текст другого языка короче по символам, чем текст на предыдущем языке, чтоб не выйти за рамки
+            if (i < text.Length) // бывают ситуации, когда текст другого языка короче по символам, чем текст на предыдущем языке, чтоб не выйти за рамки
                                                          // строки, добавляем эту проверку
                 _textMeshProUnitPhrase.text += text[i]; // Добавляем символ к тексту
         }

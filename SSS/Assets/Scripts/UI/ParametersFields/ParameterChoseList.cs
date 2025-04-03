@@ -6,10 +6,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using static StaticClassForAdditionalFunctions;
 
 public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunctions
 {
     private string _currentTextValue;
+    private ENUM _currentValue;
     private string _nameInvokingFunction;
 
     [SerializeField] private TextEdit _textButton;
@@ -17,7 +19,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     [NonSerialized] public int _indexCurrentString = 0;
 
     public string _baseStringOfText;
-    public List<object> listChosing;
+    public List<ENUM> listChosing;
     public string selfName;
 
     public bool awakeWasCalledAlready { get; set; }
@@ -29,7 +31,18 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         {
             _currentTextValue = value;
             _textButton.Text = value; // типа чтоб какую-нибудь приставку могли писать, а изменять только смысловое слово, по типу:
-                                                              // "ENUM: " + "Horizontal"
+                                      // "ENUM: " + "Horizontal"
+        }
+    }
+
+    public ENUM CurrentValue
+    {
+        get { return _currentValue; }
+        set
+        {
+            _currentValue = value;
+            object[] parameters = new object[] { value, (RectTransform)transform };
+            CallFunctionByName(_nameInvokingFunction, EventBus.Instance, parameters);
         }
     }
 
@@ -58,9 +71,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     {
         //Debug.Log("2");
         CurrentTextValue = listChosing[_indexCurrentString].ToString();
-
-        object[] parameters = new object[] { listChosing[_indexCurrentString], (RectTransform)transform };
-        StaticClassForAdditionalFunctions.CallFunctionByName(_nameInvokingFunction, EventBus.Instance, parameters);
+        CurrentValue = listChosing[_indexCurrentString];
         _indexCurrentString++;
         if (_indexCurrentString == listChosing.Count) _indexCurrentString = 0;
     }

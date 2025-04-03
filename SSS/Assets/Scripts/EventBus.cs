@@ -2,33 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static ScoreManager;
 using static StaticClassForAdditionalFunctions;
 
 
 public class EventBus : MonoBehaviour, IReadOnlyEventBus
 {
-
-    //public Dictionary<RectTransform, List<UnityEvent>> eventsAttachedToObjects;
-
-    //public void AddEventToBus(RectTransform rectTransformTrigger, UnityEvent mda)
-    //{
-    //    if (eventsAttachedToObjects.ContainsKey(rectTransformTrigger))
-    //    {
-    //        foreach (var item in rectTransformTrigger)
-    //        {
-    //            if (item == mda)
-    //            {
-    //                return;
-    //            }
-    //        }
-    //        eventsAttachedToObjects[rectTransformTrigger].Add(mda);
-    //    }
-    //    else
-    //    {
-    //        eventsAttachedToObjects[rectTransformTrigger] = new List<UnityEvent>();
-    //        eventsAttachedToObjects[rectTransformTrigger].Add(mda);
-    //    }
-    //}
     public static EventBus _instance;
 
     public static EventBus Instance
@@ -72,6 +51,10 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<ENUM, RectTransform> ValueOrientationWasChanged { get; } = new();
 
 
+    public UnityEvent<int> OnKillKomboWasChanged { get; } = new();
+    public UnityEvent<STYLE_RANK> OnRankWasChanged { get; } = new();
+
+
     public void TriggerDoorWasDestroyed(bool wasDestroyed) { DoorWasDestroyed.Invoke(wasDestroyed); }
 
     public void TriggerToggleSonicOfSettingsMenu(bool wasToggled, RectTransform rectTransformToggle) { ToggleSonicOfSettingsMenuWasToggled.Invoke(wasToggled, rectTransformToggle); }
@@ -87,4 +70,6 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void TriggerParameterLanguage(ENUM value, RectTransform rectTransformToggle) { ValueLanguageWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterOrientation(ENUM value, RectTransform rectTransformToggle) { ValueOrientationWasChanged.Invoke(value, rectTransformToggle); }
 
+    public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }
+    public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }
 }

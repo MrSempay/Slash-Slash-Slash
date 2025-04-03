@@ -2,58 +2,47 @@
     "allTogglesData": [
         {
             "selfName": "ToggleParameterCameraShaking",
-            "IsToggled": true,
-            "currentLanguage": 0
+            "IsToggled": true
         },
         {
             "selfName": "ToggleParameterVibration",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": true
         },
         {
             "selfName": "Russian",
-            "IsToggled": true,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "English",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "Spanish",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "ToggleOneWayText (3)",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "ToggleOneWayText (4)",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "ToggleGameOfSettingsMenu",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "ToggleSonicOfSettingsMenu",
-            "IsToggled": true,
-            "currentLanguage": 0
+            "IsToggled": false
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": true
         },
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
-            "IsToggled": false,
-            "currentLanguage": 0
+            "IsToggled": false
         }
     ],
     "allSlidersData": [
@@ -63,7 +52,7 @@
         },
         {
             "selfName": "ParameterVolumEffects",
-            "CurrentValue": 1.0
+            "CurrentValue": 0.0
         },
         {
             "selfName": "ParameterBrightness",
@@ -73,7 +62,8 @@
     "allChoseListsData": [
         {
             "selfName": "ParameterOrientation",
-            "CurrentTextValue": "Horizontal",
+            "CurrentTextValue": "Vertical",
+            "CurrentValue": 4,
             "_indexCurrentString": 0
         }
     ]

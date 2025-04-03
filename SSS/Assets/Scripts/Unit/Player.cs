@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 
 public class Player : Unit
@@ -17,6 +18,7 @@ public class Player : Unit
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
     [SerializeField] private float _currentExperience = 0;
     [SerializeField] private float _currentMoney = 0;
+    [SerializeField] private int _currentScore = 0;
     [SerializeField] private int _currentLevel = 0;
     [SerializeField] private int _currentKillCombo = 0;
     [SerializeField] private int _currentStamina = 0;
@@ -31,6 +33,7 @@ public class Player : Unit
 
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
+    public ProgressBar progerssBarStyleRank; // Скрипт зоны для атаки
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
@@ -42,7 +45,6 @@ public class Player : Unit
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
-    public float timeZeroizeKillComboTicks; // время для сбрасывания текущего комбо за убийства
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
     public float experienceToNextLevel;
@@ -55,6 +57,7 @@ public class Player : Unit
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
     public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе 
+    public event Action<int> OnScoreChanged;       // Событие для изменения очков
 
     public float CurrentExperience
     {
@@ -85,6 +88,17 @@ public class Player : Unit
 
             // Вызываем событие, если есть подписчики
             OnMoneyChanged?.Invoke(_currentMoney);
+        }
+    }
+    public int CurrentScore
+    {
+        get { return _currentScore; }
+        set
+        {
+            _currentScore = value;
+
+            // Вызываем событие, если есть подписчики
+            OnScoreChanged?.Invoke(_currentScore);
         }
     }
 
@@ -182,8 +196,11 @@ public class Player : Unit
         CurrentExperience = CurrentExperience;
         CurrentKillCombo = CurrentKillCombo;
         CurrentLevel = CurrentLevel;
+        CurrentScore = CurrentScore;
         CurrentMoney = CurrentMoney;
         CountAccessToUpInSchool = CountAccessToUpInSchool;
+
+        ScoreManager.Instance.Initialize(this);
 
         localPositionCamera = _mainCameraTransform.localPosition;
         foreach (RectTransform spellTransform in spellPanelTransform)
@@ -235,31 +252,34 @@ public class Player : Unit
         //_fsm.OnDisable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
     }
 
-    protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money)
+    protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score)
     {
+
         // Останавливаем предыдущую корутину (если она существует)
-        if (_zeroizeKillComboTicksCoroutine != null)
-        {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeKillComboTicksCoroutine);
-        }
+        //if (_zeroizeKillComboTicksCoroutine != null)
+        //{
+        //    CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeKillComboTicksCoroutine);
+        //}
 
-        // Запускаем новую корутину
-        _zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
+        //// Запускаем новую корутину
+        //_zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
 
 
-        CurrentExperience += experience * (1 + CurrentKillCombo * (increasingGettingExperienceByKillComboTickPercentage / 100));
-        CurrentMoney += money * (1 + CurrentKillCombo * (increasingGettingMoneyByKillComboTickPercentage / 100));
-        CurrentKillCombo++;
+        CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
+        CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
+        CurrentScore += score * ScoreManager.Instance.styleMultiplier;
+        ScoreManager.Instance.UpCombo(comboFromKill);
+        //CurrentKillCombo++;
     }
 
-    IEnumerator ZeroizeKillComboTicks()
-    {
-        yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
+    //IEnumerator ZeroizeKillComboTicks()
+    //{
+    //    yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
 
-        // Сбрасываем комбо после задержки
-        CurrentKillCombo = 0;
-        _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
-    }
+    //    // Сбрасываем комбо после задержки
+    //    CurrentKillCombo = 0;
+    //    _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
+    //}
     IEnumerator RecoverStaminaPoint()
     {
         while (true)

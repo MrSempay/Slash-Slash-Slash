@@ -13,10 +13,8 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
     public override void Enter()
     {
         Debug.Log("Equipment inside shop state [ENTER]");
-        Debug.Log(equipment.selfSprite.sprite);
         equipment.transform.localPosition = equipment.startLocalPosition;
         equipment.selfSprite.sortingOrder = 11; // ряд UI элементов могут быть над снаряжением, пока то в магазине
-        Debug.Log(equipment.selfSprite.sprite);
     }
 
     public override void Exit()

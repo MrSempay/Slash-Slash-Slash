@@ -42,10 +42,11 @@ public class Treasury : Building
             SpriteRenderer spriteRenderer = newEquipment.GetComponent<SpriteRenderer>();
             string fullPath = folderImagesOfEquipment + randomEquipmentName;
             Sprite spellSprite = Resources.Load<Sprite>(fullPath);
-            spriteRenderer.sprite = spellSprite;
+            //spriteRenderer.sprite = spellSprite;
 
             // ÍÀÑÒĞÀÈÂÀÅÌ ÊÎÌÏÎÍÅÍÒ Equipment (ÑÎÁÑÍÀ ÅÃÎ ÑÊĞÈÏÒ) Ó İÊÇÅÌÏËßĞÀ ÑÍÀĞßÆÅÍÈß
             Ammunition scriptOfEquipment = newEquipment.GetComponent<Ammunition>();
+            scriptOfEquipment.Awake();
             scriptOfEquipment.equipmentName = randomEquipmentName;
             scriptOfEquipment.sprite = spellSprite;
             scriptOfEquipment.isEquipmentASpell = false; // ïîêà ÷òî äëÿ ñïåëîâ òîëüêî

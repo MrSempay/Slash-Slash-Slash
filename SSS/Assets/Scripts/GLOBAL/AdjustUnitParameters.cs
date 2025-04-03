@@ -18,7 +18,7 @@ public static class AdjustUnitParameters
                 { C.DK.experienceToNextLevel, 200 },
                 { C.DK.experienceFromKill, 0 },
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
-                { C.DK.timeZeroizeKillComboTicks, 1f },
+                //{ C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.nameSoundGettingDamage, "PlayerGotDamage" }, // и какого хрена я это константой не делаю... шиза
                 { C.DK.increasingGettingExperienceByKillComboTickPercentage, 20f },
                 { C.DK.increasingGettingMoneyByKillComboTickPercentage, 20f },
@@ -36,12 +36,13 @@ public static class AdjustUnitParameters
         {
             C.DK.MeleeEnemy, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 150 },
+                { C.DK.healthMax, 25 },
                 { C.DK.damageReduction, 150 },
                 { C.DK.speed, 8 },
                 { C.DK.jumpForce, 14 },
                 { C.DK.moneyFromKill, 50 },
                 { C.DK.experienceFromKill, 20 },
+                { C.DK.scoreFromKill, 50 },
                 { C.DK.som, 14 },
                 { C.DK.damage, 5 },
                 { C.DK.callDownMeleeAttack, 0.5f }

@@ -12,7 +12,7 @@ public class Equipment : MonoBehaviour
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
     [NonSerialized] public SpriteRenderer selfSprite; // свой спрайт
-    [NonSerialized] public Sprite sprite; // свой спрайт
+    [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public Player player;
@@ -53,7 +53,7 @@ public class Equipment : MonoBehaviour
         }
     }
 
-    protected virtual void Awake()
+    public virtual void Awake()
     {
 
         transform = GetComponent<RectTransform>();
@@ -72,18 +72,15 @@ public class Equipment : MonoBehaviour
     }
     protected virtual void Start()
     {
-        if (AnimationExists(equipmentName))
+        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator))
         {
             animator.Play(equipmentName); // Воспроизводим анимацию
         }
         else
         {
-            Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
-            Debug.Log(sprite);
-            Debug.Log(selfSprite);
-            Debug.Log(selfSprite.sprite);
+            animator.enabled = false;
+            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
             selfSprite.sprite = sprite;
-            Debug.Log(selfSprite.sprite);
         }
         if (BuildingWhereEquipmentIs) ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала
         _fsm.SetState<FsmStateEquipmentInsideShop>();
@@ -94,25 +91,16 @@ public class Equipment : MonoBehaviour
     protected virtual void Update()
     {
         _fsm.Update();
-        Debug.Log(sprite);
-        if (selfSprite.sprite == null)
-        {
-            selfSprite.sprite = sprite;
-        }
+        //Debug.Log("Спрайт " + sprite);
+        //Debug.Log("Эх " + selfSprite);
+        //Debug.Log("Спрайт спрайта " + selfSprite.sprite);
+        //Debug.Log("Дичь " + selfSprite.sprite.GetType());
+        //Debug.Log("Дичь1 " + selfSprite.sprite.name);
+        //selfSprite.sprite = sprite;
     }
 
     // Функция для проверки существования анимации в AnimatorController
-    private bool AnimationExists(string animationName)
-    {
-        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
-        {
-            if (clip.name == animationName)
-            {
-                return true; // Анимация найдена
-            }
-        }
-        return false; // Анимация не найдена
-    }
+
 
     private void FixedUpdate()
     {

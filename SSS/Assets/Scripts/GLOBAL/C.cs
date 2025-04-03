@@ -29,7 +29,9 @@ public class C
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
+        public const string PrefabAppearingSprite = "Prefabs/UI/AppearingSprite";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
+        public const string PathFolderImagesForAppearingMessages = "Images/UI/AppearingMessages/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";
 
         // Категории предметов
@@ -87,6 +89,7 @@ public class C
         public const string moneyFromKill = "moneyFromKill";
         public const string experienceToNextLevel = "experienceToNextLevel";
         public const string experienceFromKill = "experienceFromKill";
+        public const string scoreFromKill = "scoreFromKill";
         public const string increasingGettingExperienceByKillComboTickPercentage = "increasingGettingExperienceByKillComboTickPercentage";
         public const string increasingGettingMoneyByKillComboTickPercentage = "increasingGettingMoneyByKillComboTickPercentage";
         public const string increasingParametersByLevelUpPercentage = "increasingParametersByLevelUpPercentage";

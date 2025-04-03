@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spell : Equipment
 {
-    protected override void Awake()
+    public override void Awake()
     {
         base.Awake();
     }

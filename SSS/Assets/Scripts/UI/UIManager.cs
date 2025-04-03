@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static ScoreManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextEdit currentLevelUI;
     [SerializeField] private TextEdit currentLevelUpUI;
     [SerializeField] private TextEdit currentComboUI;
+    [SerializeField] private TextEdit currentRankUI;
+    [SerializeField] private TextEdit CurrentScoreUI;
     [SerializeField] private TextEdit currentMoneyUI;
     [SerializeField] private TextEdit currentExperienceUI;
     [SerializeField] private Player player;
@@ -18,7 +21,11 @@ public class UIManager : MonoBehaviour
         player.OnMoneyChanged += ChangeMoneyTextUI;
         player.OnLevelChanged += ChangeLevelTextUI;
         player.OnLevelUpChanged += ChangeLevelUpTextUI;
-        player.OnKillComboChanged += ChangeComboTextUI;
+        player.OnScoreChanged += ChangeScoreTextUI;
+        //player.OnKillComboChanged += ChangeComboTextUI;
+
+        EventBus.Instance.OnKillKomboWasChanged.AddListener(ChangeComboTextUI);
+        EventBus.Instance.OnRankWasChanged.AddListener(ChangeRankTextUI);
     }
     public void OpenOrClosePlayMenu()
     {
@@ -56,6 +63,14 @@ public class UIManager : MonoBehaviour
     private void ChangeComboTextUI(int combo)
     {
         currentComboUI.SetNotLocalizableText(combo.ToString());
+    }   
+    private void ChangeRankTextUI(STYLE_RANK rank)
+    {
+        currentRankUI.SetNotLocalizableText(rank.ToString());
+    }  
+    private void ChangeScoreTextUI(int score)
+    {
+        CurrentScoreUI.SetNotLocalizableText(score.ToString());
     }
 
     private void OnDestroy()

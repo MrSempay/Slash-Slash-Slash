@@ -467,6 +467,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &13945668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &21913411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1249,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &51881213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 27.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &52213404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1942,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &74615351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (45)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &84392647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2793,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &128231303
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &130117252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3301,6 +3545,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &173114661
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (34)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &174441880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,6 +3954,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &179147868
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (33)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &197821973
 GameObject:
   m_ObjectHideFlags: 0
@@ -4596,6 +4962,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &249714189
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.97721
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &255376303
 GameObject:
   m_ObjectHideFlags: 0
@@ -7653,6 +8080,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &369833886
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 61.005226
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &373732581
 GameObject:
   m_ObjectHideFlags: 0
@@ -8459,6 +8947,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &425756285
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (49)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &426721185
 GameObject:
   m_ObjectHideFlags: 0
@@ -9186,6 +9735,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &451057002
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (35)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &451335350
 GameObject:
   m_ObjectHideFlags: 0
@@ -9905,6 +10515,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &508374362
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 30.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &508541501
 GameObject:
   m_ObjectHideFlags: 0
@@ -11329,6 +12000,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &545528301
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &554624838
 GameObject:
   m_ObjectHideFlags: 0
@@ -11503,6 +12235,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &559965422
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (46)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &564616564
 GameObject:
   m_ObjectHideFlags: 0
@@ -11590,6 +12383,128 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &569873931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 27.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &573606416
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &575298309
 GameObject:
   m_ObjectHideFlags: 0
@@ -11677,6 +12592,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &577345414
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 53.395233
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &578622818
 GameObject:
   m_ObjectHideFlags: 0
@@ -12135,6 +13111,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &599358700
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 38.66387
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &600260986
 GameObject:
   m_ObjectHideFlags: 0
@@ -16374,6 +17411,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &744519420
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 44.126118
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &753536193
 GameObject:
   m_ObjectHideFlags: 0
@@ -17178,6 +18276,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2207320981002851815, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2387148894939418417, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_Name
       value: ToggleParameterVibration
@@ -17346,6 +18448,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Money: '
       objectReference: {fileID: 0}
+    - target: {fileID: 6220716876910579119, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6627473865986231975, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -17480,10 +18586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1170272415049676526, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 1693076538}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
 --- !u!1 &781877261 stripped
@@ -17931,6 +19034,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &799842267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 46.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &807612656
 GameObject:
   m_ObjectHideFlags: 0
@@ -19251,6 +20415,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &861496138
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (31)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &861879953
 GameObject:
   m_ObjectHideFlags: 0
@@ -19448,6 +20673,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &865230781
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (32)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &874464301
 GameObject:
   m_ObjectHideFlags: 0
@@ -20231,6 +21517,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &940037580
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (36)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &940439407
 GameObject:
   m_ObjectHideFlags: 0
@@ -21453,6 +22800,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &991643292
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (48)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &994571915
 GameObject:
   m_ObjectHideFlags: 0
@@ -21801,6 +23209,128 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1022550684
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (43)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1023710496
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (51)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1029527916
 GameObject:
   m_ObjectHideFlags: 0
@@ -22323,6 +23853,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1059520331
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (50)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1059890780
 GameObject:
   m_ObjectHideFlags: 0
@@ -22576,6 +24167,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1064765233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1067184283
 GameObject:
   m_ObjectHideFlags: 0
@@ -23430,6 +25082,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1099181344
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (53)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1101848390
 GameObject:
   m_ObjectHideFlags: 0
@@ -24637,6 +26350,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1157580532
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.932785
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1166440811
 GameObject:
   m_ObjectHideFlags: 0
@@ -25333,6 +27107,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1194013912
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 61.005226
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1195686774
 GameObject:
   m_ObjectHideFlags: 0
@@ -26464,6 +28299,128 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1228593889
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1229053395
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 28.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1234455353
 GameObject:
   m_ObjectHideFlags: 0
@@ -26672,6 +28629,67 @@ Transform:
   - {fileID: 1152405827}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1238388476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (40)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1238683459
 GameObject:
   m_ObjectHideFlags: 0
@@ -26759,6 +28777,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1247059815
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.932785
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1256124605
 GameObject:
   m_ObjectHideFlags: 0
@@ -27784,6 +29863,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1309152684
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 38.66387
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1312891822
 GameObject:
   m_ObjectHideFlags: 0
@@ -27817,6 +29957,128 @@ Transform:
   - {fileID: 142750997}
   m_Father: {fileID: 1579902831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1315813854
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 49.85632
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1316623936
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 29.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1323211086
 GameObject:
   m_ObjectHideFlags: 0
@@ -28298,6 +30560,189 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &1348763507
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (41)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1350100671
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1355435346
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (47)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1370194694
 GameObject:
   m_ObjectHideFlags: 0
@@ -29934,6 +32379,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1456988188
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.942787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1458599109
 GameObject:
   m_ObjectHideFlags: 0
@@ -30354,6 +32860,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1477470129
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (38)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1487094999
 GameObject:
   m_ObjectHideFlags: 0
@@ -31630,6 +34197,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1548360634
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (52)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1552468103
 GameObject:
   m_ObjectHideFlags: 0
@@ -31891,6 +34519,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1560226062
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1562539832
 GameObject:
   m_ObjectHideFlags: 0
@@ -32294,6 +34983,128 @@ MonoBehaviour:
   _levelBuildScript: {fileID: 2131537743}
   school: {fileID: 1373288660}
   treasury: {fileID: 1532314005}
+--- !u!1001 &1583386727
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+--- !u!1001 &1592699364
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (37)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1595921863
 GameObject:
   m_ObjectHideFlags: 0
@@ -32776,11 +35587,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!224 &1619996119 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1170272415049676526, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
-  m_PrefabInstance: {fileID: 781877260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1620500687
 GameObject:
   m_ObjectHideFlags: 0
@@ -34260,50 +37066,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1693076536
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1693076538}
-  - component: {fileID: 1693076537}
-  m_Layer: 7
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1693076537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693076536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1693076538
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693076536}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.919426, y: -0.6957999, z: 1}
-  m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1619996119}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1695261838
 GameObject:
   m_ObjectHideFlags: 0
@@ -35565,6 +38327,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1746955527
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.721087
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2111979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1748295305
 GameObject:
   m_ObjectHideFlags: 0
@@ -37028,6 +39851,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1831464460
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.148907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1313725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1835725464
 GameObject:
   m_ObjectHideFlags: 0
@@ -37747,6 +40631,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1879844435
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1880578433
 GameObject:
   m_ObjectHideFlags: 0
@@ -38008,6 +40953,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1895064382
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1895419874
 GameObject:
   m_ObjectHideFlags: 0
@@ -39623,6 +42629,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1951095618
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 63.799107
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1579809
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1969041172
 GameObject:
   m_ObjectHideFlags: 0
@@ -45714,6 +48781,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1985554623
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.516125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &1998260230
 GameObject:
   m_ObjectHideFlags: 0
@@ -45888,6 +49016,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2006907984
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (44)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &2011587634
 GameObject:
   m_ObjectHideFlags: 0
@@ -47191,6 +50380,67 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 222
   m_TargetDisplay: 0
+--- !u!1001 &2071123165
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534148408775844546, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.538914
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1845894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534268453758617834, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5aa5e60e5938be4580215cde18caa01, type: 3}
 --- !u!1 &2074367244
 GameObject:
   m_ObjectHideFlags: 0
@@ -48509,6 +51759,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &3848576230947646998
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 447743872920223485, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_Name
+      value: AppearingSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 107.814285
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.431962
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873246386336921023, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f2e8634055aeb4845b686e37b3035a64, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -48519,6 +51826,7 @@ SceneRoots:
   - {fileID: 1401284075}
   - {fileID: 1373288659}
   - {fileID: 1532314004}
+  - {fileID: 3848576230947646998}
   - {fileID: 763777983}
   - {fileID: 32137013}
   - {fileID: 1460606870}
@@ -48533,3 +51841,57 @@ SceneRoots:
   - {fileID: 1388389278}
   - {fileID: 1061735925}
   - {fileID: 281526884}
+  - {fileID: 1194013912}
+  - {fileID: 577345414}
+  - {fileID: 1315813854}
+  - {fileID: 1951095618}
+  - {fileID: 369833886}
+  - {fileID: 128231303}
+  - {fileID: 1895064382}
+  - {fileID: 1316623936}
+  - {fileID: 1879844435}
+  - {fileID: 508374362}
+  - {fileID: 51881213}
+  - {fileID: 1157580532}
+  - {fileID: 1247059815}
+  - {fileID: 569873931}
+  - {fileID: 1229053395}
+  - {fileID: 1309152684}
+  - {fileID: 1746955527}
+  - {fileID: 599358700}
+  - {fileID: 1064765233}
+  - {fileID: 13945668}
+  - {fileID: 799842267}
+  - {fileID: 249714189}
+  - {fileID: 1985554623}
+  - {fileID: 744519420}
+  - {fileID: 865230781}
+  - {fileID: 861496138}
+  - {fileID: 1583386727}
+  - {fileID: 1228593889}
+  - {fileID: 545528301}
+  - {fileID: 2071123165}
+  - {fileID: 1350100671}
+  - {fileID: 1456988188}
+  - {fileID: 1477470129}
+  - {fileID: 1592699364}
+  - {fileID: 940037580}
+  - {fileID: 451057002}
+  - {fileID: 173114661}
+  - {fileID: 179147868}
+  - {fileID: 559965422}
+  - {fileID: 74615351}
+  - {fileID: 2006907984}
+  - {fileID: 1022550684}
+  - {fileID: 1560226062}
+  - {fileID: 1348763507}
+  - {fileID: 1238388476}
+  - {fileID: 1099181344}
+  - {fileID: 1548360634}
+  - {fileID: 1023710496}
+  - {fileID: 1059520331}
+  - {fileID: 425756285}
+  - {fileID: 991643292}
+  - {fileID: 1355435346}
+  - {fileID: 573606416}
+  - {fileID: 1831464460}

@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using static Unit;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -40,6 +41,8 @@ public abstract class Unit : MonoBehaviour
     public float speed; // скорость
     public float damage; // урон
     public float moneyFromKill; // деньги за убийство юнита
+    public int comboFromKill = 1; // комбо за убийство юнита. По умолчанию 1. Подразумеваю, что с развитием (???) игры будут добавляться враги, за которых можно дать и по-больше
+    public int scoreFromKill; // очки за убийство юнита
     public float experienceFromKill; // опыт за убийство юнита
 
     public virtual float CurrentHealth
@@ -110,7 +113,7 @@ public abstract class Unit : MonoBehaviour
                 if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
                                                                                 // с помощью какого-нибудь интерфейса
                 {
-                    unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(experienceFromKill, moneyFromKill);
+                    unitFromWhoWasGottenDamage.GetExperienceAndMoneyFromKillingUnit(experienceFromKill, moneyFromKill, comboFromKill, scoreFromKill);
                 }
             }
             CurrentHealth = 0;
@@ -278,10 +281,9 @@ public abstract class Unit : MonoBehaviour
                 Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
             }
         }
-
     }
 
-    protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money) { }
+    protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score) { }
 
     public virtual void OnDestroy()
     {
