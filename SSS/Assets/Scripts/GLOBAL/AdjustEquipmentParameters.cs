@@ -11,14 +11,20 @@ public static class AdjustEquipmentParameters : object
         { "SomeSpell1", new Dictionary<string, object>() {
             { C.DK.equipmentName, "SomeSpell1" },
             { C.DK.cost, 0 },
+            { C.DK.timeCallDown, 5 },
+            { C.DK.amountUpCombo, 10 },
         } },
         { "SomeSpell2", new Dictionary<string, object>() {
             { C.DK.equipmentName, "SomeSpell2" },
             { C.DK.cost, 0 },
+            { C.DK.timeCallDown, 5 },
+            { C.DK.amountUpCombo, 10 },
         } },
         { "SomeSpell3", new Dictionary<string, object>() {
             { C.DK.equipmentName, "SomeSpell3" },
             { C.DK.cost, 0 },
+            { C.DK.timeCallDown, 5 },
+            { C.DK.amountUpCombo, 10 },
         } }
     };
 
@@ -72,12 +78,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.Sword, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.Knife, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
                                     { C.DK.cost, 20 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
@@ -85,12 +91,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.BigSword, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
                                     { C.DK.cost, 70 } } },
                             {
                                 C.DK.Blade, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
                                     { C.DK.cost, 70 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
@@ -98,12 +104,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.SaintDragonSword, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
                                     { C.DK.cost, 170 } } },
                             {
                                 C.DK.WitchBlade, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
                                     { C.DK.cost, 170 } } } } }, } },
             {
                 C.DK.Armor, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
@@ -114,12 +120,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.NormalArmor1, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.NormalArmor2, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
                                     { C.DK.cost, 20 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
@@ -127,12 +133,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.BigArmor1, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
                                     { C.DK.cost, 70 } } },
                             {
                                 C.DK.BigArmor2, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 50f } } },
                                     { C.DK.cost, 70 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
@@ -140,12 +146,12 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.LegendaryArmor1, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
                                     { C.DK.cost, 170 } } },
                             {
                                 C.DK.LegendaryArmor2, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 100f } } },
                                     { C.DK.cost, 170 } } } } }, } },
             {
                 C.DK.Accessories, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
@@ -156,12 +162,14 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.DeathBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 10 } } },
                                     { C.DK.cost, 50 } } },
                             {
                                 C.DK.LifeBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 10 } } },
                                     { C.DK.cost, 50 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
@@ -169,12 +177,14 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.RedBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 20 } } },
                                     { C.DK.cost, 170 } } },
                             {
                                 C.DK.GreenBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 20 } } },
                                     { C.DK.cost, 170 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
@@ -182,12 +192,14 @@ public static class AdjustEquipmentParameters : object
                             {
                                 C.DK.MathBook, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 30 } } },
                                     { C.DK.cost, 270 } } },
                             {
                                 C.DK.TjanulDedRepku, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunition, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.staminaMax, 150f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentMinimumAmountCombo, 30 } } },
                                     { C.DK.cost, 270 } } } } }, } }
 
 
@@ -251,11 +263,11 @@ public static class AdjustEquipmentParameters : object
         return ammunitionNames[randomIndex];                
     }
 
-    public static void CallSpellByName(Spell spell)
+    public static void CallActionByName(Equipment scriptEquipment, int amountUpCombo, Unit whoCallAction)
     {
         // Получаем тип текущего объекта (MyClass)
-        Type type = spell.GetType();
-        string nameOfSpell = spell.equipmentName;
+        Type type = scriptEquipment.GetType();
+        string nameOfSpell = scriptEquipment.equipmentName;
 
         // Получаем информацию о методе с указанным именем
         MethodInfo methodInfo = type.GetMethod(nameOfSpell);
@@ -264,7 +276,23 @@ public static class AdjustEquipmentParameters : object
         if (methodInfo != null)
         {
             // Вызываем метод
-            methodInfo.Invoke(spell, null); // this - экземпляр объекта, null - аргументы (если есть)
+            ScoreManager.Instance.UpCombo((int)(amountUpCombo * scriptEquipment.multiplierFreshness));
+            ScoreManager.Instance.UpActionCombo(1, nameOfSpell);
+            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed);
+
+            scriptEquipment.StartCallDown();
+
+            if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
+            {
+                ScoreManager.Instance.AchivementMasterOfSkills();
+            }
+            
+            scriptEquipment.CurrentFreshnessCount++;
+
+            object[] parameters =  new object[] { whoCallAction }; // по идее можно было бы в самом скрипте спела в функции спела ссылаться на игрока, но предполагаем, что в будущем (???)
+                                                                    // кастовать спелы сможет не только игрок                                                                        
+
+            methodInfo.Invoke(scriptEquipment, parameters); // this - экземпляр объекта, null - аргументы (если есть)
         }
         else
         {

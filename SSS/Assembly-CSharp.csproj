@@ -67,11 +67,13 @@
     <Compile Include="Assets\Scripts\UI\ToggleFixedOneWay.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelBuilder\LevelBuildLevel1.cs" />
     <Compile Include="Assets\Scripts\TransformIntPair.cs" />
     <Compile Include="Assets\Scripts\FsmState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringWeaponInfoPair.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateTranslatingEquipment.cs" />
+    <Compile Include="Assets\Scripts\GLOBAL\AdjustScoreManagerParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateDied.cs" />
     <Compile Include="Assets\Scripts\UI\TogglesGroup.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript\Level1Scenario.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingOpened.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentSelected.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\Move_Player.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
@@ -163,7 +167,6 @@
     <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
     <Compile Include="Assets\Scripts\EventBus.cs" />
-    <Compile Include="Assets\Scripts\Levels\LevelBuildScript.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringStringWeaponInfoDictionaryPair.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateJumpEnemy.cs" />

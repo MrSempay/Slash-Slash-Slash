@@ -13,6 +13,7 @@ using static UnityEngine.LightTransport.IProbeIntegrator;
 public static class StaticClassForAdditionalFunctions : object
 {
     public enum ENUM { English, Russian, Spanish, Horizontal, Vertical }
+    public enum TYPES_INCREASING { Percentage, Absolute }
 
     // –ассчитывает угол наклона пр€мой между двум€ точками
     public static float GetAngle(Vector2 point1, Vector2 point2)
@@ -114,7 +115,7 @@ public static class StaticClassForAdditionalFunctions : object
             object parameterOrPropertyValue = kvp.Value;
 
             // ѕолучаем поле с именем, соответствующим ключу словар€
-            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
+            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
             if (fieldInfo != null)
             {
@@ -131,7 +132,7 @@ public static class StaticClassForAdditionalFunctions : object
             }
             else
             {
-                PropertyInfo propertyInfo = type.GetProperty(parameterOrPropertyName);
+                PropertyInfo propertyInfo = type.GetProperty(parameterOrPropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
                 if (propertyInfo != null && propertyInfo.CanWrite) //”бедимс€, что свойство существует и доступно дл€ записи
                 {
                     // ѕытаемс€ преобразовать значение к типу свойства

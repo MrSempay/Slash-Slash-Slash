@@ -6,7 +6,8 @@ using static AdjustEquipmentParameters; // ОФИГЕТЬ, ОКАЗЫВАЕТ ВОТ ТАК МОЖНО
 public class Ammunition : Equipment
 {
     [NonSerialized] public EquipmentChance categoryAndRarityTypesOfEquipment;// структура для того чтоб знать к каким разрезам относится предмет, ибо у нас их много. Присваивается значение при старте
-    [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunition = new Dictionary<string, float>();
+    [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentage = new Dictionary<string, float>();
+    [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunitionAbsolute = new Dictionary<string, float>();
 
     public override void Awake()
     {

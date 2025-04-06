@@ -17,6 +17,7 @@ public static class AdjustUnitParameters
                 { C.DK.moneyFromKill, 0 },
                 { C.DK.experienceToNextLevel, 200 },
                 { C.DK.experienceFromKill, 0 },
+                { C.DK.comboOneHitKillMultiplayer, 10f },
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.nameSoundGettingDamage, "PlayerGotDamage" }, // и какого хрена я это константой не делаю... шиза

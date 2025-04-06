@@ -87,7 +87,10 @@ public class FsmStatePlayer : FsmStateUnit
     // Обрабатываем свайп
     public void HandleSwipe(Vector3 swipe)
     {
-        // Определяем направление свайпа
+        player.wasEnemyDamagedByLastSwipe = false;
+
+        ScoreManager.Instance.UpActionCombo();
+
         if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
         {
             // Свайп влево или вправо

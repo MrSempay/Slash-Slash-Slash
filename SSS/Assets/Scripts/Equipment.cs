@@ -1,12 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Equipment;
+using static ScoreManager;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Equipment : MonoBehaviour
 {
     private Building _buildingWhereEquipmentIs; // здание, в котором находится снаряжение
     private bool _wasSold = false; // по умолчанию считаем, что все предметы находятся у продавца (в здании)
+
 
     [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
@@ -21,12 +25,77 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public string equipmentName;
     [NonSerialized] public Animator animator;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
+    [NonSerialized] public bool isReady = true;
 
     public BoxCollider2D selfCollider;
+    public int amountUpCombo;
+    public float timeCallDown;
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
     new public RectTransform transform;
+
+#region Freshness Mechanic
+
+    private FRESHNESS _currentFreshness;
+    private int _currentFreshnessCount;
+
+    public enum FRESHNESS { Fresh, Worn, Dull }
+    public float multiplierFreshness = 1;
+
+    [Serializable]
+    public struct FreshnessProperties
+    {
+        public int min;
+        public int max;
+        public float multiplierFreshness;
+    }
+
+    public static Dictionary<FRESHNESS, FreshnessProperties> freshnessProperties = new Dictionary<FRESHNESS, FreshnessProperties>
+    {
+        { FRESHNESS.Fresh, new FreshnessProperties { min = 0, max = 1, multiplierFreshness = 1f } },
+        { FRESHNESS.Worn, new FreshnessProperties { min = 2, max = 3, multiplierFreshness = 0.5f } },
+        { FRESHNESS.Dull, new FreshnessProperties { min = 3, max = int.MaxValue, multiplierFreshness = 0.3f } },
+    };
+
+    public FRESHNESS CurrentFreshness
+    {
+        get { return _currentFreshness; }
+        set
+        {
+            _currentFreshness = value;
+
+            multiplierFreshness = freshnessProperties[value].multiplierFreshness;
+        }
+    }
+    public int CurrentFreshnessCount
+    {
+        get { return _currentFreshnessCount; }
+        set
+        {
+            _currentFreshnessCount = value;
+            SetFresh(value);
+        }
+    }
+
+    private void SetFresh(int value)
+    {
+        foreach (var properties in freshnessProperties)
+        {
+            if (value >= properties.Value.min && value <= properties.Value.max)
+            {
+                if (CurrentFreshness != properties.Key)
+                {
+                    CurrentFreshness = properties.Key;
+                }
+                return; // Важно: выходим из цикла, как только нашли подходящий диапазон
+            }
+        }
+
+        Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
+    }
+    #endregion
+
 
     public bool WasSold
     {
@@ -132,6 +201,21 @@ public class Equipment : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+
+    public void StartCallDown()
+    {
+        StartCoroutine(CallDown());
+    }
+
+    IEnumerator CallDown()
+    {
+        isReady = false;
+
+        yield return new WaitForSeconds(timeCallDown);
+
+        isReady = true;
     }
 
     public virtual void OnDestroy()

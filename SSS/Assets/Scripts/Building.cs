@@ -64,7 +64,7 @@ public class Building : MonoBehaviour
 
     }
 
-    void Start()
+    protected virtual void Start()
     {
         RectTransform rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
         _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
@@ -123,7 +123,7 @@ public class Building : MonoBehaviour
             newEquipmentRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             newEquipmentRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             newEquipmentRectTransform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
-            newEquipmentRectTransform.localPosition = new Vector3(0, -0.5f, -1);
+            newEquipmentRectTransform.localPosition = new Vector3(0, 0, 0);
             newEquipmentRectTransform.name = randomEquipmentName;
 
             // НАСТРАИВАЕМ КОМПОНЕНТ SpriteRenderer У ЭКЗЕМПЛЯРА СНАРЯЖЕНИЯ

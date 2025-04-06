@@ -69,7 +69,10 @@ public class C
         // Ключи полей для предметов
         public const string equipmentName = "equipmentName";
         public const string cost = "cost";
-        public const string increasingUnitParametersByAmmunition = "increasingUnitParametersByAmmunition";
+        public const string timeCallDown = "timeCallDown";
+        public const string amountUpCombo = "amountUpCombo";
+        public const string increasingUnitParametersByAmmunitionPercentage = "increasingUnitParametersByAmmunitionPercentage";
+        public const string increasingUnitParametersByAmmunitionAbsolute = "increasingUnitParametersByAmmunitionAbsolute";
 
 
         // названия юнитов
@@ -90,6 +93,7 @@ public class C
         public const string experienceToNextLevel = "experienceToNextLevel";
         public const string experienceFromKill = "experienceFromKill";
         public const string scoreFromKill = "scoreFromKill";
+        public const string comboOneHitKillMultiplayer = "comboOneHitKillMultiplayer";
         public const string increasingGettingExperienceByKillComboTickPercentage = "increasingGettingExperienceByKillComboTickPercentage";
         public const string increasingGettingMoneyByKillComboTickPercentage = "increasingGettingMoneyByKillComboTickPercentage";
         public const string increasingParametersByLevelUpPercentage = "increasingParametersByLevelUpPercentage";
@@ -97,6 +101,7 @@ public class C
         public const string nameSoundGettingDamage = "nameSoundGettingDamage";
         public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Это исключение, так как строка начинается с заглавной (все свойства будут такими)
         public const string CurrentMoney = "CurrentMoney"; // Это исключение, так как строка начинается с заглавной
+        public const string CurrentMinimumAmountCombo = "CurrentMinimumAmountCombo"; 
         public const string som = "som";
 
         // названия настроек

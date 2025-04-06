@@ -27,7 +27,7 @@ public class AttackArea : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         // подписываемся в FsmStateWalkEnemy
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) { isPlayerOrAlliesInAttackArea?.Invoke(false, other.gameObject.GetComponent<Unit>()); Debug.Log("IBOOOOOOOOOOOOO;;;");  }
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) { isPlayerOrAlliesInAttackArea?.Invoke(false, other.gameObject.GetComponent<Unit>()); }
         // на данный момент подписаны в FsmStateWalk
         if (other.gameObject.CompareTag("Enemy")) isEnemyInAttackArea?.Invoke(false, other.gameObject.GetComponentInParent<Unit>());
     }

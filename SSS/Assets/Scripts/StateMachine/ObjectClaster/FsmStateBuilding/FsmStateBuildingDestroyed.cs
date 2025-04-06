@@ -12,6 +12,12 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
     {
         Debug.Log("Building Destroyed state [ENTER]");
         building.gameObject.SetActive(false);
+
+        IMainTarget mainTarget = building as IMainTarget;
+        if (mainTarget != null)
+        {
+            mainTarget.WasDestroyed = true;
+        }
     }
 
     public override void Exit()

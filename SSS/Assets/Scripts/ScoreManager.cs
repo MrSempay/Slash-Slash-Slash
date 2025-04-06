@@ -1,23 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
+using static StaticClassForAdditionalFunctions;
 
 public class ScoreManager : MonoBehaviour
 {
     private static ScoreManager _instance;
     private Player _player;
     private Coroutine _zeroizeKillComboTicksCoroutine;
+    private int _currentMinimumAmountCombo;
     private ProgressBar _progerssBarStyleRank;
-    private GameObject _prefubAppearingSprite;
+    private static GameObject _prefubAppearingSprite;
+    private List<Action<bool>> _listAppliedRankFunction = new();
+
 
     [SerializeField] private int _currentKillCombo = 0;
-    [SerializeField] private STYLE_RANK _currentRankStyle = 0;
-    public enum STYLE_RANK { S, A, B, C, D }
-    public enum TYPE_APPEARING_MESSAGE { ComboAdded, SkillUsed }
+    [SerializeField] private STYLE_RANK _currentRankStyle = STYLE_RANK.D;
 
-    public int styleMultiplier = 1;
-    public float timeZeroizeKillComboTicks = 5; // время для сбрасывания текущего комбо за убийства
+    [NonSerialized] public RectTransform transformSpawnComboAdd;
+    [NonSerialized] public RectTransform transformSpawnSkillUsed;
+
+    public enum STYLE_RANK { D, C, B, A, S}
+    public enum TYPE_APPEARING_MESSAGE { ComboAdded, SkillUsed, ComboMultyKill, RankImproved, SkillCombo, MasterOfSkills }
+
+    public int styleMultiplier; // коэффициент усиления получения ресурсов от текущего ранга
+    public float timeZeroizeKillComboTicks = 5; // время для сбрасывания текущего комбо за убийства. Начальное время при загрузке сцены
+    public float minTimeZeroizeKillComboTicks = 1; // минимальное время для сбрасывания комбо за убийство (меньше нельзя)
+    public float secondsAdditionalForZeroizeKillComboTicksByTimer = -1; // количество секунд прибавляемых ко времени сбрасывания комбо за убийства по срабатыванию таймера
+    public float timeForAddSecondsForZeroizeKillComboTicks = 60; // время, через которое ко времени сбрасывания комбо за убийства прибавляется secondsAdditionalForZeroizeKillComboTicksByTimer
+
 
 
     public static ScoreManager Instance
@@ -28,11 +42,193 @@ public class ScoreManager : MonoBehaviour
             {
                 var obj = new GameObject("ScoreManager");
                 _instance = obj.AddComponent<ScoreManager>();
-                DontDestroyOnLoad(obj);
+                //DontDestroyOnLoad(obj);
             }
             return _instance;
         }
     }
+
+#region ActionsCombo
+
+
+    private int _currentActionsCombo;
+    private int _indexTargetActionInClaster;
+    private bool _blockActionCombo = false;
+    private int _currentAmountInvalidActionsForStopCombo = 0;
+    private Coroutine _zeroizeActionComboTicksCoroutine;
+
+    public static List<List<string>> clastersSynergisticActions = new()
+    {
+        new List<string> { "SomeSpell1", "SomeSpell2", "SomeSpell3" }
+    };
+    public float timeZeroizeActionComboTicks = 2;
+    public float timeBlockActionCombo = 5;
+    public float multiplayerActionCombo = 10;
+    public int thresholdAmountInvalidActionsForStopCombo = 3;
+
+    private int CurrentActionsCombo
+    {
+        get { return _currentActionsCombo; }
+        set
+        {
+            if (value == 0)
+            {
+                _currentAmountInvalidActionsForStopCombo = 0;
+                if (_currentActionsCombo != 0)
+                {
+                    StartCoroutine(BlockActionComboForTime());
+                }
+            }
+            else if (value > 1) // если комбо активностей равно 1 или 0, ничего не спавним
+            {
+                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.SkillCombo);
+            }
+
+            _currentActionsCombo = value;
+
+            if (value > 1) CurrentKillCombo += (int)(value * multiplayerActionCombo); // если комбо активностей равно 1 или 0, ничего основному комбо не добавляем
+        }
+    }
+
+
+    // пожалуй, будем вызывать при каждой activity (то есть при нажатии на спел или на предмет)
+    public void UpActionCombo(int addictingCombo = 0, string nameAction = "")
+    {
+        if (!_blockActionCombo)
+            {foreach (List<string> clasterSynergisticActions in clastersSynergisticActions)
+            {
+                if (clasterSynergisticActions.Contains(nameAction)) // если интересующая нас активность есть в массиве
+                {
+                    if (CurrentActionsCombo == 0) // если мы только входим в комбо. Подразумевается, что можем войти в комбо не с начала списка активностей, а с середины или под конец,
+                                                  // а если комбо уже идёт, то нужно проверять условие, является ли текущая активность следующей по списку
+                    {
+                        CurrentActionsCombo = addictingCombo; // блокируем бонус за единичное комбо уже непосредственно в свойстве CurrentActionsCombo
+                        _indexTargetActionInClaster = clasterSynergisticActions.IndexOf(nameAction) + 1; // индекс следующей за текущей активности в данном списке активностей
+
+                        // Останавливаем предыдущую корутину (если она существует)
+                        if (_zeroizeActionComboTicksCoroutine != null)
+                        {
+                            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeActionComboTicksCoroutine);
+                        }
+
+                        // Запускаем новую корутину
+                        _zeroizeActionComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeActionComboTicks());
+
+                        if (clasterSynergisticActions.Count == 1 || clasterSynergisticActions.Count == _indexTargetActionInClaster)
+                            CurrentActionsCombo = 0; // если у нас был всего один элемент в списке (вряд ли) или прожата была последняя активность в списке
+                    }
+                    else
+                    {
+                        if (nameAction == clasterSynergisticActions[_indexTargetActionInClaster]) // проверяем, что текущая активность соответствует требуемой следующей активности в комбо
+                        {
+                            CurrentActionsCombo += addictingCombo;
+                            _indexTargetActionInClaster += 1;
+
+                            // Останавливаем предыдущую корутину (если она существует)
+                            if (_zeroizeActionComboTicksCoroutine != null)
+                            {
+                                CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeActionComboTicksCoroutine);
+                            }
+
+                            // Запускаем новую корутину
+                            _zeroizeActionComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeActionComboTicks());
+
+                            if (clasterSynergisticActions.Count == _indexTargetActionInClaster) // если текущая активность в комбо последняя в списке
+                            {
+                                CurrentActionsCombo = 0;
+                            }
+                        }
+                        else
+                        {
+                            ControlAmountInvalidActions();
+                        }
+                    }
+                }
+                else
+                {
+                    ControlAmountInvalidActions();
+                }
+            }
+        }
+     
+    }
+
+    private void ControlAmountInvalidActions()
+    {
+        _currentAmountInvalidActionsForStopCombo++;
+        if (_currentAmountInvalidActionsForStopCombo >= thresholdAmountInvalidActionsForStopCombo)
+        {
+            CurrentActionsCombo = 0;
+        }
+    }
+
+    IEnumerator ZeroizeActionComboTicks()
+    {
+        yield return new WaitForSeconds(timeZeroizeActionComboTicks); // Ждем 1 секунду
+
+        // Сбрасываем комбо после задержки
+        CurrentActionsCombo = 0;
+        _zeroizeActionComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
+    }
+    IEnumerator BlockActionComboForTime()
+    {
+        _blockActionCombo = true;
+
+        yield return new WaitForSeconds(timeBlockActionCombo); // Ждем 1 секунду
+
+        _blockActionCombo = false;
+    }
+
+    #endregion
+
+
+#region MasterOfSkills
+
+    [NonSerialized] public int amountUpKomboMasterOfSkills = 1000;
+    [NonSerialized] public bool isMasterOfSkillsReady = true;
+    [NonSerialized] public float timeCallDownMasterOfSkills = 10f;
+
+    public void AchivementMasterOfSkills()
+    {
+        if (isMasterOfSkillsReady)
+        {
+            if (_player.playersSpells.Count < _player.countAvailableSpellPlaces) // бонус получаем только при максимально заполненном инвентаре заклинаний 
+            {
+                return;
+            }
+
+            bool allSpellsInCD = true;
+            foreach (Spell spell in _player.playersSpells)
+            {
+                if (spell.isReady)
+                {
+                    allSpellsInCD = false;
+                    break;
+                }
+            }
+
+            if (allSpellsInCD)
+            {
+                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.MasterOfSkills);
+                UpCombo(amountUpKomboMasterOfSkills);
+                StartCoroutine(CallDownMasterOfSkills());
+            }
+        }
+    }
+
+
+    IEnumerator CallDownMasterOfSkills()
+    {
+        isMasterOfSkillsReady = false;
+
+        yield return new WaitForSeconds(timeCallDownMasterOfSkills);
+
+        isMasterOfSkillsReady = true;
+        AchivementMasterOfSkills();
+
+    }
+
+    #endregion
 
 
     [Serializable]
@@ -41,40 +237,100 @@ public class ScoreManager : MonoBehaviour
         public int min;
         public int max;
         public int styleMultiplier;
+        public Action<bool> functionRank; // это ссылка на лямбда-функцию, в которой будем получать ссылку на фунцию объекта ScoreManager.Instance. Хотя можно было бы просто получать ссылки
+                                        // на статические методы класса ScoreManager без лямбда функции. 
+
     }
 
-    public Dictionary<STYLE_RANK, RankProperties> rankProperties = new Dictionary<STYLE_RANK, RankProperties>
+#region SomeRankWasReached
+
+    public void RankBReached(bool isApplying)
     {
-        { STYLE_RANK.D, new RankProperties { min = 0, max = 10, styleMultiplier = 1 } },
-        { STYLE_RANK.C, new RankProperties { min = 11, max = 25, styleMultiplier = 2 } },
-        { STYLE_RANK.B, new RankProperties { min = 26, max = 50, styleMultiplier = 3 } },
-        { STYLE_RANK.A, new RankProperties { min = 51, max = 100, styleMultiplier = 4 } },
-        { STYLE_RANK.S, new RankProperties { min = 101, max = int.MaxValue, styleMultiplier = 5 } } // Для упрощения - до бесконечности
-    };
+        if (isApplying)
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 10f } }, true);
+        }
+        else
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 10f } }, false);
+        }
+
+    }
+    public void RankAReached(bool isApplying)
+    {
+        if (isApplying)
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 100f } }, true);
+        }
+        else
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 100f } }, false);
+        }
+
+    }
+    public void RankSReached(bool isApplying)
+    {
+        if (isApplying)
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 1000f } }, true);
+        }
+        else
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 1000f } }, false);
+        }
+
+    }
+
+#endregion
+
+    public Dictionary<STYLE_RANK, RankProperties> rankProperties = new Dictionary<STYLE_RANK, RankProperties> { };
 
     public STYLE_RANK CurrentRankStyle
     {
         get { return _currentRankStyle; }
         set
         {
+            List<Action<bool>> actionsForAddOrRomove = new();
+            if (value > _currentRankStyle)
+            {
+                for (STYLE_RANK i = _currentRankStyle + 1; i <= value; i++) // текущий ранг пропускаем, целевой включаем
+                {
+                    if (rankProperties[i].functionRank != null)
+                    {
+                        Debug.Log("RANGGGGGG " + i);
+                        rankProperties[i].functionRank?.Invoke(true);
+                        actionsForAddOrRomove.Add(rankProperties[i].functionRank);
+                    }
+                }
+                _listAppliedRankFunction.AddRange(actionsForAddOrRomove);
+            }
+            else
+            {
+                for (STYLE_RANK i = _currentRankStyle; i > value; i--) // текущий ранг включаем, целевой пропускаем
+                {
+                    if (rankProperties[i].functionRank != null)
+                    {
+                        rankProperties[i].functionRank?.Invoke(false);
+                        actionsForAddOrRomove.Add(rankProperties[i].functionRank);
+                    }
+                }
+                foreach (Action<bool> item in actionsForAddOrRomove)
+                {
+                    _listAppliedRankFunction.Remove(item);                    
+                }
+            }
             _currentRankStyle = value;
 
-            if (value == STYLE_RANK.C)
+            if (value != STYLE_RANK.D)
             {
-                AppearingSprite sciptAppearingSprite = Instantiate(_prefubAppearingSprite).GetComponent<AppearingSprite>();
-                sciptAppearingSprite.SetProperlyAnimationAndPosition(TYPE_APPEARING_MESSAGE.ComboAdded);
-            }
-            if (value == STYLE_RANK.B)
-            {
-                AppearingSprite sciptAppearingSprite = Instantiate(_prefubAppearingSprite).GetComponent<AppearingSprite>();
-                sciptAppearingSprite.SetProperlyAnimationAndPosition(TYPE_APPEARING_MESSAGE.SkillUsed);
+                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.RankImproved);
             }
 
-            EventBus.Instance.RankWasChanged(value);
+            EventBus.Instance.RankWasChanged(value); // изменяем UI
         }
     }
 
-    public void SetRank(int value)
+    private void SetRank(int value)
     {
         foreach (var properties in rankProperties)
         {
@@ -97,12 +353,31 @@ public class ScoreManager : MonoBehaviour
         Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
     }
 
-    public int CurrentKillCombo
+
+    public int CurrentMinimumAmountCombo
+    {
+        get { return _currentMinimumAmountCombo; }
+        set
+        {
+            if (_currentMinimumAmountCombo == CurrentKillCombo)
+            {
+                CurrentKillCombo = value;
+            }
+            _currentMinimumAmountCombo = value;
+        }
+    }
+
+    private int CurrentKillCombo
     {
         get { return _currentKillCombo; }
         set
         {
             _currentKillCombo = value;
+            if (value > 0)
+            {
+                //Debug.Log(value);
+                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.ComboAdded);
+            }
 
             // Вызываем событие, если есть подписчики
             EventBus.Instance.KillComboWasChanged(value);
@@ -123,12 +398,13 @@ public class ScoreManager : MonoBehaviour
             return;
         }
         _instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
+
+        AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
         _prefubAppearingSprite = Resources.Load<GameObject>(C.DK.PrefabAppearingSprite);
 
-
-
+        AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные для dictionaryPropertiesSprites
     }
 
     private void Start()
@@ -136,10 +412,31 @@ public class ScoreManager : MonoBehaviour
         _progerssBarStyleRank = _player.progerssBarStyleRank;        
 
         CurrentRankStyle = STYLE_RANK.D;
-        CurrentKillCombo = 0;
+        CurrentKillCombo = CurrentKillCombo;
+        CurrentMinimumAmountCombo = CurrentMinimumAmountCombo;
 
         _progerssBarStyleRank.Initialize(rankProperties[CurrentRankStyle].min, rankProperties[CurrentRankStyle].max);
 
+        StartCoroutine(ChangeComboTime(secondsAdditionalForZeroizeKillComboTicksByTimer));
+
+    }
+
+    IEnumerator ChangeComboTime(float timeChange)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeForAddSecondsForZeroizeKillComboTicks);
+            if (timeZeroizeKillComboTicks > minTimeZeroizeKillComboTicks)
+            {
+                timeZeroizeKillComboTicks += timeChange;
+            }
+        }
+    }
+
+    public static void InvokeAppearingSprite(TYPE_APPEARING_MESSAGE typeAppearingMessage)
+    {
+        AppearingSprite sciptAppearingSprite = Instantiate(_prefubAppearingSprite).GetComponent<AppearingSprite>();
+        sciptAppearingSprite.SetProperlyAnimationAndPosition(typeAppearingMessage);
     }
 
     public void UpCombo(int addictingCombo)
@@ -161,7 +458,13 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
 
         // Сбрасываем комбо после задержки
-        CurrentKillCombo = 0;
+        CurrentKillCombo = CurrentMinimumAmountCombo;
         _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
     }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
 }

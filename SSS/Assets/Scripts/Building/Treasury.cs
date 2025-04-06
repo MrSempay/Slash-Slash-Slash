@@ -3,14 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using static AdjustEquipmentParameters;
 
-public class Treasury : Building
+public class Treasury : Building, IMainTarget
 {
+
+#region IMainTarget
+
+    private bool _wasDestroyed;
+
+    [SerializeField] private bool _isMainTarget;
+
+    public bool WasDestroyed { get { return _wasDestroyed; } set { _wasDestroyed = value; } }
+    public bool IsMainTarget { get { return _isMainTarget; } set { _isMainTarget = value; } }
+
+    public void SetLikeAMainTarget()
+    {
+        if (IsMainTarget)
+        {
+            LevelBuilder.instance.listMainTargets.Add(this);
+        }
+    }
+
+#endregion
+
     public new event Action<List<Equipment>, Building> onUpdateAssortment;
 
     protected override void Awake()
     {
         nameOfObject = "Treasury";
         base.Awake();
+    }
+
+    protected override void Start()
+    {
+        SetLikeAMainTarget();
+        base.Start();
     }
 
     protected override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)

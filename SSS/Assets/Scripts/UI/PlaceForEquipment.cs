@@ -8,7 +8,7 @@ public class PlaceForEquipment : MonoBehaviour
 {
 
     private Equipment _equipment; // снаряжение в данном месте для снаряжения
-    private Dictionary<string, float> increasedParametersValuesByEquipmentInThisPlace; // снаряжение в данном месте для снаряжения
+    private Dictionary<string, float> increasedParametersValuesByEquipmentInThisPlace;
 
     [SerializeField] private TextEdit nameOfEquipment;
     [SerializeField] private TextEdit costOfEquipment;
@@ -50,7 +50,8 @@ public class PlaceForEquipment : MonoBehaviour
                     if (!value.isEquipmentASpell)
                     {
                         Ammunition ammunition = (Ammunition)value;
-                        increasedParametersValuesByEquipmentInThisPlace = ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunition, true);
+                        increasedParametersValuesByEquipmentInThisPlace = ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, true);
+                        ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, true);
                     }
                 }
                 else
@@ -69,7 +70,8 @@ public class PlaceForEquipment : MonoBehaviour
                             {
                                 decreasingUnitParametersByAmmunition[increasedParameter.Key] = increasedParameter.Value/ ammunition.player.;
                             }*/
-                            ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunition, false);
+                            ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, false);
+                            ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, false);
                         }
                     }
                 }

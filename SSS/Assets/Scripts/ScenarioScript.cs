@@ -11,19 +11,25 @@ public class ScenarioScript : MonoBehaviour
     // ибо
 
     private ScenarioScript _instance;
-
     private PlayerDialogue _scriptCurrentDialogue;
     private Coroutine _moveCameraCoroutine;
     private Coroutine _moveObjectCoroutine;
     private Coroutine _justTimeWaitCoroutine;
     private Vector3 _velocity = Vector3.zero; // Текущая скорость
 
+    [SerializeField] protected LevelBuilder levelBuildScript;
+
     protected Transform transformPlayer;
     protected Player scriptPlayer;
+
+    [NonSerialized] public static float timeWhenSceneStarted;
+
+    [NonSerialized] public Dictionary<string, int> listNamesEnemiesWavesAndRewards;
 
     public GameObject player;
     public Camera cameraPlayer;
     public Transform transformDialogueAreas;
+
 
 
     public PlayerDialogue ScriptCurrentDialogue
@@ -61,10 +67,15 @@ public class ScenarioScript : MonoBehaviour
 
         GameManager.Instance.onDialogueStarted += DialogueWasStarted;
         scriptPlayer.onUnitWasKilled += UnitWasKilled;
+        scriptPlayer.OnEnemiesWaveWasDestroyedWithoutLosingMainTargets += EnemiesWaveWasDestroyedWithoutLosingMainTargets;
+
+        timeWhenSceneStarted = Time.time;
+
     }
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
+    protected virtual void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void DialogueFinished(string nameDialogueWithFolder) { ScriptCurrentDialogue = null; } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit)
     {
@@ -178,6 +189,13 @@ public class ScenarioScript : MonoBehaviour
         _justTimeWaitCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimeWait(timeWait, markerTimeWait));
     }
 
+    protected virtual void StartWaveEnemies(Dictionary<Transform, int> targetPointsForEnemy, string nameWave)
+    {
+        levelBuildScript.currentWave = nameWave;
+        levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
+    }
+
+
 
     /* ############################# БЛОК СЛУЖЕБНЫХ (ВНУТРЕННИХ) ФУНКЦИЙ, ЯВЛЯЮТСЯ ТЕХНИЧЕСКИМИ ДЛЯ ОСНОВНЫХ ФУНКЦИЙ-РЕАКЦИЙ/СИГНАЛОВ ############################# */
 
@@ -242,6 +260,7 @@ public class ScenarioScript : MonoBehaviour
         _justTimeWaitCoroutine = null;
         GameManager.Instance.onDialogueStarted -= DialogueWasStarted;
         scriptPlayer.onUnitWasKilled -= UnitWasKilled;
+        scriptPlayer.OnEnemiesWaveWasDestroyedWithoutLosingMainTargets -= EnemiesWaveWasDestroyedWithoutLosingMainTargets;
     }
 
 

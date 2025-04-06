@@ -18,7 +18,7 @@ public class Level1Scenario : ScenarioScript
     [SerializeField] private Transform _transformPointTeleportSchool;
     [SerializeField] private Transform _transformPointTeleportTreasury;
     [SerializeField] private GameObject _enemyPrefub;
-    [SerializeField] private LevelBuildScript _levelBuildScript;
+
 
     public GameObject school;
     public GameObject treasury;
@@ -35,6 +35,12 @@ public class Level1Scenario : ScenarioScript
 
         _scriptSchool.onUpdateAssortment += AssortmentInBuildingWasUpdated;
         _scriptTreasury.onUpdateAssortment += AssortmentInBuildingWasUpdated;
+
+        listNamesEnemiesWavesAndRewards = new() // по идее это надо будет вынести в Adjust-скрипт
+        {
+            { "WaveAfterAmmunitionBue", 40000 },
+            { "JustSecondWave", 10000 },
+        };
     }
 
     void Start()
@@ -68,9 +74,12 @@ public class Level1Scenario : ScenarioScript
         {
             case "waitTimeAfterFirstAmmunitionBue":
                 Debug.Log("Study was finished");
-                StartSpawnEnemies(new Dictionary<Transform, int>() { { transformPlayer, 25 }, 
-                                                                     { _transformSchool, 25 },
-                                                                     { _transformTreasury, 25 } });
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 1 }, 
+                                                                     { _transformSchool, 1 },
+                                                                     { _transformTreasury, 1 } },
+                                 "WaveAfterAmmunitionBue");
+
+                JustTimeWait(10f, "justWait");
 
                 break;
             case "waitTimeAfterFirstEnemyKill":
@@ -78,7 +87,19 @@ public class Level1Scenario : ScenarioScript
                                                                                // MovingCameraPlayerToPoint и ждём 1 кадр)
                 TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                 break;
+            case "justWait":
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
+                                 "JustSecondWave");
+                break;
         }
+    }
+
+
+    protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
+    {
+        scriptPlayer.GiveRewardScore(listNamesEnemiesWavesAndRewards[nameWave]);
     }
 
     protected override void UnitWasKilled(Unit unit)
@@ -134,11 +155,6 @@ public class Level1Scenario : ScenarioScript
         _scriptFirstEnemyForKill.moneyFromKill = _moneyFromKillFirstEnemy;
         _scriptFirstEnemyForKill.experienceFromKill = _experienceFromKillFirstEnemy;
         return enemyObj;
-    }
-
-    private void StartSpawnEnemies(Dictionary<Transform, int> targetPointsForEnemy)
-    {
-        _levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
     }
 
 

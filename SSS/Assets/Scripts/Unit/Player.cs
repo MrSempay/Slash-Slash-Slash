@@ -1,19 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
-
+using UnityEngine.SocialPlatforms.Impl;
+using static ScoreManager;
 
 public class Player : Unit
 {
 
     private Coroutine _zeroizeKillComboTicksCoroutine;
     private Coroutine _recoverStaminaPointCoroutine;
+    private Coroutine _zeroizeComboKillCoroutine = null;
     private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
     private bool _hasVibratedByFallHealth = false; // флаг, маркерующий, была ли сделана вибрация при пересечении порога ХП в 15%
     private float _fractionCurrentHealthToVibrate = 0.15f; // порог здоровья, при пересечении которого начинаем вибрировать
     private Transform _mainCameraTransform; // компонент Transform камеры игрока
+    private int _amountEnemiesWasKilledInCombo = 0; // количество врагов, убитых "одним ударом"
+    private float _timeDuringOneHit = 0.2f; // длительность нашего "одного удара"
+    private int _currentMinimumAmountCombo; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+
 
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
     [SerializeField] private float _currentExperience = 0;
@@ -25,11 +32,15 @@ public class Player : Unit
     [SerializeField] private RectTransform _rectTransformStaminaBar;
     [SerializeField] private GameObject _prefubOfStaminaPoint;
 
+    public static Player instance;
+
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
     [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
     [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
+    [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
+    [NonSerialized] public int countAvailableSpellPlaces = 3; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
 
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
@@ -37,13 +48,15 @@ public class Player : Unit
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform spellPanelTransform; // 
-    public RectTransform ammunitionPanelTransform; // 
+    public RectTransform ammunitionPanelTransform; //
+    public List<Spell> playersSpells = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
 
     public List<Enemy> nearEnemies = new();
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
+    public bool wasEnemyDamagedByLastSwipe; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
     public Camera mainCamera; // Ссылка на камеру
     public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
@@ -58,6 +71,7 @@ public class Player : Unit
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
     public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе 
     public event Action<int> OnScoreChanged;       // Событие для изменения очков
+    public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
 
     public float CurrentExperience
     {
@@ -99,6 +113,15 @@ public class Player : Unit
 
             // Вызываем событие, если есть подписчики
             OnScoreChanged?.Invoke(_currentScore);
+        }
+    }
+    public int CurrentMinimumAmountCombo
+    {
+        get { return _currentMinimumAmountCombo; }
+        set
+        {
+            _currentMinimumAmountCombo = value;
+            ScoreManager.Instance.CurrentMinimumAmountCombo = value;
         }
     }
 
@@ -182,6 +205,7 @@ public class Player : Unit
     {
 
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM 
+        instance = this;
         nameOfUnit = "Player";
         base.Awake();
         CurrentStamina = staminaMax;
@@ -252,34 +276,74 @@ public class Player : Unit
         //_fsm.OnDisable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
     }
 
-    protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score)
+    protected override void SomeUnitWasDestroyed(Unit unit)
     {
+        _amountEnemiesWasKilledInCombo++;
+        GetExperienceAndMoneyFromKillingUnit(unit.experienceFromKill, unit.moneyFromKill, unit.comboFromKill, unit.scoreFromKill);
+        if (_zeroizeComboKillCoroutine == null)
+        {
+            _zeroizeComboKillCoroutine = StartCoroutine(ZeroizeComboKill());
+        }
 
-        // Останавливаем предыдущую корутину (если она существует)
-        //if (_zeroizeKillComboTicksCoroutine != null)
-        //{
-        //    CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _zeroizeKillComboTicksCoroutine);
-        //}
+        Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
 
-        //// Запускаем новую корутину
-        //_zeroizeKillComboTicksCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ZeroizeKillComboTicks());
+        if (enemyUnit != null) 
+        {
+                        Debug.Log("mda1");
+            if (enemyUnit.isInstancedByLevel)
+            {
+                        Debug.Log("mda2");
+                if (LevelBuilder.instance.WasEnemiesWaveDestroyed(enemyUnit)) // подразумевается, что зачищать волну может только герой пока что, если враг сам помрёт, то не засчитается
+                {
+                        Debug.Log("mda3");
+                    if (LevelBuilder.instance.IsAllMainTargetsAlive())
+                    {
+                        Debug.Log("mda4");
+                        OnEnemiesWaveWasDestroyedWithoutLosingMainTargets?.Invoke(LevelBuilder.instance.currentWave); // подписываемся в ScenarioScipt, пока что
+                    }
+                }
+            }
+        }
 
-
-        CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
-        CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
-        CurrentScore += score * ScoreManager.Instance.styleMultiplier;
-        ScoreManager.Instance.UpCombo(comboFromKill);
-        //CurrentKillCombo++;
+    }
+    protected override void SomeUnitWasHit(Unit unit) // подразумевается, конечно, что толкмо враг игроком может быть ударен (детектим для удара вражеский тэг)
+    {
+        if (wasEnemyDamagedByLastSwipe == false) // продлеваем комбо за первый удар в свайпе
+        {
+            wasEnemyDamagedByLastSwipe = true;
+            ScoreManager.Instance.UpCombo(1); // пока что магическая константа, но по идее тут должен быть всегда один, и настраивать-то нечего
+        }
     }
 
-    //IEnumerator ZeroizeKillComboTicks()
-    //{
-    //    yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
 
-    //    // Сбрасываем комбо после задержки
-    //    CurrentKillCombo = 0;
-    //    _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
-    //}
+    protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score)
+    {
+        //CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
+        CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
+        CurrentScore += score * ScoreManager.Instance.styleMultiplier;
+        ScoreManager.Instance.UpCombo(comboFromKill); // по сути набитие комбо на враге не учитывает убийство текущего врага: опыт, злато и очки не скалятся от повышения ранга
+    }
+
+    public void GiveRewardScore(int score)
+    {
+        CurrentScore += score;
+    }
+
+    IEnumerator ZeroizeComboKill()
+    {
+        yield return new WaitForSeconds(_timeDuringOneHit);
+
+        if (_amountEnemiesWasKilledInCombo > 1)
+        {
+            ScoreManager.Instance.UpCombo((int)(_amountEnemiesWasKilledInCombo * comboOneHitKillMultiplayer));
+            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
+        }
+        _amountEnemiesWasKilledInCombo = 0;
+        _zeroizeComboKillCoroutine = null;
+    }
+
+
+
     IEnumerator RecoverStaminaPoint()
     {
         while (true)
