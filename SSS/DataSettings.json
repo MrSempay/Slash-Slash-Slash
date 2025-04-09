@@ -14,7 +14,7 @@
         },
         {
             "selfName": "English",
-            "IsToggled": false
+            "IsToggled": true
         },
         {
             "selfName": "Spanish",
@@ -38,11 +38,11 @@
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
-            "IsToggled": true
+            "IsToggled": false
         },
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
-            "IsToggled": false
+            "IsToggled": true
         }
     ],
     "allSlidersData": [
@@ -52,7 +52,7 @@
         },
         {
             "selfName": "ParameterVolumEffects",
-            "CurrentValue": 0.0
+            "CurrentValue": 0.4667874872684479
         },
         {
             "selfName": "ParameterBrightness",

@@ -180,7 +180,7 @@ public class DialogueParser : MonoBehaviour
                 {
                     if (dialogueLines[index].characterName != dialogueLines[index - 1].characterName)
                     {
-                        Debug.Log("Shit?");
+                        //Debug.Log("Shit?");
                         rectTransformNameUnit.localPosition = new Vector3(rectTransformNameUnit.localPosition.x * (-1), rectTransformNameUnit.localPosition.y, rectTransformNameUnit.localPosition.z);
                         rectTransformUnitIcon.localPosition = new Vector3(rectTransformUnitIcon.localPosition.x * (-1), rectTransformUnitIcon.localPosition.y, rectTransformUnitIcon.localPosition.z);
                     }

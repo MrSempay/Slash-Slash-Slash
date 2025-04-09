@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript\Level1Scenario.cs" />
+    <Compile Include="Assets\Scripts\PlayFabLogin.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingOpened.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentSelected.cs" />
@@ -1267,12 +1268,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.2D.Aseprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Multiplayer.Center.Editor">
@@ -1465,13 +1466,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="PlayFab.csproj">
+      <Project>{AC2E48BF-1B70-EF02-13D6-668CC3125ED6}</Project>
+      <Name>PlayFab</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshPlusEditor.csproj">
       <Project>{DCAF4CAA-6952-926F-BECF-C599789047DF}</Project>
       <Name>NavMeshPlusEditor</Name>
     </ProjectReference>
+    <ProjectReference Include="PlayFabSDKEditor.csproj">
+      <Project>{9ED8A280-13D1-4B67-ED06-4CB99F1D6C46}</Project>
+      <Name>PlayFabSDKEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshPlus.csproj">
       <Project>{A91F8BB6-8056-6376-BE21-274578BEF5FB}</Project>
       <Name>NavMeshPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayFabEditorExtensions.csproj">
+      <Project>{9B04E6A3-98DA-2C42-10E9-A2FF25D94CE9}</Project>
+      <Name>PlayFabEditorExtensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
