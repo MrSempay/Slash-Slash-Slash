@@ -5,12 +5,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using static DialogueParser;
+using System.Threading.Tasks;
 
 public class ScenarioScript : MonoBehaviour
 {
     // ибо
 
-    private ScenarioScript _instance;
     private PlayerDialogue _scriptCurrentDialogue;
     private Coroutine _moveCameraCoroutine;
     private Coroutine _moveObjectCoroutine;
@@ -24,13 +24,13 @@ public class ScenarioScript : MonoBehaviour
 
     [NonSerialized] public static float timeWhenSceneStarted;
 
-    [NonSerialized] public Dictionary<string, int> listNamesEnemiesWavesAndRewards;
+    public static ScenarioScript instance;
+
+    [NonSerialized] public Dictionary<string, int> listNamesEnemiesWavesAndRewards; // инициализируем в производных классах
 
     public GameObject player;
     public Camera cameraPlayer;
     public Transform transformDialogueAreas;
-
-
 
     public PlayerDialogue ScriptCurrentDialogue
     {
@@ -52,13 +52,12 @@ public class ScenarioScript : MonoBehaviour
     }
 
     protected virtual void Awake()
-    {/*
-        if (_instance != null && _instance != this)
+    {
+        if (instance != null && instance != this) // инициализируем instance в дочернем классе
         {
             Destroy(gameObject);
             return;
         }
-        _instance = this;*/
 
         transformPlayer = player.GetComponent<Transform>();
         scriptPlayer = player.GetComponent<Player>();
@@ -68,6 +67,7 @@ public class ScenarioScript : MonoBehaviour
         GameManager.Instance.onDialogueStarted += DialogueWasStarted;
         scriptPlayer.onUnitWasKilled += UnitWasKilled;
         scriptPlayer.OnEnemiesWaveWasDestroyedWithoutLosingMainTargets += EnemiesWaveWasDestroyedWithoutLosingMainTargets;
+        scriptPlayer.OnEnemiesWaveWasDestroyed += EnemiesWaveWasDestroyed;
 
         timeWhenSceneStarted = Time.time;
 
@@ -75,6 +75,7 @@ public class ScenarioScript : MonoBehaviour
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
+    protected virtual void EnemiesWaveWasDestroyed(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void DialogueFinished(string nameDialogueWithFolder) { ScriptCurrentDialogue = null; } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit)
@@ -155,9 +156,15 @@ public class ScenarioScript : MonoBehaviour
         transformObject.position = targetPoint;
     }
 
-    protected virtual void StartDialogue(string nameDialogue) // взять образец из зоны диалога
+    protected virtual void StartDialogue(string nameDialogue) // взять образец из зоны диалога 
     {
         GameManager.Instance.StartDialogue(nameDialogue);
+    }
+    protected virtual async void FinishLevel()
+    {
+        await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
+        await Task.Delay(2000); // К сожалению лидерборд не обновляется синхронно с обновлением статистик. Нужна задержка в несколько секунд. Константа 2000 была подобрана произвольно
+        ScoreManager.Instance.ShowActualLeaderboard();
     }
 
     protected virtual GameObject SpawnObjectAtTargetPosition(GameObject someObject, Vector3 targetPosition) // может стоить для каких-нибудь объектов добавить функцию, чтоб вызывать при таком спавне

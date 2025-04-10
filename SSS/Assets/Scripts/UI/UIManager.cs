@@ -21,11 +21,12 @@ public class UIManager : MonoBehaviour
         player.OnMoneyChanged += ChangeMoneyTextUI;
         player.OnLevelChanged += ChangeLevelTextUI;
         player.OnLevelUpChanged += ChangeLevelUpTextUI;
-        player.OnScoreChanged += ChangeScoreTextUI;
+        //player.OnScoreChanged += ChangeScoreTextUI;
         //player.OnKillComboChanged += ChangeComboTextUI;
 
         EventBus.Instance.OnKillKomboWasChanged.AddListener(ChangeComboTextUI);
         EventBus.Instance.OnRankWasChanged.AddListener(ChangeRankTextUI);
+        EventBus.Instance.OnScoreWasChanged.AddListener(ChangeScoreTextUI);
     }
     public void OpenOrClosePlayMenu()
     {

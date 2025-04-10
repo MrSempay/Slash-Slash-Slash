@@ -52,6 +52,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
 
 
     public UnityEvent<int> OnKillKomboWasChanged { get; } = new();
+    public UnityEvent<int> OnScoreWasChanged { get; } = new();
     public UnityEvent<STYLE_RANK> OnRankWasChanged { get; } = new();
 
 
@@ -72,4 +73,5 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
 
     public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }
     public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }
+    public void ScoreWasChanged(int value) { OnScoreWasChanged.Invoke(value); }
 }

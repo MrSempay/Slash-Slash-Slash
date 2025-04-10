@@ -103,6 +103,7 @@
     <Compile Include="Assets\Move_Player.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterChoseList.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\AttackArea.cs" />
+    <Compile Include="Assets\Scripts\PlayFab\PlayFabManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript\Level1Scenario.cs" />
-    <Compile Include="Assets\Scripts\PlayFabLogin.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingOpened.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentSelected.cs" />
@@ -146,7 +146,9 @@
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponType.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\BannerAds.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponDatabase.cs" />
+    <Compile Include="Assets\Scripts\UI\Leaderboard.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateDoor.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldLeaderboard.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterSlider.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />

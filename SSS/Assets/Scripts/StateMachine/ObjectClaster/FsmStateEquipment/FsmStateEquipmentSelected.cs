@@ -31,7 +31,7 @@ public class FsmStateEquipmentSelected : FsmStateEquipment
         //Получаем текущую позицию курсора в мировых координатах
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Задаем новую позицию объекта
-        mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0) - new Vector3(0, 0, 3) - new Vector3(0, 0.5f, 0);
+        mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0) - new Vector3(0, 0, 3) - new Vector3(0, 0, 0);
         equipment.transform.position = mousePosition;
 
         if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши

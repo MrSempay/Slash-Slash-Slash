@@ -30,6 +30,8 @@ public class C
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
         public const string PrefabAppearingSprite = "Prefabs/UI/AppearingSprite";
+        public const string PrefabLeaderboard = "Prefabs/UI/Leaderboard";
+        public const string FieldLeaderboard = "Prefabs/UI/FieldLeaderboard";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
         public const string PathFolderImagesForAppearingMessages = "Images/UI/AppearingMessages/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";

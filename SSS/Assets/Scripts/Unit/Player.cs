@@ -49,6 +49,7 @@ public class Player : Unit
     public Transform attackAreaTransform; //  омпонент трансформ зоны дл€ атаки (далее при смене направлени€ движени€ будем позицию мен€ть (отзеркаливать))
     public RectTransform spellPanelTransform; // 
     public RectTransform ammunitionPanelTransform; //
+    public RectTransform UI; //
     public List<Spell> playersSpells = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
 
@@ -70,8 +71,8 @@ public class Player : Unit
     public event Action<int> OnLevelChanged;       // —обытие дл€ изменени€ уровн€
     public event Action<int> OnKillComboChanged;       // —обытие дл€ изменени€ комбо за убийства 
     public event Action<int> OnLevelUpChanged;       // —обытие дл€ изменени€ количества прокачки в школе 
-    public event Action<int> OnScoreChanged;       // —обытие дл€ изменени€ очков
     public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей дл€ защиты
+    public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей дл€ защиты
 
     public float CurrentExperience
     {
@@ -104,17 +105,7 @@ public class Player : Unit
             OnMoneyChanged?.Invoke(_currentMoney);
         }
     }
-    public int CurrentScore
-    {
-        get { return _currentScore; }
-        set
-        {
-            _currentScore = value;
 
-            // ¬ызываем событие, если есть подписчики
-            OnScoreChanged?.Invoke(_currentScore);
-        }
-    }
     public int CurrentMinimumAmountCombo
     {
         get { return _currentMinimumAmountCombo; }
@@ -220,7 +211,6 @@ public class Player : Unit
         CurrentExperience = CurrentExperience;
         CurrentKillCombo = CurrentKillCombo;
         CurrentLevel = CurrentLevel;
-        CurrentScore = CurrentScore;
         CurrentMoney = CurrentMoney;
         CountAccessToUpInSchool = CountAccessToUpInSchool;
 
@@ -301,6 +291,7 @@ public class Player : Unit
                         Debug.Log("mda4");
                         OnEnemiesWaveWasDestroyedWithoutLosingMainTargets?.Invoke(LevelBuilder.instance.currentWave); // подписываемс€ в ScenarioScipt, пока что
                     }
+                    OnEnemiesWaveWasDestroyed?.Invoke(LevelBuilder.instance.currentWave);
                 }
             }
         }
@@ -320,13 +311,13 @@ public class Player : Unit
     {
         //CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
         CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
-        CurrentScore += score * ScoreManager.Instance.styleMultiplier;
+        ScoreManager.Instance.CurrentScore += score * ScoreManager.Instance.styleMultiplier;
         ScoreManager.Instance.UpCombo(comboFromKill); // по сути набитие комбо на враге не учитывает убийство текущего врага: опыт, злато и очки не скал€тс€ от повышени€ ранга
     }
 
     public void GiveRewardScore(int score)
     {
-        CurrentScore += score;
+        ScoreManager.Instance.CurrentScore += score;
     }
 
     IEnumerator ZeroizeComboKill()

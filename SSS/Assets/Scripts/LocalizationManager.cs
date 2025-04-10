@@ -148,6 +148,11 @@ public class LocalizationManager
             { ENUM.Russian, "Очки:" },
             { ENUM.Spanish, "muda-da?" }
         });
+        localization.Add("Leaderboard", new Dictionary<ENUM, string>() {
+            { ENUM.English, "Leaderboard" },
+            { ENUM.Russian, "Доска почёта" },
+            { ENUM.Spanish, "muda-da?" }
+        });
     }
 
     public string GetText(string key)

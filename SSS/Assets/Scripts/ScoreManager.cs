@@ -14,11 +14,15 @@ public class ScoreManager : MonoBehaviour
     private int _currentMinimumAmountCombo;
     private ProgressBar _progerssBarStyleRank;
     private static GameObject _prefubAppearingSprite;
+    private static GameObject _prefubLeaderboard;
     private List<Action<bool>> _listAppliedRankFunction = new();
 
 
     [SerializeField] private int _currentKillCombo = 0;
+    [SerializeField] private int _currentScore = 0;
     [SerializeField] private STYLE_RANK _currentRankStyle = STYLE_RANK.D;
+
+    public static FieldLeaderboard prefubFieldLeaderboard; // используем в Leaderboard, чтоб там не получать префаб при каждом создании лидерборда
 
     [NonSerialized] public RectTransform transformSpawnComboAdd;
     [NonSerialized] public RectTransform transformSpawnSkillUsed;
@@ -31,6 +35,8 @@ public class ScoreManager : MonoBehaviour
     public float minTimeZeroizeKillComboTicks = 1; // минимальное врем€ дл€ сбрасывани€ комбо за убийство (меньше нельз€)
     public float secondsAdditionalForZeroizeKillComboTicksByTimer = -1; // количество секунд прибавл€емых ко времени сбрасывани€ комбо за убийства по срабатыванию таймера
     public float timeForAddSecondsForZeroizeKillComboTicks = 60; // врем€, через которое ко времени сбрасывани€ комбо за убийства прибавл€етс€ secondsAdditionalForZeroizeKillComboTicksByTimer
+    public float timeFromStartLevel = 0; 
+    public int maxKillCombo = 0; 
 
 
 
@@ -326,6 +332,11 @@ public class ScoreManager : MonoBehaviour
                 InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.RankImproved);
             }
 
+
+            styleMultiplier = rankProperties[value].styleMultiplier;
+
+            _progerssBarStyleRank.Initialize(rankProperties[value].min, rankProperties[value].max);
+
             EventBus.Instance.RankWasChanged(value); // измен€ем UI
         }
     }
@@ -339,9 +350,6 @@ public class ScoreManager : MonoBehaviour
                 if (CurrentRankStyle != properties.Key)
                 {
                     CurrentRankStyle = properties.Key;
-                    styleMultiplier = properties.Value.styleMultiplier;
-
-                    _progerssBarStyleRank.Initialize(properties.Value.min, properties.Value.max);
                     //_progerssBarStyleRank.CurrentValue = value;
 
                     Debug.Log("–анг: " + CurrentRankStyle);
@@ -367,7 +375,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private int CurrentKillCombo
+    public int CurrentKillCombo
     {
         get { return _currentKillCombo; }
         set
@@ -384,10 +392,22 @@ public class ScoreManager : MonoBehaviour
             SetRank(value);
             _progerssBarStyleRank.CurrentValue = value;
 
+            if (value > maxKillCombo) // обновл€ем максимальное комбо, если текущее комбо превышает текущее максимальное
+            {
+                maxKillCombo = value;
+            }
         }
     }
 
-
+    public int CurrentScore
+    {
+        get { return _currentScore; }
+        set
+        {
+            _currentScore = value;
+            EventBus.Instance.ScoreWasChanged(value);
+        }
+    }
     public void Initialize(Player player) { _player = player; } // увы, эта штука вызываетс€ после Awake, а значит к _player мы можем обращатьс€ только в Start
 
     void Awake()
@@ -403,6 +423,8 @@ public class ScoreManager : MonoBehaviour
         AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
         _prefubAppearingSprite = Resources.Load<GameObject>(C.DK.PrefabAppearingSprite);
+        _prefubLeaderboard = Resources.Load<GameObject>(C.DK.PrefabLeaderboard);
+        prefubFieldLeaderboard = Resources.Load<FieldLeaderboard>(C.DK.FieldLeaderboard);
 
         AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные дл€ dictionaryPropertiesSprites
     }
@@ -413,12 +435,18 @@ public class ScoreManager : MonoBehaviour
 
         CurrentRankStyle = STYLE_RANK.D;
         CurrentKillCombo = CurrentKillCombo;
+        CurrentScore = CurrentScore;
         CurrentMinimumAmountCombo = CurrentMinimumAmountCombo;
 
         _progerssBarStyleRank.Initialize(rankProperties[CurrentRankStyle].min, rankProperties[CurrentRankStyle].max);
 
         StartCoroutine(ChangeComboTime(secondsAdditionalForZeroizeKillComboTicksByTimer));
 
+    }
+
+    private void Update()
+    {
+        timeFromStartLevel += Time.deltaTime;
     }
 
     IEnumerator ChangeComboTime(float timeChange)
@@ -461,6 +489,18 @@ public class ScoreManager : MonoBehaviour
         CurrentKillCombo = CurrentMinimumAmountCombo;
         _zeroizeKillComboTicksCoroutine = null; // —брасываем ссылку на корутину
     }
+
+    public async void ShowActualLeaderboard()
+    {
+        await PlayFabManager.Instance.GetScoreLeaderboarderAsync(); // там информаци€ о текущем лидерборде запишетс€ в переменную объекта PlayFabManager.Instance. ќбъект Leaderboard будет
+                                                                    // пр€мо на неЄ ссылатьс€
+        Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI);
+
+        //                           ¬¬¬¬¬¬¬¬¬¬ЌЌЌЌЌЌЌЌЌ»»»»»»»»»»»ћћћћћћћћћћјјјјјјјјјјЌЌЌЌЌЌЌЌЌЌЌ»»»»»»»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈!!!!!!!!!!!! !!!!!!!!!!!!!
+        // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); «јƒј®“ √ЋќЅјЋ№Ќ”ё ѕќ«»÷»ё ƒЋя ќЅЏ≈ “ј. “ќ ≈—“№ „“ќЅ ќЌ «ј—ѕј¬Ќ»Ћ—я ¬ Ќ”Ћ≈¬ќ… “ќ„ ≈
+        // ќ“Ќќ—»“≈Ћ№Ќќ –ќƒ»“≈Ћя Ќ”∆Ќќ ” ј«џ¬ј“№ ¬ќ“ Ё“ќ ¬ќ“: _player.UI.position --- √ЋќЅјЋ№Ќ”ё ѕќ«»÷»ё –ќƒ»“≈Ћя !!!
+    }
+
 
     private void OnDestroy()
     {

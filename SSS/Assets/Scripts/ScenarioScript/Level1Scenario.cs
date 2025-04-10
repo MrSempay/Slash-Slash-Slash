@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,6 +28,9 @@ public class Level1Scenario : ScenarioScript
     protected override void Awake()
     {
         base.Awake();
+
+        instance = this;
+
         _transformSchool = school.GetComponent<Transform>();
         _scriptSchool = school.GetComponent<School>();
 
@@ -41,11 +45,6 @@ public class Level1Scenario : ScenarioScript
             { "WaveAfterAmmunitionBue", 40000 },
             { "JustSecondWave", 10000 },
         };
-    }
-
-    void Start()
-    {
-        
     }
 
 
@@ -99,7 +98,21 @@ public class Level1Scenario : ScenarioScript
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
+        Debug.Log(nameWave);
         scriptPlayer.GiveRewardScore(listNamesEnemiesWavesAndRewards[nameWave]);
+    }
+
+    protected override void EnemiesWaveWasDestroyed(string nameWave)
+    {
+        switch (nameWave)
+        {
+            case "WaveAfterAmmunitionBue":
+                break;
+                
+            case "JustSecondWave":
+                FinishLevel();
+                break;
+        }
     }
 
     protected override void UnitWasKilled(Unit unit)

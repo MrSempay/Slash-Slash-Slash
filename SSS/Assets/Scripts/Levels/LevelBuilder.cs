@@ -19,7 +19,6 @@ public class LevelBuilder : MonoBehaviour
                                                                                                        // transform-int для задания целей врагам. В целом это поле для реализации
                                                                                                        // возможности задавать цели и количество врагов для них через редактор
 
-    protected string selfName;
     protected Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом является ссылка на компонент transform цели, значением - количество
                                                                                                   // врагов, которые направятся к цели.
     protected Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>() // увеличение параметров на %
@@ -43,6 +42,7 @@ public class LevelBuilder : MonoBehaviour
     [NonSerialized] public string nameOfMainMusicTeam;
     [NonSerialized] public string currentWave;
 
+    public string selfName;
 
     public Dictionary<Transform, int> TargetPointsForEnemy
     {
@@ -76,6 +76,11 @@ public class LevelBuilder : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if (instance != null && instance != this) // инициализируем instance в дочернем классе
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         AssignParametersAndProperties(AdjustLevelParameters.levelParameters, this, selfName);
     }
@@ -103,7 +108,12 @@ public class LevelBuilder : MonoBehaviour
                 SpawnEnemy(spawnPointTransform);
             }
             numberOfSpawnIteration++;
-            yield return new WaitForSeconds(2f);
+            if (targetPointsForEnemy.Any(targetPoint => targetPoint.Value > 0)) // дабы после последней итерации спавна врагов не ждать 2 секунды до "завершения волны". Ибо если за эти
+                                                                                // 2 секунды будут убиты все враги, то при проверке spawnEnemyByTimerCoroutine на null в методе 
+                                                                                // WasEnemiesWaveDestroyed мы не выдадим true
+            {
+                yield return new WaitForSeconds(2f);
+            }
         }
         spawnEnemyByTimerCoroutine = null;
     }
@@ -163,11 +173,17 @@ public class LevelBuilder : MonoBehaviour
     // вернём true только в случае, если умрёт последний враг из последней волны
     public bool WasEnemiesWaveDestroyed(Enemy scriptEnemy)
     {
-        //Debug.Log(listEnemiesFromLastWave.Count);
+        Debug.Log(listEnemiesFromLastWave.Count);
         if (listEnemiesFromLastWave.Contains(scriptEnemy))
         {
+        Debug.Log("shit");
+
             listEnemiesFromLastWave.Remove(scriptEnemy);
             return listEnemiesFromLastWave.Count == 0 && spawnEnemyByTimerCoroutine == null; // если враг был последним в списке волны и корутина для их спавна уже не работала
+
+
+
+
         }
         return false;
     }

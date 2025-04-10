@@ -15,9 +15,9 @@ public class LevelBuildLevel1 : LevelBuilder
 
         selfName = "Level1";
         nameOfMainMusicTeam = "STAND";
-        instance = this;
 
         base.Awake();
+        instance = this;
 
         // получаем компоненты transform у целей
         /*
@@ -51,6 +51,9 @@ public class LevelBuildLevel1 : LevelBuilder
         }
 
     }
+
+
+
     protected override void Start()
     {
         base.Start();

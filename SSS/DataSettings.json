@@ -10,11 +10,11 @@
         },
         {
             "selfName": "Russian",
-            "IsToggled": false
+            "IsToggled": true
         },
         {
             "selfName": "English",
-            "IsToggled": true
+            "IsToggled": false
         },
         {
             "selfName": "Spanish",
@@ -52,7 +52,7 @@
         },
         {
             "selfName": "ParameterVolumEffects",
-            "CurrentValue": 0.4667874872684479
+            "CurrentValue": 0.0
         },
         {
             "selfName": "ParameterBrightness",
@@ -62,8 +62,8 @@
     "allChoseListsData": [
         {
             "selfName": "ParameterOrientation",
-            "CurrentTextValue": "Vertical",
-            "CurrentValue": 4,
+            "CurrentTextValue": "",
+            "CurrentValue": 0,
             "_indexCurrentString": 0
         }
     ]

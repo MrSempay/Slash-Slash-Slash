@@ -17,10 +17,14 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
     {
         if (!awakeWasCalledAlready)
         {
-            textComponent = gameObject.GetComponent<TextMeshProUGUI>();
-            baseLocalizationKey = gameObject.name;
-            Text = "";
             awakeWasCalledAlready = true;
+
+            textComponent = gameObject.GetComponent<TextMeshProUGUI>();
+            if (baseLocalizationKey == "")
+            {
+                baseLocalizationKey = gameObject.name;
+            }
+            Text = ""; // просто начальная инициализация текста
         }
     }
     private void Start()
@@ -34,6 +38,11 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
         get { return additionalLocalizationKey; }
         set
         {
+            if (!awakeWasCalledAlready)
+            {
+                Awake();
+            }
+
             additionalLocalizationKey = value; 
             string baseText = LocalizationManager.Instance.GetText(baseLocalizationKey);
             if (baseText == "")

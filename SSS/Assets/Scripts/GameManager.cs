@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public DataWrapperSettings dataWrapperSettings = new(); // оболочка настроек для последующей загрузки сохранённых настроек. При каждом сохранении настроек перезаписываем
                                                             // данное поле
     public CurrentSettings currentSettings;
+    public PlayFabManager playFabManager;
     public LocalizationManager localizationManager;
 
     [System.Serializable] public class CurrentSettings
@@ -149,6 +150,7 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
+        PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
         localizationManager = LocalizationManager.Instance; // создаём менеджер локализации
         SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
         
