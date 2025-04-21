@@ -17,6 +17,9 @@ public static class AdjustLevelParameters
                                 { "speed", 0f },
                                 { "jumpForce", 0f },
                                 { "damage", 5f } } },
+                    { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов%
+                            {
+                                { "DamageReductionPercentage", 5f } } },
                     { C.DK.timeBetweenEnemySpawnIteration, 2f } // время между спавном в секундах
                 }
             }

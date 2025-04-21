@@ -35,6 +35,7 @@ public class LevelBuilder : MonoBehaviour
     [NonSerialized] public string currentWave;
     [NonSerialized] public float timeBetweenEnemySpawnIteration = 2;
     [NonSerialized] public Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
+    [NonSerialized] public Dictionary<string, float> absoluteIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
 
     public string selfName;
 
@@ -79,11 +80,11 @@ public class LevelBuilder : MonoBehaviour
         //percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>(AdjustLevelParameters.levelParameters[selfName][C.DK.percentageIncreaseEnemiesParametersBySpawnIteration]);
         AssignParametersAndProperties(AdjustLevelParameters.levelParameters, this, selfName);
 
-        foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
-        {
-            Debug.Log(item.Value);
+        //foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
+        //{
+        //    Debug.Log(item.Value);
             
-        }
+        //}
     }
 
 
@@ -157,13 +158,21 @@ public class LevelBuilder : MonoBehaviour
 
                 Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значени€
                                                                                                                                   // дл€ усилени€ юнитов
+                Dictionary<string, float> absoluteIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); 
                 foreach (var increasingValue in percentageIncreaseEnemiesParametersBySpawnIteration)
                 {
                     string newKey = string.Copy(increasingValue.Key); // —оздаем новый экземпл€р строки
                     float newValue = increasingValue.Value * numberOfSpawnIteration; // ƒл€ float это простое копирование значени€
                     percentageIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
+                } 
+                foreach (var increasingValue in absoluteIncreaseEnemiesParametersBySpawnIteration)
+                {
+                    string newKey = string.Copy(increasingValue.Key); // —оздаем новый экземпл€р строки
+                    float newValue = increasingValue.Value * numberOfSpawnIteration; // ƒл€ float это простое копирование значени€
+                    absoluteIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
                 }
                 newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration, true);
+                newEnemy.ChangeUnitParametersAndPropertiesByAbsolute(absoluteIncreasedEnemiesParametersBySpawnIteration, true);
                 return;
             }
 

@@ -15,8 +15,8 @@ using static StaticClassForAdditionalFunctions;
 public abstract class Unit : MonoBehaviour
 {
 
-    private float _damageReductionPercentage; //ѕоглощение урона
 
+    [SerializeField] private float _damageReductionPercentage; //ѕоглощение урона
     [SerializeField] private float _healthCurrent; // Ќачальное здоровье
     [SerializeField] private Image _healthBarFilling;
     
@@ -219,10 +219,10 @@ public abstract class Unit : MonoBehaviour
         Dictionary<string, float> changedParametersValuesAbs = new Dictionary<string, float>();
         foreach (var kvp in parametersIncreases)
         {
-            string parameterName = kvp.Key;
-            float parameterIncreasing = kvp.Value;
+            string parameterOrPropertyName = kvp.Key;
+            float parameterOrPropertyIncreasing = kvp.Value;
             // ѕолучаем поле с именем, соответствующим ключу словар€
-            FieldInfo fieldInfo = type.GetField(parameterName);
+            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
 
             if (fieldInfo != null)
             {
@@ -230,11 +230,11 @@ public abstract class Unit : MonoBehaviour
                 try
                 {
                     // 1. ѕолучаем базовое значение (предполагаем, что оно типа object)
-                    object baseValueObject = baseParametersValues[parameterName];
+                    object baseValueObject = baseParametersValues[parameterOrPropertyName];
 
                     // 2. ѕреобразуем базовое значение к Double
                     double baseValueDouble = Convert.ToDouble(baseValueObject);
-                    double parameterIncreasingDouble = Convert.ToDouble(parameterIncreasing);
+                    double parameterIncreasingDouble = Convert.ToDouble(parameterOrPropertyIncreasing);
 
                     double increasedValue = isIncreasing
                         ? Convert.ToDouble(fieldInfo.GetValue(this)) + (baseValueDouble * (parameterIncreasingDouble / 100))
@@ -245,20 +245,40 @@ public abstract class Unit : MonoBehaviour
 
 
                     fieldInfo.SetValue(this, convertedValue);
-                    if (parameterName == C.DK.healthMax || parameterName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
+                    if (parameterOrPropertyName == C.DK.healthMax || parameterOrPropertyName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
                                                                                              // значений, вызываем функцию AdjustCurrentParametersValues, котора€ правильно настроит 
                                                                                              // текущее значение параметра
-                        AdjustCurrentParametersValuesPercentage(parameterName, isIncreasing, parameterIncreasing, baseValueDouble);
+                        AdjustCurrentParametersValuesPercentage(parameterOrPropertyName, isIncreasing, parameterOrPropertyIncreasing, baseValueDouble);
                     // 5. ѕрисваиваем значение полю
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.Log($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    Debug.Log($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
             {
-                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
+                PropertyInfo propertyInfo = type.GetProperty(parameterOrPropertyName);
+
+                if (propertyInfo != null)
+                {
+
+                    double propertyIncreasingDouble = Convert.ToDouble(parameterOrPropertyIncreasing);
+
+                    double increasedValue = isIncreasing
+                        ? Convert.ToDouble(propertyInfo.GetValue(this)) + propertyIncreasingDouble
+                        : Convert.ToDouble(propertyInfo.GetValue(this)) - propertyIncreasingDouble;
+
+                    // 4. ѕреобразуем обратно к типу пол€
+                    object convertedValue = Convert.ChangeType(increasedValue, propertyInfo.PropertyType);
+
+                    propertyInfo.SetValue(this, convertedValue);
+                }
+                else
+                {
+                    Debug.LogWarning($"Field '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                }
+
             }
 
 

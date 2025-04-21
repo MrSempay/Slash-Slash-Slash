@@ -119,6 +119,7 @@ public class C
         // параметры уровня
 
         public const string percentageIncreaseEnemiesParametersBySpawnIteration = "percentageIncreaseEnemiesParametersBySpawnIteration";
+        public const string absoluteIncreaseEnemiesParametersBySpawnIteration = "absoluteIncreaseEnemiesParametersBySpawnIteration";
         public const string timeBetweenEnemySpawnIteration = "timeBetweenEnemySpawnIteration";
 
 
