@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\AttackArea.cs" />
     <Compile Include="Assets\Scripts\PlayFab\PlayFabManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
+    <Compile Include="Assets\Scripts\UI\CustomCombo.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />

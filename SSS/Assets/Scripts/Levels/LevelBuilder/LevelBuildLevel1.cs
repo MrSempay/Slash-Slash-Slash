@@ -35,7 +35,7 @@ public class LevelBuildLevel1 : LevelBuilder
 
 
         // получаем компоненты transform у точек для спавна
-        clusterSpawnPointsTransform = GameObject.Find("SpawnPoints").transform;
+        clusterSpawnPointsTransform = GameObject.Find("SpawnPoints")?.transform;
 
         // проверяем, что есть кластер для точек спавна врагов на уровне
         if (clusterSpawnPointsTransform)

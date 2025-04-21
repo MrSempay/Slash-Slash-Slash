@@ -49,20 +49,26 @@ public class C
         // Ќазвани€ предметов
         public const string Sword = "Sword";
         public const string Knife = "Knife";
-        public const string BigSword = "BigSword";
-        public const string Blade = "Blade";
+        public const string Spear = "Spear";
+        public const string ThunderAxe = "ThunderAxe";
+        public const string Axe = "Axe";
+        public const string FireSword = "FireSword";
         public const string SaintDragonSword = "SaintDragonSword";
         public const string WitchBlade = "WitchBlade";
 
-        public const string NormalArmor1 = "NormalArmor1";
-        public const string NormalArmor2 = "NormalArmor2";
-        public const string BigArmor1 = "BigArmor1";
-        public const string BigArmor2 = "BigArmor2";
+        public const string LeatherArmor = "LeatherArmor";
+        public const string ChainMail = "ChainMail";
+        public const string PlateArmor = "PlateArmor";
+        public const string ThunderArmor = "ThunderArmor";
+        public const string DragonArmor = "DragonArmor";
         public const string LegendaryArmor1 = "LegendaryArmor1";
         public const string LegendaryArmor2 = "LegendaryArmor2";
 
-        public const string DeathBook = "DeathBook";
-        public const string LifeBook = "LifeBook";
+        public const string RingBerserker = "RingBerserker";
+        public const string DexterityBracelet = "DexterityBracelet";
+        public const string MedallionOfLife = "MedallionOfLife";
+        public const string RingWarrior = "RingWarrior";
+        public const string RingForesight = "RingForesight";
         public const string GreenBook = "GreenBook";
         public const string RedBook = "RedBook";
         public const string MathBook = "MathBook";
@@ -88,8 +94,11 @@ public class C
         public const string timeRecoverStaminaPoint = "timeRecoverStaminaPoint";
         public const string timeZeroizeKillComboTicks = "timeZeroizeKillComboTicks";
         public const string staminaMax = "staminaMax";
-        public const string damageReduction = "damageReduction";
+        public const string DamageReductionPercentage = "DamageReductionPercentage";
         public const string speed = "speed";
+        public const string evasionPercentage = "evasionPercentage";
+        public const string timeStuneByStanartAttack = "timeStuneByStanartAttack";
+        public const string stuneChanceByStandartAttackPercentage = "stuneChanceByStandartAttackPercentage";
         public const string jumpForce = "jumpForce";
         public const string moneyFromKill = "moneyFromKill";
         public const string experienceToNextLevel = "experienceToNextLevel";
@@ -104,7 +113,15 @@ public class C
         public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Ёто исключение, так как строка начинаетс€ с заглавной (все свойства будут такими)
         public const string CurrentMoney = "CurrentMoney"; // Ёто исключение, так как строка начинаетс€ с заглавной
         public const string CurrentMinimumAmountCombo = "CurrentMinimumAmountCombo"; 
+        public const string CurrentIncreasingStamina = "CurrentIncreasingStamina"; 
         public const string som = "som";
+
+        // параметры уровн€
+
+        public const string percentageIncreaseEnemiesParametersBySpawnIteration = "percentageIncreaseEnemiesParametersBySpawnIteration";
+        public const string timeBetweenEnemySpawnIteration = "timeBetweenEnemySpawnIteration";
+
+
 
         // названи€ настроек
 

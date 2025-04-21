@@ -83,7 +83,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
                 _coroutineDeleyBeforeSelectedState = null;
                 if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
                 {
-                    if (equipment.isReady)
+                    if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // если не КД и действия игрока не заблокированы!
                     {
                         AdjustEquipmentParameters.CallActionByName(equipment, equipment.amountUpCombo, equipment.player);
                     }
@@ -105,7 +105,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
             _coroutineDeleyBeforeSelectedState = null;
             if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y))
             {
-                if (equipment.isReady) // у любого снаряжения, даже если нет активки, есть кд, по умолчанию равно 0 секундам, задаётся в скрипте Adjust
+                if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // у любого снаряжения, даже если нет активки, есть кд, по умолчанию равно 0 секундам, задаётся в скрипте Adjust
                 {
                     AdjustEquipmentParameters.CallActionByName(equipment, equipment.amountUpCombo, equipment.player);
                 }

@@ -5,9 +5,13 @@ using static AdjustEquipmentParameters; // ОФИГЕТЬ, ОКАЗЫВАЕТ ВОТ ТАК МОЖНО
 
 public class Ammunition : Equipment
 {
+    [SerializeField] private CustomCombo _prefubCustomCombo;
+
     [NonSerialized] public EquipmentChance categoryAndRarityTypesOfEquipment;// структура для того чтоб знать к каким разрезам относится предмет, ибо у нас их много. Присваивается значение при старте
     [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentage = new Dictionary<string, float>();
     [NonSerialized] public Dictionary<string, float> increasingUnitParametersByAmmunitionAbsolute = new Dictionary<string, float>();
+
+
 
     public override void Awake()
     {
@@ -19,4 +23,16 @@ public class Ammunition : Equipment
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(ammunitionParameters[categoryAndRarityTypesOfEquipment.equipmentCategory][categoryAndRarityTypesOfEquipment.equipmentRarityType], this, equipmentName);
         base.Start();
     }
+
+    public void Sakura()
+    {
+        CustomCombo scriptCustomCombo = Instantiate(_prefubCustomCombo, Player.instance.rectTransformPlaceCustomCombos);
+        //EventBus.Instance.OnEnemyWasKilledByPlayer.AddListener(scriptCustomCombo.ChangeComboTextUI);
+    }
+
+    private void SakuraCombo(Enemy enemy)
+    {
+
+    }
+
 }

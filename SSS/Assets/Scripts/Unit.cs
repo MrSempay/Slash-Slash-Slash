@@ -14,18 +14,20 @@ using static StaticClassForAdditionalFunctions;
 
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] private float _healthCurrent; // Начальное здоровье
 
+    private float _damageReductionPercentage; //Поглощение урона
+
+    [SerializeField] private float _healthCurrent; // Начальное здоровье
     [SerializeField] private Image _healthBarFilling;
     
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
     [NonSerialized] public GameObject parametersBars;
 
-
     public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public bool isAlive = true; // Флаг, жив ли юнит
+    public bool areUpdatingFunctionsEnabled = true; // флаг, определяющий, может ли совершать какие-либо действия юнит
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
     public string nameSoundGettingDamage;
@@ -37,10 +39,12 @@ public abstract class Unit : MonoBehaviour
     public event UnitWasKilled onUnitWasKilled;         // экземляр(?) функции/сигнала(?)
 
     public float healthMax; // Начальное здоровье
-    public float damageReduction; //Поглощение урона
     public float jumpForce; // сила прыжка
     public float speed; // скорость
+    public float stuneChanceByStandartAttackPercentage; // шанс стана при обычной атаки, %. Пока что плевать, какая атака, хоть магическая, хоть дальняя, хоть ближняя
+    public float timeStuneByStanartAttack; // время стана дефолтной атаки
     public float damage; // урон
+    public float evasionPercentage; // уклонение, проценты
     public float moneyFromKill; // деньги за убийство юнита
     public int comboFromKill = 1; // комбо за убийство юнита. По умолчанию 1. Подразумеваю, что с развитием (???) игры будут добавляться враги, за которых можно дать и по-больше
     public int scoreFromKill; // очки за убийство юнита
@@ -56,6 +60,14 @@ public abstract class Unit : MonoBehaviour
             ChangeHealthBar(_currentHealthAsPercantage);
             // Вызываем событие, если есть подписчики
             OnHealthChanged?.Invoke(_healthCurrent); // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar)
+        }
+    }
+    public virtual float DamageReductionPercentage
+    {
+        get { return _damageReductionPercentage; }
+        set
+        {
+            _damageReductionPercentage = value;
         }
     }
 
@@ -80,7 +92,7 @@ public abstract class Unit : MonoBehaviour
         damage = (float) unitParameters["Damage"];
         speed = (float) unitParameters["Speed"];
         jumpForce = (float) unitParameters["JumpPower"];
-        damageReduction = (float) unitParameters["damageReduction"]; */
+        DamageReductionPercentage = (float) unitParameters["DamageReductionPercentage"]; */
     }
 
     protected virtual void Start()
@@ -89,17 +101,30 @@ public abstract class Unit : MonoBehaviour
     }
 
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
-    public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
+    public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
     {
         if (isAlive)
         {
-            CurrentHealth -= damageSize; // Уменьшаем здоровье
-            AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
 
             if (unitFromWhoWasGottenDamage)
             {
+                if (CheckChance(evasionPercentage)) // шанс уклониться от урона. Не важно, от какого, главное, что от исходящего от другого юнита
+                {
+                    return;
+                }
+
+                if (wasDamageByStandartAttack)
+                {
+                    if (CheckChance(unitFromWhoWasGottenDamage.stuneChanceByStandartAttackPercentage)) // шанс, что застанили текущей атакой
+                    {
+                        StuneThisUnit(unitFromWhoWasGottenDamage.timeStuneByStanartAttack);
+                    }
+                }
+
                 unitFromWhoWasGottenDamage.SomeUnitWasHit(this);
             }
+            CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage/100); // Уменьшаем здоровье
+            AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
 
             if (CurrentHealth <= 0)
             {
@@ -107,6 +132,8 @@ public abstract class Unit : MonoBehaviour
             }
         }
     }
+
+
 
     // по идее надо изменить на private, но оставим так для мгновенной смерти из спела SomeSpell1
     public virtual void Die(Unit unitFromWhoWasGottenDamage = null)
@@ -331,8 +358,8 @@ public abstract class Unit : MonoBehaviour
                 double maxFieldValue = Convert.ToDouble(maxFieldInfo.GetValue(this));
 
                 double assigningCurrentPropertyValue = isIncreasing
-                        ? currentPropertyValue + (baseParameterValue * (currentPropertyValue / (maxFieldValue - (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100))
-                        : currentPropertyValue - (baseParameterValue * (currentPropertyValue / (maxFieldValue + (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100));
+                        ? currentPropertyValue + (baseParameterValue * (currentPropertyValue / (maxFieldValue - (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100)) * Math.Sign(increasingValuePercentage) // в теории, при формальном увеличении какого-то параметра мы можем фактически его уменьшать. Типа предмет при надевании даёт штраф в 15% к чему-то
+                        : currentPropertyValue - (baseParameterValue * (currentPropertyValue / (maxFieldValue + (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100)) * Math.Sign(increasingValuePercentage);
 
                 //Debug.Log(assigningCurrentPropertyValue);
                 object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
@@ -404,6 +431,42 @@ public abstract class Unit : MonoBehaviour
     protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score) { }
     protected virtual void SomeUnitWasDestroyed(Unit unit) { }
     protected virtual void SomeUnitWasHit(Unit unit) { }
+
+# region Stune mechanic
+
+    private float _currentStuneTimeRemaining;
+    private Coroutine _waitStuneTimeCoroutine; // Начальное здоровье
+    protected virtual void StuneThisUnit(float timeStune)
+    {
+        if (timeStune > _currentStuneTimeRemaining)
+        {
+            _currentStuneTimeRemaining = timeStune;
+            if (_waitStuneTimeCoroutine != null) StopCoroutine(_waitStuneTimeCoroutine);
+            _waitStuneTimeCoroutine = StartCoroutine(WaitBeforeEndingStune(timeStune));
+        }
+    }
+
+    IEnumerator WaitBeforeEndingStune(float timeStune)
+    {
+        areUpdatingFunctionsEnabled = false;
+
+        while (_currentStuneTimeRemaining > 0)
+        {
+            yield return null; // Ждем один кадр
+
+            // Уменьшаем оставшееся время
+            _currentStuneTimeRemaining -= Time.deltaTime;
+
+            // Дополнительная проверка, если _currentStuneTimeRemaining случайно станет отрицательным
+            if (_currentStuneTimeRemaining < 0)
+            {
+                _currentStuneTimeRemaining = 0;
+            }
+        }
+
+        areUpdatingFunctionsEnabled = true;
+    }
+# endregion
 
     public virtual void OnDestroy()
     {

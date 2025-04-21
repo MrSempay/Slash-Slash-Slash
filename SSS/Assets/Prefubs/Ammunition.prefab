@@ -153,7 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfCollider: {fileID: 1610743810911700948}
+  amountUpCombo: 0
+  timeCallDown: 0
   transform: {fileID: 0}
+  multiplierFreshness: 1
+  _prefubCustomCombo: {fileID: 7992864537223697326, guid: 8c4d4f67342a740458a0603a6ee05dea, type: 3}
 --- !u!95 &8998731946317222285
 Animator:
   serializedVersion: 7

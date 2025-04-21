@@ -79,7 +79,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
             {
                 if (i < enemy.listOfUnitsInAttackArea.Count)
                 {
-                    if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage); }
+                    if (enemy.listOfUnitsInAttackArea[i]) { enemy.listOfUnitsInAttackArea[i].GetDamage(enemy.damage, enemy, true); }
                     else unitsToRemove.Add(enemy.listOfUnitsInAttackArea[i]); // Добавляем в список на удаление
                 }
             }

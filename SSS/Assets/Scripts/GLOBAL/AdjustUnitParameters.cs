@@ -11,12 +11,15 @@ public static class AdjustUnitParameters
             {
                 { C.DK.healthMax, 250 },
                 { C.DK.staminaMax, 2 },
-                { C.DK.damageReduction, 100 },
+                { C.DK.DamageReductionPercentage, 0 }, // Процент блокировки урона! Любого! 0 - дефолт, наносится полный урон
                 { C.DK.speed, 2 },
                 { C.DK.jumpForce, 12 },
                 { C.DK.moneyFromKill, 0 },
                 { C.DK.experienceToNextLevel, 200 },
                 { C.DK.experienceFromKill, 0 },
+                { C.DK.stuneChanceByStandartAttackPercentage, 0 },
+                { C.DK.timeStuneByStanartAttack, 2 },
+                { C.DK.evasionPercentage, 50 },
                 { C.DK.comboOneHitKillMultiplayer, 10f },
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
@@ -38,8 +41,11 @@ public static class AdjustUnitParameters
             C.DK.MeleeEnemy, new Dictionary<string, object>()
             {
                 { C.DK.healthMax, 25 },
-                { C.DK.damageReduction, 150 },
+                { C.DK.DamageReductionPercentage, 0 },
                 { C.DK.speed, 8 },
+                { C.DK.stuneChanceByStandartAttackPercentage, 50 }, 
+                { C.DK.evasionPercentage, 0 }, 
+                { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.jumpForce, 14 },
                 { C.DK.moneyFromKill, 50 },
                 { C.DK.experienceFromKill, 20 },

@@ -15,8 +15,8 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
-    [NonSerialized] public SpriteRenderer selfSprite; // свой спрайт
-    [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт
+    [NonSerialized] public SpriteRenderer selfSprite; // свой компонент спрайта
+    [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт, назначается в здании при спавне
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public Player player;
@@ -26,6 +26,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public Animator animator;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
     [NonSerialized] public bool isReady = true;
+    [NonSerialized] new public RectTransform transform;
 
     public BoxCollider2D selfCollider;
     public int amountUpCombo;
@@ -33,7 +34,6 @@ public class Equipment : MonoBehaviour
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
-    new public RectTransform transform;
 
 #region Freshness Mechanic
 
@@ -141,16 +141,31 @@ public class Equipment : MonoBehaviour
     }
     protected virtual void Start()
     {
+        // Короче, план таков: если в списке анимаций есть анимация с именем текущего снаряжения, мы воспроизводим её. Если таковой анимации не было найдено, то мы
+        // ищем анимацию для активного состояния данного снаряжения (ибо снаряжение может иметь 2 вида анимации: активное и деактивированное, когда, например, в КД),
+        // если нашли - воспроизводим её. Если нет и таковой, то просто устанавливаем спрайт для данного снаряжения. Спрайт по умолчанию назначается в скрипте здания,
+        // которое это снаряжение спавнит, находится в поле sprite
+        // Предполагается, что не должно быть для указанного снаряжения одновременно и просто анимации по его имени, и анимации с постфиксом "Active", в таком случае
+        // будет отдаваться приоритет проигрывания только анимации по имени, которая без постфикса
+
         if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator))
         {
             animator.Play(equipmentName); // Воспроизводим анимацию
         }
         else
         {
-            animator.enabled = false;
-            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
-            selfSprite.sprite = sprite;
+            if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Active", animator))
+            {
+                animator.Play(equipmentName + "Active"); // Воспроизводим анимацию
+            }
+            else
+            {
+                animator.enabled = false;
+                //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+                selfSprite.sprite = sprite;
+            }
         }
+
         if (BuildingWhereEquipmentIs) ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала
         _fsm.SetState<FsmStateEquipmentInsideShop>();
 

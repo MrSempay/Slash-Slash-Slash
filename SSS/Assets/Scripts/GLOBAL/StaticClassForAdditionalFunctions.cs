@@ -333,4 +333,14 @@ public static class StaticClassForAdditionalFunctions : object
         return false; // Анимация не найдена
     }
 
+    public static bool CheckChance(float chancePercentage)
+    {
+        // Генерируем случайное число от 0 до 100
+        float randomNumber = UnityEngine.Random.Range(0f, 100f);
+
+        // Проверяем, меньше ли случайное число, чем заданный шанс
+        return randomNumber <= chancePercentage;
+    }
+
+
 }

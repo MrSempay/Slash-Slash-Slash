@@ -11,7 +11,7 @@ public class DataWrapperUnit
     public bool isAlive = true; // Флаг, жив ли юнит
     public string nameOfUnit;
     public float healthMax; // Начальное здоровье
-    public float damageReduction; //Поглощение урона
+    public float DamageReductionPercentage; //Поглощение урона
     public float jumpForce; // сила прыжка
     public float speed; // скорость
     public float damage; // урон

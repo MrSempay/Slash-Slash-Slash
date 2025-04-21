@@ -51,10 +51,15 @@ public class Treasury : Building, IMainTarget
         equipmentInBuilding.Clear();
         foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
         {
+            string randomEquipmentName = GetRandomAmmunitionName(randomCategoryAndRarityTypesOfEquipment[i]);
+            if (randomEquipmentName == null) // это значит, что в заданной категории и редкости нет ни одного предмета!!! ‘ункци€ GetRandomAmmunitionName не нашла ни одного имени там!!!
+            {
+                continue;
+            }
+
             // —ќ«ƒј®ћ ќЅЏ≈ “ —Ќј–я∆≈Ќ»я, ѕќЋ”„ј≈ћ ≈√ќ »ћя, RectTransform, —ѕј¬Ќ»ћ ” «јƒјЌЌќ√ќ –ќƒ»“≈Ћя (ћ≈—“ј —Ќј–я∆≈Ќ»я)
             GameObject newEquipment = Instantiate(prefubOfEquipment, Vector3.zero, Quaternion.identity);
             RectTransform newEquipmentRectTransform = newEquipment.GetComponent<RectTransform>();
-            string randomEquipmentName = GetRandomAmmunitionName(randomCategoryAndRarityTypesOfEquipment[i]);
             newEquipmentRectTransform.SetParent(placeForEquipment, false); // false - чтобы не сохран€ть мировые координаты (позицию, масштаб, поворот)
 
             // Ќј—“–ј»¬ј≈ћ  ќћѕќЌ≈Ќ“ RectTransform ” Ё «≈ћѕЋя–ј —Ќј–я∆≈Ќ»я

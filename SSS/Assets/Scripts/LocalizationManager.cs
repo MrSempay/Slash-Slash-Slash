@@ -157,9 +157,15 @@ public class LocalizationManager
 
     public string GetText(string key)
     {
-        if (localization.ContainsKey(key) && localization[key].ContainsKey(currentLanguage))
+        Debug.Log(localization);
+        Debug.Log(key);
+        Debug.Log(localization.ContainsKey(key));
+        if (localization.ContainsKey(key))
         {
-            return localization[key][currentLanguage];
+            if (localization[key].ContainsKey(currentLanguage))
+            {
+                return localization[key][currentLanguage];
+            }
         }
         return ""; // Какой-то текст по умолчанию
     }

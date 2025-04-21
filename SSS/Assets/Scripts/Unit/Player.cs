@@ -20,9 +20,10 @@ public class Player : Unit
     private int _amountEnemiesWasKilledInCombo = 0; // количество врагов, убитых "одним ударом"
     private float _timeDuringOneHit = 0.2f; // длительность нашего "одного удара"
     private int _currentMinimumAmountCombo; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+    [SerializeField] private float _currentIncreasingStamina; 
 
 
-    [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
+    [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь 
     [SerializeField] private float _currentExperience = 0;
     [SerializeField] private float _currentMoney = 0;
     [SerializeField] private int _currentScore = 0;
@@ -41,6 +42,7 @@ public class Player : Unit
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
     [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
     [NonSerialized] public int countAvailableSpellPlaces = 3; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+    [NonSerialized] public RectTransform rectTransformPlaceCustomCombos;
 
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
@@ -55,7 +57,6 @@ public class Player : Unit
 
     public List<Enemy> nearEnemies = new();
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
-    public bool areUpdatingFunctionsEnabled = true; // Проверка, находится ли игрок на земле
     public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public bool wasEnemyDamagedByLastSwipe; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
@@ -170,6 +171,40 @@ public class Player : Unit
         {
             _currentStamina = value > 0 ? value : 0;
             ChangeStaminaBar(_currentStamina);
+
+            if (value < staminaMax) 
+            {
+                if (_recoverStaminaPointCoroutine == null) // если текущая выносливость меньше максимальной и при этом корутина для её восстановления не запущена
+                {
+                    _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
+                }
+            }
+            else
+            {
+                if (_recoverStaminaPointCoroutine != null) // если текущая выносливость равна максимальной и при этом корутина для её восстановления всё ещё работает
+                {
+                    CoroutineManager.Instance.StopManagedCoroutine(gameObject, _recoverStaminaPointCoroutine);
+                    _recoverStaminaPointCoroutine = null;
+                }
+            }
+        }
+    }
+
+    public float CurrentIncreasingStamina // ввели отдельный контур для увеличения стамины, ибо просто повышать staminaMax не получилось бы из-за слишком маленького шага единицы измерения
+    {
+        get { return _currentIncreasingStamina; }
+        set
+        {
+            _currentIncreasingStamina = value;
+            int ab = 1;
+            Debug.Log(ab.GetType());
+            Debug.Log((float)ab);
+            Debug.Log((baseParametersValues[C.DK.staminaMax]).GetType());
+            Debug.Log((baseParametersValues[C.DK.staminaMax]));
+            Debug.Log(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]));
+            int increasingStamina = Mathf.RoundToInt(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]) * (value/100));
+            staminaMax = Convert.ToInt32(baseParametersValues[C.DK.staminaMax]) + increasingStamina;
+            CurrentStamina += increasingStamina;
         }
     }
     public override float CurrentHealth
@@ -236,7 +271,6 @@ public class Player : Unit
     {
         //texxt.Text = "Greeting";
         base.Start();
-        _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
         _fsm.SetState<FsmStateIdle>();
     }
 
@@ -268,6 +302,10 @@ public class Player : Unit
 
     protected override void SomeUnitWasDestroyed(Unit unit)
     {
+        Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
+
+        EventBus.Instance.EnemyWasKilledByPlayer(enemyUnit);
+
         _amountEnemiesWasKilledInCombo++;
         GetExperienceAndMoneyFromKillingUnit(unit.experienceFromKill, unit.moneyFromKill, unit.comboFromKill, unit.scoreFromKill);
         if (_zeroizeComboKillCoroutine == null)
@@ -275,7 +313,6 @@ public class Player : Unit
             _zeroizeComboKillCoroutine = StartCoroutine(ZeroizeComboKill());
         }
 
-        Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
 
         if (enemyUnit != null) 
         {
@@ -309,7 +346,7 @@ public class Player : Unit
 
     protected override void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score)
     {
-        //CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
+        CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
         CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
         ScoreManager.Instance.CurrentScore += score * ScoreManager.Instance.styleMultiplier;
         ScoreManager.Instance.UpCombo(comboFromKill); // по сути набитие комбо на враге не учитывает убийство текущего врага: опыт, злато и очки не скалятся от повышения ранга
@@ -339,8 +376,8 @@ public class Player : Unit
     {
         while (true)
         {
-            if (CurrentStamina < staminaMax) CurrentStamina++;
             yield return new WaitForSeconds(timeRecoverStaminaPoint);
+            if (CurrentStamina < staminaMax) CurrentStamina++;
 
         }
 
@@ -366,9 +403,16 @@ public class Player : Unit
         if (isDoorDestroyed) ShakeCamera(_mainCameraTransform, localPositionCamera);
     }
 
-    public override void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null)
+    public override void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
     {
-        ShakeCamera(_mainCameraTransform, localPositionCamera);
+        if (unitFromWhoWasGottenDamage)
+        {
+            if (StaticClassForAdditionalFunctions.CheckChance(evasionPercentage)) // шанс уклониться от урона. Не важно, от какого, главное, что от исходящего от другого юнита
+            {
+                return;
+            }
+        }
+            ShakeCamera(_mainCameraTransform, localPositionCamera);
         base.GetDamage(damageSize, unitFromWhoWasGottenDamage);
     }
 

@@ -5,7 +5,7 @@ public class DamageReceiver : MonoBehaviour
 {
     public float CurrentHealth = 100f; // Начальное здоровье
     public float healthMax = 100f; // Начальное здоровье
-    public float damageReduction = 0f; //Поглощение урона
+    public float DamageReductionPercentage = 0f; //Поглощение урона
     public event Action<float> HealthChanged;
     public void TakeDamage(float damage)
     {

@@ -21,14 +21,6 @@ public class LevelBuilder : MonoBehaviour
 
     protected Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом является ссылка на компонент transform цели, значением - количество
                                                                                                   // врагов, которые направятся к цели.
-    protected Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>() // увеличение параметров на %
-    {
-            { "healthMax", 5 },
-            { "damageReduction", 0 },
-            { "speed", 0 },
-            { "jumpForce", 0 },
-            { "damage", 5 } };
-
     protected Coroutine spawnEnemyByTimerCoroutine;
     protected List<Transform> spawnPointsTransforms = new(); // массив для компонентов Transform всех точек спавна
     protected Transform clusterSpawnPointsTransform; // кластер (родительский элемент) всех точек спавна
@@ -41,6 +33,8 @@ public class LevelBuilder : MonoBehaviour
 
     [NonSerialized] public string nameOfMainMusicTeam;
     [NonSerialized] public string currentWave;
+    [NonSerialized] public float timeBetweenEnemySpawnIteration = 2;
+    [NonSerialized] public Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
 
     public string selfName;
 
@@ -82,7 +76,14 @@ public class LevelBuilder : MonoBehaviour
             return;
         }
 
+        //percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>(AdjustLevelParameters.levelParameters[selfName][C.DK.percentageIncreaseEnemiesParametersBySpawnIteration]);
         AssignParametersAndProperties(AdjustLevelParameters.levelParameters, this, selfName);
+
+        foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
+        {
+            Debug.Log(item.Value);
+            
+        }
     }
 
 
@@ -112,7 +113,7 @@ public class LevelBuilder : MonoBehaviour
                                                                                 // 2 секунды будут убиты все враги, то при проверке spawnEnemyByTimerCoroutine на null в методе 
                                                                                 // WasEnemiesWaveDestroyed мы не выдадим true
             {
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(timeBetweenEnemySpawnIteration);
             }
         }
         spawnEnemyByTimerCoroutine = null;

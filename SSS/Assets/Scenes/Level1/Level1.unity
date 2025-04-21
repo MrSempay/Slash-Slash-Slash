@@ -19125,6 +19125,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Money: '
       objectReference: {fileID: 0}
+    - target: {fileID: 6138097922778250140, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: baseLocalizationKey
+      value: 'Money:'
+      objectReference: {fileID: 0}
     - target: {fileID: 6220716876910579119, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1
@@ -24155,7 +24159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1014860134
 RectTransform:
   m_ObjectHideFlags: 0

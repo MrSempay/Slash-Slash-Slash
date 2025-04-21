@@ -55,6 +55,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<int> OnScoreWasChanged { get; } = new();
     public UnityEvent<STYLE_RANK> OnRankWasChanged { get; } = new();
 
+    public UnityEvent<Enemy> OnEnemyWasKilledByPlayer { get; } = new();
+
 
     public void TriggerDoorWasDestroyed(bool wasDestroyed) { DoorWasDestroyed.Invoke(wasDestroyed); }
 
@@ -74,4 +76,6 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }
     public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }
     public void ScoreWasChanged(int value) { OnScoreWasChanged.Invoke(value); }
+
+    public void EnemyWasKilledByPlayer(Enemy enemy) { OnEnemyWasKilledByPlayer.Invoke(enemy); }
 }
