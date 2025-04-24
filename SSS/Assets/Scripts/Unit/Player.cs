@@ -32,7 +32,7 @@ public class Player : Unit
     [SerializeField] private int _currentStamina = 0;
     [SerializeField] private RectTransform _rectTransformStaminaBar;
     [SerializeField] private GameObject _prefubOfStaminaPoint;
-
+    
     public static Player instance;
 
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
@@ -42,8 +42,9 @@ public class Player : Unit
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. “ребуетс€ лишь дл€ отладки
     [NonSerialized] public float comboOneHitKillMultiplayer; // множитель дл€ убийства врагов за "один удар"
     [NonSerialized] public int countAvailableSpellPlaces = 3; // количество €чеек в инвентаре дл€ заклинаний, пока что... просто константа и не вли€ет на их количество
-    [NonSerialized] public RectTransform rectTransformPlaceCustomCombos;
+    [NonSerialized] public int countAvailableAmmunitionPlaces = 3; // количество €чеек в инвентаре дл€ аммуниции, пока что... просто константа и не вли€ет на их количество
 
+    public RectTransform rectTransformPlaceCustomCombos;
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // —крипт зоны дл€ атаки
     public ProgressBar progerssBarStyleRank; // —крипт зоны дл€ атаки
@@ -225,7 +226,12 @@ public class Player : Unit
         }
     }
 
-
+    // здесь будем инициализировать те штуки, которые завис€т и ссылаютс€ на объект Player, и которые без него работать не смогут
+    private void InitializeDependencies()
+    {
+        ScoreManager.Instance.Initialize(this);
+        InventoryPlayer.Instance.Initialize(this);
+    }
 
     protected override void Awake()
     {
@@ -249,7 +255,7 @@ public class Player : Unit
         CurrentMoney = CurrentMoney;
         CountAccessToUpInSchool = CountAccessToUpInSchool;
 
-        ScoreManager.Instance.Initialize(this);
+
 
         localPositionCamera = _mainCameraTransform.localPosition;
         foreach (RectTransform spellTransform in spellPanelTransform)
@@ -257,6 +263,7 @@ public class Player : Unit
 
         }
 
+        InitializeDependencies();
 
         _fsm.AddState(new FsmStateIdle(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalk(_fsm, gameObject));

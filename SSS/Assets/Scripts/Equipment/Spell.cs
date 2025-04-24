@@ -27,14 +27,15 @@ public class Spell : Equipment
             Debug.Log("Найден враг: " + enemy.gameObject.name);
             enemy.Die(whoCastedSpell);
         }
+        StartCallDown();
     }
     public void SomeSpell2(Unit whoCastedSpell)
     {
-
+        StartCallDown();
     }
     public void SomeSpell3(Unit whoCastedSpell)
     {
-
+        StartCallDown();
     }
 
 }

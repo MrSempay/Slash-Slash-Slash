@@ -54,7 +54,7 @@ public class C
         public const string Axe = "Axe";
         public const string FireSword = "FireSword";
         public const string SaintDragonSword = "SaintDragonSword";
-        public const string WitchBlade = "WitchBlade";
+        public const string ThirstySakura = "ThirstySakura";
 
         public const string LeatherArmor = "LeatherArmor";
         public const string ChainMail = "ChainMail";
@@ -69,7 +69,7 @@ public class C
         public const string MedallionOfLife = "MedallionOfLife";
         public const string RingWarrior = "RingWarrior";
         public const string RingForesight = "RingForesight";
-        public const string GreenBook = "GreenBook";
+        public const string Tragicomedy = "Tragicomedy";
         public const string RedBook = "RedBook";
         public const string MathBook = "MathBook";
         public const string TjanulDedRepku = "TjanulDedRepku";
@@ -79,8 +79,10 @@ public class C
         public const string cost = "cost";
         public const string timeCallDown = "timeCallDown";
         public const string amountUpCombo = "amountUpCombo";
+        public const string durationActiveState = "durationActiveState";
         public const string increasingUnitParametersByAmmunitionPercentage = "increasingUnitParametersByAmmunitionPercentage";
         public const string increasingUnitParametersByAmmunitionAbsolute = "increasingUnitParametersByAmmunitionAbsolute";
+        public const string increasingUnitParametersByAmmunitionPercentageByCast = "increasingUnitParametersByAmmunitionPercentageByCast";
 
 
         // названия юнитов
@@ -154,6 +156,10 @@ public class C
     public static class Prefixes
     {
         public const string PrefixTrigger = "Trigger";
+        public const string PrefixActivate = "Activate";
+        public const string PrefixDeactivate = "Deactivate";
+        public const string EnteredInventory = "EnteredInventory";
+        public const string ExitedInventory = "ExitedInventory";
 
     }
 }

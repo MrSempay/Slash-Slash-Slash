@@ -63,7 +63,7 @@ public static class AdjustEquipmentParameters : object
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Standart, chance = 20f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Rare, chance = 7.14f } ,
-        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1.43f } ,   
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1111111.43f } ,   
     };
 
     // increasingUnitParametersByAmmunitionAbsolute - увеличиваем на абсолютное значение параметры в словаре 
@@ -120,9 +120,9 @@ public static class AdjustEquipmentParameters : object
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
                         {
                             {
-                                C.DK.WitchBlade, new Dictionary<string, object>()
+                                C.DK.ThirstySakura, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 100f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {   } },
                                     { C.DK.cost, 170 } } } } }, } },
             {
                 C.DK.Armor, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
@@ -205,7 +205,15 @@ public static class AdjustEquipmentParameters : object
                                     { C.DK.cost, 170 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
-                        { } 
+                        {
+                            {
+                                C.DK.Tragicomedy, new Dictionary<string, object>()
+                                {
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentageByCast, new Dictionary<string, float>() { { C.DK.damage, 200f }, { C.DK.DamageReductionPercentage, -100f } } },
+                                    { C.DK.timeCallDown, 5 },
+                                    { C.DK.durationActiveState, 5 }, // можно настраивать длительность эффекта. Влияет на то, когда активный эффект сбросится и активка снаряжения уйдёт на КД
+                                    { C.DK.cost, 170 } } }
+                        } 
                     
                     } } }
 
@@ -271,11 +279,21 @@ public static class AdjustEquipmentParameters : object
         return ammunitionNames[randomIndex];                
     }
 
-    public static void CallActionByName(Equipment scriptEquipment, int amountUpCombo, Unit whoCallAction)
+
+
+    // вызывается для установки пассивных бонусов при попадании снаряжения в инвентарь. Требуется явно передать имя вызываемой функции (на более высоком уровне управления выбираем 
+    // префикс Activate/Deactivate. Переделали, теперь вызывается при любом взаимодействии спела с миром, хоть при нажатии, хоть при пассивных бонусах. Имя функции активации передаётся
+    // через параметр nameActivationFunction. Если ничего не было передано (null), значит, по умолчанию имя функции активации равно имени снаряжения (scriptEquipment.equipmentName)
+    public static void CallActionFunctionByName(Equipment scriptEquipment, int amountUpCombo, Unit whoCallAction, string nameActivationFunction = null)
     {
         // Получаем тип текущего объекта (MyClass)
         Type type = scriptEquipment.GetType();
-        string nameOfSpell = scriptEquipment.equipmentName;
+
+        string nameOfSpell = nameActivationFunction;
+        if (nameOfSpell == null)
+        {
+            nameOfSpell = scriptEquipment.equipmentName;
+        }
 
         // Получаем информацию о методе с указанным именем
         MethodInfo methodInfo = type.GetMethod(nameOfSpell);
@@ -286,9 +304,7 @@ public static class AdjustEquipmentParameters : object
             // Вызываем метод
             ScoreManager.Instance.UpCombo((int)(amountUpCombo * scriptEquipment.multiplierFreshness));
             ScoreManager.Instance.UpActionCombo(1, nameOfSpell);
-            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed);
-
-            scriptEquipment.StartCallDown();
+            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
 
             if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
             {

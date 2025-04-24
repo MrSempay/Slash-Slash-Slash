@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Equipment;
 using static ScoreManager;
+using static AdjustEquipmentParameters;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Equipment : MonoBehaviour
@@ -19,7 +20,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт, назначается в здании при спавне
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
-    [NonSerialized] public Player player;
+    [NonSerialized] public Player player; // НАДО БУДЕТ КАК-нибудь поменять на Unit onwer
     [NonSerialized] public int cost;
     [NonSerialized] public bool isEquipmentASpell;
     [NonSerialized] public string equipmentName;
@@ -30,7 +31,9 @@ public class Equipment : MonoBehaviour
 
     public BoxCollider2D selfCollider;
     public int amountUpCombo;
+    public bool isActivated; // флаг активированных снаряжений. Типа переключаемой способности
     public float timeCallDown;
+    public float durationActiveState;
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
@@ -97,7 +100,7 @@ public class Equipment : MonoBehaviour
     #endregion
 
 
-    public bool WasSold
+    public bool WasSold // МЕНЯЕМ ЗНАЧЕНИЕ ТОЛЬКО В СОСТОЯНИЯХ InsideShop и AtPlayer!!!!!!!!!!!!!!!!!!!!
     {
         get { return _wasSold; }
         set
@@ -110,14 +113,22 @@ public class Equipment : MonoBehaviour
         }
     }
 
-    public Building BuildingWhereEquipmentIs
+    // свойство нужно для концептуального определения: где-то там сейчас находится снаряжение (возвращает некий Building, хотя лучше в будущем расширить интерфейсом, ведь снаряжение
+    // возможно будет уметь лежать на земле, находиться у торговцев, падать в виде лута с врагов и т.п), или в инвентаре у героя (тогда будет null, его и детектим в Inventory)
+    public Building BuildingWhereEquipmentIs // пока что работает мега-ущербно, у нас снаряжение либо в здании, либо null, что означает в инвентаре у игрока. Нужно интерфейсы сделать...
     {
         get { return _buildingWhereEquipmentIs; }
         set
         {
             //if (value == null && _buildingWhereEquipmentIs != null) Sell(); // детектим факт перехода снаряжения из здания в... не здание. Значит продано. Хотя интересно, если оно просто 
-                                                                                  // будет в итоге выпадать из зданий без факта продажи
-            _buildingWhereEquipmentIs = value;
+            // будет в итоге выпадать из зданий без факта продажи
+
+            if (_buildingWhereEquipmentIs != value)
+            {
+                _buildingWhereEquipmentIs = value;
+                
+
+            }
 
         }
     }
@@ -197,10 +208,11 @@ public class Equipment : MonoBehaviour
         {
             transform.parent.gameObject.GetComponent<PlaceForEquipment>().Equipment = null; // у скрипта экземпляра старого места поле Equipment сбрасываем в null (ибо с него убираем)
             PlaceForEquipment rectTransformTargetPlaceScript = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>(); // получаем скрипт целевого места
-            rectTransformTargetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
-                                                             // этого текущего. Далее для целевого места назначим снаряжение наше новое (вот это). Сделано для того, чтоб модификаторы
-                                                             // снаряжения в ИНВЕНТАРЕ сбросились и назначились корректно
             rectTransformTargetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
+            // /\ \/ - поменяны местами
+            rectTransformTargetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
+                                                             // этого текущего. Выше для целевого места назначим снаряжение наше новое (вот это). Сделано для того, чтоб модификаторы
+                                                             // снаряжения в ИНВЕНТАРЕ сбросились и назначились корректно
             // 4. Устанавливаем родительский элемент
             transform.SetParent(rectTransformPlace, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
 
@@ -224,13 +236,38 @@ public class Equipment : MonoBehaviour
         StartCoroutine(CallDown());
     }
 
-    IEnumerator CallDown()
+    IEnumerator CallDown() // по идее не должно быть ситуаций, когда данная корутина будет запускаться (но не работать! работать можно!) в здании (вне инвентаря героя)
     {
+        //string nameDeactivationFunction = equipmentName + "Deactivate";
+        //CallActionFunctionByName(this, 0, player, nameDeactivationFunction); // player надо будет заменить на owner!!! У нас половина механики не доделана!
+
         isReady = false;
+
+        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Disable", animator))
+        {
+            animator.Play(equipmentName + "Disable"); // Воспроизводим анимацию
+        }
+        else
+        {
+            animator.enabled = false;
+            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+            selfSprite.sprite = sprite;
+        }
 
         yield return new WaitForSeconds(timeCallDown);
 
         isReady = true;
+
+        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Active", animator))
+        {
+            animator.Play(equipmentName + "Active"); // Воспроизводим анимацию
+        }
+        else
+        {
+            animator.enabled = false;
+            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+            selfSprite.sprite = sprite;
+        }
     }
 
     public virtual void OnDestroy()

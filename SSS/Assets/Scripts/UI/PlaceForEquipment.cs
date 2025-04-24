@@ -12,14 +12,16 @@ public class PlaceForEquipment : MonoBehaviour
 
     [SerializeField] private TextEdit nameOfEquipment;
     [SerializeField] private TextEdit costOfEquipment;
-    public Equipment previousEquipment;
 
+    public Inventory inventory; // предполагается, что в дальнейшем инвентарь может быть не один (не только у игрока)
+    public Equipment previousEquipment;
     public bool isBuildingPlace = false; // флаг для детекции, находится ли это место в здании
     public Equipment Equipment
     {
         get { return _equipment; }
         set
         {
+            //inventory.CheckWasEquipmentAlreadyInInventory(value, this);
             previousEquipment = _equipment; // Сохраняем предыдущее значение
             //Debug.Log(this.ToString() + previousEquipment);
             //Debug.Log(this.ToString() + _equipment);

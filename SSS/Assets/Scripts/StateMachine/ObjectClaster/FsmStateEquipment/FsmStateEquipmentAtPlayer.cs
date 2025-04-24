@@ -16,12 +16,17 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
     public override void Enter()
     {
         Debug.Log("Equipment At Player state [ENTER]");
-        equipment.BuildingWhereEquipmentIs = null; // по умолчанию будем считать, что мы снар€жение вытащили из здани€. ћен€ть этот параметр пока что будем в состо€нии FsmStateEquipmentAtPlayer
+        if (equipment.BuildingWhereEquipmentIs != null)
+        {
+            equipment.BuildingWhereEquipmentIs = null; // по умолчанию будем считать, что мы снар€жение вытащили из здани€. ћен€ть этот параметр пока что будем в состо€нии FsmStateEquipmentAtPlayer
+            
+        }
         equipment.transform.localPosition = equipment.startLocalPosition;
         equipment.selfSprite.sortingOrder = 21; // выше всех UI-элементов, кроме диалога, по идее
-        if (!equipment.WasSold) // не устанавливаем WasSold в true, если снар€жение уже у нас типа в инвентаре
+        if (!equipment.WasSold) // не устанавливаем WasSold в true, если снар€жение уже у нас типа в инвентаре. ѕо идее WasSold маркирует снар€жение, true только если продан и в инвентаре
         {
             equipment.WasSold = true;
+            InventoryPlayer.Instance.SetEquipmentToInventory(equipment);
         }
 
         if (equipment.isEquipmentASpell)
@@ -85,7 +90,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
                 {
                     if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // если не  ƒ и действи€ игрока не заблокированы!
                     {
-                        AdjustEquipmentParameters.CallActionByName(equipment, equipment.amountUpCombo, equipment.player);
+                        AdjustEquipmentParameters.CallActionFunctionByName(equipment, equipment.amountUpCombo, equipment.player);
                     }
                 }
             }
@@ -107,7 +112,7 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
             {
                 if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // у любого снар€жени€, даже если нет активки, есть кд, по умолчанию равно 0 секундам, задаЄтс€ в скрипте Adjust
                 {
-                    AdjustEquipmentParameters.CallActionByName(equipment, equipment.amountUpCombo, equipment.player);
+                    AdjustEquipmentParameters.CallActionFunctionByName(equipment, equipment.amountUpCombo, equipment.player);
                 }
             }
               

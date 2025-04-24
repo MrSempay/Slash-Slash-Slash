@@ -56,6 +56,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<STYLE_RANK> OnRankWasChanged { get; } = new();
 
     public UnityEvent<Enemy> OnEnemyWasKilledByPlayer { get; } = new();
+    public UnityEvent<int> OnOneEnemyWasKilledByPlayer { get; } = new(); // нужно для подписи для тех специфических итераторов, которые увеличиваются на 1 при убийстве врага игроком
 
 
     public void TriggerDoorWasDestroyed(bool wasDestroyed) { DoorWasDestroyed.Invoke(wasDestroyed); }
@@ -77,5 +78,6 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }
     public void ScoreWasChanged(int value) { OnScoreWasChanged.Invoke(value); }
 
-    public void EnemyWasKilledByPlayer(Enemy enemy) { OnEnemyWasKilledByPlayer.Invoke(enemy); }
+    public void EnemyWasKilledByPlayer(Enemy enemy) { OnEnemyWasKilledByPlayer.Invoke(enemy);
+                                                      OnOneEnemyWasKilledByPlayer.Invoke(1); }
 }

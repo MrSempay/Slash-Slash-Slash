@@ -86,4 +86,9 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
         notLocalizableText = text;
         UpdateText();
     }
+    public void SetBaseText(string text)
+    {
+        baseLocalizationKey = text;
+        UpdateText();
+    }
 }

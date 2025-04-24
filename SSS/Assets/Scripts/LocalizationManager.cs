@@ -153,13 +153,15 @@ public class LocalizationManager
             { ENUM.Russian, "Доска почёта" },
             { ENUM.Spanish, "muda-da?" }
         });
+        localization.Add("KillCount", new Dictionary<ENUM, string>() {
+            { ENUM.English, "Kill count" },
+            { ENUM.Russian, "Счётчик убийств" },
+            { ENUM.Spanish, "muda-da?" }
+        });
     }
 
     public string GetText(string key)
     {
-        Debug.Log(localization);
-        Debug.Log(key);
-        Debug.Log(localization.ContainsKey(key));
         if (localization.ContainsKey(key))
         {
             if (localization[key].ContainsKey(currentLanguage))

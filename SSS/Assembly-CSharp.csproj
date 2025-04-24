@@ -169,6 +169,7 @@
     <Compile Include="Assets\Scripts\UI\TextEdit.cs" />
     <Compile Include="Assets\Scripts\Equipment\Ammunition.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventory\InventoryPlayer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
     <Compile Include="Assets\Scripts\EventBus.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Assets\Scripts\Legacy-code\DamageReceiver.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustUnitParameters.cs" />
     <Compile Include="Assets\Scripts\UI\PlayingMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
