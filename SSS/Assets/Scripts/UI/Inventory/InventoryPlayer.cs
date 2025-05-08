@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static AdjustEquipmentParameters;
+using static UnityEngine.Rendering.DebugUI;
 
 public class InventoryPlayer : Inventory
 {
 
     private static InventoryPlayer _instance;
-    private int _amountAmmunitionSlotsInInventory = 3; // по умолчанию 3 места в инвентаре под аммуницию
-    private int _amountSpellSlotsInInventory = 3; // по умолчанию 3 места в инвентаре под заклинания
+    private int _amountAmmunitionSlotsInInventory; // по умолчанию 3 места в инвентаре под аммуницию
+    private int _amountSpellSlotsInInventory; // по умолчанию 3 места в инвентаре под заклинания
     private float _widthSpaceForPlaceForEquipment = 1.33f;
     private Player _player;
     private new RectTransform transform;
@@ -86,22 +87,27 @@ public class InventoryPlayer : Inventory
     {
         if (equipment.isEquipmentASpell)
         {
-            
-            if (!listSpellsInInventory.Contains((Spell)equipment))
+            Spell spell = (Spell)equipment;
+            if (!listSpellsInInventory.Contains(spell))
             {
-                listSpellsInInventory.Add((Spell)equipment);
+                listSpellsInInventory.Add(spell);
             }
         }
         else
         {
-            if (!listAmmunitionInInventory.Contains((Ammunition)equipment))
+            Ammunition ammunition = (Ammunition)equipment;
+            if (!listAmmunitionInInventory.Contains(ammunition))
             {
-                listAmmunitionInInventory.Add((Ammunition)equipment);
+                listAmmunitionInInventory.Add(ammunition);
+                ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, true);
+                ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, true);
             }
         }
 
-        string nameEnteredInventoryFunction = equipment.equipmentName + C.Prefixes.EnteredInventory;
-        CallActionFunctionByName(equipment, 0, _player, nameEnteredInventoryFunction);
+        equipment.EnteredIntoInventory(_player);
+
+        //string nameEnteredInventoryFunction = equipment.equipmentName + C.Prefixes.EnteredInventory;
+        //CallActionFunctionByName(equipment, 0, _player, nameEnteredInventoryFunction);
     }
 
 
@@ -109,26 +115,32 @@ public class InventoryPlayer : Inventory
     {
         if (equipment.isEquipmentASpell)
         {
-            if (listSpellsInInventory.Contains((Spell)equipment))
+            Spell spell = (Spell)equipment;
+            if (listSpellsInInventory.Contains(spell))
             {
-                listSpellsInInventory.Remove((Spell)equipment);
+                listSpellsInInventory.Remove(spell);
             }
         }
         else
         {
-            if (listAmmunitionInInventory.Contains((Ammunition)equipment))
+            Ammunition ammunition = (Ammunition)equipment;
+            if (listAmmunitionInInventory.Contains(ammunition))
             {
-                listAmmunitionInInventory.Remove((Ammunition)equipment);
+                listAmmunitionInInventory.Remove(ammunition);
+                ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, false);
+                ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, false);
             }
         }
         // Простое изменение параметров героя через параметры снаряжения отменяется при извлечении снаряжения из инвентаря в PlaceForEquipment (желательно оное также перенести сюда)
 
-        string nameExitedInventoryFunction = equipment.equipmentName + C.Prefixes.ExitedInventory;
-        CallActionFunctionByName(equipment, 0, _player, nameExitedInventoryFunction); // отменяем пассивные специфические бонусы (которые не просто параметры юнита увеличивают,
+        equipment.ExitedFromInventory(_player);
+
+        //string nameExitedInventoryFunction = equipment.equipmentName + C.Prefixes.ExitedInventory;
+        //CallActionFunctionByName(equipment, 0, _player, nameExitedInventoryFunction); // отменяем пассивные специфические бонусы (которые не просто параметры юнита увеличивают,
                                                                                       // а вызывались с помощью отдельной функции (Сакура)), если таковые будут найдены.
 
-        string nameDeactivationFunction = equipment.equipmentName + "Deactivate";
-        CallActionFunctionByName(equipment, 0, _player, nameDeactivationFunction); // отменяем активированные абилки (что-то типа переключаемой способности, то, на что мы нажали и это
+        //string nameDeactivationFunction = equipment.equipmentName + "Deactivate";
+        //CallActionFunctionByName(equipment, 0, _player, nameDeactivationFunction); // отменяем активированные абилки (что-то типа переключаемой способности, то, на что мы нажали и это
                                                                                    // действует длительно. На данный момент механика работает так, что при извлечении из инвентаря
                                                                                    // снаряжения его активные бонусы отменяются (Трагикомедия)), если таковые будут найдены
 

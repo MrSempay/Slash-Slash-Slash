@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FsmStateBuildingOpened : FsmStateBuilding
@@ -7,7 +8,7 @@ public class FsmStateBuildingOpened : FsmStateBuilding
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Building Open state [ENTER]");
         building.entirePanel.SetActive(true);

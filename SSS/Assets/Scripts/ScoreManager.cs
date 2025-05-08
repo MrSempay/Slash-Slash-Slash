@@ -13,7 +13,6 @@ public class ScoreManager : MonoBehaviour
     private Coroutine _zeroizeKillComboTicksCoroutine;
     private int _currentMinimumAmountCombo;
     private ProgressBar _progerssBarStyleRank;
-    private static GameObject _prefubAppearingSprite;
     private static GameObject _prefubLeaderboard;
     private List<Action<bool>> _listAppliedRankFunction = new();
 
@@ -325,6 +324,7 @@ public class ScoreManager : MonoBehaviour
                     _listAppliedRankFunction.Remove(item);                    
                 }
             }
+            _player.rankStyle.CurrentStyleRank = value;
             _currentRankStyle = value;
 
             if (value != STYLE_RANK.D)
@@ -422,9 +422,8 @@ public class ScoreManager : MonoBehaviour
 
         AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
-        _prefubAppearingSprite = Resources.Load<GameObject>(C.DK.PrefabAppearingSprite);
-        _prefubLeaderboard = Resources.Load<GameObject>(C.DK.PrefabLeaderboard);
-        prefubFieldLeaderboard = Resources.Load<FieldLeaderboard>(C.DK.FieldLeaderboard);
+        _prefubLeaderboard = Resources.Load<GameObject>(C.Paths.PrefabLeaderboard);
+        prefubFieldLeaderboard = Resources.Load<FieldLeaderboard>(C.Paths.FieldLeaderboard);
 
         AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные для dictionaryPropertiesSprites
     }
@@ -461,9 +460,9 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public static void InvokeAppearingSprite(TYPE_APPEARING_MESSAGE typeAppearingMessage)
+    public void InvokeAppearingSprite(TYPE_APPEARING_MESSAGE typeAppearingMessage)
     {
-        AppearingSprite sciptAppearingSprite = Instantiate(_prefubAppearingSprite).GetComponent<AppearingSprite>();
+        AppearingSprite sciptAppearingSprite = Instantiate(GameManager.Instance.prefubAppearingSprite).GetComponent<AppearingSprite>();
         sciptAppearingSprite.SetProperlyAnimationAndPosition(typeAppearingMessage);
     }
 

@@ -429,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 100
   healthMax: 100
-  damageReduction: 0
+  DamageReductionPercentage: 0
 --- !u!114 &3562836757429485931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,31 +585,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 788c517b116c5994da74ff66f76e1b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageReductionPercentage: 0
   _healthCurrent: 0
   _healthBarFilling: {fileID: 5520585972428565759}
   animator: {fileID: 5234051109404531447}
   lookingRight: 1
   isAlive: 1
+  areUpdatingFunctionsEnabled: 1
   nameOfUnit: 
+  nameSoundGettingDamage: 
+  isGrounded: 0
+  stunePlace: {fileID: 3576711239184067755}
   healthMax: 100
-  damageReduction: 0
   jumpForce: 15
   speed: 0
+  stuneChanceByStandartAttackPercentage: 0
+  timeStuneByStanartAttack: 0
   damage: 0
+  evasionPercentage: 0
   moneyFromKill: 0
+  comboFromKill: 1
+  scoreFromKill: 0
   experienceFromKill: 0
   player: {fileID: 0}
   selfEnemyCollider: {fileID: 705119281058959487}
   fuck: {fileID: 538770094925077176}
   isInstancedByLevel: 0
-  isGrounded: 0
   triggerAreaScript: {fileID: 1333133579512327867}
   pitDetectorScript: {fileID: 4835165679625548219}
   attackAreaTransform: {fileID: 2255733836217545654}
   pitDetectorTransform: {fileID: 5326668062353441970}
   objForRotate: {fileID: 6413405061816031053}
   scriptFloorDetector: {fileID: 7470825976436602348}
-  typeOfEnemy: 
   attackAreaScript: {fileID: 2504768566284520106}
   listOfUnitsInAttackArea: []
 --- !u!1 &4973938418784863996
@@ -650,6 +657,7 @@ Transform:
   - {fileID: 2255733836217545654}
   - {fileID: 3096099769811187284}
   - {fileID: 7936738540825560678}
+  - {fileID: 3576711239184067755}
   m_Father: {fileID: 3534268453758617834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8564578062598501805
@@ -925,6 +933,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2939d8c8803ca4e91c154dfab8fedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6285724401477820153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3576711239184067755}
+  m_Layer: 3
+  m_Name: StunePlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3576711239184067755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285724401477820153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.06, y: 1.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6413405061816031053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7051795487247972820
 GameObject:
   m_ObjectHideFlags: 0

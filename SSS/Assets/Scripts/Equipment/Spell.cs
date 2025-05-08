@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class Spell : Equipment
 {
-
-
-
     public override void Awake()
     {
+        //Debug.Log("≈бучий Awake");
+        //Debug.Log(this.GetInstanceID());
         base.Awake();
     }
 
-    protected override void Start()
+    public override void Start()
     {
+        //Debug.Log(AdjustEquipmentParameters.spellParameters);
+        //Debug.Log("≈бучий Start");
+        //Debug.Log(this.GetInstanceID());
+        //Debug.Log(gameObject.GetComponent<Equipment>().GetInstanceID());
+        //Debug.Log(equipmentName);
+        //Debug.Log(this);
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustEquipmentParameters.spellParameters, this, equipmentName); // нужно вызвать до входа в первое состо€ние, поэтому до base
         base.Start();
     }
 
-    public void SomeSpell1(Unit whoCastedSpell)
+    public virtual void ProtectiveField(Unit whoCastedSpell)
     {
         // ѕолучаем массив всех объектов на сцене, которые €вл€ютс€ экземпл€рами класса Enemy или его подклассов 
         Enemy[] allEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);

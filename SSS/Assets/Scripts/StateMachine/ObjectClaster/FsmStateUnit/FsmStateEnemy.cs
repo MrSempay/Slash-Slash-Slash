@@ -27,7 +27,7 @@ public class FsmStateEnemy : FsmStateUnit
     public FsmStateEnemy(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
         fsmEnemy = fsm;
-        enemy = gameObject.GetComponent<Enemy>();
+        enemy = (Enemy)unit;
 
         path = new NavMeshPath();
         enemy.scriptFloorDetector.OnObjGetFloor += OnFloor;
@@ -100,7 +100,7 @@ public class FsmStateEnemy : FsmStateUnit
         //Ориентация спрайта и прочего
         if (enemy.lookingRight == enemy.nextPointInPath.x < enemy.transform.position.x)
         {
-            ChangeDirectionView();
+            ChangeDirectionView(null);
         }
 
         //Отрисовка пути
@@ -145,11 +145,15 @@ public class FsmStateEnemy : FsmStateUnit
     }
 
     // отзеркаливаем персонажа и все детекторы при повороте
-    void ChangeDirectionView()
+    public override void ChangeDirectionView(bool? lookingRight)
     {
         if (canFlipByTimeDeley)
         {
+
             enemy.lookingRight = enemy.nextPointInPath.x > enemy.transform.position.x;
+
+            base.ChangeDirectionView(enemy.lookingRight);
+
             enemy.selfSprite.flipX = !enemy.selfSprite.flipX;
             enemy.attackAreaTransform.localPosition = new Vector3(-1 * enemy.attackAreaTransform.localPosition.x, enemy.attackAreaTransform.localPosition.y, enemy.attackAreaTransform.localPosition.z);
             enemy.pitDetectorTransform.localPosition = new Vector3(-1 * enemy.pitDetectorTransform.localPosition.x, enemy.pitDetectorTransform.localPosition.y, enemy.pitDetectorTransform.localPosition.z);

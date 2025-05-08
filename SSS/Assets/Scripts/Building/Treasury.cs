@@ -29,7 +29,7 @@ public class Treasury : Building, IMainTarget
 
     protected override void Awake()
     {
-        nameOfObject = "Treasury";
+        selfName = "Treasury";
         base.Awake();
     }
 
@@ -75,8 +75,20 @@ public class Treasury : Building, IMainTarget
             Sprite spellSprite = Resources.Load<Sprite>(fullPath);
             //spriteRenderer.sprite = spellSprite;
 
-            // Õ¿—“–¿»¬¿≈Ã  ŒÃœŒÕ≈Õ“ Equipment (—Œ¡—Õ¿ ≈√Œ — –»œ“) ” › «≈ÃœÀﬂ–¿ —Õ¿–ﬂ∆≈Õ»ﬂ
-            Ammunition scriptOfEquipment = newEquipment.GetComponent<Ammunition>();
+            Ammunition scriptOfEquipment;
+
+            if (customScriptsEquipment.ContainsKey(randomEquipmentName))
+            {
+                Debug.Log("shit");
+
+                scriptOfEquipment = (Ammunition)newEquipment.AddComponent(customScriptsEquipment[randomEquipmentName]);
+
+                //Debug.Log(scriptOfEquipment.GetInstanceID());
+            }
+            else
+            {
+                scriptOfEquipment = (Ammunition)newEquipment.AddComponent(typeof(Ammunition));
+            }
             scriptOfEquipment.Awake();
             scriptOfEquipment.equipmentName = randomEquipmentName;
             scriptOfEquipment.sprite = spellSprite;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 310eb4409e9e5344bb281f117da85055
+guid: 2194562aa43ffdb4e83787e598a0637d
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: SomeSpell2
+  - name: SomeSpell1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 9
@@ -133,9 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 308
-      height: 172
-    spriteID: f8615c069f98ada4480bf311407330a6
+      width: 154
+      height: 216
+    spriteID: cb985ccda3e06124594b73fc1d00c75b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -147,8 +147,8 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -665394810
-    name: SomeSpell2
+    guid: 900689131
+    name: SomeSpell1
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -157,11 +157,11 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
-        y: 2
-        width: 308
-        height: 172
-      spriteId: f8615c069f98ada4480bf311407330a6
+        x: 160
+        y: 15
+        width: 154
+        height: 216
+      spriteId: cb985ccda3e06124594b73fc1d00c75b
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -180,5 +180,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 315, y: 176}
-  previousTextureSize: {x: 512, y: 256}
+  canvasSize: {x: 500, y: 250}
+  previousTextureSize: {x: 256, y: 256}

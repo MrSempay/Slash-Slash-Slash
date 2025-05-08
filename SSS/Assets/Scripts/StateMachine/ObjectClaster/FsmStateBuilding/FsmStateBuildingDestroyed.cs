@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static FsmStatePlayer;
 
 public class FsmStateBuildingDestroyed : FsmStateBuilding
@@ -8,10 +10,16 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Building Destroyed state [ENTER]");
-        building.gameObject.SetActive(false);
+        //building.gameObject.SetActive(false);
+
+        building.selfCollider.enabled = false;
+        
+        building.animator.Play(building.selfName + C.Prefixes.Destroyed);
+
+        building.buttonEnter.SetActive(false);
 
         IMainTarget mainTarget = building as IMainTarget;
         if (mainTarget != null)

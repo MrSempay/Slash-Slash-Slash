@@ -19,22 +19,28 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private float _damageReductionPercentage; //Поглощение урона
     [SerializeField] private float _healthCurrent; // Начальное здоровье
     [SerializeField] private Image _healthBarFilling;
-    
+
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
     [NonSerialized] public GameObject parametersBars;
 
     public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
-    public bool isAlive = true; // Флаг, жив ли юнит
+    public bool isAlive = true; // Флаг, жив ли юнит 
     public bool areUpdatingFunctionsEnabled = true; // флаг, определяющий, может ли совершать какие-либо действия юнит
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
     public string nameSoundGettingDamage;
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
+    public bool isInvicible = false; // неуязвимость к УРОНУ (но не к эффектам, наверное)
     public Fsm _fsm;
+    public Transform stunePlace; // место для спрайта эффекта стана
     public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
     public event Action<float> OnHealthChanged;       // пока что нигде не подписаны (изменяем ХП-бар тут же через ChangeHealthBar
+    public event Action<Unit, Unit> OnThisUnitWasAttacked; // сигнал эмулируется из юнита, которому был нанесён урон. Атакованного и атаковавшего юнитов передаём в качестве параметров
+    public event Action<string> OnCastAnimationFinished;  // когда закончился каст какой-то абилки. Передаём название анимации полностью
+    public event Action<string> OnCastAnimationPeacked;  // когда достигли кульминации анимации (может быть только одна в рамках одной анимации). Передаём название анимации полностью
+    public event Action<bool> OnDirectionViewWasChanged;  //  true - когда смотрим направо
     public delegate void UnitWasKilled(Unit unit); // шаблон функции
     public event UnitWasKilled onUnitWasKilled;         // экземляр(?) функции/сигнала(?)
 
@@ -55,7 +61,19 @@ public abstract class Unit : MonoBehaviour
         get { return _healthCurrent; }
         set
         {
-            _healthCurrent = value;
+            if (value < 0)
+            {
+                _healthCurrent = 0;
+            }
+            else if (value > healthMax)
+            {
+                _healthCurrent = healthMax;
+            }
+            else
+            {
+                _healthCurrent = value;
+            }
+
             float _currentHealthAsPercantage = _healthCurrent / healthMax;
             ChangeHealthBar(_currentHealthAsPercantage);
             // Вызываем событие, если есть подписчики
@@ -67,20 +85,29 @@ public abstract class Unit : MonoBehaviour
         get { return _damageReductionPercentage; }
         set
         {
-            _damageReductionPercentage = value;
+            if (value > 100f)
+            {
+                _damageReductionPercentage = 100f;
+            }
+            else
+            {
+                _damageReductionPercentage = value;
+            }
         }
     }
 
     protected virtual void Awake()
     {
 
-        unitParameters = (Dictionary<string, object>) AdjustUnitParameters.GetSetupOfUnit(nameOfUnit);
+        unitParameters = (Dictionary<string, object>)AdjustUnitParameters.GetSetupOfUnit(nameOfUnit);
         //AssignParameters(unitParameters);
         AssignParametersAndProperties(AdjustUnitParameters.unitParameters, this, nameOfUnit);
         //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustUnitParameters.unitParameters, this, nameOfUnit);
         baseParametersValues = new Dictionary<string, object>(AdjustUnitParameters.unitParameters[nameOfUnit]);
         CurrentHealth = healthMax;
         _fsm = new Fsm();
+
+        _fsm.AddState(new FsmStateStuneUnit(_fsm, gameObject));
 
         Transform transformParametersBars = transform.Find("ParametersBars");
         if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;
@@ -101,44 +128,56 @@ public abstract class Unit : MonoBehaviour
     }
 
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
-    public virtual void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
+    // Возвращает bool оттого, что необходимо нам проверять в производной функции, нужно ли завершать её досрочно. Если базовая возвращает true, значит производную функцию нужно прервать
+    public virtual bool GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
     {
         if (isAlive)
         {
+            ThisUnitWasAttacked(this, unitFromWhoWasGottenDamage);
 
-            if (unitFromWhoWasGottenDamage)
+            if (!isInvicible)
             {
-                if (CheckChance(evasionPercentage)) // шанс уклониться от урона. Не важно, от какого, главное, что от исходящего от другого юнита
+                if (unitFromWhoWasGottenDamage)
                 {
-                    return;
-                }
-
-                if (wasDamageByStandartAttack)
-                {
-                    if (CheckChance(unitFromWhoWasGottenDamage.stuneChanceByStandartAttackPercentage)) // шанс, что застанили текущей атакой
+                    if (CheckChance(evasionPercentage)) // шанс уклониться от урона. Не важно, от какого, главное, что от исходящего от другого юнита
                     {
-                        StuneThisUnit(unitFromWhoWasGottenDamage.timeStuneByStanartAttack);
+                        return false; // уклонились
                     }
+
+                    if (wasDamageByStandartAttack)
+                    {
+                        if (CheckChance(unitFromWhoWasGottenDamage.stuneChanceByStandartAttackPercentage)) // шанс, что застанили текущей атакой
+                        {
+                            StuneThisUnit(unitFromWhoWasGottenDamage.timeStuneByStanartAttack);
+                        }
+                    }
+
+                    unitFromWhoWasGottenDamage.SomeUnitWasHit(this);
                 }
 
-                unitFromWhoWasGottenDamage.SomeUnitWasHit(this);
-            }
-            CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage/100); // Уменьшаем здоровье
-            AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
+                CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage / 100); // Уменьшаем здоровье
+                AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
 
-            if (CurrentHealth <= 0)
-            {
-                Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
+                if (CurrentHealth <= 0)
+                {
+                    Die(unitFromWhoWasGottenDamage); // Вызываем метод смерти
+                }
+                return true; // получили урон
             }
+            return false; // неуязвим
         }
+        return false; // мёртв
     }
 
-
+    public virtual void Heal(float healthHealAmount)
+    {
+        CurrentHealth += healthHealAmount;
+    }
 
     // по идее надо изменить на private, но оставим так для мгновенной смерти из спела SomeSpell1
     public virtual void Die(Unit unitFromWhoWasGottenDamage = null)
     {
-        if (isAlive)
+        if (isAlive) // по идее когда помирает юнит, у него коллайдер отключается, но в ряде случаев это происходит не сразу (например, когда юнит умирает в падении и нужно чтоб он корректно приземлился (его останки))
         {
             Debug.Log(gameObject.name + " уничтожен!");
             if (unitFromWhoWasGottenDamage)
@@ -151,6 +190,7 @@ public abstract class Unit : MonoBehaviour
             }
             CurrentHealth = 0;
             parametersBars.SetActive(false); // при смерте отключает все полоски здоровья/стамины прочего
+
             onUnitWasKilled?.Invoke(this);
             //Destroy(gameObject); // Уничтожаем объект
         }
@@ -213,7 +253,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     // функция, увеличивающая текущий параметр на процент об базового значения данного параметра, то есть увеличение/уменьшение параметров на % будет всегда фиксированным
-    public Dictionary<string, float> ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases,bool isIncreasing)
+    public Dictionary<string, float> ChangeUnitParametersByPercentage(Dictionary<string, float> parametersIncreases, bool isIncreasing)
     {
         Type type = this.GetType(); // Получаем тип текущего класса
         Dictionary<string, float> changedParametersValuesAbs = new Dictionary<string, float>();
@@ -246,8 +286,8 @@ public abstract class Unit : MonoBehaviour
 
                     fieldInfo.SetValue(this, convertedValue);
                     if (parameterOrPropertyName == C.DK.healthMax || parameterOrPropertyName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
-                                                                                             // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
-                                                                                             // текущее значение параметра
+                                                                                                                 // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
+                                                                                                                 // текущее значение параметра
                         AdjustCurrentParametersValuesPercentage(parameterOrPropertyName, isIncreasing, parameterOrPropertyIncreasing, baseValueDouble);
                     // 5. Присваиваем значение полю
                 }
@@ -285,7 +325,7 @@ public abstract class Unit : MonoBehaviour
         }
         return changedParametersValuesAbs;
     }
-    
+
     public void ChangeUnitParametersAndPropertiesByAbsolute(Dictionary<string, float> parametersOrPropertyIncreases, bool isIncreasing)
     {
         Type type = this.GetType(); // Получаем тип текущего класса
@@ -314,8 +354,8 @@ public abstract class Unit : MonoBehaviour
 
                     fieldInfo.SetValue(this, convertedValue);
                     if (parameterOrPropertyName == C.DK.healthMax || parameterOrPropertyName == C.DK.staminaMax) // если значение устанавливаемого параметра подразумевает наличие текущего и максимального
-                                                                                             // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
-                                                                                             // текущее значение параметра
+                                                                                                                 // значений, вызываем функцию AdjustCurrentParametersValues, которая правильно настроит 
+                                                                                                                 // текущее значение параметра
                         AdjustCurrentParametersValuesAbsolute(parameterOrPropertyName, isIncreasing, parameterOrPropertyIncreasing);
                     // 5. Присваиваем значение полю
                 }
@@ -330,7 +370,7 @@ public abstract class Unit : MonoBehaviour
 
                 if (propertyInfo != null)
                 {
-                    
+
                     double propertyIncreasingDouble = Convert.ToDouble(parameterOrPropertyIncreasing);
 
                     double increasedValue = isIncreasing
@@ -449,8 +489,53 @@ public abstract class Unit : MonoBehaviour
     }
 
     protected virtual void GetExperienceAndMoneyFromKillingUnit(float experience, float money, int comboFromKill, int score) { }
-    protected virtual void SomeUnitWasDestroyed(Unit unit) { }
-    protected virtual void SomeUnitWasHit(Unit unit) { }
+    protected virtual void SomeUnitWasDestroyed(Unit unit) { } // вызывается для (из) того, кто уничтожил какой-то юнит
+    protected virtual void SomeUnitWasHit(Unit unit) { } // вызывается для (из) того, кто нанёс урон какому-то юниту
+    protected virtual void ThisUnitWasAttacked(Unit unitWhichWasAttacked, Unit attackingUnit) // вызывается в юните, который получил урон
+    {
+        OnThisUnitWasAttacked?.Invoke(unitWhichWasAttacked, attackingUnit);
+    }
+    public virtual void DirectionViewWasChanged(bool lookingRight) // вызывается в юните, сменил направление взора
+    {
+        OnDirectionViewWasChanged?.Invoke(lookingRight);
+    }
+    public void CastAnimationFinished(string nameFinishedAnimation)
+    {
+        OnCastAnimationFinished?.Invoke(nameFinishedAnimation);
+    }
+    public void CastAnimationPeaked(string namePeackedAnimation)
+    {
+        OnCastAnimationPeacked?.Invoke(namePeackedAnimation);
+    }
+    public virtual void SomeAnimationUnitWasFinished(string nameFinishedAnimation) // Когда анимация закончилась
+    {
+        string lastFourChars = "";
+        if (nameFinishedAnimation.Length >= 4) // проверяем, что строка достаточно длинная
+        {
+            lastFourChars = nameFinishedAnimation.Substring(nameFinishedAnimation.Length - 4);
+        }
+        switch (lastFourChars) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Prefixes.Cast:
+                CastAnimationFinished(nameFinishedAnimation); // просто обёртка над сигналом, определён в Unit
+                break;
+        }
+    }
+    public virtual void SomeAnimationUnitWasPeaked(string namePeackedAnimation) // Когда анимация достигла целевой точки, но не конца. Для Peak такая точка может быть только одна в анимации
+    {
+        string lastFourChars = "";
+        if (namePeackedAnimation.Length >= 4) // проверяем, что строка достаточно длинная
+        {
+            lastFourChars = namePeackedAnimation.Substring(namePeackedAnimation.Length - 4);
+        }
+        switch (lastFourChars) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Prefixes.Peak:
+                CastAnimationPeaked(namePeackedAnimation); // просто обёртка над сигналом, определён в Unit
+                break;
+        }
+    }
+
 
 # region Stune mechanic
 
@@ -458,17 +543,27 @@ public abstract class Unit : MonoBehaviour
     private Coroutine _waitStuneTimeCoroutine; // Начальное здоровье
     protected virtual void StuneThisUnit(float timeStune)
     {
-        if (timeStune > _currentStuneTimeRemaining)
+        if (stunePlace != null)
         {
-            _currentStuneTimeRemaining = timeStune;
-            if (_waitStuneTimeCoroutine != null) StopCoroutine(_waitStuneTimeCoroutine);
-            _waitStuneTimeCoroutine = StartCoroutine(WaitBeforeEndingStune(timeStune));
+            if (timeStune > _currentStuneTimeRemaining)
+            {
+                _currentStuneTimeRemaining = timeStune;
+                if (_waitStuneTimeCoroutine != null) StopCoroutine(_waitStuneTimeCoroutine);
+                _waitStuneTimeCoroutine = StartCoroutine(WaitBeforeEndingStune(timeStune));
+
+                _fsm.SetState<FsmStateStuneUnit>();
+
+                GameManager.Instance.InvokeAppearingSprite(C.Other.Stune, stunePlace, timeStune, true); // на самом деле хотелось бы вынести это в состояние FsmStateStuneUnit тоже, но
+                                                                                                    // на данный момент мы не можем отсылать параметры в состояние, надо как-нибудь улучшить
+
+                                                                                                    // выше вроде как бред написан. Если мы будем в состоянии стана, мы не сможем в него
+                                                                                                    // повторно входить, поэтому спрайт стана надо вызывать тут (по идее). 
+            }
         }
     }
 
     IEnumerator WaitBeforeEndingStune(float timeStune)
     {
-        areUpdatingFunctionsEnabled = false;
 
         while (_currentStuneTimeRemaining > 0)
         {
@@ -483,8 +578,7 @@ public abstract class Unit : MonoBehaviour
                 _currentStuneTimeRemaining = 0;
             }
         }
-
-        areUpdatingFunctionsEnabled = true;
+        _fsm.SetStateIdle(this);
     }
 # endregion
 

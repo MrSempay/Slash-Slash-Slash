@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FsmStateJumpEnemy : FsmStateEnemy
@@ -8,7 +9,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Jump state [ENTER]");
         enemy.rb.linearVelocity = new Vector2(enemy.rb.linearVelocity.x, 0);

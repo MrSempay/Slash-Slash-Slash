@@ -11,7 +11,6 @@ public class Building : MonoBehaviour
     private Coroutine _coroutineUpdateAssortimentInBuilding;
     private bool _isAroundBuilding = false;
 
-    protected string nameOfObject;
 
     [NonSerialized] public string nameTargetEquipmentPanelPlayer;
     [NonSerialized] public float timeForUpdateAssortiment;
@@ -21,8 +20,12 @@ public class Building : MonoBehaviour
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public List<Equipment> equipmentInBuilding = new List<Equipment>(); // список всего снар€жени€ в здании
 
+    public string selfName;
     public GameObject prefubOfEquipment;
+    public Animator animator;
+    public BoxCollider2D selfCollider;
     public bool buttonEnterWasPressedToEnter = false;
+    public Dictionary<string, Type> customScriptsEquipment;
 
     public event Action<List<Equipment>, Building> onUpdateAssortment;
 
@@ -46,12 +49,12 @@ public class Building : MonoBehaviour
     protected virtual void Awake()
     {
 
-        StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
+        StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustBuildingParameters.buildingParameters, this, selfName);
         //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
 
         rectTransformTargetEquipmentPanelPlayer = GameObject.Find(nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
-        entirePanel = transform.Find("EntirePanel")?.gameObject; // »спользуем ?. дл€ безопасного доступа (если не найдено)
-        buttonEnter = transform.Find("CanvasButtonEnter")?.gameObject;
+        entirePanel = transform.Find("EntirePanel").gameObject; 
+        buttonEnter = transform.Find("CanvasButtonEnter").gameObject;
 
   
         
@@ -82,6 +85,7 @@ public class Building : MonoBehaviour
         _fsm.FixedUpdate();
     }
 
+    // зона дл€ активации кнопки входа в здание
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = true; }

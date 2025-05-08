@@ -62,17 +62,35 @@ public class PlayFabManager : MonoBehaviour
         }
         //var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true };
         //PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
+#if UNITY_ANDROID
+        var requestAndroid = new LoginWithAndroidDeviceIDRequest { AndroidDeviceId = ReturnMobileID(), CreateAccount = true };
+        PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnLoginMobileSuccess, OnLoginMobileFailure);
+
+#endif
+
+#if UNITY_IOS
+        var requestIOS = new LoginWithIOSDeviceIDRequest { DeviceId = ReturnMobileID(), CreateAccount = true };
+        PlayFabClientAPI.LoginWithIOSDeviceID(requestIOS, OnLoginMobileSuccess, OnLoginMobileFailure);
+  
+
+#endif
     }
 
 
 
-#region Login/Registration
+# region Login/Registration
 
     public static PlayFabAuthenticationContext contextCurrentSession;
 
     private void OnLoginSuccess(LoginResult result)
     {
         Debug.Log("Залогинились");
+        //contextCurrentSession = result.AuthenticationContext;
+    }
+
+    private void OnLoginMobileSuccess(LoginResult result)
+    {
+        Debug.Log("Залогинились (Mobile)");
         //contextCurrentSession = result.AuthenticationContext;
     }
 
@@ -90,12 +108,19 @@ public class PlayFabManager : MonoBehaviour
 
     private void OnLoginFailure(PlayFabError error)
     {
-        Debug.Log(error.ToString());
-        Debug.Log(error.ToString());
-        Debug.Log(error.GetType());
+        //Debug.Log(error.ToString());
+        //Debug.Log(error.ToString());
+        //Debug.Log(error.GetType());
         var registerRequest = new RegisterPlayFabUserRequest { Email = _userEmail, Password = _userPassword, Username = _userName };
 
         PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
+    }
+
+    private void OnLoginMobileFailure(PlayFabError error)
+    {
+        //Debug.Log(error.ToString());
+        //Debug.Log(error.GetType());
+        Debug.Log(error.GenerateErrorReport());
     }
 
 
@@ -126,10 +151,16 @@ public class PlayFabManager : MonoBehaviour
 
     }
 
-    #endregion
+    public static string ReturnMobileID()
+    {
+        string deviceID = SystemInfo.deviceUniqueIdentifier;
+        return deviceID;
+    }
+
+# endregion
 
 
-#region PlayerStatistic
+    #region PlayerStatistic
 
     public int oneStat;
     public int secondStat;
@@ -305,10 +336,10 @@ public class PlayFabManager : MonoBehaviour
  
 
 
-#endregion
+# endregion
 
 
-#region Leaderboard
+# region Leaderboard
 
 
     // в асинхронной среде не будет ждать получения результатов с сервера. Асинхронная среда продолжит выполнение кода не дожидаясь результатов.
@@ -340,6 +371,9 @@ public class PlayFabManager : MonoBehaviour
         try
         {
             GetLeaderboardResult result = await taskCompletionSource.Task;
+            //Debug.Log(result);
+            //Debug.Log(taskCompletionSource);
+            //Debug.Log(taskCompletionSource.Task);
             OnGetLeaderboard(result);
         }
         catch (Exception e)
@@ -359,13 +393,24 @@ public class PlayFabManager : MonoBehaviour
 
     void OnGetLeaderboard(GetLeaderboardResult result)
     {
+        //Debug.Log("mdaaaaaaaaaaaaaaaaaa");
+        //Debug.Log(result);
+        //Debug.Log(result.Leaderboard);
+        //Debug.Log(result.Leaderboard.Count);
         lastLeaderboardStatsInfo = new();
 
         foreach (PlayerLeaderboardEntry fieldLeaderboard in result.Leaderboard)
         {
-            lastLeaderboardStatsInfo[fieldLeaderboard.DisplayName] = fieldLeaderboard.StatValue;
-            //Debug.Log(fieldLeaderboard.DisplayName + ": " + fieldLeaderboard.StatValue);
-            //Debug.Log(fieldLeaderboard.PlayFabId + ": " + fieldLeaderboard.StatValue);
+            if (!string.IsNullOrEmpty(fieldLeaderboard.DisplayName))
+            {
+                lastLeaderboardStatsInfo[fieldLeaderboard.DisplayName] = fieldLeaderboard.StatValue;
+                //Debug.Log(fieldLeaderboard.DisplayName + ": " + fieldLeaderboard.StatValue);
+                //Debug.Log(fieldLeaderboard.PlayFabId + ": " + fieldLeaderboard.StatValue);
+            }
+            else
+            {
+                lastLeaderboardStatsInfo["DisplayName is null!" + UnityEngine.Random.RandomRange(-10000, 1000)] = fieldLeaderboard.StatValue;
+            }
         }
     }
 
@@ -375,6 +420,6 @@ public class PlayFabManager : MonoBehaviour
     }
 
 
-#endregion
+# endregion
 
 }

@@ -35,7 +35,7 @@ public class CustomCombo : MonoBehaviour
                 _zeroizeComboCoroutine = StartCoroutine(ZeroizeCombo());
             }
 
-            _actionAfterUpdatingCombo.Invoke(CurrentCombo, value);
+            _actionAfterUpdatingCombo?.Invoke(CurrentCombo, value);
 
             _currentCombo = value;
             ChangeComboTextUI(value);

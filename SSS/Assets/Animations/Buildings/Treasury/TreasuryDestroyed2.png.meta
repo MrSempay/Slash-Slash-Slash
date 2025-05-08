@@ -1,0 +1,721 @@
+fileFormatVersion: 2
+guid: 116a2d5ca5db1744e969ec7faf0cc0f6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6886891990773826258
+    second: TreasuryDestroyed2_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2d71730938dc60a0800000000000000
+      internalID: -6886891990773826258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_1
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba2ea321647f0c40aa258c17b160dc3
+      internalID: -198874901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_2
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4f3f7a1e0581874ebef60a4f5b3db78
+      internalID: 965601438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_3
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059ba76d86c62d440b32c3d94765eef9
+      internalID: 1307284220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_4
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2ded6c9411940b4593843911b12e5d3
+      internalID: 1839259166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_5
+      rect:
+        serializedVersion: 2
+        x: 2185
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 531daedd8cd5322489cb847ed9a9a0f0
+      internalID: 1384157060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_6
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a585c2b68780184dbffb69a39243ddd
+      internalID: 852450385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_7
+      rect:
+        serializedVersion: 2
+        x: 3059
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ea419ffe0f56b543a3b36335abca7d9
+      internalID: -1923060244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_8
+      rect:
+        serializedVersion: 2
+        x: 3496
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe69e767bfaa5e42928dfb15f5169f8
+      internalID: 845532379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_9
+      rect:
+        serializedVersion: 2
+        x: 3933
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afda680a3f8342b4d8f24da182753eb4
+      internalID: 2099825000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_10
+      rect:
+        serializedVersion: 2
+        x: 4370
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fba06121e1a3cb479a53bce9d3a0653
+      internalID: -1976640180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_11
+      rect:
+        serializedVersion: 2
+        x: 4807
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa25301f33ee3d49a800876f0d3d181
+      internalID: -865897690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_12
+      rect:
+        serializedVersion: 2
+        x: 5244
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7add2c94bfa2f4b826ccaa157c2402
+      internalID: 810186456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_13
+      rect:
+        serializedVersion: 2
+        x: 5681
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55d0e9cb56d22f24681e39cb718cdbfa
+      internalID: -185486291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_14
+      rect:
+        serializedVersion: 2
+        x: 6118
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 231d8e066044f7b499a8ea10316bc991
+      internalID: 744560978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_15
+      rect:
+        serializedVersion: 2
+        x: 6555
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a5054fbffd82934e9b8fdf03c95d165
+      internalID: 708692219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_16
+      rect:
+        serializedVersion: 2
+        x: 6992
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f88b5c49ab118da428455dd60f2b9f5c
+      internalID: 2044225931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_17
+      rect:
+        serializedVersion: 2
+        x: 7429
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9723ea4f9823d64bba4c992ec3259e4
+      internalID: 858249316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_18
+      rect:
+        serializedVersion: 2
+        x: 7866
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfdc3605ffa28ae44a76545af9ed9ed8
+      internalID: -1284729973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_19
+      rect:
+        serializedVersion: 2
+        x: 8303
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0aa0b56193ea624aa539028ad51df00
+      internalID: 725948669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_20
+      rect:
+        serializedVersion: 2
+        x: 8740
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b150947622f71408791f0f32244eb9
+      internalID: -1017351382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_21
+      rect:
+        serializedVersion: 2
+        x: 9177
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8f9e6ce5504ef64990db3af4f31177b
+      internalID: 709376123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_22
+      rect:
+        serializedVersion: 2
+        x: 9614
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49df11a8a6063d41a3472161e352335
+      internalID: -584598650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_23
+      rect:
+        serializedVersion: 2
+        x: 10051
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53da2e8d6557e54e81626343ffd5112
+      internalID: -1005035628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreasuryDestroyed2_24
+      rect:
+        serializedVersion: 2
+        x: 10488
+        y: 1
+        width: 437
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bc6fea3a6475ed41af265bc9f67f3ff
+      internalID: 778765330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6ebf69c917f01d04abea27717e7ce377
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      TreasuryDestroyed2_0: -6886891990773826258
+      TreasuryDestroyed2_1: -198874901
+      TreasuryDestroyed2_10: -1976640180
+      TreasuryDestroyed2_11: -865897690
+      TreasuryDestroyed2_12: 810186456
+      TreasuryDestroyed2_13: -185486291
+      TreasuryDestroyed2_14: 744560978
+      TreasuryDestroyed2_15: 708692219
+      TreasuryDestroyed2_16: 2044225931
+      TreasuryDestroyed2_17: 858249316
+      TreasuryDestroyed2_18: -1284729973
+      TreasuryDestroyed2_19: 725948669
+      TreasuryDestroyed2_2: 965601438
+      TreasuryDestroyed2_20: -1017351382
+      TreasuryDestroyed2_21: 709376123
+      TreasuryDestroyed2_22: -584598650
+      TreasuryDestroyed2_23: -1005035628
+      TreasuryDestroyed2_24: 778765330
+      TreasuryDestroyed2_3: 1307284220
+      TreasuryDestroyed2_4: 1839259166
+      TreasuryDestroyed2_5: 1384157060
+      TreasuryDestroyed2_6: 852450385
+      TreasuryDestroyed2_7: -1923060244
+      TreasuryDestroyed2_8: 845532379
+      TreasuryDestroyed2_9: 2099825000
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -28,6 +28,7 @@ public class Enemy : Unit
     public CapsuleCollider2D selfEnemyCollider;
     public FuckingBuggingRotationForBody fuck;
     public bool isInstancedByLevel = false; // Флаг, указывающий, что враг был заспавнен скриптом спавна на уроне, а не добавлен на сцену вручную
+    public bool isTriggered = false; // Флаг, указывающий, что враг затриггерен
     public TriggerArea triggerAreaScript; // Скрипт зоны для погони (триггер)
     public PitDetector pitDetectorScript; // Скрипт зоны детекции ямок 
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
@@ -72,9 +73,6 @@ public class Enemy : Unit
         triggerAreaScript.OnPlayerEnteredTriggerArea += FollowPlayer;
         // просто заглушка, что если мы сами заспавним врага на уровень, то по умолчанию у него цель будет игрок
 
-        _fsm = new Fsm();
-
-
         _fsm.AddState(new FsmStateIdleEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalkEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateJumpEnemy(_fsm, gameObject));
@@ -109,12 +107,18 @@ public class Enemy : Unit
 
         //Debug.Log(_fsm.StateCurrent);
         //Debug.Log(isGrounded);
-        _fsm.Update();
+        if (areUpdatingFunctionsEnabled)
+        {
+            _fsm.Update();
+        }
     }
 
     private void FixedUpdate()
     {
-        _fsm.FixedUpdate();
+        if (areUpdatingFunctionsEnabled)
+        {
+            _fsm.FixedUpdate();
+        }
     }
 
     public override void OnDestroy()

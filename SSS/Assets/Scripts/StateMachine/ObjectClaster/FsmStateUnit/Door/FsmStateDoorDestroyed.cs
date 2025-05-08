@@ -14,7 +14,7 @@ public class FsmStateDoorDestroyed : FsmStateDoor
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Destroyed state [ENTER]");
         door.selfCollider.enabled = false;

@@ -127,7 +127,7 @@ public static class StaticClassForAdditionalFunctions : object
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.LogError($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    Debug.LogWarning($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
@@ -342,5 +342,13 @@ public static class StaticClassForAdditionalFunctions : object
         return randomNumber <= chancePercentage;
     }
 
+    public static UnityEngine.Transform InstanceEmptyObjectAndGetTransform(UnityEngine.Transform parentTransform, string nameObject, Vector3 biasPosition)
+    {
+        UnityEngine.Transform transformEmptyObject = new GameObject(nameObject).GetComponent<UnityEngine.Transform>();
+        transformEmptyObject.SetParent(parentTransform, false);
+        transformEmptyObject.localPosition = Vector3.zero + biasPosition;
+
+        return transformEmptyObject;
+    }
 
 }

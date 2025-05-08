@@ -54,13 +54,13 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
 
             if (_justCheckMark)
             {
-                _spriteToSetToggled = Resources.Load<Sprite>(C.DK.PathFolderImagesForToggles + "CheckMarckToggled");
-                _spriteToSetUntoggled = Resources.Load<Sprite>(C.DK.PathFolderImagesForToggles + "CheckMarckUntoggled");
+                _spriteToSetToggled = Resources.Load<Sprite>(C.Paths.PathFolderImagesForToggles + "CheckMarckToggled");
+                _spriteToSetUntoggled = Resources.Load<Sprite>(C.Paths.PathFolderImagesForToggles + "CheckMarckUntoggled");
             }
             else
             {
-                _spriteToSetToggled = Resources.Load<Sprite>(C.DK.PathFolderImagesForToggles + name + "Toggled");
-                _spriteToSetUntoggled = Resources.Load<Sprite>(C.DK.PathFolderImagesForToggles + name + "Untoggled");
+                _spriteToSetToggled = Resources.Load<Sprite>(C.Paths.PathFolderImagesForToggles + name + "Toggled");
+                _spriteToSetUntoggled = Resources.Load<Sprite>(C.Paths.PathFolderImagesForToggles + name + "Untoggled");
             }
 
 

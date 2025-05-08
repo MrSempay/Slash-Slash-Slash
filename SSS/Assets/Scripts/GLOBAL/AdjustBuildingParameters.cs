@@ -10,13 +10,15 @@ public static class AdjustBuildingParameters : object
         // »нициализируем словарь при объ€влении
         { C.DK.School, new Dictionary<string, object>() {
             { C.DK.TimeForUpdateAssortiment, 15f },
-            { C.DK.FolderImagesOfEquipment, C.DK.FolderImagesForSpells },
+            { C.DK.FolderImagesOfEquipment, C.Paths.FolderImagesForSpells },
             { C.DK.NameTargetEquipmentPanelPlayer, C.DK.SpellPanel },
+            { C.DK.customScriptsEquipment, new Dictionary<string, Type> { { C.DK.ProtectiveField, typeof(ProtectiveField) }, { C.DK.Berserker, typeof(Berserker) }, { C.DK.Healing, typeof(Healing) } } },
         } },
         { C.DK.Treasury, new Dictionary<string, object>() {
             { C.DK.TimeForUpdateAssortiment, 15f },
-            { C.DK.FolderImagesOfEquipment, C.DK.FolderImagesForAmmunition },
+            { C.DK.FolderImagesOfEquipment, C.Paths.FolderImagesForAmmunition },
             { C.DK.NameTargetEquipmentPanelPlayer, C.DK.AmmunitionPanel },
+            { C.DK.customScriptsEquipment, new Dictionary<string, Type> { { C.DK.Tragicomedy, typeof(Tragicomedy) }, { C.DK.ThirstySakura, typeof(ThirstySakura) } }  },
         } },
     };
 

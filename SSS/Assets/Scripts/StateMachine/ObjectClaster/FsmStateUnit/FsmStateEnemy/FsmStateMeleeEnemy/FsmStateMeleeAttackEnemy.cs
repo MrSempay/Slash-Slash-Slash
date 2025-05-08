@@ -15,7 +15,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
     }
 
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Melee attack state [ENTER]");
         enemy.rb.linearVelocityX = 0;

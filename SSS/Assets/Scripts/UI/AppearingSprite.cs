@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,16 @@ using static ScoreManager;
 public class AppearingSprite : MonoBehaviour
 {
 
-    private Animator animator;
     private string fullPath;
     private float _timeBeforeDisappearing = 2f;
-    private Sprite sprite;
     private new RectTransform transform;
     private static Dictionary<TYPE_APPEARING_MESSAGE, ParametersAppearingSprite> dictionaryPropertiesSprites;
 
-    [SerializeField] private SpriteRenderer selfSprite;
+    [NonSerialized] public Animator animator;
+    [NonSerialized] public Sprite sprite;
+    [NonSerialized] public Action<string> OnSomeAnimationWasFninished;
+
+    public SpriteRenderer selfSprite;
 
     private class ParametersAppearingSprite
     {
@@ -63,6 +66,7 @@ public class AppearingSprite : MonoBehaviour
         
     }
 
+    // пока что может вызываться только из ScoreManager, но с публичным доступом
     public void SetProperlyAnimationAndPosition(TYPE_APPEARING_MESSAGE typeAppearingMessage)
     {
         string nameAnimation = dictionaryPropertiesSprites[typeAppearingMessage].nameVisualisation;
@@ -75,7 +79,7 @@ public class AppearingSprite : MonoBehaviour
         else
         {
             animator.enabled = false;
-            fullPath = C.DK.PathFolderImagesForAppearingMessages + nameAnimation;
+            fullPath = C.Paths.PathFolderImagesForAppearingSprites + nameAnimation;
             sprite = Resources.Load<Sprite>(fullPath);
             if (sprite != null)
                 selfSprite.sprite = sprite;
@@ -94,24 +98,111 @@ public class AppearingSprite : MonoBehaviour
 
         BiasAllAnotherAppearingSpritesInGroupDown(height, rectTranformParentGroup);
 
-        StartCoroutine(StartDisappearingMessageTimer());
+        StartCoroutine(StartDisappearingMessageTimer(_timeBeforeDisappearing));
     }
 
-
-    private void BiasAllAnotherAppearingSpritesInGroupDown(float height, RectTransform rectTransformParent)
+    private void BiasAllAnotherAppearingSpritesInGroupDown(float height, Transform transformParent)
     {
-        foreach (RectTransform childRect in rectTransformParent)
+        if (transformParent.childCount > 1)
         {
-            childRect.localPosition = new Vector3(childRect.localPosition.x, childRect.localPosition.y - height, 0);
+            foreach (Transform childTransform in transformParent)
+            {
+                childTransform.localPosition = new Vector3(childTransform.localPosition.x, childTransform.localPosition.y - height, 0);
+            }
         }
     }
 
-    IEnumerator StartDisappearingMessageTimer()
+    // вызывается через GameManager. Глобальный доступ. timeDisappearing = -1 для бесконечного спрайта!
+    // Разберём малость подробнее: nameAnimation - имя анимации для спрайта, которая будет проигрываться. transformParent - родительский трансформ, которому появляющийся спрайт будет
+    // назанчен как дочерний. timeDisappearing - время жизни спрайта (не путать со временем анимации для исчезания спрайта! Таковой по умолчанию тут вообще не предусмотрено!), -1 для
+    // бесконечного спрайта. shouldBeOnlyOneSpriteInGroup - у заданного transformParent будет только один дочерний спрайт, каждый предыдущий будет удаляться при добавлении следующего.
+    // shouldBeSpecifyControlPositionSpritesInGroup - по сути будет работать только когда shouldBeOnlyOneSpriteInGroup = false. Логика в том, что если данный параметр будет равен false,
+    // то по умолчанию появляющиеся спрайты будут сдвигаться вниз, образуя столбик. Если параметр равен true, то контроль за положением спрайтов ложится на более высокую ступень управления,
+    // на ту, из которой данный спрайт и создавался (в общем случае). На данный момент эта логика нужна для того, чтоб появляющиеся спрайты у заданного transformParent не сдвигались вниз,
+    // а скапливались, по сути, друг на друге. Но от того, что спрайты у нас занимают только небольшую область сами по себе (и не перекрываются), будет создаваться впечатления, что они
+    // находятся в разных местах. Подход пока что примитивный, но в будущем можно будет улучить
+    public void SetProperlyAnimationAndPosition(string nameAnimation,
+                                                Transform transformParent,
+                                                float timeDisappearing,
+                                                bool shouldBeOnlyOneSpriteInGroup,
+                                                bool shouldBeSpecifyControlPositionSpritesInGroup = false)
     {
-        yield return new WaitForSeconds(_timeBeforeDisappearing);
+
+        if (StaticClassForAdditionalFunctions.AnimationExists(nameAnimation, animator))
+        {
+            animator.Play(nameAnimation);
+        }
+        else
+        {
+            animator.enabled = false;
+            fullPath = C.Paths.PathFolderImagesForAppearingSprites + nameAnimation;
+            sprite = Resources.Load<Sprite>(fullPath);
+            if (sprite != null)
+                selfSprite.sprite = sprite;
+        }
+
+        // Устанавливаем родительский Transform
+        transform.SetParent(transformParent);
+
+        // Дополнительные настройки (необязательно)
+        transform.localPosition = Vector3.zero; // Обнуляем локальную позицию
+        transform.localRotation = Quaternion.identity; // Обнуляем локальный поворот
+
+        if (!shouldBeOnlyOneSpriteInGroup) // если должно быть больше одного дочернего спрайта у заданного transformParent
+        {
+            if (!shouldBeSpecifyControlPositionSpritesInGroup) 
+            {
+                Vector2 size = transform.sizeDelta;
+
+                float height = size.y;
+
+                BiasAllAnotherAppearingSpritesInGroupDown(height, transformParent);
+            }
+            else // для специфического контроля позиции спрайтов в группе тут пока что ничего не делаем, логику определяет управление свыше
+            {
+
+            }
+        }
+        else
+        {
+            foreach (Transform transformChildSprite in transformParent)
+            {
+                if (transformChildSprite != transform)
+                {
+                    Destroy(transformChildSprite.gameObject);
+                }
+            }
+        }
+        if (timeDisappearing != -1f)
+        {
+            StartCoroutine(StartDisappearingMessageTimer(timeDisappearing));
+        }
+    }
+
+
+
+
+
+    IEnumerator StartDisappearingMessageTimer(float timeTimer)
+    {
+        yield return new WaitForSeconds(timeTimer);
+
         Destroy(gameObject);
     }
 
+
+    // ---------------------- ФУНКЦИИ, СИГНАЛИЗИРУЮЩИЕ О ТОМ, ЧТО КАКАЯ-ТО АНИМАЦИЯ ЗАВЕРШИЛАСЬ (ну и бред, к чёрту идёт инкапсулированость, видимо) ---------------------//
+
+    
+    public void ProtectiveFieldAppearFinished()
+    {
+        OnSomeAnimationWasFninished.Invoke("ProtectiveFieldAppear");
+    }
+       
+    public void ProtectiveFieldDisappearFinished()
+    {
+        OnSomeAnimationWasFninished.Invoke("ProtectiveFieldDisappear");
+    }
 
     //IEnumerator RiseCurrentMusicTick(AudioClip explosionSound)
     //{
@@ -127,6 +218,9 @@ public class AppearingSprite : MonoBehaviour
     //    }
     //}
 
-
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 
 }

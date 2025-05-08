@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,11 +13,13 @@ public class FsmStateDiedEnemy : FsmStateEnemy
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Died state [ENTER]");
         enemy.animator.Play("EnemyDied");
         enemy.isAlive = false;
+        enemy.areUpdatingFunctionsEnabled = false;
+        enemy.StopAllCoroutines();
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
 
     }

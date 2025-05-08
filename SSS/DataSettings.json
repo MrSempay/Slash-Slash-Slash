@@ -38,11 +38,11 @@
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
-            "IsToggled": false
+            "IsToggled": true
         },
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
-            "IsToggled": true
+            "IsToggled": false
         }
     ],
     "allSlidersData": [
@@ -56,7 +56,7 @@
         },
         {
             "selfName": "ParameterBrightness",
-            "CurrentValue": 1.0
+            "CurrentValue": 0.352396696805954
         }
     ],
     "allChoseListsData": [

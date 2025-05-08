@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static DialogueParser;
@@ -10,7 +11,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
     }
 
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Equipment inside shop state [ENTER]");
         if (equipment.WasSold) // по идее это вызоветс€ только при перемещении снар€жени€ из инвентар€ геро€ в здание, иначе, если снар€жение просто спавнитс€ в здании, WasSold равно false по умолчанию
@@ -30,6 +31,8 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
 
     public override void Update()
     {
+        //Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment);
+        //Debug.Log(gameObject.GetInstanceID());
         base.Update();
         if (Input.GetMouseButtonDown(0)) //  огда нажата лева€ кнопка мыши
         {

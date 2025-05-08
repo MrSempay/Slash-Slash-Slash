@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,7 +10,7 @@ public class FsmStateIdle : FsmStatePlayer
         OnSwipeEnded += SetStateWalk; // эмулирется в MakingSwipe
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Idle state [ENTER]");
         player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);

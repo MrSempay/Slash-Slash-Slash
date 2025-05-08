@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static FsmStatePlayer;
 using static UnityEngine.RuleTile.TilingRuleOutput;
@@ -10,7 +11,7 @@ public class FsmStateEquipmentSelected : FsmStateEquipment
     }
 
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Equipment selected state [ENTER]");
         equipment.player.IsTranslatingEquipment = true;

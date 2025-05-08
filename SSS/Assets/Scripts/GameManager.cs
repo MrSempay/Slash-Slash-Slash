@@ -5,16 +5,21 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using static DialogueArea;
 using static GameManager;
+using static ScoreManager;
 using static StaticClassForAdditionalFunctions;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+
     private string _nameCurrentScene;
     private string _nameTargetScene;
-    private string _pathToFolderWithPrefubs = C.DK.PrefabDialogueWindowForPlayer;
+    private string _pathToFolderWithPrefubs = C.Paths.PrefabDialogueWindowForPlayer;
     private GameObject _prefubPlayerDialogue;
     private LiftGammaGain _liftGammaGain;
+
+    public GameObject prefubAppearingSprite;
+    public CustomCombo prefubCustomCombo;
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
     public event DialogueStarted onDialogueStarted;         // экземляр(?) функции/сигнала(?)
@@ -149,13 +154,17 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefabAppearingSprite);
+        prefubCustomCombo = Resources.Load<CustomCombo>(C.Paths.PrefubCustomCombo);
+
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
         localizationManager = LocalizationManager.Instance; // создаём менеджер локализации
         SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
         
         Volume volumeRender = gameObject.AddComponent<Volume>();
-        VolumeProfile profile = Resources.Load<VolumeProfile>(C.DK.IboPostProcessProfile);
+        VolumeProfile profile = Resources.Load<VolumeProfile>(C.Paths.IboPostProcessProfile);
         volumeRender.sharedProfile = profile;
         if (volumeRender.sharedProfile.TryGet<LiftGammaGain>(out var liftGammaGain))
         {
@@ -205,6 +214,18 @@ public class GameManager : MonoBehaviour
         //Debug.Log(_prefubPlayerDialogue);
         PlayerDialogue sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
+    }
+
+    public AppearingSprite InvokeAppearingSprite(string nameAnimation,
+                                                 Transform transformParent,
+                                                 float timeDisappearing,
+                                                 bool shouldBeOnlyOneSpriteInGroup,
+                                                 bool shouldBeSpecifyControlPositionSpritesInGroup = false)
+    {
+        AppearingSprite sciptAppearingSprite = Instantiate(prefubAppearingSprite).GetComponent<AppearingSprite>();
+        sciptAppearingSprite.SetProperlyAnimationAndPosition(nameAnimation, transformParent, timeDisappearing, shouldBeOnlyOneSpriteInGroup, shouldBeSpecifyControlPositionSpritesInGroup);
+
+        return sciptAppearingSprite;
     }
 
     public void PauseGame(bool setPause)

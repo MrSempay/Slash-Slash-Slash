@@ -51,9 +51,9 @@ public class PlaceForEquipment : MonoBehaviour
                 {
                     if (!value.isEquipmentASpell)
                     {
-                        Ammunition ammunition = (Ammunition)value;
-                        increasedParametersValuesByEquipmentInThisPlace = ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, true);
-                        ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, true);
+                        //Ammunition ammunition = (Ammunition)value;
+                        //increasedParametersValuesByEquipmentInThisPlace = ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, true);
+                        //ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, true);
                     }
                 }
                 else
@@ -66,14 +66,14 @@ public class PlaceForEquipment : MonoBehaviour
                         if (!previousEquipment.isEquipmentASpell)
                         {
                             //Debug.Log("Shit Here?");
-                            Ammunition ammunition = (Ammunition)previousEquipment;
+                            //Ammunition ammunition = (Ammunition)previousEquipment;
                             /*Dictionary<string, float> decreasingUnitParametersByAmmunition;
                             foreach (var increasedParameter in increasedParametersValuesByEquipmentInThisPlace)
                             {
                                 decreasingUnitParametersByAmmunition[increasedParameter.Key] = increasedParameter.Value/ ammunition.player.;
                             }*/
-                            ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, false);
-                            ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, false);
+                            //ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, false);
+                            //ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, false);
                         }
                     }
                 }

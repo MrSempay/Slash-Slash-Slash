@@ -20,9 +20,9 @@ public class Player : Unit
     private int _amountEnemiesWasKilledInCombo = 0; // количество врагов, убитых "одним ударом"
     private float _timeDuringOneHit = 0.2f; // длительность нашего "одного удара"
     private int _currentMinimumAmountCombo; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+
+
     [SerializeField] private float _currentIncreasingStamina; 
-
-
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь 
     [SerializeField] private float _currentExperience = 0;
     [SerializeField] private float _currentMoney = 0;
@@ -50,9 +50,8 @@ public class Player : Unit
     public ProgressBar progerssBarStyleRank; // Скрипт зоны для атаки
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
-    public RectTransform spellPanelTransform; // 
-    public RectTransform ammunitionPanelTransform; //
     public RectTransform UI; //
+    public RankStyle rankStyle; //
     public List<Spell> playersSpells = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
 
@@ -75,6 +74,7 @@ public class Player : Unit
     public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе 
     public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
     public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей для защиты
+            
 
     public float CurrentExperience
     {
@@ -197,12 +197,6 @@ public class Player : Unit
         set
         {
             _currentIncreasingStamina = value;
-            int ab = 1;
-            Debug.Log(ab.GetType());
-            Debug.Log((float)ab);
-            Debug.Log((baseParametersValues[C.DK.staminaMax]).GetType());
-            Debug.Log((baseParametersValues[C.DK.staminaMax]));
-            Debug.Log(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]));
             int increasingStamina = Mathf.RoundToInt(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]) * (value/100));
             staminaMax = Convert.ToInt32(baseParametersValues[C.DK.staminaMax]) + increasingStamina;
             CurrentStamina += increasingStamina;
@@ -258,10 +252,6 @@ public class Player : Unit
 
 
         localPositionCamera = _mainCameraTransform.localPosition;
-        foreach (RectTransform spellTransform in spellPanelTransform)
-        {
-
-        }
 
         InitializeDependencies();
 
@@ -270,6 +260,7 @@ public class Player : Unit
         _fsm.AddState(new FsmStateJump(_fsm, gameObject));
         _fsm.AddState(new FsmStateFall(_fsm, gameObject));
         _fsm.AddState(new FsmStateDied(_fsm, gameObject));
+        _fsm.AddState(new FsmStateCastPlayer(_fsm, gameObject));
         _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
 
 
@@ -278,6 +269,7 @@ public class Player : Unit
     {
         //texxt.Text = "Greeting";
         base.Start();
+        
         _fsm.SetState<FsmStateIdle>();
     }
 
@@ -343,6 +335,7 @@ public class Player : Unit
     }
     protected override void SomeUnitWasHit(Unit unit) // подразумевается, конечно, что толкмо враг игроком может быть ударен (детектим для удара вражеский тэг)
     {
+        base.SomeUnitWasHit(unit);
         if (wasEnemyDamagedByLastSwipe == false) // продлеваем комбо за первый удар в свайпе
         {
             wasEnemyDamagedByLastSwipe = true;
@@ -371,7 +364,7 @@ public class Player : Unit
         if (_amountEnemiesWasKilledInCombo > 1)
         {
             ScoreManager.Instance.UpCombo((int)(_amountEnemiesWasKilledInCombo * comboOneHitKillMultiplayer));
-            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
+            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
         }
         _amountEnemiesWasKilledInCombo = 0;
         _zeroizeComboKillCoroutine = null;
@@ -410,17 +403,17 @@ public class Player : Unit
         if (isDoorDestroyed) ShakeCamera(_mainCameraTransform, localPositionCamera);
     }
 
-    public override void GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
+    public override bool GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
     {
-        if (unitFromWhoWasGottenDamage)
+        if (!base.GetDamage(damageSize, unitFromWhoWasGottenDamage))
         {
-            if (StaticClassForAdditionalFunctions.CheckChance(evasionPercentage)) // шанс уклониться от урона. Не важно, от какого, главное, что от исходящего от другого юнита
-            {
-                return;
-            }
+            return false;
         }
-            ShakeCamera(_mainCameraTransform, localPositionCamera);
-        base.GetDamage(damageSize, unitFromWhoWasGottenDamage);
+
+        ShakeCamera(_mainCameraTransform, localPositionCamera);
+        
+        return true;
+
     }
 
 
@@ -516,6 +509,7 @@ public class Player : Unit
 
     public override void OnDestroy()
     {
+        Debug.Log("Ебля блядоносная");
         base.OnDestroy();
         nearAreaDetector.isEnemyNear -= EnemyNear;
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);

@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class FsmState
@@ -14,7 +15,8 @@ public abstract class FsmState
 
     }
     
-    public virtual void Enter() { }
+    public virtual void Enter(Dictionary<string, object> initialConditionsEntering) { }
+    public virtual void EnterNew(params object[] parameters) { }
     public virtual void Exit() { }
     public virtual void Update() { }
     public virtual void FixedUpdate() { }

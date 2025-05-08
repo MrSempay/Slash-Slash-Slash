@@ -17,6 +17,7 @@ public class C
 
         public const string TimeForUpdateAssortiment = "timeForUpdateAssortiment";
         public const string FolderImagesOfEquipment = "folderImagesOfEquipment";
+        public const string customScriptsEquipment = "customScriptsEquipment";
         public const string NameTargetEquipmentPanelPlayer = "nameTargetEquipmentPanelPlayer";
                 // значения параметров зданий
                 public const string SpellPanel = "SpellPanel";
@@ -24,17 +25,7 @@ public class C
 
 
         // пути для файлов/папок
-        public const string FolderImagesForSpells = "Images/Spells/";
-        public const string FolderImagesForAmmunition = "Images/Ammunition/";
-        public const string ImageDoorOpened = "Images/Door/DoorOpened";
-        public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
-        public const string PrefabAppearingSprite = "Prefabs/UI/AppearingSprite";
-        public const string PrefabLeaderboard = "Prefabs/UI/Leaderboard";
-        public const string FieldLeaderboard = "Prefabs/UI/FieldLeaderboard";
-        public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
-        public const string PathFolderImagesForAppearingMessages = "Images/UI/AppearingMessages/";
-        public const string IboPostProcessProfile = "IboPostProcessProfile";
+
 
         // Категории предметов
         public const string Weapon = "Weapon";
@@ -75,15 +66,24 @@ public class C
         public const string TjanulDedRepku = "TjanulDedRepku";
 
         // Ключи полей для предметов
+
         public const string equipmentName = "equipmentName";
         public const string cost = "cost";
         public const string timeCallDown = "timeCallDown";
+        public const string healthHealAmount = "healthHealAmount";
+        public const string shouldBeCastedAtStartUnitAnimation = "shouldBeCastedAtStartUnitAnimation";
         public const string amountUpCombo = "amountUpCombo";
+        public const string amountBlockingAttackMax = "amountBlockingAttackMax";
         public const string durationActiveState = "durationActiveState";
         public const string increasingUnitParametersByAmmunitionPercentage = "increasingUnitParametersByAmmunitionPercentage";
         public const string increasingUnitParametersByAmmunitionAbsolute = "increasingUnitParametersByAmmunitionAbsolute";
         public const string increasingUnitParametersByAmmunitionPercentageByCast = "increasingUnitParametersByAmmunitionPercentageByCast";
 
+        // названия заклинаний
+
+        public const string ProtectiveField = "ProtectiveField";
+        public const string Berserker = "Berserker";
+        public const string Healing = "Healing";
 
         // названия юнитов
         public const string Player = "Player";
@@ -160,6 +160,40 @@ public class C
         public const string PrefixDeactivate = "Deactivate";
         public const string EnteredInventory = "EnteredInventory";
         public const string ExitedInventory = "ExitedInventory";
+        public const string Destroyed = "Destroyed";
+        public const string Idle = "Idle";
+        public const string Appear = "Appear";
+        public const string Disappear = "Disappear";
+        public const string Cast = "Cast";
+        public const string Peak = "Peak";
 
     }
+    public static class Paths
+    {
+        public const string FolderImagesForSpells = "Images/Spells/";
+        public const string FolderImagesForAmmunition = "Images/Ammunition/";
+        public const string FolderImagesForRankStyles = "Images/UI/RankStyle/";
+        public const string ImageDoorOpened = "Images/Door/DoorOpened";
+        public const string ImageDoorClosed = "Images/Door/DoorClosed";
+        public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
+        public const string PrefabAppearingSprite = "Prefabs/AppearingSprite";
+        public const string PrefubCustomCombo = "Prefabs/UI/CustomCombo";
+        public const string PrefabLeaderboard = "Prefabs/UI/Leaderboard";
+        public const string FieldLeaderboard = "Prefabs/UI/FieldLeaderboard";
+        public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
+        public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
+        public const string IboPostProcessProfile = "IboPostProcessProfile";
+
+    }
+
+    public static class Other
+    {
+        public const string Stune = "Stune";
+    }
+
+    public static class AppSprite
+    {
+        public const string BerserkerEyes = "BerserkerEyes";
+    }
+
 }

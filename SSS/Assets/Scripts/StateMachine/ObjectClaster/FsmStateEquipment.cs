@@ -8,7 +8,11 @@ public class FsmStateEquipment : FsmState
 
     public FsmStateEquipment(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
+        //Debug.Log("≈бал€ва€ пиздаЄбка");
         equipment = gameObject.GetComponent<Equipment>();
+        //Debug.Log(equipment.GetInstanceID());
+        //Debug.Log(equipment.GetInstanceID());
+        //Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment + "" + equipment.GetInstanceID());
 
     }
 
@@ -31,6 +35,11 @@ public class FsmStateEquipment : FsmState
             GameObject someGameObject = hit.gameObject; // ѕолучаем GameObject
             if (someGameObject.CompareTag("Equipment"))
             {
+                //Debug.Log(equipment);
+                //Debug.Log(equipment._fsm);
+                //Debug.Log(someGameObject);
+                //Debug.Log(someGameObject.GetComponent<Equipment>());
+                //Debug.Log(equipment.GetInstanceID());
                 if (equipment._fsm.StateCurrent.GetType() == typeof(FsmStateEquipmentSelected)) return someGameObject.GetComponent<Equipment>(); // возвращаем любое снар€жение
 
                 if (someGameObject.GetComponent<Equipment>() == equipment) return someGameObject.GetComponent<Equipment>(); // возвращаем только то снар€жение, которое равно экземпл€ру

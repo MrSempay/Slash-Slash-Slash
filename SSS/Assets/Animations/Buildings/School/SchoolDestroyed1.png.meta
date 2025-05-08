@@ -1,0 +1,997 @@
+fileFormatVersion: 2
+guid: 6bc70ce871b3d3e419fc3a4302fd4b1e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7921467409539650615
+    second: libraryMcrash1_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 10
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 10
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: libraryMcrash1_0
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cb2e8a5c5b411290800000000000000
+      internalID: -7921467409539650615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_1
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04d856c4f751ca14383ac24f641ab8a4
+      internalID: 1302735414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_2
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7158f63247dacb45bfc714f4df0407f
+      internalID: 1847788342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_3
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95eaf70d6a2b3d444ac010bef4ac2a37
+      internalID: 1718088136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_4
+      rect:
+        serializedVersion: 2
+        x: 1617
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5303d9f6c1a6b847bc1d7a3930bd8eb
+      internalID: -1980801432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_5
+      rect:
+        serializedVersion: 2
+        x: 2012
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58329c40be68a446b6e79064b1a675d
+      internalID: -1021571895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_6
+      rect:
+        serializedVersion: 2
+        x: 2407
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8a713e26a39994e9054cceba519407
+      internalID: -977249496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_7
+      rect:
+        serializedVersion: 2
+        x: 2802
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d1b39b8127c0943937a414c1fe5879
+      internalID: 429409582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_8
+      rect:
+        serializedVersion: 2
+        x: 3197
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 855f87bbd688aaf419931e4e742c64b0
+      internalID: -137013689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_9
+      rect:
+        serializedVersion: 2
+        x: 3592
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd9086c6f009c83478d268382e61743c
+      internalID: -892972595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_10
+      rect:
+        serializedVersion: 2
+        x: 3987
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad802aff99bb96a4ca74aa5cc40ffe17
+      internalID: -865104629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_11
+      rect:
+        serializedVersion: 2
+        x: 4382
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ddb3ccdf1988a140891fb34413eeeb6
+      internalID: -984783363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_12
+      rect:
+        serializedVersion: 2
+        x: 4777
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62a18d49f90e73e40a51bff94f079f27
+      internalID: 1813014925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_13
+      rect:
+        serializedVersion: 2
+        x: 5172
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d7b39759b162a84ba4a00703d1e9cd5
+      internalID: -375876875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_14
+      rect:
+        serializedVersion: 2
+        x: 5567
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe7f19f72994ce04f8cff3d52482599a
+      internalID: 1962741640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_15
+      rect:
+        serializedVersion: 2
+        x: 5962
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 446e85ff8589fff439bf633fdac5fd03
+      internalID: -226326578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_16
+      rect:
+        serializedVersion: 2
+        x: 6357
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40358e106c045334fb60d92f7641f75d
+      internalID: -1228976746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_17
+      rect:
+        serializedVersion: 2
+        x: 6752
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4a6e2212af2e044b42c10b4b9c2f43
+      internalID: 2135732123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_18
+      rect:
+        serializedVersion: 2
+        x: 7147
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8b933b53b52acb4f864616397b85a1a
+      internalID: -1166688674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_19
+      rect:
+        serializedVersion: 2
+        x: 7542
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a3ed8520aea4a244b9bb5fa779fef2f
+      internalID: 19354382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_20
+      rect:
+        serializedVersion: 2
+        x: 7937
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7559dfa25fca0840827da886900a1f5
+      internalID: -1275406376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_21
+      rect:
+        serializedVersion: 2
+        x: 8332
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12ba0f61d0a81ad45bc613da6f423f19
+      internalID: -540142233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_22
+      rect:
+        serializedVersion: 2
+        x: 8727
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c10bd1f165a894da68db4d1545c57d
+      internalID: -1760568019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_23
+      rect:
+        serializedVersion: 2
+        x: 9122
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f84e8a61f9ba64e916da9a1bd63e78
+      internalID: 196758429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_24
+      rect:
+        serializedVersion: 2
+        x: 9517
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 370fd0e912c837547863267df532422f
+      internalID: -1348415750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_25
+      rect:
+        serializedVersion: 2
+        x: 9912
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8a13313b3ef1846bedb62b59f1e9a8
+      internalID: 1036349631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_26
+      rect:
+        serializedVersion: 2
+        x: 10307
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687c30f4ae188f24e9bf5270c74fc6ed
+      internalID: 928866238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_27
+      rect:
+        serializedVersion: 2
+        x: 10702
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 666a6c4d791c770448ac5b1f62811eae
+      internalID: -1709152437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_28
+      rect:
+        serializedVersion: 2
+        x: 11097
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b9560b145cce6b4ba2f9c4d1a9e2a11
+      internalID: -19361921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_29
+      rect:
+        serializedVersion: 2
+        x: 11492
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c253c5dfaa4857745968e3e29cd62b97
+      internalID: -1090046522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_30
+      rect:
+        serializedVersion: 2
+        x: 11887
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23c11999735bc1740b2b9f25515de880
+      internalID: -1085831168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_31
+      rect:
+        serializedVersion: 2
+        x: 12282
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bb69bbc621a3240a3030e67ca3f726
+      internalID: -1025636823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_32
+      rect:
+        serializedVersion: 2
+        x: 12677
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b31f8a8e358025f438f87633e89bbaf0
+      internalID: 1733060460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_33
+      rect:
+        serializedVersion: 2
+        x: 13072
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82b99ef57d3b984e86d623a6598a5c0
+      internalID: -307516889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_34
+      rect:
+        serializedVersion: 2
+        x: 13467
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69dab2ab8dd357142971e9fbf8d0978f
+      internalID: -2098500187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_35
+      rect:
+        serializedVersion: 2
+        x: 13862
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16517c048f64fb24ca71f55e2e78dc5b
+      internalID: 1136447341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: libraryMcrash1_36
+      rect:
+        serializedVersion: 2
+        x: 14257
+        y: 0
+        width: 321
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e44880a98c28d6643ba34b6a41a6394e
+      internalID: 1896802565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 25e000a73992b6a458b61bf1ae7eafb7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      libraryMcrash1_0: -7921467409539650615
+      libraryMcrash1_1: 1302735414
+      libraryMcrash1_10: -865104629
+      libraryMcrash1_11: -984783363
+      libraryMcrash1_12: 1813014925
+      libraryMcrash1_13: -375876875
+      libraryMcrash1_14: 1962741640
+      libraryMcrash1_15: -226326578
+      libraryMcrash1_16: -1228976746
+      libraryMcrash1_17: 2135732123
+      libraryMcrash1_18: -1166688674
+      libraryMcrash1_19: 19354382
+      libraryMcrash1_2: 1847788342
+      libraryMcrash1_20: -1275406376
+      libraryMcrash1_21: -540142233
+      libraryMcrash1_22: -1760568019
+      libraryMcrash1_23: 196758429
+      libraryMcrash1_24: -1348415750
+      libraryMcrash1_25: 1036349631
+      libraryMcrash1_26: 928866238
+      libraryMcrash1_27: -1709152437
+      libraryMcrash1_28: -19361921
+      libraryMcrash1_29: -1090046522
+      libraryMcrash1_3: 1718088136
+      libraryMcrash1_30: -1085831168
+      libraryMcrash1_31: -1025636823
+      libraryMcrash1_32: 1733060460
+      libraryMcrash1_33: -307516889
+      libraryMcrash1_34: -2098500187
+      libraryMcrash1_35: 1136447341
+      libraryMcrash1_36: 1896802565
+      libraryMcrash1_4: -1980801432
+      libraryMcrash1_5: -1021571895
+      libraryMcrash1_6: -977249496
+      libraryMcrash1_7: 429409582
+      libraryMcrash1_8: -137013689
+      libraryMcrash1_9: -892972595
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

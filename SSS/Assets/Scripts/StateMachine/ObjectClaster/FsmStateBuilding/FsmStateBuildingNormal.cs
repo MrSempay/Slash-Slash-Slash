@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FsmStateBuildingNormal : FsmStateBuilding
@@ -7,10 +8,10 @@ public class FsmStateBuildingNormal : FsmStateBuilding
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("BuildingNormal state [ENTER]");
-
+        building.selfCollider.enabled = true;
     }
 
     public override void Exit()

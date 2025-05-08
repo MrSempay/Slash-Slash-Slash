@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,15 +8,18 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
 
     private Coroutine _coroutineDeleyBeforeSelectedState;
     private float _timeDeleyBeforeChangingState = 2f;
+    private bool _enteredToStateJustNow = true;
 
     public FsmStateEquipmentAtPlayer(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
         
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Equipment At Player state [ENTER]");
+
+        _enteredToStateJustNow = true;
         if (equipment.BuildingWhereEquipmentIs != null)
         {
             equipment.BuildingWhereEquipmentIs = null; // по умолчанию будем считать, что мы снаряжение вытащили из здания. Менять этот параметр пока что будем в состоянии FsmStateEquipmentAtPlayer
@@ -83,14 +87,20 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
             }
             else if (touch.phase == TouchPhase.Ended)
             {
+                if (_enteredToStateJustNow)
+                {
+                    _enteredToStateJustNow = false;
+                    return;
+                }
+
                 // где бы мы не отпустили кнопку, если мы всё ещё не выделили наше снаряжение, отменяем попытку выделения его.
                 CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
                 _coroutineDeleyBeforeSelectedState = null;
                 if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
                 {
-                    if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // если не КД и действия игрока не заблокированы!
+                    if (equipment.isReady && equipment.player.areUpdatingFunctionsEnabled && !equipment.isActivated) // если не КД и действия игрока не заблокированы, и снаряжение сейчас не в активном состоянии!
                     {
-                        AdjustEquipmentParameters.CallActionFunctionByName(equipment, equipment.amountUpCombo, equipment.player);
+                        equipment.player._fsm.SetState<FsmStateCastPlayer>(new Dictionary<string, object> { { "equipmentWhatWasPressed", equipment } });
                     }
                 }
             }
@@ -105,14 +115,22 @@ public class FsmStateEquipmentAtPlayer : FsmStateEquipment
         }
         if (Input.GetMouseButtonUp(0)) // Когда нажата левая кнопка мыши
         {
+            //Debug.Log("AAAAAAAAAAAAAAAAA МЫ ЧЁ, ТИПА КАСТУЕМ? ЧЕГО ЗА РОФЛЯ?!");
+
+            if (_enteredToStateJustNow)
+            {
+                _enteredToStateJustNow = false;
+                return;
+            }
+
             // где бы мы не отпустили кнопку, если мы всё ещё не выделили наше снаряжение, отменяем попытку выделения его.
             CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
             _coroutineDeleyBeforeSelectedState = null;
             if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y))
             {
-                if (equipment.isReady && Player.instance.areUpdatingFunctionsEnabled) // у любого снаряжения, даже если нет активки, есть кд, по умолчанию равно 0 секундам, задаётся в скрипте Adjust
+                if (equipment.isReady && equipment.player.areUpdatingFunctionsEnabled && !equipment.isActivated) // у любого снаряжения, даже если нет активки, есть кд, по умолчанию равно 0 секундам, задаётся в скрипте Adjust
                 {
-                    AdjustEquipmentParameters.CallActionFunctionByName(equipment, equipment.amountUpCombo, equipment.player);
+                    equipment.player._fsm.SetState<FsmStateCastPlayer>(new Dictionary<string, object> { { "equipmentWhatWasPressed", equipment } });
                 }
             }
               

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class Fsm
@@ -15,7 +16,7 @@ public class Fsm
         _states.Add(state.GetType(), state);
     }
 
-    public void SetState<T>() where T : FsmState
+    public void SetState<T>(Dictionary<string, object> initialConditionsEntering = null) where T : FsmState
     {
         var type = typeof(T);
         if (StateCurrent?.GetType() == type)
@@ -27,7 +28,7 @@ public class Fsm
         {
             StateCurrent?.Exit();
             StateCurrent = newState;
-            StateCurrent.Enter();
+            StateCurrent.Enter(initialConditionsEntering);
 
         }
         else
@@ -35,6 +36,22 @@ public class Fsm
             Debug.Log("ÀÀÀÀÀÀÀÀ ÑÓÊÀ ¨ÁÀÍÀß ÑÎÑÒÎßÍÈÅ ÇÀÁÛËËËËËËËËËËËËËËËËËËËËËËËË");
         }
     }
+
+    public void SetStateIdle(Unit unit)
+    {
+        if (unit is Player)
+        {
+            Debug.Log("Èãğîê");
+            unit._fsm.SetState<FsmStateIdle>();
+        }
+        else if (unit is Enemy)
+        {
+            Debug.Log("Âğàã");
+            unit._fsm.SetState<FsmStateIdleEnemy>();
+        } 
+
+    }
+
 
     public void Update()
     {

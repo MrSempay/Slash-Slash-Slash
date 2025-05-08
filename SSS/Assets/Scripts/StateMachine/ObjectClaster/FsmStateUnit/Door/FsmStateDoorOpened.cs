@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FsmStateDoorOpened : FsmStateDoor
@@ -7,7 +8,7 @@ public class FsmStateDoorOpened : FsmStateDoor
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Opened door state [ENTER]");
         door.selfCollider.enabled = false;

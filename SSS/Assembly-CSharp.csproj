@@ -61,6 +61,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.37f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateCastPlayer.cs" />
     <Compile Include="Assets\Scripts\DebugExtension.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustLevelParameters.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Assets\Scripts\Interfaces\IReadOnlyEventBus.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustBuildingParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateJump.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Ammunition\ThirstySakura.cs" />
+    <Compile Include="Assets\Scripts\UI\RankStyle.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringWeaponInfoDictionary.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\DamageDealer.cs" />
@@ -125,12 +128,14 @@
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponCategory.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateFallEnemy.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateFall.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateStuneUnit.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateIdleEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\FuckingBuggingRotationForBody.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser\PlayerDialogue.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateDiedEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy.cs" />
     <Compile Include="Assets\Scripts\TestMovingKinematic.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell\ProtectionField.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
@@ -152,6 +157,8 @@
     <Compile Include="Assets\Scripts\UI\FieldLeaderboard.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterSlider.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell\Healing.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell\Berserker.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
     <Compile Include="Assets\Scripts\Unit\Door.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IControlLifeCicleFunctions.cs" />
@@ -160,6 +167,7 @@
     <Compile Include="Assets\Scripts\Building\School.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\AdsInitializer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorOpened.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Ammunition\Tragicomedy.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueArea.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\DataWrapperUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Player\AreaDetectors\EnemyNearDetector.cs" />
@@ -213,6 +221,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue1.txt" />
   </ItemGroup>

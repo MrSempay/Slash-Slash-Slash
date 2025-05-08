@@ -12,7 +12,7 @@ public class FsmStatePlayer : FsmStateUnit
     public FsmStatePlayer(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
         fsmPlayer = fsm;
-        player = gameObject.GetComponent<Player>();
+        player = (Player) unit;
         
     }
 
@@ -80,7 +80,7 @@ public class FsmStatePlayer : FsmStateUnit
         }
         if ((player.lookingRight == player.rb.linearVelocityX < 0) && Mathf.Abs(player.rb.linearVelocityX) > 0.01) // добавили некоторый treshhold для нивелирования небольшого заноса от CompositeCollider
         {
-            ChangeDirectionView();
+            ChangeDirectionView(null);
         }
     }
 
@@ -149,12 +149,16 @@ public class FsmStatePlayer : FsmStateUnit
         fsmPlayer.SetState<FsmStateJump>();
     }
 
-    void ChangeDirectionView()
+    public override void ChangeDirectionView(bool? lookingRight)
     {
+
         if (player.rb.linearVelocityX != 0) // чтоб во время остановки у нас спрайт не разворачивался влево всегда. Как остановились, так остановились
         {
             
             player.lookingRight = player.rb.linearVelocityX > 0;
+
+            base.ChangeDirectionView(player.lookingRight);
+
             player.selfSprite.flipX = !player.selfSprite.flipX;
             player.attackAreaTransform.localPosition = new Vector3(-1 * player.attackAreaTransform.localPosition.x, player.attackAreaTransform.localPosition.y, player.attackAreaTransform.localPosition.z);
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class FsmStateJump : FsmStateMovementPlayer
         
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Jump state [ENTER]");
         player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);

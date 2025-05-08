@@ -57,11 +57,11 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
                 string settingValue = LocalizationManager.Instance.GetText(value);
                 if (settingValue != "")
                 {
-                Debug.Log("箝응응응응응응응응응응응응응응응응응응응응응응응응�");
-                Debug.Log(value);
-                Debug.Log(textComponent);
-                Debug.Log(textComponent.text);
-                Debug.Log(LocalizationManager.Instance.GetText(value));
+                //Debug.Log("箝응응응응응응응응응응응응응응응응응응응응응응응응�");
+                //Debug.Log(value);
+                //Debug.Log(textComponent);
+                //Debug.Log(textComponent.text);
+                //Debug.Log(LocalizationManager.Instance.GetText(value));
                     textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey) + " " + LocalizationManager.Instance.GetText(value);
                 }
                 else

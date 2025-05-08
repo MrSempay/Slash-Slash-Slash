@@ -347,11 +347,11 @@ public class SaveLoadManager : MonoBehaviour
                 {
                     foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
                     {
-                        Debug.Log(rootRectTransform);
-                        Debug.Log(wrapChoseList);
+                        //Debug.Log(rootRectTransform);
+                        //Debug.Log(wrapChoseList);
 
                         Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapChoseList);
-                        Debug.Log(fieldsAndPropertiesOfWrapper);
+                        //Debug.Log(fieldsAndPropertiesOfWrapper);
                         FindAndImplementAllSlidersInGivenRectTransformRecursivly(rootRectTransform, wrapChoseList, fieldsAndPropertiesOfWrapper);
                     }
                 }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static EnemyNearDetector;
 using static ScoreManager;
 
 public class UIManager : MonoBehaviour
@@ -17,6 +18,8 @@ public class UIManager : MonoBehaviour
 
     public void Awake()
     {
+        //Debug.Log("CERFFFFFFFFFFFFFFFFFFFFFFFF");
+
         player.OnExperienceChanged += ChangeExperienceTextUI;
         player.OnMoneyChanged += ChangeMoneyTextUI;
         player.OnLevelChanged += ChangeLevelTextUI;
@@ -76,11 +79,11 @@ public class UIManager : MonoBehaviour
 
     private void OnDestroy()
     {
+            Debug.Log("Ебля блядоносная");
         player.OnExperienceChanged -= ChangeExperienceTextUI;
         player.OnMoneyChanged -= ChangeMoneyTextUI;
         player.OnLevelChanged -= ChangeLevelTextUI;
         player.OnLevelUpChanged -= ChangeLevelUpTextUI;
         player.OnKillComboChanged -= ChangeComboTextUI;
     }
-
 }

@@ -28,17 +28,20 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
     [NonSerialized] public bool isReady = true;
     [NonSerialized] new public RectTransform transform;
+    [NonSerialized] public BoxCollider2D selfCollider;
+    [NonSerialized] public Equipment newScriptOfEquipment;
 
-    public BoxCollider2D selfCollider;
     public int amountUpCombo;
     public bool isActivated; // флаг активированных снаряжений. Типа переключаемой способности
+    public bool shouldBeCastedAtStartUnitAnimation; // флаг, определяющий, должен ли эффект каста начать так или иначе работать сразу при начале анимации каста персонажа, или только после её полного завершения
     public float timeCallDown;
-    public float durationActiveState;
+    public float durationActiveState = -1; // -1 для бесконечного активного по времени состояния
+    public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentageByCast = new Dictionary<string, float>();
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
 
-#region Freshness Mechanic
+# region Freshness Mechanic
 
     private FRESHNESS _currentFreshness;
     private int _currentFreshnessCount;
@@ -97,7 +100,8 @@ public class Equipment : MonoBehaviour
 
         Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
     }
-    #endregion
+
+# endregion
 
 
     public bool WasSold // МЕНЯЕМ ЗНАЧЕНИЕ ТОЛЬКО В СОСТОЯНИЯХ InsideShop и AtPlayer!!!!!!!!!!!!!!!!!!!!
@@ -139,19 +143,37 @@ public class Equipment : MonoBehaviour
         transform = GetComponent<RectTransform>();
         player = GameObject.Find("Player").GetComponent<Player>();
         selfSprite = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
+        selfCollider = GetComponent<BoxCollider2D>();    
 
+
+
+        //animator.Play(equipmentName);
+    }
+    public virtual void Cast(Unit whoCasted) { }
+    public virtual void Activate(Unit whoCasted) // в теории можно передавать параметры, которые будут регулировать, на что именно мы подписываемся, но это так запарно...
+    {
+        whoCasted.OnCastAnimationFinished += UnitCastAnimationFinished;
+        whoCasted.OnCastAnimationPeacked += UnitCastAnimationPeacked;
+    }
+    public virtual void Deactivate(Unit whoCasted)
+    {
+        whoCasted.OnCastAnimationFinished -= UnitCastAnimationFinished;
+        whoCasted.OnCastAnimationPeacked -= UnitCastAnimationPeacked;
+    }
+    public virtual void EnteredIntoInventory(Unit ownerInventory) { }
+    public virtual void ExitedFromInventory(Unit ownerInventory)
+    {
+        Deactivate(ownerInventory);
+    }
+
+    public virtual void Start()
+    {
         _fsm = new Fsm();
 
         _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
         _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
         _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
-
-
-        //animator.Play(equipmentName);
-    }
-    protected virtual void Start()
-    {
         // Короче, план таков: если в списке анимаций есть анимация с именем текущего снаряжения, мы воспроизводим её. Если таковой анимации не было найдено, то мы
         // ищем анимацию для активного состояния данного снаряжения (ибо снаряжение может иметь 2 вида анимации: активное и деактивированное, когда, например, в КД),
         // если нашли - воспроизводим её. Если нет и таковой, то просто устанавливаем спрайт для данного снаряжения. Спрайт по умолчанию назначается в скрипте здания,
@@ -159,7 +181,7 @@ public class Equipment : MonoBehaviour
         // Предполагается, что не должно быть для указанного снаряжения одновременно и просто анимации по его имени, и анимации с постфиксом "Active", в таком случае
         // будет отдаваться приоритет проигрывания только анимации по имени, которая без постфикса
 
-        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator))
+        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator)) 
         {
             animator.Play(equipmentName); // Воспроизводим анимацию
         }
@@ -167,7 +189,7 @@ public class Equipment : MonoBehaviour
         {
             if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Active", animator))
             {
-                animator.Play(equipmentName + "Active"); // Воспроизводим анимацию
+                animator.Play(equipmentName + "Active"); // Воспроизводим анимацию 
             }
             else
             {
@@ -186,7 +208,7 @@ public class Equipment : MonoBehaviour
     protected virtual void Update()
     {
         _fsm.Update();
-        //Debug.Log("Спрайт " + sprite);
+        //Debug.Log("Снаряжение " + this + " " + gameObject.GetInstanceID());
         //Debug.Log("Эх " + selfSprite);
         //Debug.Log("Спрайт спрайта " + selfSprite.sprite);
         //Debug.Log("Дичь " + selfSprite.sprite.GetType());
@@ -230,6 +252,21 @@ public class Equipment : MonoBehaviour
         return false;
     }
 
+    public void StartTimerActiveState(Unit whoCastedSpell) // хотя, в будущем, логичнее было бы заменить whoCastedSpell на targetOfSpell
+    {
+        if (durationActiveState != -1f)
+        {
+            StartCoroutine(DurationActive(whoCastedSpell));
+        }
+    }
+
+    IEnumerator DurationActive(Unit whoCastedSpell)
+    {
+        Debug.Log(durationActiveState);
+        yield return new WaitForSeconds(durationActiveState);
+
+        Deactivate(whoCastedSpell);
+    }
 
     public void StartCallDown()
     {
@@ -270,9 +307,43 @@ public class Equipment : MonoBehaviour
         }
     }
 
+# region Animation live-time controlling
+
+    private void UnitCastAnimationFinished(string nameCastAnimation) // юнит может закончить различные анимации каста, мы фильтруем только анимацию каста, подходящую для данного
+                                                                            // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
+    {
+        if (nameCastAnimation == equipmentName + C.Prefixes.Cast)
+        {
+            UnitCastAnimationFinishedForThisEquipment();
+        }
+    }
+
+    // для того, чтобы использовать нишеописанную функцию, требуется в конечном скрипте снаряжения в методах Activate и Deactivate вызвать их базовые рализации через base.
+    // после этого переопределяем в конечном скрипте функцию UnitCastAnimationFinishedForThisEquipment с той логикой, которая нам нужна
+    public virtual void UnitCastAnimationFinishedForThisEquipment() { } // по идее вызывается, когда юнит закончил анимацию каста для данного снаряжения. Может вызваться только если
+                                                                        // снаряжение уже в состоянии Active. Нужно, скорее всего, только в том случае, когда переход в состояние Active
+                                                                        // происходит сразу при начале каста, но какая-то дополнительная логика отрабатывает, когда анимация каста уже окончена
+    private void UnitCastAnimationPeacked(string nameCastAnimation) // юнит может закончить различные анимации каста, мы фильтруем только анимацию каста, подходящую для данного
+                                                                            // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
+    {
+        if (nameCastAnimation == equipmentName + C.Prefixes.Peak)
+        {
+            UnitCastAnimationPeackedForThisEquipment();
+        }
+    }
+
+    public virtual void UnitCastAnimationPeackedForThisEquipment() { }
+
+# endregion 
+
     public virtual void OnDestroy()
     {
-        _fsm.StateCurrent?.OnDestroy();
+        //Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
+        
+
+        StopAllCoroutines();
+        if (_fsm != null)
+            _fsm.StateCurrent?.OnDestroy();
     }
     public virtual void OnEnable()
     {

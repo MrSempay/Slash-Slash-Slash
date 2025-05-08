@@ -19,7 +19,7 @@ public static class AdjustUnitParameters
                 { C.DK.experienceFromKill, 0 },
                 { C.DK.stuneChanceByStandartAttackPercentage, 0 },
                 { C.DK.timeStuneByStanartAttack, 2 },
-                { C.DK.evasionPercentage, 50 },
+                { C.DK.evasionPercentage, 0 },
                 { C.DK.comboOneHitKillMultiplayer, 10f },
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },

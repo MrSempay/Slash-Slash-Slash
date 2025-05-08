@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class FsmStateFall : FsmStateMovementPlayer
         //groundLayer = scriptGameObject.groundLayer;
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Fall state [ENTER]");
         player.animator.Play("PlayerFall");

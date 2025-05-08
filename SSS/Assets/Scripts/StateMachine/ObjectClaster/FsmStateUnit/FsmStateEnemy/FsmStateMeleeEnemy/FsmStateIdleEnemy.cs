@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -9,25 +10,36 @@ public class FsmStateIdleEnemy : FsmStateEnemy
 
     }
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Idle Enemy state [ENTER]");
         enemy.animator.Play("EnemyIdle");
+        enemy.rb.linearVelocityX = 0;
     }
 
     public override void Exit()
     {
         Debug.Log("Idle Enemy state [EXIT]");
+        enemy.isTriggered = true; // по идее любой факт выхода из состояния idle будет выставлять факт триггера в true
     }
 
     public override void Update()
     {
         base.Update();
-        //if (!enemy.isGrounded) fsmEnemy.SetState<FsmStateFallEnemy>();
+        //if (!enemy.isGrounded) fsmEnemy.SetState<FsmStateFallEnemy>(); 
+
         FixingFuckingBuggingRotation();
     }
 
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
 
+        if (enemy.isTriggered)
+        {
+            enemy._fsm.SetState<FsmStateWalkEnemy>();
+        }
+    }
 
 
     public override void OnDestroy()

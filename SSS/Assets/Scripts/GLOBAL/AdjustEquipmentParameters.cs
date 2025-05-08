@@ -8,22 +8,37 @@ public static class AdjustEquipmentParameters : object
     public static readonly Dictionary<string, Dictionary<string, object>> spellParameters = new Dictionary<string, Dictionary<string, object>>()
     {
         // Инициализируем словарь при объявлении
-        { "SomeSpell1", new Dictionary<string, object>() {
-            { C.DK.equipmentName, "SomeSpell1" },
+        { C.DK.ProtectiveField, new Dictionary<string, object>() {
+            { C.DK.equipmentName, C.DK.ProtectiveField },
             { C.DK.cost, 0 },
-            { C.DK.timeCallDown, 5 },
+            { C.DK.timeCallDown, 5f },
             { C.DK.amountUpCombo, 10 },
+            { C.DK.amountBlockingAttackMax, 5 },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, false },
+            { C.DK.durationActiveState, -1f },
+        } },
+        { C.DK.Berserker, new Dictionary<string, object>() {
+            { C.DK.equipmentName, C.DK.Berserker },
+            { C.DK.cost, 0 },
+            { C.DK.timeCallDown, 5f },
+            { C.DK.amountUpCombo, 10 },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, false },
+            { C.DK.durationActiveState, 10f },
+            { C.DK.increasingUnitParametersByAmmunitionPercentageByCast, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
         } },
         { "SomeSpell2", new Dictionary<string, object>() {
             { C.DK.equipmentName, "SomeSpell2" },
             { C.DK.cost, 0 },
             { C.DK.timeCallDown, 5 },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, true },
             { C.DK.amountUpCombo, 10 },
         } },
-        { "SomeSpell3", new Dictionary<string, object>() {
-            { C.DK.equipmentName, "SomeSpell3" },
+        { C.DK.Healing, new Dictionary<string, object>() {
+            { C.DK.equipmentName, C.DK.Healing },
             { C.DK.cost, 0 },
             { C.DK.timeCallDown, 5 },
+            { C.DK.healthHealAmount, 20f },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, true },
             { C.DK.amountUpCombo, 10 },
         } }
     };
@@ -63,7 +78,7 @@ public static class AdjustEquipmentParameters : object
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Standart, chance = 20f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Rare, chance = 7.14f } ,
-        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1111111.43f } ,   
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1.43f } ,   
     };
 
     // increasingUnitParametersByAmmunitionAbsolute - увеличиваем на абсолютное значение параметры в словаре 
@@ -212,6 +227,7 @@ public static class AdjustEquipmentParameters : object
                                     { C.DK.increasingUnitParametersByAmmunitionPercentageByCast, new Dictionary<string, float>() { { C.DK.damage, 200f }, { C.DK.DamageReductionPercentage, -100f } } },
                                     { C.DK.timeCallDown, 5 },
                                     { C.DK.durationActiveState, 5 }, // можно настраивать длительность эффекта. Влияет на то, когда активный эффект сбросится и активка снаряжения уйдёт на КД
+                                    { C.DK.shouldBeCastedAtStartUnitAnimation, true },
                                     { C.DK.cost, 170 } } }
                         } 
                     
@@ -294,9 +310,9 @@ public static class AdjustEquipmentParameters : object
         {
             nameOfSpell = scriptEquipment.equipmentName;
         }
-
+        Debug.Log("чё за параща " + type);
         // Получаем информацию о методе с указанным именем
-        MethodInfo methodInfo = type.GetMethod(nameOfSpell);
+        MethodInfo methodInfo = type.GetMethod(nameOfSpell, BindingFlags.Public | BindingFlags.Instance);
 
         // Проверяем, что метод существует
         if (methodInfo != null)
@@ -304,7 +320,7 @@ public static class AdjustEquipmentParameters : object
             // Вызываем метод
             ScoreManager.Instance.UpCombo((int)(amountUpCombo * scriptEquipment.multiplierFreshness));
             ScoreManager.Instance.UpActionCombo(1, nameOfSpell);
-            ScoreManager.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
 
             if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
             {
@@ -323,6 +339,31 @@ public static class AdjustEquipmentParameters : object
             Debug.Log($"Функция с именем '{nameOfSpell}' не найдена.");
             return;
         }
+    }
+    public static void CallActionFunctionByLink(Equipment scriptEquipment, int amountUpCombo, Unit whoCallAction, Action<Unit> linkActionFunction)
+    {
+
+        if (!scriptEquipment.isActivated) // чтоб, если снаряжение уже активное (то есть было прожато в недавнем будущем), второй раз комбо не прибавлять
+                                          // (второй раз эффект активации всё равно не применить). Логика данного контроля также реализована в FsmStateEquipmentAtPlayer
+        {
+            ScoreManager.Instance.UpActionCombo(1, scriptEquipment.equipmentName);
+            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+
+            if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
+            {
+                ScoreManager.Instance.AchivementMasterOfSkills();
+            }
+
+            if (amountUpCombo > 0) // иначе комбо увеличится на ноль, но соответствующая логика всё равно применится (сигнализирующий спрайт появится, КД на обнуление сбросится и т.п)
+            {
+                ScoreManager.Instance.UpCombo((int)(amountUpCombo * scriptEquipment.multiplierFreshness));
+            }
+        }
+            
+        scriptEquipment.CurrentFreshnessCount++;
+
+        linkActionFunction.Invoke(whoCallAction);
+
     }
 
 }

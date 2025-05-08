@@ -1,6 +1,7 @@
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class FsmStateWalkEnemy : FsmStateEnemy
 {
@@ -18,7 +19,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
     }
 
 
-    public override void Enter()
+    public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Walk state [ENTER]");
         enemy.currentCornerIndex = 1; // Начинаем со второй точки (индекс 1)
