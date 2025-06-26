@@ -37,6 +37,21 @@ public class Ammunition : Equipment
         base.Start();
     }
 
+
+    public override void EnteredIntoUnitInventory(Unit ownerInventory)
+    {
+        base.EnteredIntoUnitInventory(ownerInventory);
+        ownerUnit.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentage, true);
+        ownerUnit.ChangeUnitParametersAndPropertiesByAbsolute(increasingUnitParametersByAmmunitionAbsolute, true);
+    }
+    public override void ExitedFromUnitInventory(Unit ownerInventory)
+    {
+        base.EnteredIntoUnitInventory(ownerInventory);
+        ownerUnit.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentage, false);
+        ownerUnit.ChangeUnitParametersAndPropertiesByAbsolute(increasingUnitParametersByAmmunitionAbsolute, false);
+    }
+
+
     //--------------------------------------------------------- Прожимаемые абилки ---------------------------------------------------------//
 
     // ПОЛНОСТЬЮ ВСЁ ПОМЕНЯЛИ! Теперь всё активируемое снаряжение или снаряжение со специфической логикой находится в отдельных классах!!!
@@ -50,6 +65,6 @@ public class Ammunition : Equipment
 
 
 
- 
+
 
 }

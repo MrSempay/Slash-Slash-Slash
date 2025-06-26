@@ -20,7 +20,8 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт, назначается в здании при спавне
     [NonSerialized] public Vector3 startLocalPosition;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
-    [NonSerialized] public Player player; // НАДО БУДЕТ КАК-нибудь поменять на Unit onwer
+    [NonSerialized] public Unit ownerUnit; // если владелец кто-либо из юнитов
+    [NonSerialized] public IInventoryStatic ownerStatic; // если владелец что-нибудь статичное (здание, например)
     [NonSerialized] public int cost;
     [NonSerialized] public bool isEquipmentASpell;
     [NonSerialized] public string equipmentName;
@@ -38,6 +39,7 @@ public class Equipment : MonoBehaviour
     public float durationActiveState = -1; // -1 для бесконечного активного по времени состояния
     public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentageByCast = new Dictionary<string, float>();
     public event Action<string, int> ParametersOfEquipmentWasAssigned;   
+    public event Action<Equipment> OnEquipmentShouldBeActivate;   
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
 
@@ -141,7 +143,7 @@ public class Equipment : MonoBehaviour
     {
 
         transform = GetComponent<RectTransform>();
-        player = GameObject.Find("Player").GetComponent<Player>();
+        //player = GameObject.Find("Player").GetComponent<Player>();
         selfSprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         selfCollider = GetComponent<BoxCollider2D>();    
@@ -161,11 +163,13 @@ public class Equipment : MonoBehaviour
         whoCasted.OnCastAnimationFinished -= UnitCastAnimationFinished;
         whoCasted.OnCastAnimationPeacked -= UnitCastAnimationPeacked;
     }
-    public virtual void EnteredIntoInventory(Unit ownerInventory) { }
-    public virtual void ExitedFromInventory(Unit ownerInventory)
+    public virtual void EnteredIntoUnitInventory(Unit ownerInventory) { }
+    public virtual void ExitedFromUnitInventory(Unit ownerInventory)
     {
         Deactivate(ownerInventory);
     }
+    public virtual void EnteredIntoStaticInventory(IInventory ownerInventory) { }
+    public virtual void ExitedFromStaticInventory(IInventory ownerInventory) { }
 
     public virtual void Start()
     {
@@ -271,6 +275,10 @@ public class Equipment : MonoBehaviour
     public void StartCallDown()
     {
         StartCoroutine(CallDown());
+    }
+    public void EquipmentShouldBeActivate(Equipment equipment) // просто обёртка над сигналом, который долен вызываться, когда игрок нажимает на иконку снаряжения
+    {
+        OnEquipmentShouldBeActivate?.Invoke(equipment); // ну по сути equipment = this
     }
 
     IEnumerator CallDown() // по идее не должно быть ситуаций, когда данная корутина будет запускаться (но не работать! работать можно!) в здании (вне инвентаря героя)

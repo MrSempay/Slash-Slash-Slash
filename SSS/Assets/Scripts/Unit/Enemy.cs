@@ -12,7 +12,6 @@ public class Enemy : Unit
 
     [SerializeField] private Player player;
 
-    [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Transform playerTransform; // компонент Transform игрока (чтоб позицию его знать дл€ навигации)
     [NonSerialized] public NavMeshAgent agent; // навигационный агент врага (собственный)
     [NonSerialized] public LineRenderer lineRenderer; // ломанна€ дл€ визуализации пути
@@ -52,7 +51,7 @@ public class Enemy : Unit
         selfSprite = fuck.gameObject.GetComponent<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
         lineRenderer = GetComponent<LineRenderer>(); // ѕолучаем компонент LineRenderer
-        rb = GetComponent<Rigidbody2D>();
+
 
         Transform transformParametersBars = fuck.transform.Find("ParametersBars");
         if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;

@@ -64,7 +64,10 @@ public class ProtectiveField : Spell
     {
         if (isActivated)
         {
-            StartCallDown();
+            if (gameObject.activeSelf)  
+            {
+                StartCallDown();
+            }
 
 
 
@@ -136,7 +139,7 @@ public class ProtectiveField : Spell
         }
     }
 
-    public override void EnteredIntoInventory(Unit ownerInventory)
+    public override void EnteredIntoUnitInventory(Unit ownerInventory)
     {
         if (_transformParentProtectiveField == null)
         {
@@ -149,9 +152,9 @@ public class ProtectiveField : Spell
                                                                                                                        _biasPositionProtectionFieldFromOwner);
         }
     }
-    public override void ExitedFromInventory(Unit ownerInventory)
+    public override void ExitedFromUnitInventory(Unit ownerInventory)
     {
-        base.ExitedFromInventory(ownerInventory);
+        base.ExitedFromUnitInventory(ownerInventory);
 
         if (_transformParentProtectiveField != null)
         {

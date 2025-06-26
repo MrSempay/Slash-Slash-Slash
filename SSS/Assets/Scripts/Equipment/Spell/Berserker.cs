@@ -18,7 +18,7 @@ public class Berserker : Spell
         base.Start();
     }
 
-    public override void EnteredIntoInventory(Unit ownerInventory)
+    public override void EnteredIntoUnitInventory(Unit ownerInventory)
     {
         if (_transformParentBerserkerEyes == null)
         {
@@ -27,9 +27,9 @@ public class Berserker : Spell
                                                                                                                    _biasPositionBerserkerEyesFromOwner);
         }
     }
-    public override void ExitedFromInventory(Unit ownerInventory)
+    public override void ExitedFromUnitInventory(Unit ownerInventory)
     {
-        base.ExitedFromInventory(ownerInventory);
+        base.ExitedFromUnitInventory(ownerInventory);
 
         if (_transformParentBerserkerEyes != null)
         {

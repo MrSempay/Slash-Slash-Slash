@@ -13,6 +13,10 @@ public class FsmStateIdle : FsmStatePlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Idle state [ENTER]");
+
+        SubscribeForSignalActivationSomeEquipment();
+        player.OnTranslateEquipment += SomeTranslateEquipment;
+
         player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
         player.animator.Play("PlayerIdle");
     }
@@ -20,6 +24,9 @@ public class FsmStateIdle : FsmStatePlayer
     public override void Exit()
     {
         Debug.Log("Idle state [EXIT]");
+
+        UnsubscribeForSignalActivationSomeEquipment();
+        player.OnTranslateEquipment -= SomeTranslateEquipment;
     }
 
     public override void Update()

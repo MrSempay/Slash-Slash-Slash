@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static FsmStatePlayer;
+using static UnityEngine.Rendering.DebugUI;
 
 public class FsmStatePlayer : FsmStateUnit
 {
@@ -147,6 +150,31 @@ public class FsmStatePlayer : FsmStateUnit
     void Jump()
     {
         fsmPlayer.SetState<FsmStateJump>();
+    } 
+
+    public void SubscribeForSignalActivationSomeEquipment()
+    {
+        player.OnSomeEquipmentShouldBeActivate += SomeEquipmentShouldBeActivate;
+    }
+
+    public void UnsubscribeForSignalActivationSomeEquipment()
+    {
+        player.OnSomeEquipmentShouldBeActivate -= SomeEquipmentShouldBeActivate;
+    }
+
+    private void SomeEquipmentShouldBeActivate(Equipment equipment)
+    {
+        player._fsm.SetState<FsmStateCastUnit>(new Dictionary<string, object> { { "equipmentWhatWasPressed", equipment } });
+    }
+
+    public void SomeTranslateEquipment(bool isTranslating) // если честно, совершенно не ясно, на кой чёрт нам нужно вот это состояние: FsmStateTranslatingEquipment. Если мы хотим
+                                                           // хотим привязать его к перетаскиванию снаряжение, то, например, во время анимации каста, нам нельзя перетаскивать снаряжение,
+                                                           // иначе состояние каста прервётся. Есть смысл оставлять просто текущее состояние при перемещении снаряжения. Или пусть тогда
+                                                           // при клацании на снаряжение оно не переходит сразу в состояние Selected, а, если текущее состояние позволяет, игрок переходит
+                                                           // в FsmStateTranslatingEquipment и только тогда уже состояние снаряжения переводится в Selected
+    {
+        if (isTranslating) player._fsm.SetState<FsmStateTranslatingEquipment>();
+        else player._fsm.SetState<FsmStateIdle>();
     }
 
     public override void ChangeDirectionView(bool? lookingRight)

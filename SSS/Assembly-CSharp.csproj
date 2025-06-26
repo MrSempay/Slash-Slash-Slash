@@ -61,8 +61,8 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.37f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateCastPlayer.cs" />
     <Compile Include="Assets\Scripts\DebugExtension.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInventoryUnit.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustLevelParameters.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixedOneWay.cs" />
@@ -76,11 +76,13 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateTranslatingEquipment.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustScoreManagerParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInventory.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateDied.cs" />
     <Compile Include="Assets\Scripts\UI\TogglesGroup.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustSettingsParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateCastUnit.cs" />
     <Compile Include="Assets\Scripts\Building.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser\SceneDialogueBuild.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterChoseList.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\AttackArea.cs" />
     <Compile Include="Assets\Scripts\PlayFab\PlayFabManager.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInventoryStatic.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
     <Compile Include="Assets\Scripts\UI\CustomCombo.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
@@ -114,17 +117,21 @@
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\Wrapper.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentAtPlayer.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixed.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
     <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventory\InventoryStatic.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
     <Compile Include="Assets\Scripts\ScenarioScript\Level1Scenario.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentSelected.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell\ArcLightning.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingOpened.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentSelected.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\Move_Player.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponCategory.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateFallEnemy.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateFall.cs" />
@@ -141,12 +148,12 @@
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInventoryPlayer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser.cs" />
     <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\FloorDetector.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentAtPlayer.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\MovingCamera.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponInfo.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponType.cs" />
@@ -178,6 +185,7 @@
     <Compile Include="Assets\Scripts\Equipment\Ammunition.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\InventoryPlayer.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventory\InventoryUnit.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
     <Compile Include="Assets\Scripts\EventBus.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />

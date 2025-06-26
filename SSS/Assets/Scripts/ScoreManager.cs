@@ -197,13 +197,13 @@ public class ScoreManager : MonoBehaviour
     {
         if (isMasterOfSkillsReady)
         {
-            if (_player.playersSpells.Count < _player.countAvailableSpellPlaces) // бонус получаем только при максимально заполненном инвентаре заклинаний 
+            if (_player.Inventory.listSpellsInInventory.Count < _player.CountAvailableSpellPlaces) // бонус получаем только при максимально заполненном инвентаре заклинаний 
             {
                 return;
             }
 
             bool allSpellsInCD = true;
-            foreach (Spell spell in _player.playersSpells)
+            foreach (Spell spell in _player.Inventory.listSpellsInInventory)
             {
                 if (spell.isReady)
                 {
@@ -422,7 +422,7 @@ public class ScoreManager : MonoBehaviour
 
         AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
-        _prefubLeaderboard = Resources.Load<GameObject>(C.Paths.PrefabLeaderboard);
+        _prefubLeaderboard = Resources.Load<GameObject>(C.Paths.PrefubLeaderboard);
         prefubFieldLeaderboard = Resources.Load<FieldLeaderboard>(C.Paths.FieldLeaderboard);
 
         AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные для dictionaryPropertiesSprites

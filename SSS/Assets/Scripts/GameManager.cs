@@ -14,12 +14,13 @@ public class GameManager : MonoBehaviour
 
     private string _nameCurrentScene;
     private string _nameTargetScene;
-    private string _pathToFolderWithPrefubs = C.Paths.PrefabDialogueWindowForPlayer;
+    private string _pathToFolderWithPrefubs = C.Paths.PrefubDialogueWindowForPlayer;
     private GameObject _prefubPlayerDialogue;
     private LiftGammaGain _liftGammaGain;
 
     public GameObject prefubAppearingSprite;
     public CustomCombo prefubCustomCombo;
+    public PlaceForEquipment prefubPlaceForEquipment;
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
     public event DialogueStarted onDialogueStarted;         // экземляр(?) функции/сигнала(?)
@@ -155,8 +156,9 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
 
-        prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefabAppearingSprite);
+        prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefubAppearingSprite);
         prefubCustomCombo = Resources.Load<CustomCombo>(C.Paths.PrefubCustomCombo);
+        prefubPlaceForEquipment = Resources.Load<PlaceForEquipment>(C.Paths.PrefubPlaceForEquipment);
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager

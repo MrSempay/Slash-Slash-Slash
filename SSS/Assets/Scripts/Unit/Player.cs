@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.SocialPlatforms.Impl;
 using static ScoreManager;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Player : Unit
 {
@@ -35,14 +36,11 @@ public class Player : Unit
     
     public static Player instance;
 
-    [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
     [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
     [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
     [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
-    [NonSerialized] public int countAvailableSpellPlaces = 3; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
-    [NonSerialized] public int countAvailableAmmunitionPlaces = 3; // количество ячеек в инвентаре для аммуниции, пока что... просто константа и не влияет на их количество
 
     public RectTransform rectTransformPlaceCustomCombos;
     public InterstitialAds interstitialAds;
@@ -52,7 +50,7 @@ public class Player : Unit
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform UI; //
     public RankStyle rankStyle; //
-    public List<Spell> playersSpells = new(); // список заклинаний, доступных игроку в инвентаре 
+    //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
 
     public List<Enemy> nearEnemies = new();
@@ -71,10 +69,15 @@ public class Player : Unit
     public event Action<float> OnMoneyChanged;     // Событие для изменения денег
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
-    public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе 
+    public event Action<bool> OnTranslateEquipment;       // когда начали или окончили двигать снаряжение из мест для снаряжения
+    public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе  
     public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
     public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей для защиты
-            
+    public event Action<Equipment> OnSomeEquipmentShouldBeActivate;  // событие зачистки всей волны врагов без потери основных целей для защиты
+
+
+
+
 
     public float CurrentExperience
     {
@@ -153,18 +156,6 @@ public class Player : Unit
         }
     }
 
-    public bool IsTranslatingEquipment
-    {
-        get { return _isTranslatingEquipment; }
-        set
-        {
-            _isTranslatingEquipment = value;
-            if (value) _fsm.SetState<FsmStateTranslatingEquipment>();
-            else _fsm.SetState<FsmStateIdle>();
-
-        }
-    }
-
     public int CurrentStamina
     {
         get { return _currentStamina; }
@@ -221,10 +212,10 @@ public class Player : Unit
     }
 
     // здесь будем инициализировать те штуки, которые зависят и ссылаются на объект Player, и которые без него работать не смогут
-    private void InitializeDependencies()
+    public override void InitializeDependencies()
     {
+        base.InitializeDependencies();
         ScoreManager.Instance.Initialize(this);
-        InventoryPlayer.Instance.Initialize(this);
     }
 
     protected override void Awake()
@@ -235,7 +226,6 @@ public class Player : Unit
         nameOfUnit = "Player";
         base.Awake();
         CurrentStamina = staminaMax;
-        rb = GetComponent<Rigidbody2D>();
         selfSprite = GetComponent<SpriteRenderer>();
         _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
@@ -260,7 +250,7 @@ public class Player : Unit
         _fsm.AddState(new FsmStateJump(_fsm, gameObject));
         _fsm.AddState(new FsmStateFall(_fsm, gameObject));
         _fsm.AddState(new FsmStateDied(_fsm, gameObject));
-        _fsm.AddState(new FsmStateCastPlayer(_fsm, gameObject));
+        _fsm.AddState(new FsmStateCastUnit(_fsm, gameObject));
         _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
 
 
@@ -500,6 +490,15 @@ public class Player : Unit
     }
 
 
+    public void SomeEquipmentShouldBeActivate(Equipment equipment) // подписываем эту функцию в InventoryPlayer на прослушку снаряжения, которое попадают к нам в инвентарь. Отписываем при покидании инвентаря снаряжением
+    {
+        OnSomeEquipmentShouldBeActivate?.Invoke(equipment);
+    }
+
+    public void WrapOnTranslateEquipment(bool isTranslating)
+    {
+        OnTranslateEquipment?.Invoke(isTranslating);
+    }
 
     public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
@@ -509,7 +508,7 @@ public class Player : Unit
 
     public override void OnDestroy()
     {
-        Debug.Log("Ебля блядоносная");
+        //Debug.Log("Ебля блядоносная");
         base.OnDestroy();
         nearAreaDetector.isEnemyNear -= EnemyNear;
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);

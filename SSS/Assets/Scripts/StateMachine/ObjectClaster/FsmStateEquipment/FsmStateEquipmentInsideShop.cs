@@ -17,7 +17,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
         if (equipment.WasSold) // по идее это вызовется только при перемещении снаряжения из инвентаря героя в здание, иначе, если снаряжение просто спавнится в здании, WasSold равно false по умолчанию
         {
             equipment.WasSold = false; // предполагаем, что любое снаряжение, которое попадает в здание, помечается как "не продано"
-            InventoryPlayer.Instance.RemoveEquipmentFromInventory(equipment); 
+            equipment.ownerUnit.Inventory.RemoveEquipmentFromInventory(equipment); 
         }
         equipment.transform.localPosition = equipment.startLocalPosition;
         equipment.selfSprite.sortingOrder = 11; // ряд UI элементов могут быть над снаряжением, пока то в магазине

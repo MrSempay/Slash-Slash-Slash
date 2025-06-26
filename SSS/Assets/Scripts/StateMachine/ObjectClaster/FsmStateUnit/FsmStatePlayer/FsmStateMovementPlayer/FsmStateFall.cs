@@ -20,6 +20,9 @@ public class FsmStateFall : FsmStateMovementPlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Fall state [ENTER]");
+
+        SubscribeForSignalActivationSomeEquipment();
+
         player.animator.Play("PlayerFall");
 
         // animator.Play("fall");
@@ -28,6 +31,8 @@ public class FsmStateFall : FsmStateMovementPlayer
     public override void Exit()
     {
         Debug.Log("Fall state [EXIT]");
+
+        UnsubscribeForSignalActivationSomeEquipment();
     }
 
     public override void Update()

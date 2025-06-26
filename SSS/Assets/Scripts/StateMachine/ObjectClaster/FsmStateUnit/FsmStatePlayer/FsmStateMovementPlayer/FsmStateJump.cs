@@ -15,6 +15,9 @@ public class FsmStateJump : FsmStateMovementPlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Jump state [ENTER]");
+
+        SubscribeForSignalActivationSomeEquipment();
+
         player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);
         player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
         player.animator.Play("PlayerJump");
@@ -24,6 +27,8 @@ public class FsmStateJump : FsmStateMovementPlayer
     public override void Exit()
     {
         Debug.Log("Jump state [EXIT]");
+
+        UnsubscribeForSignalActivationSomeEquipment();
     }
 
 

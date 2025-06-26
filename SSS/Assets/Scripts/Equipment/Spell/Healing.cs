@@ -16,13 +16,13 @@ public class Healing : Spell
         base.Start();
     }
 
-    public override void EnteredIntoInventory(Unit ownerInventory)
+    public override void EnteredIntoUnitInventory(Unit ownerInventory) // хотя это ближе не к ownerInventory, а просто к inventory
     {
-        base.EnteredIntoInventory(ownerInventory);
+        base.EnteredIntoUnitInventory(ownerInventory);
     }
-    public override void ExitedFromInventory(Unit ownerInventory)
+    public override void ExitedFromUnitInventory(Unit ownerInventory)
     {
-        base.ExitedFromInventory(ownerInventory);
+        base.ExitedFromUnitInventory(ownerInventory);
     }
 
     public override void Cast(Unit whoCastedSpell)
@@ -32,7 +32,7 @@ public class Healing : Spell
 
     public override void Activate(Unit whoCastedSpell)
     {
-        base.Activate(whoCastedSpell);
+        base.Activate(whoCastedSpell); // хотя я вот думаю, что логику базового метода можно было бы вывести просто в отдельную функцию и вызывать её при надобности 
 
         if (!isActivated)
         {
@@ -44,7 +44,7 @@ public class Healing : Spell
     }
     public override void Deactivate(Unit whoCastedSpell)
     {
-        base.Activate(whoCastedSpell);
+        base.Activate(whoCastedSpell); // хотя я вот думаю, что логику базового метода можно было бы вывести просто в отдельную функцию и вызывать её при надобности
 
         if (isActivated)
         {
@@ -57,13 +57,13 @@ public class Healing : Spell
     public override void UnitCastAnimationPeackedForThisEquipment()
     {
         //Debug.Log("Hilim");
-        player.Heal(healthHealAmount); // Срочно!!! нужно менять!!! на owner !!!, я не могу более на это смотреть...
+        ownerUnit.Heal(healthHealAmount); // Срочно!!! нужно менять!!! на owner !!!, я не могу более на это смотреть...
     }
 
     public override void UnitCastAnimationFinishedForThisEquipment()
     {
         //Debug.Log("konchaem");
-        Deactivate(player); // AAAAAAAAA
+        Deactivate(ownerUnit); // AAAAAAAAA
     }
 
 }

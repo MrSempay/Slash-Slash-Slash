@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class FsmStateCastPlayer : FsmStatePlayer // пока что сделали так, что токмо после ПОЛНОГО ЗАВЕРШЕНИЯ АНИМАЦИИ КАСТА ПЕРСОНАЖА мы применяем какое-либо действие в плане активности
+public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо после ПОЛНОГО ЗАВЕРШЕНИЯ АНИМАЦИИ КАСТА ПЕРСОНАЖА мы применяем какое-либо действие в плане активности
 
                                                  // переделали, теперь хоть сразу при начале анимации (её может даже не быть) применяем активность, хоть после её окончания.
                                                  // по сути данное состояние нужно лишь для контроля передачи управления логикой самому снаряжению. Также детектим внешние раздражители,
@@ -11,7 +11,7 @@ public class FsmStateCastPlayer : FsmStatePlayer // пока что сделали так, что то
     public Equipment equipmentWhatWasPressed;
     public bool wasCastAnimationFinished = false;
 
-    public FsmStateCastPlayer(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
+    public FsmStateCastUnit(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
 
     }
@@ -27,24 +27,24 @@ public class FsmStateCastPlayer : FsmStatePlayer // пока что сделали так, что то
             equipmentWhatWasPressed = (Equipment) initialConditionsEntering["equipmentWhatWasPressed"]; // если ошибка тут, то либо передали не Equipment, либо вообще такого ключа нет в словаре
                                                                                                         // а сделано это потому, что кастомный класс не реализует IConvertable
 
-            player.OnCastAnimationFinished += CastAnimationFinished;
+            unit.OnCastAnimationFinished += CastAnimationFinished;
 
             //AdjustEquipmentParameters.CallActionFunctionByName(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.player);
             
             if (equipmentWhatWasPressed.shouldBeCastedAtStartUnitAnimation)
             {
-                AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.player, equipmentWhatWasPressed.Cast);
+                AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.ownerUnit, equipmentWhatWasPressed.Cast);
             }
 
-            if (StaticClassForAdditionalFunctions.AnimationExists(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast, player.animator))
+            if (StaticClassForAdditionalFunctions.AnimationExists(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast, unit.animator))
             {
-                player.animator.Play(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
-                player.rb.linearVelocityX = 0;
+                unit.animator.Play(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
+                unit.rb.linearVelocityX = 0;
             }
             else // кастуем мгновенно и уходим в состояние покоя
             {
                 wasCastAnimationFinished = true;
-                player._fsm.SetState<FsmStateIdle>();
+                unit._fsm.SetStateIdle(equipmentWhatWasPressed.ownerUnit);
             }
         }
         else
@@ -58,7 +58,7 @@ public class FsmStateCastPlayer : FsmStatePlayer // пока что сделали так, что то
     {
         Debug.Log("Player cast state [EXIT]");
 
-        player.OnCastAnimationFinished -= CastAnimationFinished;
+        unit.OnCastAnimationFinished -= CastAnimationFinished;
 
         if (!wasCastAnimationFinished && equipmentWhatWasPressed.shouldBeCastedAtStartUnitAnimation) // если каст был прерван, при этом какая-то логика была запущена (снаряжение было isActivated)
         {
@@ -69,17 +69,17 @@ public class FsmStateCastPlayer : FsmStatePlayer // пока что сделали так, что то
     }
     public void ExitBySomethingWrong()
     {
-        AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, 0, equipmentWhatWasPressed.player, equipmentWhatWasPressed.Deactivate);
+        AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, 0, equipmentWhatWasPressed.ownerUnit, equipmentWhatWasPressed.Deactivate);
     }
 
     private void CastAnimationFinished(string nameCastAnimation) // по идее, пока мы в этом состоянии, может закончиться анимация каста только текущего спела/предмета
     {
         if (!equipmentWhatWasPressed.shouldBeCastedAtStartUnitAnimation) // если анимация каста персонажа завершилась и активность должна примениться именно после этой анимации
         {
-            AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.player, equipmentWhatWasPressed.Cast);
+            AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.ownerUnit, equipmentWhatWasPressed.Cast);
         }
 
         wasCastAnimationFinished = true;
-        player._fsm.SetState<FsmStateIdle>();
+        unit._fsm.SetStateIdle(equipmentWhatWasPressed.ownerUnit);
     }
 }

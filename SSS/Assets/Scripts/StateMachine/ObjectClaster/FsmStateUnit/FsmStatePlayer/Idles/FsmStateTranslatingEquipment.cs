@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Translating Equipment state [ENTER]");
+
+        player.OnTranslateEquipment += SomeTranslateEquipment;
         player.animator.Play("PlayerIdle");
         player.rb.linearVelocityX = 0;
     }
@@ -20,5 +23,8 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
     public override void Exit()
     {
         Debug.Log("Translating Equipment state [EXIT]");
+
+        player.OnTranslateEquipment -= SomeTranslateEquipment;
     }
+
 }

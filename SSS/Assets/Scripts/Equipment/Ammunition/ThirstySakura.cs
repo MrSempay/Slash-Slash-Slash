@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class ThirstySakura : Ammunition
 {
 
-    public override void EnteredIntoInventory(Unit ownerInventory)
+    public override void EnteredIntoUnitInventory(Unit ownerInventory)
     {
         //Debug.Log("mda");
 
@@ -36,11 +36,11 @@ public class ThirstySakura : Ammunition
         scriptCustomCombo.AddMethodListenerToDictionary(this, upCombo); // теоретически можно перенести в Initialize. ’от€ нет, иногда нам нужно просто добавить новый объект дл€ инду
                                                                         // цировани€ изменени€ комбо при этом не создава€ его (например комбо одно, а его измен€ют несколько объектов)
     }
-    public override void ExitedFromInventory(Unit ownerInventory)
+    public override void ExitedFromUnitInventory(Unit ownerInventory)
     {
         //Debug.Log("mda");
 
-        base.ExitedFromInventory(ownerInventory);
+        base.ExitedFromUnitInventory(ownerInventory);
 
         foreach (RectTransform killCount in Player.instance.rectTransformPlaceCustomCombos)
         {

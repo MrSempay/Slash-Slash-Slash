@@ -344,7 +344,7 @@ public static class AdjustEquipmentParameters : object
     {
 
         if (!scriptEquipment.isActivated) // чтоб, если снаряжение уже активное (то есть было прожато в недавнем будущем), второй раз комбо не прибавлять
-                                          // (второй раз эффект активации всё равно не применить). Логика данного контроля также реализована в FsmStateEquipmentAtPlayer
+                                          // (второй раз эффект активации всё равно не применить). Логика данного контроля также реализована в FsmStateEquipmentAtUnit
         {
             ScoreManager.Instance.UpActionCombo(1, scriptEquipment.equipmentName);
             ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции

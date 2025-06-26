@@ -12,7 +12,7 @@ using static Unit;
 using static UnityEngine.EventSystems.EventTrigger;
 using static StaticClassForAdditionalFunctions;
 
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, IInventory
 {
 
 
@@ -22,6 +22,7 @@ public abstract class Unit : MonoBehaviour
 
     [NonSerialized] public SpriteRenderer selfSprite; // собственный спрайт
     [NonSerialized] public GameObject parametersBars;
+    [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
 
     public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
@@ -55,6 +56,58 @@ public abstract class Unit : MonoBehaviour
     public int comboFromKill = 1; // комбо за убийство юнита. По умолчанию 1. Подразумеваю, что с развитием (???) игры будут добавляться враги, за которых можно дать и по-больше
     public int scoreFromKill; // очки за убийство юнита
     public float experienceFromKill; // опыт за убийство юнита
+
+    #region Inventory interface
+
+    [SerializeField] private Inventory _inventory; // инвентарий героя, назначаем в инспекторе
+
+    [NonSerialized] public int _countAvailableSpellPlaces = 3; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+    [NonSerialized] public int _countAvailableAmmunitionPlaces = 3; // количество ячеек в инвентаре для аммуниции, пока что... просто константа и не влияет на их количество
+
+    public Inventory Inventory // назначаем _inventory в инспекторе
+    {
+        get { return _inventory; }
+        set
+        {
+            _inventory = value;
+        }
+    }
+    public Unit UnitSelf
+    {
+        get { return this; }
+    }
+    
+    public virtual Type TypeInventory
+    {
+        get { return typeof(IInventoryUnit); }
+    }
+
+    public int CountAvailableAmmunitionPlaces // пока что _countAvailableAmmunitionPlaces задали явно константой в этом скрипте, позже можно будет вынести в скрипт Adjust
+    {
+        get { return _countAvailableAmmunitionPlaces; }
+        set
+        {
+            _countAvailableAmmunitionPlaces = value;
+        }
+    }
+    public int CountAvailableSpellPlaces // пока что _countAvailableSpellPlaces задали явно константой в этом скрипте, позже можно будет вынести в скрипт Adjust
+    {
+        get { return _countAvailableSpellPlaces; }
+        set
+        {
+            _countAvailableSpellPlaces = value;
+        }
+    }
+    public bool IsStaticInventory
+    {
+        get { return false; }
+    }
+    public Transform Transform
+    {
+        get { return transform; }
+    }
+
+    #endregion
 
     public virtual float CurrentHealth
     {
@@ -96,6 +149,16 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
+
+
+    public virtual void InitializeDependencies()
+    {
+        if (Inventory != null)
+        {
+            Inventory.Initialize(this);
+        }
+    }
+
     protected virtual void Awake()
     {
 
@@ -113,6 +176,7 @@ public abstract class Unit : MonoBehaviour
         if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;
 
         selfSprite = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
         // при их создании. Вообще может было бы напрямую обращаться в таком случае к AdjustUnitParameters.GetParameter, но пока что оставим этот дубль словаря (хз зачем)
         /*healthMax = (float) unitParameters["Health"];
@@ -572,7 +636,7 @@ public abstract class Unit : MonoBehaviour
             // Уменьшаем оставшееся время
             _currentStuneTimeRemaining -= Time.deltaTime;
 
-            // Дополнительная проверка, если _currentStuneTimeRemaining случайно станет отрицательным
+            // Дополнительная проверка, если _currentStuneTimeRemaining случайно станет отрицательным 
             if (_currentStuneTimeRemaining < 0)
             {
                 _currentStuneTimeRemaining = 0;

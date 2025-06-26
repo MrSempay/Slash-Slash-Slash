@@ -23,6 +23,10 @@ public class Fsm
         {
             return;
         }
+        //if (StateCurrent?.GetType() == typeof(FsmStateTranslatingEquipment) && type == typeof(FsmStateCastUnit))
+        //{
+        //    return;
+        //}
 
         if (_states.TryGetValue(type, out var newState))
         {

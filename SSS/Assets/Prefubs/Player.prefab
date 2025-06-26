@@ -1116,6 +1116,7 @@ MonoBehaviour:
   nameOfUnit: 
   nameSoundGettingDamage: 
   isGrounded: 1
+  isInvicible: 0
   stunePlace: {fileID: 6915119074318247226}
   healthMax: 0
   jumpForce: 0
@@ -1128,6 +1129,7 @@ MonoBehaviour:
   comboFromKill: 1
   scoreFromKill: 0
   experienceFromKill: 0
+  _inventory: {fileID: 2022923937445141213}
   _currentIncreasingStamina: 0
   _countAccessToUpInSchool: 0
   _currentExperience: 0
@@ -1146,7 +1148,6 @@ MonoBehaviour:
   attackAreaTransform: {fileID: 671813874167989058}
   UI: {fileID: 1170272415049676526}
   rankStyle: {fileID: 949498140885088109}
-  playersSpells: []
   nearEnemies: []
   localPositionCamera: {x: 0, y: 0, z: 0}
   isEnemyNear: 0
@@ -1473,9 +1474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92433c4cc10bf748a7411cbc9f4e30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransformAmmunitionPanel: {fileID: 5582673636017912220}
-  _rectTransformSpellPanel: {fileID: 229638531191806766}
-  _prefubPlaceForEquipment: {fileID: 7098459443056449197, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+  rectTransformAmmunitionPanel: {fileID: 5582673636017912220}
+  rectTransformSpellPanel: {fileID: 229638531191806766}
   listSpellsInInventory: []
   listAmmunitionInInventory: []
 --- !u!1 &6182549297543639070

@@ -14,6 +14,10 @@ public class FsmStateWalk : FsmStateMovementPlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Walk state [ENTER]");
+
+        SubscribeForSignalActivationSomeEquipment();
+        player.OnTranslateEquipment += SomeTranslateEquipment;
+
         HandleSwipe(player.endTouchPosition - player.startTouchPosition); // по идее любой вход в данное состояние подразумевает, что свайп был сделан в состоянии покоя и мы
                                                                           // далее работает с полями объекта, которые уже были изменены в ходе этого свайпа. Далее в FixedUpdate
                                                                           // мы мониторим факт дальнеших свайпов
@@ -30,6 +34,9 @@ public class FsmStateWalk : FsmStateMovementPlayer
     public override void Exit()
     {
         Debug.Log("Walk state [EXIT]");
+
+        UnsubscribeForSignalActivationSomeEquipment();
+        player.OnTranslateEquipment -= SomeTranslateEquipment;
     }
 
     public override void Update()

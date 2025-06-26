@@ -175,11 +175,12 @@ public class C
         public const string FolderImagesForRankStyles = "Images/UI/RankStyle/";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefabDialogueWindowForPlayer = "Prefabs/UI/DialogueWindowForPlayer";
-        public const string PrefabAppearingSprite = "Prefabs/AppearingSprite";
-        public const string PrefubCustomCombo = "Prefabs/UI/CustomCombo";
-        public const string PrefabLeaderboard = "Prefabs/UI/Leaderboard";
-        public const string FieldLeaderboard = "Prefabs/UI/FieldLeaderboard";
+        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayer";
+        public const string PrefubAppearingSprite = "Prefubs/AppearingSprite";
+        public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
+        public const string PrefubLeaderboard = "Prefubs/UI/Leaderboard";
+        public const string PrefubPlaceForEquipment = "Prefubs/UI/PlaceForEquipment"; 
+        public const string FieldLeaderboard = "Prefubs/UI/FieldLeaderboard";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
         public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";
