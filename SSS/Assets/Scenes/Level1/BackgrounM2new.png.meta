@@ -1,0 +1,846 @@
+fileFormatVersion: 2
+guid: b78216f4fa5a8284b81fb2dcfc580a8a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4193235992025293589
+    second: BackgrounM2new_0
+  - first:
+      213: 2559427870617729472
+    second: BackgrounM2new_1
+  - first:
+      213: -6044187500484907583
+    second: BackgrounM2new_2
+  - first:
+      213: -6548659686949024527
+    second: BackgrounM2new_3
+  - first:
+      213: -6792392508470479762
+    second: BackgrounM2new_4
+  - first:
+      213: -6901641547692637868
+    second: BackgrounM2new_5
+  - first:
+      213: 3953941697180836496
+    second: BackgrounM2new_6
+  - first:
+      213: 2065150412873925623
+    second: BackgrounM2new_7
+  - first:
+      213: 6843582589726540309
+    second: BackgrounM2new_8
+  - first:
+      213: -1617087915311373856
+    second: BackgrounM2new_9
+  - first:
+      213: -3526587448128417883
+    second: BackgrounM2new_10
+  - first:
+      213: -5318838267151935988
+    second: BackgrounM2new_11
+  - first:
+      213: 4645676264579845653
+    second: BackgrounM2new_12
+  - first:
+      213: 2576641323965150455
+    second: BackgrounM2new_13
+  - first:
+      213: 8831600120625785781
+    second: BackgrounM2new_14
+  - first:
+      213: 3318921371514475886
+    second: BackgrounM2new_15
+  - first:
+      213: 5061017356788275749
+    second: BackgrounM2new_16
+  - first:
+      213: 5985626948397720235
+    second: BackgrounM2new_17
+  - first:
+      213: -7313199573981258353
+    second: BackgrounM2new_18
+  - first:
+      213: 6641360040970938845
+    second: BackgrounM2new_19
+  - first:
+      213: 7260225952933978049
+    second: BackgrounM2new_20
+  - first:
+      213: 263286161213302243
+    second: BackgrounM2new_21
+  - first:
+      213: -5455735792289099911
+    second: BackgrounM2new_22
+  - first:
+      213: -7097289710417297645
+    second: BackgrounM2new_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BackgrounM2new_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 133
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 513ec040bed513a30800000000000000
+      internalID: 4193235992025293589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 133
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c97760861ae48320800000000000000
+      internalID: 2559427870617729472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_2
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 133
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cdadb5ed7bbe1ca0800000000000000
+      internalID: -6044187500484907583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_3
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 125
+        width: 32
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fc8b7406bc7e15a0800000000000000
+      internalID: -6548659686949024527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 116
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e64b79d40039cb1a0800000000000000
+      internalID: -6792392508470479762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_5
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 108
+        width: 3
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45104be24917830a0800000000000000
+      internalID: -6901641547692637868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_6
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 101
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 092a11356093fd630800000000000000
+      internalID: 3953941697180836496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_7
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 101
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f30a1fdb53e8ac10800000000000000
+      internalID: 2065150412873925623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_8
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 108
+        width: 14
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512c2b34b1a49fe50800000000000000
+      internalID: 6843582589726540309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_9
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 94
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1e945db13fe89e0800000000000000
+      internalID: -1617087915311373856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_10
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 85
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5af44fc866b0f0fc0800000000000000
+      internalID: -3526587448128417883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_11
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 94
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0697a4c6c0bf26b0800000000000000
+      internalID: -5318838267151935988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_12
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 81
+        width: 47
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51eceb3e2f1c87040800000000000000
+      internalID: 4645676264579845653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_13
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 85
+        width: 15
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4f88ce1a112c320800000000000000
+      internalID: 2576641323965150455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_14
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 85
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bb62349485209a70800000000000000
+      internalID: 8831600120625785781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_15
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 53
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e65929a276d2f0e20800000000000000
+      internalID: 3318921371514475886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_17
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 69
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba260411ff7311350800000000000000
+      internalID: 5985626948397720235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_18
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 59
+        width: 45
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8d1f450cbb428a90800000000000000
+      internalID: -7313199573981258353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_19
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 32
+        width: 57
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd9eb8315c9da2c50800000000000000
+      internalID: 6641360040970938845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_20
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 37
+        width: 41
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cf93b1b90181c460800000000000000
+      internalID: 7260225952933978049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_21
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1
+        width: 14
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e525616e5167a300800000000000000
+      internalID: 263286161213302243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_22
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 1
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97f4930e3355944b0800000000000000
+      internalID: -5455735792289099911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_23
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 5
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31fba868c9c518d90800000000000000
+      internalID: -7097289710417297645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_16
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 108
+        width: 2
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f7e120b8e75a514683bf3d14a7d4fc2
+      internalID: 5061017356788275749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_24
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 108
+        width: 2
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cd6da12a70dd6b44b50435db6fb78dc
+      internalID: 866217700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_25
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 108
+        width: 2
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b2ea26e4c27ca242a196b8a7a851eda
+      internalID: -1097491638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_26
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 32
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33badade0a423bf4482645819eae8834
+      internalID: -1165846678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackgrounM2new_27
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 32
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 876f7aea7f8797141ada90c4f3d595f6
+      internalID: 1331710757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0d34a6dea2ce4b94ab6333cbc29d6dca
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BackgrounM2new_0: 4193235992025293589
+      BackgrounM2new_1: 2559427870617729472
+      BackgrounM2new_10: -3526587448128417883
+      BackgrounM2new_11: -5318838267151935988
+      BackgrounM2new_12: 4645676264579845653
+      BackgrounM2new_13: 2576641323965150455
+      BackgrounM2new_14: 8831600120625785781
+      BackgrounM2new_15: 3318921371514475886
+      BackgrounM2new_16: 5061017356788275749
+      BackgrounM2new_17: 5985626948397720235
+      BackgrounM2new_18: -7313199573981258353
+      BackgrounM2new_19: 6641360040970938845
+      BackgrounM2new_2: -6044187500484907583
+      BackgrounM2new_20: 7260225952933978049
+      BackgrounM2new_21: 263286161213302243
+      BackgrounM2new_22: -5455735792289099911
+      BackgrounM2new_23: -7097289710417297645
+      BackgrounM2new_24: 866217700
+      BackgrounM2new_25: -1097491638
+      BackgrounM2new_26: -1165846678
+      BackgrounM2new_27: 1331710757
+      BackgrounM2new_3: -6548659686949024527
+      BackgrounM2new_4: -6792392508470479762
+      BackgrounM2new_5: -6901641547692637868
+      BackgrounM2new_6: 3953941697180836496
+      BackgrounM2new_7: 2065150412873925623
+      BackgrounM2new_8: 6843582589726540309
+      BackgrounM2new_9: -1617087915311373856
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
