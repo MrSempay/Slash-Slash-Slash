@@ -11,6 +11,7 @@ public class Building : MonoBehaviour
     private Coroutine _coroutineUpdateAssortimentInBuilding;
     private bool _isAroundBuilding = false;
 
+    [SerializeField] private Door _selfDoor;
 
     [NonSerialized] public string nameTargetEquipmentPanelPlayer;
     [NonSerialized] public float timeForUpdateAssortiment;
@@ -55,9 +56,12 @@ public class Building : MonoBehaviour
         rectTransformTargetEquipmentPanelPlayer = GameObject.Find(nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
         entirePanel = transform.Find("EntirePanel").gameObject; 
         buttonEnter = transform.Find("CanvasButtonEnter").gameObject;
+        //Debug.Log("ћџ “””””””””””””“ " + Quaternion.identity);
+        _selfDoor.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
+        buttonEnter.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
+        entirePanel.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
 
-  
-        
+
 
         _fsm = new Fsm();
 
@@ -88,12 +92,12 @@ public class Building : MonoBehaviour
     // зона дл€ активации кнопки входа в здание
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = true; }
+        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = true; } // убрали в рамках расстановки снар€жени€ на полу...
         if (other.gameObject.CompareTag("Enemy")) { _fsm.SetState<FsmStateBuildingDestroyed>(); } 
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = false; }
+        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = false; } // убрали в рамках расстановки снар€жени€ на полу...
     }
 
 

@@ -10,7 +10,7 @@ public class C
     {
         // названия зданий
 
-        public const string School = "School";
+        public const string School = "School"; 
         public const string Treasury = "Treasury";
 
         // параметры зданий
@@ -82,6 +82,7 @@ public class C
         // названия заклинаний
 
         public const string ProtectiveField = "ProtectiveField";
+        public const string ArcLightning = "ArcLightning";
         public const string Berserker = "Berserker";
         public const string Healing = "Healing";
 
@@ -150,6 +151,8 @@ public class C
     {
         public const string SceneDialogue = "SceneDialogue";
         public const string Level1 = "Level1";
+        public const string Level2 = "Level2";
+        public const string Level5 = "Level5";
         public const string SampleScene = "SampleScene";
         public const string MainMenu = "MainMenu";
     }
@@ -166,12 +169,14 @@ public class C
         public const string Disappear = "Disappear";
         public const string Cast = "Cast";
         public const string Peak = "Peak";
+        public const string Disabled = "Disabled";
 
     }
     public static class Paths
     {
         public const string FolderImagesForSpells = "Images/Spells/";
         public const string FolderImagesForAmmunition = "Images/Ammunition/";
+        public const string FolderBWImagesForAmmunition = "Images/Ammunition/AmmunitionBW/";
         public const string FolderImagesForRankStyles = "Images/UI/RankStyle/";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
@@ -180,6 +185,8 @@ public class C
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
         public const string PrefubLeaderboard = "Prefubs/UI/Leaderboard";
         public const string PrefubPlaceForEquipment = "Prefubs/UI/PlaceForEquipment"; 
+        public const string PrefubAmmunition = "Prefubs/Ammunition"; 
+        public const string PrefubSpell = "Prefubs/Spell"; 
         public const string FieldLeaderboard = "Prefubs/UI/FieldLeaderboard";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
         public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
@@ -192,9 +199,21 @@ public class C
         public const string Stune = "Stune";
     }
 
+    public static class NamesSpawningObjects
+    {
+        public const string Stune = "Stune";
+        public const string RandomTargetForSplit = "RandomTargetForSplit";
+        public const string BoxSplitTargetPointsForEnemies = "BoxSplitTargetPointsForEnemies";
+    }
+
     public static class AppSprite
     {
         public const string BerserkerEyes = "BerserkerEyes";
+    }
+    public static class Dilogues
+    {
+        public const string DialogueStart = "DialogueStart";
+        public const string DialogueFinish = "DialogueFinish";
     }
 
 }

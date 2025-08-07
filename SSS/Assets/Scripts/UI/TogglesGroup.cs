@@ -38,7 +38,7 @@ public class TogglesGroup : MonoBehaviour, IControlLifeCicleFunctions
     // параметры уже в зависимости от того, какой именно тумблер был вжат
     public void InvokeGroupFunction(ToggleFixed scriptToggle)
     {
-        ENUM foundLanguage;
+        LANGUAGE foundLanguage;
         string nameToggle = scriptToggle.selfName;
         object[] parameters = null;
 

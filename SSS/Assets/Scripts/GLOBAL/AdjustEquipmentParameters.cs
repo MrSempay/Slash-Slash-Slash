@@ -14,10 +14,22 @@ public static class AdjustEquipmentParameters : object
             { C.DK.timeCallDown, 5f },
             { C.DK.amountUpCombo, 10 },
             { C.DK.amountBlockingAttackMax, 5 },
-            { C.DK.shouldBeCastedAtStartUnitAnimation, false },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, false }, // Вроде как разобрался: этот параметр отвечает за то, будет ли сразу при старте каста (анимации) активирована функция Cast и,
+                                                                // как следствие, Activate. Если true, то дальнейшее управление ходом сотворения заклинания (реакции на анимацию) передаётся
+                                                                // самому Spell, именно там в функции Activate устанавливается прослушка сигналов о пике и окочании анимации. Если же false,
+                                                                // то функция Cast (и Activate) будет вызвана только после окончания анимации, до этого момента сам Spell не может ни на 
+                                                                // что реагировать. Вообщем данный параметр определяет, кому и на каком этапе будет передано управление сотворения каста.
             { C.DK.durationActiveState, -1f },
         } },
-        { C.DK.Berserker, new Dictionary<string, object>() {
+        { C.DK.ArcLightning, new Dictionary<string, object>() {
+            { C.DK.equipmentName, C.DK.ArcLightning },
+            { C.DK.cost, 0 },
+            { C.DK.damage, 50 },
+            { C.DK.timeCallDown, 5f },
+            { C.DK.amountUpCombo, 10 },
+            { C.DK.shouldBeCastedAtStartUnitAnimation, true },
+        } },
+        { C.DK.Berserker, new Dictionary<string, object>() { 
             { C.DK.equipmentName, C.DK.Berserker },
             { C.DK.cost, 0 },
             { C.DK.timeCallDown, 5f },
@@ -66,7 +78,7 @@ public static class AdjustEquipmentParameters : object
     {
         public string equipmentCategory; // например Weapon, Armor и т.п
         public string equipmentRarityType; // например Standart, Rare и т.п
-        public float chance;    // Вероятность выпадения (в процентах)
+        public float chance;    // Вероятность выпадения (в процентах).
     }
 
     public static List<EquipmentChance> allEquipmentTypesAndCategoriesChance = new List<EquipmentChance>() { 
@@ -98,19 +110,19 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.Spear, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, -15f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, -15f }, { C.DK.jumpForce, 5 } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.Knife, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, -50f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, 50f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, 50f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.Axe, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 25f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandartAttackPercentage, 5f }, { C.DK.CurrentIncreasingStamina, -20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandartAttackPercentage, 5f }, { C.DK.CurrentIncreasingStamina, -20f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.Sword, new Dictionary<string, object>()

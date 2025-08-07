@@ -22,6 +22,8 @@ public class FsmStateDiedEnemy : FsmStateEnemy
         enemy.StopAllCoroutines();
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
 
+        GameManager.DestroyObject(enemy.temporaryTargetForRazbrestis);
+
     }
 
     public override void Exit()

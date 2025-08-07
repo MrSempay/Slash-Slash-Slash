@@ -41,7 +41,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
         timeElapsed += Time.fixedDeltaTime;
 
         // Рассчитываем мгновенную скорость
-        velocity = gravity * timeElapsed;
+        velocity = gravity * timeElapsed * enemy.rb.mass;
 
         enemy.rb.linearVelocityY = -velocity;
         CalculateDrawPathChangeDirectionAndMove();
@@ -59,7 +59,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
 
     private void SetStateIdleOrWalk()
     {
-        if (enemy.currentTargetTransform != null)
+        if (enemy.CurrentTargetTransform != null)
         {
             fsm.SetState<FsmStateWalkEnemy>();
             return;

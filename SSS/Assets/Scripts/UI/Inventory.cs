@@ -11,9 +11,9 @@ public class Inventory : MonoBehaviour
     protected float widthSpaceForPlaceForEquipment = 1.33f;
     protected new RectTransform transform;
 
-    [SerializeField] protected RectTransform rectTransformAmmunitionPanel;
-    [SerializeField] protected RectTransform rectTransformSpellPanel;
 
+    public RectTransform rectTransformAmmunitionPanel;
+    public RectTransform rectTransformSpellPanel;
     public List<Spell> listSpellsInInventory = new();
     public List<Ammunition> listAmmunitionInInventory = new();
 
@@ -46,19 +46,24 @@ public class Inventory : MonoBehaviour
                                                              rectTransformSpellPanel.sizeDelta.y);
         }
 
-        for (int i = 0; i < amountAmmunitionSlotsInInventory; i++)
-        {
-            PlaceForEquipment scriptPlaceForEquipment = Instantiate(GameManager.Instance.prefubPlaceForEquipment, rectTransformAmmunitionPanel);
-            scriptPlaceForEquipment.inventory = this;
-        }
-        for (int i = 0; i < amountSpellSlotsInInventory; i++)
-        {
-            PlaceForEquipment scriptPlaceForEquipment = Instantiate(GameManager.Instance.prefubPlaceForEquipment, rectTransformSpellPanel);
-            scriptPlaceForEquipment.inventory = this;
-        }
+        InstantiatePlacesForEquipment(rectTransformAmmunitionPanel, amountAmmunitionSlotsInInventory);
 
+        InstantiatePlacesForEquipment(rectTransformSpellPanel, amountSpellSlotsInInventory);
     }
 
+    private void InstantiatePlacesForEquipment(RectTransform rectTransformEquipmentPanel, int amountPlaces)
+    {
+        for (int i = 0; i < amountPlaces; i++)
+        {
+            PlaceForEquipment scriptPlaceForEquipment = Instantiate(GameManager.Instance.prefubPlaceForEquipment, rectTransformEquipmentPanel);
+            scriptPlaceForEquipment.inventory = this;
+            if (unitSelf)
+            {
+                //Debug.Log("sadasdasdas");
+                scriptPlaceForEquipment.isBuildingPlace = false;
+            }
+        }
+    }
 
     public virtual bool SetEquipmentToInventory(Equipment equipment)
     {
@@ -86,7 +91,7 @@ public class Inventory : MonoBehaviour
                 return false;
             }
         }
-        Debug.Log(infoAboutInventory.IsStaticInventory);
+        //Debug.Log(infoAboutInventory.IsStaticInventory);
         if (infoAboutInventory.IsStaticInventory)
         {
             equipment.EnteredIntoStaticInventory(infoAboutInventory); // впрочем, вот это явное приведение можно было бы вынести в дочерние классы, ну да ладно

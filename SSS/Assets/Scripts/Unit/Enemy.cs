@@ -6,25 +6,30 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using static UnityEngine.EventSystems.EventTrigger;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Enemy : Unit
 {
 
+    [SerializeField] private Transform _currentTargetTransform; // временно [SerializeField]
     [SerializeField] private Player player;
 
     [NonSerialized] public Transform playerTransform; // компонент Transform игрока (чтоб позицию его знать дл€ навигации)
     [NonSerialized] public NavMeshAgent agent; // навигационный агент врага (собственный)
     [NonSerialized] public LineRenderer lineRenderer; // ломанна€ дл€ визуализации пути
     [NonSerialized] public Vector2 nextPointInPath; // “екуща€ целева€ позици€ (втора€ точка в пути)
-    [NonSerialized] public Transform currentTargetTransform; // “екуща€ целева€ позици€ (втора€ точка в пути)
     [NonSerialized] public float arrivalThreshold = 0.1f; // –ассто€ние, при котором считаем, что достигли цели
     [NonSerialized] public float callDownMeleeAttack;
     [NonSerialized] public int currentCornerIndex; // »ндекс текущего угла в пути
     [NonSerialized] public bool isPathValid; // ‘лаг, указывающий, что путь валиден
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. “ребуетс€ лишь дл€ отладки
+    [NonSerialized] public GameObject temporaryTargetForRazbrestis;
+
 
 
     public CapsuleCollider2D selfEnemyCollider;
+    public IMainTarget currentMainTarget;
+    public List<Transform> transformTargets;
     public FuckingBuggingRotationForBody fuck;
     public bool isInstancedByLevel = false; // ‘лаг, указывающий, что враг был заспавнен скриптом спавна на уроне, а не добавлен на сцену вручную
     public bool isTriggered = false; // ‘лаг, указывающий, что враг затриггерен
@@ -36,9 +41,23 @@ public class Enemy : Unit
     public FloorDetector scriptFloorDetector; // —сылка на скрипт детектора пола
     public AttackArea attackAreaScript; // —крипт зоны дл€ атаки
     public List<Unit> listOfUnitsInAttackArea = new List<Unit>();
+    public bool isInRazbrestisState = false; // измен€ть “ќЋ№ ќ ¬ FsmStateEnemy !!!
 
 
 
+    public Transform CurrentTargetTransform // “екуща€ целева€ позици€ (втора€ точка в пути)
+    {
+        get { return _currentTargetTransform; }
+        set
+        {
+            _currentTargetTransform = value;
+            if (!isInRazbrestisState)
+            {
+                currentMainTarget = value.GetComponent<IMainTarget>();
+                
+            }
+        }
+    }
 
 
 
@@ -63,12 +82,15 @@ public class Enemy : Unit
 
             if (selfEnemyCollider != null && playerCollider != null)
             {
+                //Debug.Log("»»»»»»»»√√√√√√√√ЌЌЌЌЌЌЌЌЌЌќќќќќќќќќќ––––––––––»»»»»»ћћћћћћћћћћћћћћћћ");
                 Physics2D.IgnoreCollision(selfEnemyCollider, playerCollider);
             }
         }
 
 
-        attackAreaScript.isPlayerOrAlliesInAttackArea += PlayerOrAlliesInAttackArea;
+        attackAreaScript.isPlayerOrAlliesInAttackArea += PlayerOrAlliesInAttackArea; // насколько € понимаю, зона атаки будет детектить и вхождение врагов в эту зону, но суть в том, что
+                                                                                     // сами враги подписаны на прослушивание только сигнала вхождени€ игрока в зону, поэтому враги дл€ врагов
+                                                                                     // игнорируютс€
         triggerAreaScript.OnPlayerEnteredTriggerArea += FollowPlayer;
         // просто заглушка, что если мы сами заспавним врага на уровень, то по умолчанию у него цель будет игрок
 
@@ -93,7 +115,7 @@ public class Enemy : Unit
        // заход в первое состо€ние выполн€лс€ с не актуальными значени€ми р€да полей.
         if (!isInstancedByLevel)
         {
-            currentTargetTransform = playerTransform;
+            CurrentTargetTransform = playerTransform;
             _fsm.SetState<FsmStateIdleEnemy>();
             return;
         }
@@ -144,7 +166,10 @@ public class Enemy : Unit
     {
         // ≈сли мы в состо€нии поко€, переходим в режим погони. ¬ любом случае ставим целью игрока, предыдущие цели нас более не волнуют
         if (_fsm.StateCurrent?.GetType() == typeof(FsmStateIdleEnemy)) _fsm.SetState<FsmStateWalkEnemy>();
-        currentTargetTransform = playerTransform;
+        CurrentTargetTransform = playerTransform;
+        currentMainTarget = CurrentTargetTransform.GetComponent<IMainTarget>();
+        temporaryTargetForRazbrestis = null;
+        isInRazbrestisState = false;
     }
 
 

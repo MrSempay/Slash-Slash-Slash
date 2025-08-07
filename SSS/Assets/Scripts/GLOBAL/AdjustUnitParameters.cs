@@ -43,10 +43,10 @@ public static class AdjustUnitParameters
                 { C.DK.healthMax, 25 },
                 { C.DK.DamageReductionPercentage, 0 },
                 { C.DK.speed, 8 },
-                { C.DK.stuneChanceByStandartAttackPercentage, 50 }, 
+                { C.DK.stuneChanceByStandartAttackPercentage, 10 }, 
                 { C.DK.evasionPercentage, 0 }, 
                 { C.DK.timeStuneByStanartAttack, 2 },
-                { C.DK.jumpForce, 14 },
+                { C.DK.jumpForce, 75 }, // 14 при массе 1
                 { C.DK.moneyFromKill, 50 },
                 { C.DK.experienceFromKill, 20 },
                 { C.DK.scoreFromKill, 50 },

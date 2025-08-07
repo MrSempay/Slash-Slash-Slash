@@ -11,7 +11,7 @@ using static StaticClassForAdditionalFunctions;
 public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunctions
 {
     private string _currentTextValue;
-    private ENUM _currentValue;
+    private LANGUAGE _currentValue;
     private string _nameInvokingFunction;
 
     [SerializeField] private TextEdit _textButton;
@@ -19,7 +19,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     [NonSerialized] public int _indexCurrentString = 0;
 
     public string _baseStringOfText;
-    public List<ENUM> listChosing;
+    public List<LANGUAGE> listChosing;
     public string selfName;
 
     public bool awakeWasCalledAlready { get; set; }
@@ -35,7 +35,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         }
     }
 
-    public ENUM CurrentValue
+    public LANGUAGE CurrentValue
     {
         get { return _currentValue; }
         set

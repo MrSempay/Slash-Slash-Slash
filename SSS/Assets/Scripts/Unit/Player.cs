@@ -8,7 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 using static ScoreManager;
 using static UnityEngine.Rendering.DebugUI;
 
-public class Player : Unit
+public class Player : Unit, IMainTarget
 {
 
     private Coroutine _zeroizeKillComboTicksCoroutine;
@@ -56,6 +56,7 @@ public class Player : Unit
     public List<Enemy> nearEnemies = new();
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
+    public static bool isTransitingEquipment = false; // флаг, идентифицирующий, переносим ли мы сейчас какое-либо снаряжение
     public bool wasEnemyDamagedByLastSwipe; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
     public Camera mainCamera; // Ссылка на камеру
@@ -76,7 +77,25 @@ public class Player : Unit
     public event Action<Equipment> OnSomeEquipmentShouldBeActivate;  // событие зачистки всей волны врагов без потери основных целей для защиты
 
 
+    # region IMainTarget
 
+    private bool _wasDestroyed;
+
+    [SerializeField] private bool _isMainTarget = true;
+
+    public bool WasDestroyed { get { return _wasDestroyed; } set { _wasDestroyed = value; } }
+    public bool IsMainTarget { get { return _isMainTarget; } set { _isMainTarget = value; } }
+    public Transform targetTransform { get { return transform; } }
+
+    public void SetLikeAMainTarget()
+    {
+        if (IsMainTarget)
+        {
+            LevelBuilder.instance.listMainTargets.Add(this);
+        }
+    }
+
+    #endregion
 
 
     public float CurrentExperience
@@ -188,7 +207,7 @@ public class Player : Unit
         set
         {
             _currentIncreasingStamina = value;
-            int increasingStamina = Mathf.RoundToInt(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]) * (value/100));
+            int increasingStamina = Mathf.RoundToInt(Convert.ToSingle(baseParametersValues[C.DK.staminaMax]) * (value/100)); //0.3
             staminaMax = Convert.ToInt32(baseParametersValues[C.DK.staminaMax]) + increasingStamina;
             CurrentStamina += increasingStamina;
         }
@@ -220,7 +239,6 @@ public class Player : Unit
 
     protected override void Awake()
     {
-
         // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM 
         instance = this;
         nameOfUnit = "Player";
@@ -257,9 +275,15 @@ public class Player : Unit
     }
     protected override void Start()
     {
-        //texxt.Text = "Greeting";
-        base.Start();
+        Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
+        Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
+        Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
+        School.SpawnParticularSpell(C.DK.ArcLightning, this);
+        School.SpawnParticularSpell(C.DK.ProtectiveField, this);
         
+        base.Start();
+        SetLikeAMainTarget(); 
+
         _fsm.SetState<FsmStateIdle>();
     }
 

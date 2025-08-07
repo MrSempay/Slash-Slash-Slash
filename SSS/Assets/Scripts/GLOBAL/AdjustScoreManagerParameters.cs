@@ -12,11 +12,12 @@ public class AdjustScoreManagerParameters
         { "timeForAddSecondsForZeroizeKillComboTicks", 60f }, // время, через которое ко времени сбрасывания комбо за убийства прибавляется secondsAdditionalForZeroizeKillComboTicksByTimer. Секунды
         { "timeZeroizeActionComboTicks", 2f }, // время, через которое сбрасывается детекция комбо за спелы/активности. Секунды
         { "timeBlockActionCombo", 5f }, // время КД для комбо по скилам/активностям. Секунды
-        { "multiplayerActionCombo", 10f }, // дополнительное комбо к основному комбо, за единицу комбо спелов/активностей
+        { "multiplayerActionCombo", 20f }, // дополнительное комбо к основному комбо, за единицу комбо спелов/активностей
         { "thresholdAmountInvalidActionsForStopCombo", 3 }, // номер! неправильной активности/спела прожатых подряд, при котором комбо спелов сбросится и уйдёт на КД (то есть на третье действие)
         { "clastersSynergisticActions", new List<List<string>>() // список цепочек синнергирующих активностей (по названиям спелов/активных предметов). Для простой атаки указать: ""
             {
-                new List<string> { "SomeSpell1", "SomeSpell2", "SomeSpell3" }
+                //                    10+20          10+40       10+60
+                new List<string> { "SomeSpell1", "SomeSpell2", "SomeSpell3" },
             } },        
         { "amountUpKomboMasterOfSkills", 1000 }, // количество дополнительного основного комбо за получение ачивки MasterOfSkills
         { "timeCallDownMasterOfSkills", 10f },  // время КД ачивки MasterOfSkills. Секунды

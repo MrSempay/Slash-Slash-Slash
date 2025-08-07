@@ -2,15 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Equipment;
-using static ScoreManager;
-using static AdjustEquipmentParameters;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.UI;
 
 public class Equipment : MonoBehaviour
 {
     private Building _buildingWhereEquipmentIs; // здание, в котором находится снаряжение
-    private bool _wasSold = false; // по умолчанию считаем, что все предметы находятся у продавца (в здании)
+    private bool _wasSold = false; // по умолчанию считаем, что все предметы находятся у продавца (в здании) 
+    private Image _callDownIcon; // иконка для анимации таймера КД.
+    private Coroutine _callDownCoroutine; // иконка для анимации таймера КД.
+    private Coroutine _callDownAnimationCoroutine; // иконка для анимации таймера КД.
+    private bool _startWasCalledAlready = false; // иконка для анимации таймера КД.
+    private bool _awakeWasCalledAlready = false; // иконка для анимации таймера КД.
+    public Animator mdaaa;
 
 
     [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
@@ -38,12 +41,12 @@ public class Equipment : MonoBehaviour
     public float timeCallDown;
     public float durationActiveState = -1; // -1 для бесконечного активного по времени состояния
     public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentageByCast = new Dictionary<string, float>();
-    public event Action<string, int> ParametersOfEquipmentWasAssigned;   
-    public event Action<Equipment> OnEquipmentShouldBeActivate;   
+    public event Action<string, int> ParametersOfEquipmentWasAssigned;
+    public event Action<Equipment> OnEquipmentShouldBeActivate;
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
 
-# region Freshness Mechanic
+    #region Freshness Mechanic
 
     private FRESHNESS _currentFreshness;
     private int _currentFreshnessCount;
@@ -103,7 +106,7 @@ public class Equipment : MonoBehaviour
         Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
     }
 
-# endregion
+    #endregion
 
 
     public bool WasSold // МЕНЯЕМ ЗНАЧЕНИЕ ТОЛЬКО В СОСТОЯНИЯХ InsideShop и AtPlayer!!!!!!!!!!!!!!!!!!!!
@@ -132,7 +135,7 @@ public class Equipment : MonoBehaviour
             if (_buildingWhereEquipmentIs != value)
             {
                 _buildingWhereEquipmentIs = value;
-                
+
 
             }
 
@@ -141,13 +144,21 @@ public class Equipment : MonoBehaviour
 
     public virtual void Awake()
     {
+        if (!_awakeWasCalledAlready)
+        {
+            transform = GetComponent<RectTransform>();
+            //player = GameObject.Find("Player").GetComponent<Player>();
+            selfSprite = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
+            selfCollider = GetComponent<BoxCollider2D>();
+            mdaaa = animator;
 
-        transform = GetComponent<RectTransform>();
-        //player = GameObject.Find("Player").GetComponent<Player>();
-        selfSprite = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        selfCollider = GetComponent<BoxCollider2D>();    
+            _callDownIcon = transform.Find("CallDownIcon").GetComponent<Image>();
 
+            //spriteCallDown = callDownIcon.sprite; // на тот случай, если мы не найдём спрайт по имени + Disabled при спавне снаряжения. Спрайт должен быть всегда!
+            sprite = selfSprite.sprite; // на тот случай, если мы не найдём спрайт по имени при спавне снаряжения. Спрайт должен быть всегда!
+            _awakeWasCalledAlready = true;
+        }
 
 
         //animator.Play(equipmentName);
@@ -173,38 +184,53 @@ public class Equipment : MonoBehaviour
 
     public virtual void Start()
     {
-        _fsm = new Fsm();
-
-        _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
-        _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
-        _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
-        // Короче, план таков: если в списке анимаций есть анимация с именем текущего снаряжения, мы воспроизводим её. Если таковой анимации не было найдено, то мы
-        // ищем анимацию для активного состояния данного снаряжения (ибо снаряжение может иметь 2 вида анимации: активное и деактивированное, когда, например, в КД),
-        // если нашли - воспроизводим её. Если нет и таковой, то просто устанавливаем спрайт для данного снаряжения. Спрайт по умолчанию назначается в скрипте здания,
-        // которое это снаряжение спавнит, находится в поле sprite
-        // Предполагается, что не должно быть для указанного снаряжения одновременно и просто анимации по его имени, и анимации с постфиксом "Active", в таком случае
-        // будет отдаваться приоритет проигрывания только анимации по имени, которая без постфикса
-
-        if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator)) 
+        if (!_startWasCalledAlready)
         {
-            animator.Play(equipmentName); // Воспроизводим анимацию
-        }
-        else
-        {
-            if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Active", animator))
+            _fsm = new Fsm();
+
+            _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
+            _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
+            _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
+            // Короче, план таков: если в списке анимаций есть анимация с именем текущего снаряжения, мы воспроизводим её. Если таковой анимации не было найдено, то мы
+            // ищем анимацию для активного состояния данного снаряжения (ибо снаряжение может иметь 2 вида анимации: активное и деактивированное, когда, например, в КД),
+            // если нашли - воспроизводим её. Если нет и таковой, то просто устанавливаем спрайт для данного снаряжения. Спрайт по умолчанию назначается в скрипте здания,
+            // которое это снаряжение спавнит, находится в поле sprite
+            // Предполагается, что не должно быть для указанного снаряжения одновременно и просто анимации по его имени, и анимации с постфиксом "Active", в таком случае
+            // будет отдаваться приоритет проигрывания только анимации по имени, которая без постфикса
+
+            if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName, animator))
             {
-                animator.Play(equipmentName + "Active"); // Воспроизводим анимацию 
+                animator.Play(equipmentName); // Воспроизводим анимацию
             }
             else
             {
-                animator.enabled = false;
-                //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
-                selfSprite.sprite = sprite;
+                if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Active", animator))
+                {
+                    animator.Play(equipmentName + "Active"); // Воспроизводим анимацию 
+                }
+                else
+                {
+                    //Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA MUD-da-daYUUU");
+                    animator.enabled = false; // ОЧЕНЬ ВАЖНО! Иначе картинку в SpriteRenderer не даст отображать!
+                                              //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+                    selfSprite.sprite = sprite; // по идее sprite никогда не будет null, если в префабе по умолчанию уже стоит хоть какой-то спрайт для снаряжения
+                }
             }
-        }
 
-        if (BuildingWhereEquipmentIs) ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала
-        _fsm.SetState<FsmStateEquipmentInsideShop>();
+            //callDownIcon.sprite = spriteCallDown;
+
+
+            if (BuildingWhereEquipmentIs)
+            {
+                ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала 
+                _fsm.SetState<FsmStateEquipmentInsideShop>();
+            }
+            else if (ownerUnit)
+            {
+                _fsm.SetState<FsmStateEquipmentAtPlayer>();
+            }
+            _startWasCalledAlready = true;
+        }
 
 
     }
@@ -234,11 +260,11 @@ public class Equipment : MonoBehaviour
         {
             transform.parent.gameObject.GetComponent<PlaceForEquipment>().Equipment = null; // у скрипта экземпляра старого места поле Equipment сбрасываем в null (ибо с него убираем)
             PlaceForEquipment rectTransformTargetPlaceScript = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>(); // получаем скрипт целевого места
-            rectTransformTargetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
             // /\ \/ - поменяны местами
             rectTransformTargetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
                                                              // этого текущего. Выше для целевого места назначим снаряжение наше новое (вот это). Сделано для того, чтоб модификаторы
                                                              // снаряжения в ИНВЕНТАРЕ сбросились и назначились корректно
+            rectTransformTargetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
             // 4. Устанавливаем родительский элемент
             transform.SetParent(rectTransformPlace, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
 
@@ -274,11 +300,28 @@ public class Equipment : MonoBehaviour
 
     public void StartCallDown()
     {
-        StartCoroutine(CallDown());
+        //_callDownCoroutine = StartCoroutine(CallDown());
+        //_callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
+        _callDownCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDown());
+        _callDownAnimationCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDownIconAnimation()); 
     }
+
+
     public void EquipmentShouldBeActivate(Equipment equipment) // просто обёртка над сигналом, который долен вызываться, когда игрок нажимает на иконку снаряжения
     {
         OnEquipmentShouldBeActivate?.Invoke(equipment); // ну по сути equipment = this
+    }
+    IEnumerator CallDownIconAnimation()
+    {
+        _callDownIcon.gameObject.SetActive(true);
+        _callDownIcon.fillAmount = 1;
+        while (!isReady)
+        {
+            yield return null;
+            _callDownIcon.fillAmount -= 1 / (timeCallDown / Time.deltaTime);
+        }
+        _callDownIcon.gameObject.SetActive(false);
+        _callDownIcon.fillAmount = 0;
     }
 
     IEnumerator CallDown() // по идее не должно быть ситуаций, когда данная корутина будет запускаться (но не работать! работать можно!) в здании (вне инвентаря героя)
@@ -290,7 +333,7 @@ public class Equipment : MonoBehaviour
 
         if (StaticClassForAdditionalFunctions.AnimationExists(equipmentName + "Disable", animator))
         {
-            animator.Play(equipmentName + "Disable"); // Воспроизводим анимацию
+            animator.Play(equipmentName + "Disable"); // Воспроизводим анимацию. Хотя теперь не понятно, что делать с анимацией таймера КД, где у нас заполяется прозрачный спрайт
         }
         else
         {
@@ -315,10 +358,10 @@ public class Equipment : MonoBehaviour
         }
     }
 
-# region Animation live-time controlling
+    #region Animation live-time controlling
 
     private void UnitCastAnimationFinished(string nameCastAnimation) // юнит может закончить различные анимации каста, мы фильтруем только анимацию каста, подходящую для данного
-                                                                            // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
+                                                                     // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
     {
         if (nameCastAnimation == equipmentName + C.Prefixes.Cast)
         {
@@ -332,7 +375,7 @@ public class Equipment : MonoBehaviour
                                                                         // снаряжение уже в состоянии Active. Нужно, скорее всего, только в том случае, когда переход в состояние Active
                                                                         // происходит сразу при начале каста, но какая-то дополнительная логика отрабатывает, когда анимация каста уже окончена
     private void UnitCastAnimationPeacked(string nameCastAnimation) // юнит может закончить различные анимации каста, мы фильтруем только анимацию каста, подходящую для данного
-                                                                            // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
+                                                                    // снаряжения. Шаблон имени анимации: ИМЯ_СНАРЯЖЕНИЯ + "Cast", например: ProtectiveFieldCast
     {
         if (nameCastAnimation == equipmentName + C.Prefixes.Peak)
         {
@@ -342,12 +385,14 @@ public class Equipment : MonoBehaviour
 
     public virtual void UnitCastAnimationPeackedForThisEquipment() { }
 
-# endregion 
+    #endregion
 
     public virtual void OnDestroy()
     {
         //Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
-        
+
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+        _fsm.StateCurrent.Exit(); // Если снаряжении находится в состоянии Selected, то дабы корректно завершить состояние Translate у Player необходимо выйти из состояния Selected.
 
         StopAllCoroutines();
         if (_fsm != null)
@@ -355,7 +400,11 @@ public class Equipment : MonoBehaviour
     }
     public virtual void OnEnable()
     {
-        //Debug.Log(equipmentName);
+        if (!isReady)
+        {
+            //(_callDownCoroutine);
+            //StartCoroutine(_callDownAnimationCoroutine);            
+        }
 
     }
 

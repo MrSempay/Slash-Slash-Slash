@@ -7,6 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Door : Unit
 {
+
     private Vector3 _startPositionOfEnterButton;
 
     private bool _doorIsOpened;

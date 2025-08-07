@@ -17,7 +17,7 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
 
         building.selfCollider.enabled = false;
         
-        building.animator.Play(building.selfName + C.Prefixes.Destroyed);
+        building.animator.Play(building.selfName + C.Prefixes.Destroyed);   
 
         building.buttonEnter.SetActive(false);
 

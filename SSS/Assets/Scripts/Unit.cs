@@ -57,12 +57,12 @@ public abstract class Unit : MonoBehaviour, IInventory
     public int scoreFromKill; // очки за убийство юнита
     public float experienceFromKill; // опыт за убийство юнита
 
-    #region Inventory interface
+    #region IInventory interface
 
     [SerializeField] private Inventory _inventory; // инвентарий геро€, назначаем в инспекторе
 
-    [NonSerialized] public int _countAvailableSpellPlaces = 3; // количество €чеек в инвентаре дл€ заклинаний, пока что... просто константа и не вли€ет на их количество
-    [NonSerialized] public int _countAvailableAmmunitionPlaces = 3; // количество €чеек в инвентаре дл€ аммуниции, пока что... просто константа и не вли€ет на их количество
+    [NonSerialized] private int _countAvailableSpellPlaces = 3; // количество €чеек в инвентаре дл€ заклинаний, пока что... просто константа и не вли€ет на их количество
+    [NonSerialized] private int _countAvailableAmmunitionPlaces = 3; // количество €чеек в инвентаре дл€ аммуниции, пока что... просто константа и не вли€ет на их количество
 
     public Inventory Inventory // назначаем _inventory в инспекторе
     {
@@ -559,7 +559,7 @@ public abstract class Unit : MonoBehaviour, IInventory
     {
         OnThisUnitWasAttacked?.Invoke(unitWhichWasAttacked, attackingUnit);
     }
-    public virtual void DirectionViewWasChanged(bool lookingRight) // вызываетс€ в юните, сменил направление взора
+    public virtual void DirectionViewWasChanged(bool lookingRight) // вызываетс€ в юните, когда тот сменил направление взора
     {
         OnDirectionViewWasChanged?.Invoke(lookingRight);
     }
@@ -587,6 +587,7 @@ public abstract class Unit : MonoBehaviour, IInventory
     }
     public virtual void SomeAnimationUnitWasPeaked(string namePeackedAnimation) //  огда анимаци€ достигла целевой точки, но не конца. ƒл€ Peak така€ точка может быть только одна в анимации
     {
+        //Debug.Log("FAISFHJASKJHASK:FAJS:KFAK:FAS:KFASK:F"); 
         string lastFourChars = "";
         if (namePeackedAnimation.Length >= 4) // провер€ем, что строка достаточно длинна€
         {

@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Text.RegularExpressions;
+using static UnityEngine.Rendering.DebugUI;
+//using System.Diagnostics;
 
 public class FsmStateEnemy : FsmStateUnit
 {
@@ -15,6 +17,7 @@ public class FsmStateEnemy : FsmStateUnit
                                                                                      // углу при детекции провалов
     private Coroutine constraintTimeFlipXCoroutine;
     private bool canFlipByTimeDeley;
+    private float _timeForBiasTemporaryTraget = 1f;
 
     protected readonly object _lock = new();
 
@@ -23,6 +26,7 @@ public class FsmStateEnemy : FsmStateUnit
     public NavMeshPath path; // Переменная для хранения пути
     public bool onFloor;
 
+    private enum BEHAVIOUR_MODEL { StayAtTargetPosition, SplitAroundTargetPosition }; // ??? а может ну его...
 
     public FsmStateEnemy(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
@@ -49,25 +53,28 @@ public class FsmStateEnemy : FsmStateUnit
         }
         //Debug.Log(enemy.currentTargetTransform.position);
         //Debug.Log(enemy.currentTargetTransform);
-            // Обновляем путь, если необходимо (например, если игрок переместился). По идее надо детектить ещё и y-состовляющую, но да ладно...
-        if (Mathf.Abs(enemy.transform.position.x - enemy.currentTargetTransform.position.x) > 0.1f)
+        // Обновляем путь, если необходимо (например, если игрок переместился). По идее надо детектить ещё и y-состовляющую, но да ладно...
+        if (enemy.CurrentTargetTransform)
         {
-            //Debug.Log("Emmm???1");
-            //Debug.Log(enemy.currentTargetTransform);
-            enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.currentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
-            //Debug.Log(path.corners.Length);
-            //enemy.agent.destination = enemy.playerTransform.position;
-            //path = enemy.agent.path;
-            if (path.corners.Length >= 1) enemy.isPathValid = true;
-
-            if (enemy.isPathValid)
+            if (Mathf.Abs(enemy.transform.position.x - enemy.CurrentTargetTransform.position.x) > 0.5f)
             {
-                enemy.currentCornerIndex = 1; // Сбрасываем индекс при пересчете пути
+                //Debug.Log("Emmm???1");
+                //Debug.Log(enemy.currentTargetTransform);
+                enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.CurrentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
+                //Debug.Log(path.corners.Length);
+                //enemy.agent.destination = enemy.playerTransform.position;
+                //path = enemy.agent.path;
+                if (path.corners.Length >= 1) enemy.isPathValid = true;
+
+                if (enemy.isPathValid)
+                {
+                    enemy.currentCornerIndex = 1; // Сбрасываем индекс при пересчете пути
+                }
             }
         }
         //Debug.Log("Emmm???2");
         //Действия, если пути нет. Например, поиск пути
-        if (!enemy.isPathValid || path.corners.Length < 2)
+        if (!enemy.isPathValid || path.corners.Length < 2) 
         {
             //Останавливаем движение, например
             enemy.rb.linearVelocityX = 0;
@@ -125,17 +132,93 @@ public class FsmStateEnemy : FsmStateUnit
             enemy.currentCornerIndex++;
             if (enemy.currentCornerIndex >= path.corners.Length)
             {
-                //Debug.Log("Emmm???6");
+                // transformTargets
+                Debug.Log("Emmm???6");
+
                 // Достигли конечной точки
                 enemy.rb.linearVelocityX = 0; //Останавливаемся
                 enemy.isPathValid = false; //Сбрасываем флаг
+                if (enemy.currentMainTarget != null)
+                {
+                    if (!enemy.currentMainTarget.WasDestroyed)
+                    {
+                        Debug.Log("Ебануться");
+                        return;
+                    }
+                }
+
+                if (!enemy.isInRazbrestisState)
+                {
+                    SpawnTemporaryTargetForRazbrestis();
+                }
+                else
+                {
+                    Debug.Log("Не Ебануться");
+                    enemy.isInRazbrestisState = false;
+                    if (enemy.temporaryTargetForRazbrestis)
+                    {
+                        GameManager.DestroyObject(enemy.temporaryTargetForRazbrestis);
+                    }
+                    if (enemy.currentMainTarget != null) // если это была целевая конечная точка, 
+                    {
+                        ProcessReachingMainTarget();
+                    }
+                    else
+                    {
+                        fsm.SetState<FsmStateIdleEnemy>();
+                    }
+                }
                 return;
             }
         }
     }
 
-    // отрисовываем путь
-    void DrawPath()
+    private void ProcessReachingMainTarget()
+    {
+        Debug.Log("Emmm???7");
+        if (enemy.currentMainTarget.WasDestroyed)  // и она уничтожена - 
+        {
+            Debug.Log("Emmm???8");
+            Debug.Log(enemy.transformTargets.Count);
+            enemy.transformTargets.Remove(enemy.currentMainTarget.targetTransform); // убираем её из с писка и 
+            if (enemy.transformTargets.Count > 0)
+            {
+                Debug.Log("Emmm???9");
+                int randomIndex = UnityEngine.Random.Range(0, enemy.transformTargets.Count);
+                enemy.CurrentTargetTransform = enemy.transformTargets[randomIndex]; // переходим к рандомной в списке (если достигли школы => к сокровищнице или герою)
+            }
+            else // пусть разбредутся по округе
+            {
+                enemy.currentMainTarget = null;
+                SpawnTemporaryTargetForRazbrestis();
+            }
+        }
+    }
+
+    private void SpawnTemporaryTargetForRazbrestis()
+    {
+        enemy.isInRazbrestisState = true;
+        float randomPositionNearLastTarget = UnityEngine.Random.Range(-6f, 6f);
+        Vector3 positionNewTarget = new Vector3(enemy.CurrentTargetTransform.position.x + randomPositionNearLastTarget, enemy.CurrentTargetTransform.position.y, enemy.CurrentTargetTransform.position.z);
+        enemy.CurrentTargetTransform = StaticClassForAdditionalFunctions.InstanceEmptyObjectAndGetTransform(LevelBuilder.instance.BoxSplitTargetPointsForEnemies, C.NamesSpawningObjects.RandomTargetForSplit, positionNewTarget, false);
+        enemy.temporaryTargetForRazbrestis = enemy.CurrentTargetTransform.gameObject;
+        GameManager.Instance.ShakeSomething(enemy.temporaryTargetForRazbrestis, 7f, -1f, 0.3f, false);
+        //CoroutineManager.Instance.StartManagedCoroutine(gameObject, BiasForSpawnTemporaryTarget());
+    }
+
+    IEnumerator BiasForSpawnTemporaryTarget() // иногда враги "залипают" при приближении к временному таргету для дисперсии нему
+    {
+        float a = -1;
+        Vector3 startPosition = enemy.temporaryTargetForRazbrestis.transform.position;
+        while (enemy.temporaryTargetForRazbrestis != null)
+        {
+            enemy.temporaryTargetForRazbrestis.transform.position = new Vector3(startPosition.x + (0.4f * a), startPosition.y, startPosition.z);
+            a *= -1;
+            yield return new WaitForSeconds(_timeForBiasTemporaryTraget);
+        }
+    }
+// отрисовываем путь
+void DrawPath()
     {
         if (enemy.lineRenderer == null || path == null) return;
         // Устанавливаем количество точек LineRenderer

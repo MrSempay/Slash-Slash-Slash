@@ -38,8 +38,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
         {
             if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y)) fsm.SetState<FsmStateEquipmentSelected>();
         }
-
-        if (Input.touchCount > 0)
+        else if (Input.touchCount > 0) 
         {
             Touch touch = Input.GetTouch(0);
 

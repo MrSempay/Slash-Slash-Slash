@@ -88,8 +88,8 @@ public class ProtectiveField : Spell
     // whoMakeHitIntoField может быть null
     private void ProtectiveFieldWasHit(Unit ownerProtectiveField, Unit whoMakeHitIntoField)
     {
-        Debug.Log("Мы теперь тут");
-        Debug.Log(_ownerProtectiveField.isInvicible);
+        //Debug.Log("Мы теперь тут");
+        //Debug.Log(_ownerProtectiveField.isInvicible);
         AnimateHittingField();
 
         CurremtAmountBlockingAttack++;
@@ -103,8 +103,6 @@ public class ProtectiveField : Spell
                                                                              // Этот удар блокироваться не будет. Стоит отметить, что это не полная деактивация, а снятие эффекта неуязви
                                                                              // мости и отписка от детекции OnThisUnitWasAttacked
         {
-
-
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
             _ownerProtectiveField.isInvicible = false;
         }

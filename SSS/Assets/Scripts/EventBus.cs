@@ -47,8 +47,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<float, RectTransform> ValueBrightnessWasChanged { get; } = new();
     public UnityEvent<float, RectTransform> ValueVolumMusicWasChanged { get; } = new();
     public UnityEvent<float, RectTransform> ValueVolumEffectsWasChanged { get; } = new();
-    public UnityEvent<ENUM, RectTransform> ValueLanguageWasChanged { get; } = new();
-    public UnityEvent<ENUM, RectTransform> ValueOrientationWasChanged { get; } = new();
+    public UnityEvent<LANGUAGE, RectTransform> ValueLanguageWasChanged { get; } = new();
+    public UnityEvent<LANGUAGE, RectTransform> ValueOrientationWasChanged { get; } = new();
 
 
     public UnityEvent<int> OnKillKomboWasChanged { get; } = new();
@@ -71,8 +71,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void TriggerParameterBrightness(float value, RectTransform rectTransformToggle) { ValueBrightnessWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterVolumMusic(float value, RectTransform rectTransformToggle) { ValueVolumMusicWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterVolumEffects(float value, RectTransform rectTransformToggle) { ValueVolumEffectsWasChanged.Invoke(value, rectTransformToggle); }
-    public void TriggerParameterLanguage(ENUM value, RectTransform rectTransformToggle) { ValueLanguageWasChanged.Invoke(value, rectTransformToggle); }
-    public void TriggerParameterOrientation(ENUM value, RectTransform rectTransformToggle) { ValueOrientationWasChanged.Invoke(value, rectTransformToggle); }
+    public void TriggerParameterLanguage(LANGUAGE value, RectTransform rectTransformToggle) { ValueLanguageWasChanged.Invoke(value, rectTransformToggle); }
+    public void TriggerParameterOrientation(LANGUAGE value, RectTransform rectTransformToggle) { ValueOrientationWasChanged.Invoke(value, rectTransformToggle); }
 
     public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }
     public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }

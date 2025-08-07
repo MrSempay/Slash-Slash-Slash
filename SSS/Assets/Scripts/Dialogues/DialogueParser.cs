@@ -107,7 +107,7 @@ public class DialogueParser : MonoBehaviour
 
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
         string fullPathToDialogueFile = _nameDialogueFolder + LocalizationManager.Instance.currentLanguage + "/" + _nameDialogueFileWithParentFolder;
-        Debug.Log(fullPathToDialogueFile);
+        //Debug.Log(fullPathToDialogueFile);
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)
@@ -150,7 +150,7 @@ public class DialogueParser : MonoBehaviour
         _currentIndexDialogue++;
     }
 
-    private void UpdateDialogueText(ENUM language)
+    private void UpdateDialogueText(LANGUAGE language)
     {
         _currentIndexDialogue--;
         LoadAndParseDialogueAndShowPhrase();

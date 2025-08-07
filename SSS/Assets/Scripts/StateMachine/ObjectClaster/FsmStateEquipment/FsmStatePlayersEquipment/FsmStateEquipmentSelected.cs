@@ -17,7 +17,8 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Equipment selected state [ENTER]");
-        
+
+        Player.isTransitingEquipment = true;
         player.WrapOnTranslateEquipment(true);
         equipment.selfSprite.sortingOrder = 25; // чтоб поверх вообще всех UI было. Кроме, возможно, диалогового окна (там 25 тоже)
     }
@@ -26,8 +27,8 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
     {
         Debug.Log("Equipment selected state [EXIT]");
 
+        Player.isTransitingEquipment = false;
         player.WrapOnTranslateEquipment(false);
-
         equipment.selfCollider.enabled = true;
         equipment.selfSprite.sortingOrder = 11; // это значение, скорее всего, будет изменять в методе Enter других состояний
 
@@ -87,25 +88,32 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                         }
                         else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                     }
-                    equipment.SetEquipmentToPlaceIfNotNull(rectTransformPlace); // устанавливаем снаряжение на это место либо вернёт false если null и ничего не сделает
+                    Debug.Log(equipment);
+                    Debug.Log(rectTransformPlace);
 
                     // НУЖНО ДЛЯ ОБМЕНА МЕСТАМИ СНАРЯЖЕНИЯ В ЗДАНИИ И У ИГРОКА. Получаем ссылку на снаряжение, которое находится в интересующем нас месте у игрока либо null
                     equipment.selfCollider.enabled = false;
-                    Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                    //Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                    Equipment isAtPlaceEquipment = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment;
 
                     //Debug.Log("Ставим!");
+                    //Debug.Log(rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>());
+                    //Debug.Log(isAtPlaceEquipment);
+                    //Debug.Log(isAtPlaceEquipment.name);
+                    //Debug.Log(isAtPlaceEquipment.equipmentName);
                     if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
-                    {
-                        //Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
+                    { 
+                        Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
                         isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                         isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
                         isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
                         isAtPlaceEquipment.startLocalPosition = equipment.startLocalPosition;
                         isAtPlaceEquipment.transform.localPosition = equipment.startLocalPosition;
-                        isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;
+                        isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;  
                                                                                                                                                        // другое снаряжения в его скрипте
 
                     }
+                    equipment.SetEquipmentToPlaceIfNotNull(rectTransformPlace); // устанавливаем снаряжение на это место либо вернёт false если null и ничего не сделает
                     equipment.transformCurrentEquipmentPlace = rectTransformPlace; // устанавливаем текущую позицию для снаряжения в виде целевой, на которую снаряжение только что переместили
                     //fsm.SetState<FsmStateEquipmentAtPlayer>();
                     CoroutineManager.Instance.StartManagedCoroutine(gameObject, DelayBeforeSetStateAtPlayer());

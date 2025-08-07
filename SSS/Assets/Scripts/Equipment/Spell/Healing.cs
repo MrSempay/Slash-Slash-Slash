@@ -38,13 +38,14 @@ public class Healing : Spell
         {
             isActivated = true;
 
-            StartTimerActiveState(whoCastedSpell); // контролим через событие Peak анимации
+            StartTimerActiveState(whoCastedSpell); // контролим через событие Peak анимации. 30.07.2025 - Нафиг тут эта строка вообще хз...
 
         }
     }
     public override void Deactivate(Unit whoCastedSpell)
     {
-        base.Activate(whoCastedSpell); // хотя я вот думаю, что логику базового метода можно было бы вывести просто в отдельную функцию и вызывать её при надобности
+        // ТУТ БЫЛО:   base.Activate(whoCastedSpell);      !!!
+        base.Deactivate(whoCastedSpell); // хотя я вот думаю, что логику базового метода можно было бы вывести просто в отдельную функцию и вызывать её при надобности
 
         if (isActivated)
         {

@@ -575,7 +575,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6006235072889196775}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -646,6 +646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6487045860534479873}
   - component: {fileID: 2167528596454198070}
+  - component: {fileID: 7945814483696819063}
   m_Layer: 0
   m_Name: Visualisation
   m_TagString: Untagged
@@ -727,6 +728,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7945814483696819063
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222500988073135644}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe1f3fb6e7f05bf41b9d06f8c6519dcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6895839156671575643
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2206852001076059017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1087,9 +1110,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf1ba649905db74e8dbdf4fc7d410d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selfDoor: {fileID: 3016543444325182037}
+  selfName: 
   prefubOfEquipment: {fileID: 7709106239216515054, guid: 7ee29a73e8ea0414dba2e69bdeb86182, type: 3}
+  animator: {fileID: 7945814483696819063}
+  selfCollider: {fileID: 8756440220059778847}
   buttonEnterWasPressedToEnter: 0
-  _isMainTarget: 0
+  _isMainTarget: 1
 --- !u!61 &8756440220059778847
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1365,6 +1392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellPlace
       objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1435,11 +1466,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.14
+      value: -19.26
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.37
+      value: -1.46
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1585,6 +1616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellPlace
       objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2853885846529086191, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1659,11 +1694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.09
+      value: -1.08
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.37
+      value: -1.29
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1698,6 +1733,10 @@ PrefabInstance:
     - target: {fileID: 815669075519134456, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Name
       value: SpellPlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Pivot.x
@@ -1769,11 +1808,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.007
+      value: -13.49
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.37
+      value: -1.83
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1858,6 +1897,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7112272ad06e3f143972a8418b29556c, type: 3}
+--- !u!114 &3016543444325182037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9174053262890016676, guid: 7112272ad06e3f143972a8418b29556c, type: 3}
+  m_PrefabInstance: {fileID: 6236397593884866033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868a8fbae455d7741bfb0f124977d37b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4237556921561712012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7801062488148324477, guid: 7112272ad06e3f143972a8418b29556c, type: 3}

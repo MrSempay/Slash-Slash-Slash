@@ -40,7 +40,7 @@ public class DataWrapperSettings
     public class DataWrapperChoseList : Wrapper
     {
         public string CurrentTextValue;
-        public ENUM CurrentValue;
+        public LANGUAGE CurrentValue;
         public int _indexCurrentString;
     }
 

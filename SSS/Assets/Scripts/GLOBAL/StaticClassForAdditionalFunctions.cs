@@ -12,7 +12,7 @@ using static UnityEngine.LightTransport.IProbeIntegrator;
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
 public static class StaticClassForAdditionalFunctions : object
 {
-    public enum ENUM { English, Russian, Spanish, Horizontal, Vertical }
+    public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical }
     public enum TYPES_INCREASING { Percentage, Absolute }
 
     // Рассчитывает угол наклона прямой между двумя точками
@@ -342,11 +342,18 @@ public static class StaticClassForAdditionalFunctions : object
         return randomNumber <= chancePercentage;
     }
 
-    public static UnityEngine.Transform InstanceEmptyObjectAndGetTransform(UnityEngine.Transform parentTransform, string nameObject, Vector3 biasPosition)
+    public static UnityEngine.Transform InstanceEmptyObjectAndGetTransform(UnityEngine.Transform parentTransform, string nameObject, Vector3 biasPosition, bool biasFromParent = true)
     {
         UnityEngine.Transform transformEmptyObject = new GameObject(nameObject).GetComponent<UnityEngine.Transform>();
         transformEmptyObject.SetParent(parentTransform, false);
-        transformEmptyObject.localPosition = Vector3.zero + biasPosition;
+        if (biasFromParent) // относительно родителя двигаем на biasPosition
+        {
+            transformEmptyObject.localPosition = Vector3.zero + biasPosition;
+        }
+        else // задаём глобальную позицию biasPosition для объекта
+        {
+            transformEmptyObject.position = biasPosition;
+        }
 
         return transformEmptyObject;
     }

@@ -11,7 +11,7 @@ public class LocalizationManager
 {
     private static LocalizationManager _instance;
 
-    public event Action<ENUM> OnLanguageWasChanged;
+    public event Action<LANGUAGE> OnLanguageWasChanged;
 
     public static LocalizationManager Instance
     {
@@ -25,138 +25,148 @@ public class LocalizationManager
         }
     }
 
-    public ENUM currentLanguage = ENUM.English;
+    public LANGUAGE currentLanguage = LANGUAGE.English;
 
-    private Dictionary<string, Dictionary<ENUM, string>> localization = new Dictionary<string, Dictionary<ENUM, string>>();
+    private Dictionary<string, Dictionary<LANGUAGE, string>> localization = new Dictionary<string, Dictionary<LANGUAGE, string>>();
 
     private LocalizationManager()
     {
         // Заполняем словарь
-        localization.Add("Greeting", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Hello!" },
-            { ENUM.Russian, "Привет!" },
-            { ENUM.Spanish, "?Hola!" }
+        localization.Add("Greeting", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Hello!" },
+            { LANGUAGE.Russian, "Привет!" },
+            { LANGUAGE.Spanish, "?Hola!" }
         });
 
-        localization.Add("Goodbye", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Goodbye!" },
-            { ENUM.Russian, "До свидания!" },
-            { ENUM.Spanish, "?Adi?s!" }
+        localization.Add("Goodbye", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Goodbye!" },
+            { LANGUAGE.Russian, "До свидания!" },
+            { LANGUAGE.Spanish, "?Adi?s!" }
         });
-        localization.Add("mda", new Dictionary<ENUM, string>() {
-            { ENUM.English, "mda!" },
-            { ENUM.Russian, "мда" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("mda", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "mda!" },
+            { LANGUAGE.Russian, "мда" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Vibration", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Vibration" },
-            { ENUM.Russian, "Вибрация" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Vibration", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Vibration" },
+            { LANGUAGE.Russian, "Вибрация" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Camera shaking", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Camera shaking" },
-            { ENUM.Russian, "Шатание камеры" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Camera shaking", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Camera shaking" },
+            { LANGUAGE.Russian, "Шатание камеры" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Russian", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Russian" },
-            { ENUM.Russian, "Русский" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Russian", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Russian" },
+            { LANGUAGE.Russian, "Русский" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("English", new Dictionary<ENUM, string>() {
-            { ENUM.English, "English" },
-            { ENUM.Russian, "Английский" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("English", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "English" },
+            { LANGUAGE.Russian, "Английский" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Spanish", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Spanish" },
-            { ENUM.Russian, "Гишпанский" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Spanish", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Spanish" },
+            { LANGUAGE.Russian, "Гишпанский" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Volum Effects", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Volum Effects" },
-            { ENUM.Russian, "Громкость эффектов" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Volum Effects", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Volum Effects" },
+            { LANGUAGE.Russian, "Громкость эффектов" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Volum Music", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Volum Music" },
-            { ENUM.Russian, "Громкость музыки" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Volum Music", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Volum Music" },
+            { LANGUAGE.Russian, "Громкость музыки" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Brightness", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Brightness" },
-            { ENUM.Russian, "Яркость" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Brightness", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Brightness" },
+            { LANGUAGE.Russian, "Яркость" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Orientation", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Orientation" },
-            { ENUM.Russian, "Ориентация" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Orientation", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Orientation" },
+            { LANGUAGE.Russian, "Ориентация" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Horizontal", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Horizontal" },
-            { ENUM.Russian, "Горизонтальная" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Horizontal", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Horizontal" },
+            { LANGUAGE.Russian, "Горизонтальная" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Vertical", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Vertical" },
-            { ENUM.Russian, "Вертикальная" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Vertical", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Vertical" },
+            { LANGUAGE.Russian, "Вертикальная" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Money:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Money:" },
-            { ENUM.Russian, "Деньги:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Money:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Money:" },
+            { LANGUAGE.Russian, "Деньги:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Level:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Level:" },
-            { ENUM.Russian, "Уровень:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Level:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level:" },
+            { LANGUAGE.Russian, "Уровень:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Up lvl:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Up lvl:" },
-            { ENUM.Russian, "Up уровня:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Up lvl:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Up lvl:" },
+            { LANGUAGE.Russian, "Up уровня:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Experience:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Experience:" },
-            { ENUM.Russian, "Опыт:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Name:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Name:" },
+            { LANGUAGE.Russian, "Название:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Combo:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Combo:" },
-            { ENUM.Russian, "Комбо:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Experience:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Experience:" },
+            { LANGUAGE.Russian, "Опыт:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("SomeSpell1", new Dictionary<ENUM, string>() {
-            { ENUM.English, "SomeSpell1" },
-            { ENUM.Russian, "Некое заклинание 1" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Combo:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Combo:" },
+            { LANGUAGE.Russian, "Комбо:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Cost:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Cost:" },
-            { ENUM.Russian, "Цена:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("SomeSpell1", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "SomeSpell1" },
+            { LANGUAGE.Russian, "Некое заклинание 1" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Style Rank:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Style rank:" },
-            { ENUM.Russian, "Ранг стиля:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Cost:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Cost:" },
+            { LANGUAGE.Russian, "Цена:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Score:", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Score:" },
-            { ENUM.Russian, "Очки:" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Style Rank:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Style rank:" },
+            { LANGUAGE.Russian, "Ранг стиля:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("Leaderboard", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Leaderboard" },
-            { ENUM.Russian, "Доска почёта" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Score:", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Score:" },
+            { LANGUAGE.Russian, "Очки:" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
-        localization.Add("KillCount", new Dictionary<ENUM, string>() {
-            { ENUM.English, "Kill count" },
-            { ENUM.Russian, "Счётчик убийств" },
-            { ENUM.Spanish, "muda-da?" }
+        localization.Add("Leaderboard", new Dictionary<LANGUAGE, string>() { 
+            { LANGUAGE.English, "Leaderboard" },
+            { LANGUAGE.Russian, "Доска почёта" },
+            { LANGUAGE.Spanish, "muda-da?" }
+        });
+        localization.Add("KillCount", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Kill count" },
+            { LANGUAGE.Russian, "Счётчик убийств" },
+            { LANGUAGE.Spanish, "muda-da?" }
+        });
+        localization.Add(C.DK.PlateArmor, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Plate Armor" },
+            { LANGUAGE.Russian, "Пластинчатый Доспех" },
+            { LANGUAGE.Spanish, "muda-da?" }
         });
     }
 
@@ -172,7 +182,7 @@ public class LocalizationManager
         return ""; // Какой-то текст по умолчанию
     }
 
-    public void SetLanguage(ENUM newLanguage)
+    public void SetLanguage(LANGUAGE newLanguage)
     {
         currentLanguage = newLanguage;
         OnLanguageWasChanged?.Invoke(currentLanguage);

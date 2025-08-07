@@ -400,7 +400,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 6
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -595,6 +595,7 @@ MonoBehaviour:
   nameOfUnit: 
   nameSoundGettingDamage: 
   isGrounded: 0
+  isInvicible: 0
   stunePlace: {fileID: 3576711239184067755}
   healthMax: 100
   jumpForce: 15
@@ -607,10 +608,12 @@ MonoBehaviour:
   comboFromKill: 1
   scoreFromKill: 0
   experienceFromKill: 0
+  _inventory: {fileID: 0}
   player: {fileID: 0}
   selfEnemyCollider: {fileID: 705119281058959487}
   fuck: {fileID: 538770094925077176}
   isInstancedByLevel: 0
+  isTriggered: 0
   triggerAreaScript: {fileID: 1333133579512327867}
   pitDetectorScript: {fileID: 4835165679625548219}
   attackAreaTransform: {fileID: 2255733836217545654}
@@ -703,7 +706,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 12
   m_Sprite: {fileID: -4154348150017000952, guid: 13294f6647c9cd24fad1f4a0e0facf92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

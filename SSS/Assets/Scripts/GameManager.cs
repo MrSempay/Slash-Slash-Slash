@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     private GameObject _prefubPlayerDialogue;
     private LiftGammaGain _liftGammaGain;
 
+    public GameObject prefubAmmunition;
+    public GameObject prefubSpell;
     public GameObject prefubAppearingSprite;
     public CustomCombo prefubCustomCombo;
     public PlaceForEquipment prefubPlaceForEquipment;
@@ -43,8 +46,8 @@ public class GameManager : MonoBehaviour
         public float volumeMusic = 1;
         public float volumeEffects = 1;
         public float volumeBrightness = 1;
-        public ENUM orientation = ENUM.Horizontal;
-        public ENUM language; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
+        public LANGUAGE orientation = LANGUAGE.Horizontal;
+        public LANGUAGE language; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
 
         public static CurrentSettings Instance
         {
@@ -57,7 +60,7 @@ public class GameManager : MonoBehaviour
                 return _instance;
             }
         }
-        public ENUM Orientation
+        public LANGUAGE Orientation
         {
             get { return orientation; }
             set
@@ -65,17 +68,17 @@ public class GameManager : MonoBehaviour
                 orientation = value;
                 switch (value)
                 {
-                    case ENUM.Horizontal:
+                    case LANGUAGE.Horizontal:
                         Screen.orientation = ScreenOrientation.LandscapeLeft;
                         break;
 
-                    case ENUM.Vertical:
+                    case LANGUAGE.Vertical:
                         Screen.orientation = ScreenOrientation.Portrait;
                         break;
                 }
             }
         }
-        public ENUM Language
+        public LANGUAGE Language
         {
             get { return language; }
             set
@@ -159,6 +162,9 @@ public class GameManager : MonoBehaviour
         prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefubAppearingSprite);
         prefubCustomCombo = Resources.Load<CustomCombo>(C.Paths.PrefubCustomCombo);
         prefubPlaceForEquipment = Resources.Load<PlaceForEquipment>(C.Paths.PrefubPlaceForEquipment);
+        prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
+        prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
+        _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
@@ -181,9 +187,9 @@ public class GameManager : MonoBehaviour
     {
         // Игнорируем столкновения между слоем "Enemy" и самим собой. Происходит игнорирование также всех зон/коллайдеров для данного слоя (слой можно назначить как для родительского,
         // так и для всех объектов. Если у объекта изменить слой у одного из дочерних элементов, будет происходить детекция коллизий коллайдеров и зон только для этого элемента
-        _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
+        
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
-        currentSettings.Language = ENUM.Russian;
+        currentSettings.Language = LANGUAGE.Russian;
     }
 
     // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
@@ -234,4 +240,99 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = setPause ? 0 : 1;
     }
+
+    public static void DestroyObject(GameObject obj)
+    {
+        if (obj != null)
+        {
+            Destroy(obj);
+        }
+    }
+
+
+    public void ShakeSomething(GameObject obj, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation) // timeDuration = -1 для бесконечного шатания,
+                                                                                                                                  // tickTime = -1 для шатания в каждом фрейме,
+                                                                                                                                  // shouldBeAttenuation = true для затухания со вреиенем
+                                                                                                                                  // (работает только если timeDuration != -1).
+    {
+        StartCoroutine(ShakeCoroutine(obj.transform, radiusShaking, timeDuration, tickTime, shouldBeAttenuation));
+    }
+
+    IEnumerator ShakeCoroutine(Transform objTransform, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation)
+    {
+        float elapsed = 0.0f;
+        Vector3 initialLocalPositionObject = objTransform.localPosition;
+
+        float shakeDuration = 0.7f; // Длительность тряски
+        float shakeMagnitude = 0.1f; // Интенсивность тряски
+
+        if (timeDuration == -1)
+        {
+            while (true)
+            {
+                // Генерируем случайное смещение в пределах сферы
+                float x = UnityEngine.Random.Range(-1f * radiusShaking, 1f * radiusShaking) * shakeMagnitude;
+                float y = UnityEngine.Random.Range(-1f * radiusShaking, 1f * radiusShaking) * shakeMagnitude;
+
+                if (objTransform)
+                {
+                    objTransform.localPosition = initialLocalPositionObject + new Vector3(x, y, 0);
+                }
+                else
+                {
+                    break;
+                }
+
+                if (tickTime == -1f)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(tickTime);
+                }
+            }
+        }
+        else
+        {
+            while (elapsed < shakeDuration)
+            {
+                // Генерируем случайное смещение в пределах сферы
+                float x = UnityEngine.Random.Range(-1f * radiusShaking, 1f * radiusShaking) * shakeMagnitude;
+                float y = UnityEngine.Random.Range(-1f * radiusShaking, 1f * radiusShaking) * shakeMagnitude;
+
+                if (objTransform)
+                {
+                    objTransform.localPosition = initialLocalPositionObject + new Vector3(x, y, 0);
+                }
+                else
+                {
+                    break;
+                }
+
+                elapsed += Time.deltaTime;
+
+                //Затухание: Уменьшаем величину тряски со временем
+                if (shouldBeAttenuation)
+                {
+                    shakeMagnitude = Mathf.Lerp(shakeMagnitude, 0, elapsed / shakeDuration);
+                }
+
+                if (tickTime == -1f)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(tickTime);
+                }
+            }
+        }
+        if (objTransform)
+        {
+            objTransform.localPosition = initialLocalPositionObject; // Возвращаем объект в исходную позицию
+        }
+    }
+
+
 }

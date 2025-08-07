@@ -38,11 +38,13 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
 
             if (StaticClassForAdditionalFunctions.AnimationExists(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast, unit.animator))
             {
+                //Debug.Log(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
                 unit.animator.Play(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
                 unit.rb.linearVelocityX = 0;
             }
             else // кастуем мгновенно и уходим в состояние покоя
             {
+                //Debug.Log(2);
                 wasCastAnimationFinished = true;
                 unit._fsm.SetStateIdle(equipmentWhatWasPressed.ownerUnit);
             }

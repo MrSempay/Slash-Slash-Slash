@@ -17,7 +17,7 @@ public class AttackArea : MonoBehaviour
     // Надеемся универсализировать скрипт зоны атаки для всех юнитов
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // подписываемся в FsmStateWalkEnemy 
+        // подписываемся в Enemy 
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) { isPlayerOrAlliesInAttackArea?.Invoke(true, other.gameObject.GetComponent<Unit>()); }
         // на данный момент подписаны в FsmStateWalk
         if (other.gameObject.CompareTag("Enemy")) { isEnemyInAttackArea?.Invoke(true, other.gameObject.GetComponentInParent<Unit>());} // так как коллайдер у врага находится на дочернем элементе Body, а скрипт сам на 

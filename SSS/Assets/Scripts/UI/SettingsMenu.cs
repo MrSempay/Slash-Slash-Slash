@@ -131,12 +131,12 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         if (GameManager.Instance.currentSettings.cameraShakingOn != value)
             GameManager.Instance.currentSettings.cameraShakingOn = value;
     }
-    private void ValueOrientationWasChanged(ENUM value, RectTransform rectTransformToggle)
+    private void ValueOrientationWasChanged(LANGUAGE value, RectTransform rectTransformToggle)
     {
         if (GameManager.Instance.currentSettings.Orientation != value)
             GameManager.Instance.currentSettings.Orientation = value;
     }
-    private void ValueLanguageWasChanged(ENUM value, RectTransform rectTransformToggle)
+    private void ValueLanguageWasChanged(LANGUAGE value, RectTransform rectTransformToggle)
     {
         if (GameManager.Instance.currentSettings.Language != value)
             GameManager.Instance.currentSettings.Language = value;

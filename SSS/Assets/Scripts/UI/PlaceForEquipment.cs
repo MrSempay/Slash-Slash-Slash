@@ -7,7 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlaceForEquipment : MonoBehaviour
 {
 
-    private Equipment _equipment; // снаряжение в данном месте для снаряжения
+    [SerializeField] private Equipment _equipment; // снаряжение в данном месте для снаряжения // временно [SerializeField]
     private Dictionary<string, float> increasedParametersValuesByEquipmentInThisPlace;
 
     [SerializeField] private TextEdit nameOfEquipment;
@@ -30,16 +30,17 @@ public class PlaceForEquipment : MonoBehaviour
 
                 if (!value) // если где-либо значение Equipment устанавливают в null, то мы изменям UI поля
                 {
-                    nameOfEquipment.enabled = false;
-                    costOfEquipment.enabled = false;
+                    nameOfEquipment.gameObject.SetActive(false);
+                    costOfEquipment.gameObject.SetActive(false);
+                    //Debug.Log(_equipment);
                     _equipment.ParametersOfEquipmentWasAssigned -= ChangeNameAndCostEquipment; // если место для снаряжения не в здании и снаряжение из этого места исчезло, отписываемся
                                                                                                // от детекции сигнала о смене его параметров (прошлого экземпляра снаряжения)
                 }
                 else
                 {
                     ChangeNameAndCostEquipment(value.equipmentName, value.cost); // чтоб если в здании вообще появилось новое снаряжение, мы обновляли его цену и имя
-                    nameOfEquipment.enabled = true;
-                    costOfEquipment.enabled = !value.isEquipmentASpell; // не устанавливаем цену для снаряжения типа Spell
+                    nameOfEquipment.gameObject.SetActive(true);
+                    costOfEquipment.gameObject.SetActive(!value.isEquipmentASpell); // не устанавливаем цену для снаряжения типа Spell
                     value.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment; // если место для снаряжения не в здании и снаряжение появилось на данном месте, подписываемся на
                                                                                           // изменение его параметров (вот этого нового экземпляра снаряжения)
                 }
@@ -91,23 +92,23 @@ public class PlaceForEquipment : MonoBehaviour
     {
         if (!isBuildingPlace)
         {
-            nameOfEquipment.enabled = false;
-            costOfEquipment.enabled = false;
+            //Debug.Log("Mmm?");
+            nameOfEquipment.gameObject.SetActive(false);
+            costOfEquipment.gameObject.SetActive(false);
             return;
         }
         else if (Equipment.isEquipmentASpell)
         {
-            nameOfEquipment.enabled = true;
-            costOfEquipment.enabled = false;
+            nameOfEquipment.gameObject.SetActive(true);
+            costOfEquipment.gameObject.SetActive(false);
         }
 
-            Equipment.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment;
+        Equipment.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     // хоть на данный момент мы эмулируем сигнал ParametersOfEquipmentWasAssigned только при первичном присвоении параметров для снаряжения, можно будет доработать скрипт Equipment:

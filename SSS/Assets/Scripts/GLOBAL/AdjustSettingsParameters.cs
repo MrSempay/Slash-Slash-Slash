@@ -10,7 +10,7 @@ public class AdjustSettingsParameters
         {
             C.DK.ParameterOrientation, new Dictionary<string, object>()
             {
-                { C.DK.listChosing, new List<ENUM> { ENUM.Horizontal, ENUM.Vertical } },
+                { C.DK.listChosing, new List<LANGUAGE> { LANGUAGE.Horizontal, LANGUAGE.Vertical } },
 
             }
         },

@@ -29,7 +29,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
         equipment.selfSprite.sortingOrder = 21; // выше всех UI-элементов, кроме диалога, по идее
         if (!equipment.WasSold) // не устанавливаем WasSold в true, если снаряжение уже у нас типа в инвентаре. По идее WasSold маркирует снаряжение, true только если продан и в инвентаре
         {
-            equipment.WasSold = true;
+            equipment.WasSold = true; // может, стоит WasSold заменить просто на AtPlayer.
             player.Inventory.SetEquipmentToInventory(equipment);
         }
 

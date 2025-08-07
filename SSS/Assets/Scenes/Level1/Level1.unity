@@ -16702,6 +16702,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &686763939 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7945814483696819063, guid: a09af9f7ab483274b8fe97e4dcd432ba, type: 3}
+  m_PrefabInstance: {fileID: 1532314004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &691458489
 GameObject:
   m_ObjectHideFlags: 0
@@ -18211,6 +18216,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 229638531191806766, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.81
+      objectReference: {fileID: 0}
     - target: {fileID: 248180197713157016, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: m_Name
       value: ParameterLanguage
@@ -18258,7 +18267,7 @@ PrefabInstance:
     - target: {fileID: 2022923937445141213, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: _rectTransformSpellPanel
       value: 
-      objectReference: {fileID: 954485410}
+      objectReference: {fileID: 0}
     - target: {fileID: 2022923937445141213, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
       propertyPath: _rectTransformAmmunitionPanel
       value: 
@@ -22031,11 +22040,6 @@ Transform:
   - {fileID: 1579902831}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &954485410 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3749833563227270942, guid: 1bd45d56e41be4642a41b763776eaf45, type: 3}
-  m_PrefabInstance: {fileID: 781877260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &954559668
 GameObject:
   m_ObjectHideFlags: 0
@@ -22587,11 +22591,11 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.22000001
+  m_VoxelSize: 0.11000001
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: caa20667dbef00e4f942e3dd9ed963cf, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f2cb49a4183e16a488721c39104d97c7, type: 2}
 --- !u!4 &963693488
 Transform:
   m_ObjectHideFlags: 0
@@ -32516,6 +32520,10 @@ PrefabInstance:
       value: School
       objectReference: {fileID: 0}
     - target: {fileID: 6830146508781297310, guid: 9dae0d87d198a8e4bb02433debb872e0, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1620912444}
+    - target: {fileID: 6830146508781297310, guid: 9dae0d87d198a8e4bb02433debb872e0, type: 3}
       propertyPath: _isMainTarget
       value: 1
       objectReference: {fileID: 0}
@@ -35911,6 +35919,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1295342500009894015, guid: a09af9f7ab483274b8fe97e4dcd432ba, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 686763939}
+    - target: {fileID: 1295342500009894015, guid: a09af9f7ab483274b8fe97e4dcd432ba, type: 3}
       propertyPath: _isMainTarget
       value: 1
       objectReference: {fileID: 0}
@@ -37777,6 +37789,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1620912444 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8059377822951659230, guid: 9dae0d87d198a8e4bb02433debb872e0, type: 3}
+  m_PrefabInstance: {fileID: 1373288659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621930276
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,24 +10,23 @@ using Unity.VisualScripting;
 
 public class LevelBuilder : MonoBehaviour
 {
-    public List<IMainTarget> listMainTargets = new();
 
     // В коде будем использовать словарь, для удобства, поэтому создадим его на основе списка
 
-    [SerializeField] protected Enemy enemy;
-    [SerializeField] protected List<TransformIntPair> targetPointsList = new List<TransformIntPair>(); // храним массив элементов класса, описывающего элемент словаря ключ-значения
-                                                                                                       // transform-int для задания целей врагам. В целом это поле для реализации
-                                                                                                       // возможности задавать цели и количество врагов для них через редактор
+    protected List<TransformIntPair> targetPointsList = new List<TransformIntPair>(); // храним массив элементов класса, описывающего элемент словаря ключ-значения
+                                                                                      // transform-int для задания целей врагам. В целом это поле для реализации
+                                                                                      // возможности задавать цели и количество врагов для них через редактор
 
-    protected Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом является ссылка на компонент transform цели, значением - количество
-                                                                                                  // врагов, которые направятся к цели.
+    protected Dictionary<Transform, int> targetPointsForEnemy = new Dictionary<Transform, int>(); // ключом является ссылка на объект, реализующий IMainTarget, значением - количество                                                                                                  // врагов, которые направятся к цели.
     protected Coroutine spawnEnemyByTimerCoroutine;
     protected List<Transform> spawnPointsTransforms = new(); // массив для компонентов Transform всех точек спавна
     protected Transform clusterSpawnPointsTransform; // кластер (родительский элемент) всех точек спавна
     protected bool isStillEnemyForSpawn;
     protected int numberOfSpawnIteration = 0; // чтоб знали, насколько усиливать врагов на текущей итерации
-    protected List<Transform> targetTransformsForRandom;
+    protected List<Transform> targetsForRandom;
     protected List<Enemy> listEnemiesFromLastWave = new();
+
+    [SerializeField] protected Enemy enemy;
 
     public static LevelBuilder instance;
 
@@ -36,8 +35,10 @@ public class LevelBuilder : MonoBehaviour
     [NonSerialized] public float timeBetweenEnemySpawnIteration = 2;
     [NonSerialized] public Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
     [NonSerialized] public Dictionary<string, float> absoluteIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
+    [NonSerialized] public string selfName;
 
-    public string selfName;
+    public Transform BoxSplitTargetPointsForEnemies;
+    public List<IMainTarget> listMainTargets = new();
 
     public Dictionary<Transform, int> TargetPointsForEnemy
     {
@@ -80,6 +81,7 @@ public class LevelBuilder : MonoBehaviour
         //percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>(AdjustLevelParameters.levelParameters[selfName][C.DK.percentageIncreaseEnemiesParametersBySpawnIteration]);
         AssignParametersAndProperties(AdjustLevelParameters.levelParameters, this, selfName);
 
+        BoxSplitTargetPointsForEnemies = InstanceEmptyObjectAndGetTransform(transform, C.NamesSpawningObjects.BoxSplitTargetPointsForEnemies, Vector3.zero);
         //foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
         //{
         //    Debug.Log(item.Value);
@@ -125,36 +127,40 @@ public class LevelBuilder : MonoBehaviour
         if (enemy != null && spawnPointTransform != null) // Проверяем, что ссылки установлены
         {
             // получаем список ключей из словаря. В список добавляем только те позиции, на которые ещё должны идти враги
-            targetTransformsForRandom = new List<Transform>();
+            targetsForRandom = new List<Transform>(); // этот список только с теми целевыми точками, куда нужно спавнить более 0 врагов, ибо можем задать точку и указать 0 врагов
+            List<Transform> allTransformTargetPoints = new List<Transform>(); // этот список для вообще всех Transform-ов всех целевых точек. А может и не надо оно...
             foreach (var targetPoint in TargetPointsForEnemy)
             {
+                allTransformTargetPoints.Add(targetPoint.Key);
                 if (targetPoint.Value > 0)
                 {
-                    if (targetPoint.Key != null) targetTransformsForRandom.Add(targetPoint.Key); // теоретически у нас может не быть на уровне одной из предустановленных в скрипте 
-                                                                                                 // целевых точек для врага. В таком случае соответствующее поле Transfrom будет null
+                    if (targetPoint.Key != null) targetsForRandom.Add(targetPoint.Key); // теоретически у нас может не быть на уровне одной из предустановленных в скрипте 
+                                                                                        // целевых точек для врага. В таком случае соответствующее поле Transfrom будет null
                 }
             }
 
             // если массив не пустой (то есть были позици, на которые ещё должны идти враги), то движемся далее
-            if (targetTransformsForRandom.Count > 0)
+            if (targetsForRandom.Count > 0)
             {
                 // генерируем случайный индекс
-                int randomIndex = UnityEngine.Random.Range(0, targetTransformsForRandom.Count);
+                int randomIndex = UnityEngine.Random.Range(0, targetsForRandom.Count);
 
                 // получаем случайный Transform (ключ) из списка
-                Transform randomTarget = targetTransformsForRandom[randomIndex];
+                Transform randomTarget = targetsForRandom[randomIndex];
 
                 // инстанцируем врага
                 Enemy newEnemy = Instantiate(enemy, spawnPointTransform.position, spawnPointTransform.rotation);
 
                 // уменьшаем количество врагов для заданной врагу позиции
+                Debug.Log(targetsForRandom.Count);
                 targetPointsForEnemy[randomTarget]--;
                 // присваиваем случайный Transform врагу
-                newEnemy.currentTargetTransform = randomTarget;
+                newEnemy.CurrentTargetTransform = randomTarget;
                 newEnemy.isInstancedByLevel = true;
-                Debug.Log(listEnemiesFromLastWave.Count);
+                Debug.Log(targetsForRandom.Count);
+                newEnemy.transformTargets = allTransformTargetPoints;
                 listEnemiesFromLastWave.Add(newEnemy);
-                Debug.Log(listEnemiesFromLastWave.Count);
+                //Debug.Log(listEnemiesFromLastWave.Count);
 
                 Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значения
                                                                                                                                   // для усиления юнитов
@@ -183,10 +189,10 @@ public class LevelBuilder : MonoBehaviour
     // вернём true только в случае, если умрёт последний враг из последней волны
     public bool WasEnemiesWaveDestroyed(Enemy scriptEnemy)
     {
-        Debug.Log(listEnemiesFromLastWave.Count);
+        //Debug.Log(listEnemiesFromLastWave.Count);
         if (listEnemiesFromLastWave.Contains(scriptEnemy))
         {
-        Debug.Log("shit");
+        //Debug.Log("shit");
 
             listEnemiesFromLastWave.Remove(scriptEnemy);
             return listEnemiesFromLastWave.Count == 0 && spawnEnemyByTimerCoroutine == null; // если враг был последним в списке волны и корутина для их спавна уже не работала

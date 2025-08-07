@@ -9,14 +9,14 @@ public static class AdjustBuildingParameters : object
     {
         // »нициализируем словарь при объ€влении
         { C.DK.School, new Dictionary<string, object>() {
-            { C.DK.TimeForUpdateAssortiment, 15f },
+            { C.DK.TimeForUpdateAssortiment, 15f }, // настраивать “ќЋ№ ќ Ё“ќ!
             { C.DK.FolderImagesOfEquipment, C.Paths.FolderImagesForSpells },
             { C.DK.NameTargetEquipmentPanelPlayer, C.DK.SpellPanel },
-            { C.DK.customScriptsEquipment, new Dictionary<string, Type> { { C.DK.ProtectiveField, typeof(ProtectiveField) }, { C.DK.Berserker, typeof(Berserker) }, { C.DK.Healing, typeof(Healing) } } },
+            { C.DK.customScriptsEquipment, new Dictionary<string, Type> { { C.DK.ProtectiveField, typeof(ProtectiveField) }, { C.DK.Berserker, typeof(Berserker) }, { C.DK.Healing, typeof(Healing) }, { C.DK.ArcLightning, typeof(ArcLightning) } } },
         } },
         { C.DK.Treasury, new Dictionary<string, object>() {
             { C.DK.TimeForUpdateAssortiment, 15f },
-            { C.DK.FolderImagesOfEquipment, C.Paths.FolderImagesForAmmunition },
+            { C.DK.FolderImagesOfEquipment, C.Paths.FolderImagesForAmmunition }, // вроде как рудиментна€ вещь уже. —сылаемс€ просто сразу на константу
             { C.DK.NameTargetEquipmentPanelPlayer, C.DK.AmmunitionPanel },
             { C.DK.customScriptsEquipment, new Dictionary<string, Type> { { C.DK.Tragicomedy, typeof(Tragicomedy) }, { C.DK.ThirstySakura, typeof(ThirstySakura) } }  },
         } },
