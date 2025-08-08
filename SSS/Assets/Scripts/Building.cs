@@ -3,13 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+//using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Building : MonoBehaviour
 {
     private Fsm _fsm;
     private Coroutine _coroutineUpdateAssortimentInBuilding;
     private bool _isAroundBuilding = false;
+    private RectTransform rectTransformEquipmentPlaces;
 
     [SerializeField] private Door _selfDoor;
 
@@ -51,15 +52,20 @@ public class Building : MonoBehaviour
     {
 
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustBuildingParameters.buildingParameters, this, selfName);
+        rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
         //StaticClassForAdditionalFunctions.AssignPropertyValues(AdjustBuildingParameters.buildingParameters, this, nameOfObject);
 
         rectTransformTargetEquipmentPanelPlayer = GameObject.Find(nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
         entirePanel = transform.Find("EntirePanel").gameObject; 
         buttonEnter = transform.Find("CanvasButtonEnter").gameObject;
         //Debug.Log("МЫ ТУУУУУУУУУУУУТ " + Quaternion.identity);
+        foreach (Transform equipmentTransform in rectTransformEquipmentPlaces)
+        {
+            equipmentTransform.rotation = Quaternion.identity;
+        }
         _selfDoor.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
         buttonEnter.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
-        entirePanel.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
+        //entirePanel.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
 
 
 
@@ -73,7 +79,6 @@ public class Building : MonoBehaviour
 
     protected virtual void Start()
     {
-        RectTransform rectTransformEquipmentPlaces = transform.Find("EntirePanel/EquipmentStuffPlaces")?.gameObject.GetComponent<RectTransform>();
         _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
         _fsm.SetState<FsmStateBuildingNormal>();
     }
@@ -92,12 +97,12 @@ public class Building : MonoBehaviour
     // зона для активации кнопки входа в здание
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = true; } // убрали в рамках расстановки снаряжения на полу...
+        //if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = true; } // убрали в рамках расстановки снаряжения на полу...
         if (other.gameObject.CompareTag("Enemy")) { _fsm.SetState<FsmStateBuildingDestroyed>(); } 
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = false; } // убрали в рамках расстановки снаряжения на полу...
+        //if (other.gameObject.CompareTag("Player")) { IsAroundBuilding = false; } // убрали в рамках расстановки снаряжения на полу...
     }
 
 

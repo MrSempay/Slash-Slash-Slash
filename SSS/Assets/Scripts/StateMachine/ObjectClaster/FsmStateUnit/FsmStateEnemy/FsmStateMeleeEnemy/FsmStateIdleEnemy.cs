@@ -37,7 +37,7 @@ public class FsmStateIdleEnemy : FsmStateEnemy
 
         if (enemy.isTriggered)
         {
-            enemy._fsm.SetState<FsmStateWalkEnemy>();
+            //enemy._fsm.SetState<FsmStateWalkEnemy>(); // по идее триггеримся только во время входа игрока в зону детекции
         }
     }
 

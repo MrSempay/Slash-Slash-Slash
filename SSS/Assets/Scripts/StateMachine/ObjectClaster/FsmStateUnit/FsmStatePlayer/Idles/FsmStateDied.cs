@@ -21,6 +21,7 @@ public class FsmStateDied : FsmStatePlayer
         player.areUpdatingFunctionsEnabled = false;
         player.StopAllCoroutines();
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
+        player.WasDestroyed = true;
 
     }
 

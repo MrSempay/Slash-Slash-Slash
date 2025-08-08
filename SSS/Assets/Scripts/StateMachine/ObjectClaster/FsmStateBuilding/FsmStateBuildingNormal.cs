@@ -23,7 +23,7 @@ public class FsmStateBuildingNormal : FsmStateBuilding
     {
         base.Update();
 
-        building.buttonEnter.SetActive(building.IsAroundBuilding);
+        // building.buttonEnter.SetActive(building.IsAroundBuilding); // убрали в рамках расстановки снар€жени€ на полу...
         if (building.buttonEnterWasPressedToEnter) fsm.SetState<FsmStateBuildingOpened>();
 
     }

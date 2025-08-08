@@ -169,6 +169,11 @@ public class Enemy : Unit
         CurrentTargetTransform = playerTransform;
         currentMainTarget = CurrentTargetTransform.GetComponent<IMainTarget>();
         temporaryTargetForRazbrestis = null;
+        if (!transformTargets.Contains(playerTransform))
+        {
+            transformTargets.Add(playerTransform);
+        }
+        GameManager.DestroyObject(temporaryTargetForRazbrestis);
         isInRazbrestisState = false;
     }
 

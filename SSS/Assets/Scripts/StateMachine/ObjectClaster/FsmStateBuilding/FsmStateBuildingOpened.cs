@@ -11,20 +11,20 @@ public class FsmStateBuildingOpened : FsmStateBuilding
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Building Open state [ENTER]");
-        building.entirePanel.SetActive(true);
+        //building.entirePanel.SetActive(true); // убрали в рамках расстановки снар€жени€ на полу...
     }
 
     public override void Exit()
     {
         Debug.Log("Building Open state [EXIT]");
-        building.entirePanel.SetActive(false);
-        building.buttonEnterWasPressedToEnter = false;
+        //building.entirePanel.SetActive(false); // убрали в рамках расстановки снар€жени€ на полу...
+        //building.buttonEnterWasPressedToEnter = false; // убрали в рамках расстановки снар€жени€ на полу...
     }
 
     public override void Update()
     {
         base.Update();
-        if (!building.buttonEnterWasPressedToEnter) fsm.SetState<FsmStateBuildingNormal>();
-        if (!building.IsAroundBuilding) fsm.SetState<FsmStateBuildingNormal>();
+        // if (!building.buttonEnterWasPressedToEnter) fsm.SetState<FsmStateBuildingNormal>(); // убрали в рамках расстановки снар€жени€ на полу...
+        // if (!building.IsAroundBuilding) fsm.SetState<FsmStateBuildingNormal>(); // убрали в рамках расстановки снар€жени€ на полу...
     }
 }

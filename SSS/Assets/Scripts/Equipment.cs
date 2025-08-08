@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static C;
 
 public class Equipment : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Equipment : MonoBehaviour
     private Coroutine _callDownAnimationCoroutine; // иконка для анимации таймера КД.
     private bool _startWasCalledAlready = false; // иконка для анимации таймера КД.
     private bool _awakeWasCalledAlready = false; // иконка для анимации таймера КД.
+    private AreaDetectEnteringExiting _areaDetectEnteringExiting;
+
     public Animator mdaaa;
 
 
@@ -153,7 +156,10 @@ public class Equipment : MonoBehaviour
             selfCollider = GetComponent<BoxCollider2D>();
             mdaaa = animator;
 
-            _callDownIcon = transform.Find("CallDownIcon").GetComponent<Image>();
+            _callDownIcon = transform.Find(C.NamesObjects.CallDownIcon).GetComponent<Image>();
+            //_areaDetectEnteringExiting = transform.Find(C.NamesObjects.AreaDetectEnteringExiting).GetComponent<AreaDetectEnteringExiting>();
+
+            //_areaDetectEnteringExiting.somethingEnterExitArea += PlayerEnteredInfoArea;
 
             //spriteCallDown = callDownIcon.sprite; // на тот случай, если мы не найдём спрайт по имени + Disabled при спавне снаряжения. Спрайт должен быть всегда!
             sprite = selfSprite.sprite; // на тот случай, если мы не найдём спрайт по имени при спавне снаряжения. Спрайт должен быть всегда!
@@ -386,6 +392,18 @@ public class Equipment : MonoBehaviour
     public virtual void UnitCastAnimationPeackedForThisEquipment() { }
 
     #endregion
+
+
+
+
+    private void PlayerEnteredInfoArea(bool isEnter, GameObject obj, Transform transformArea)
+    {
+        if (obj.CompareTag("Player")) 
+        {
+            
+        }
+    }
+
 
     public virtual void OnDestroy()
     {

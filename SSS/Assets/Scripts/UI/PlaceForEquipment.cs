@@ -39,8 +39,8 @@ public class PlaceForEquipment : MonoBehaviour
                 else
                 {
                     ChangeNameAndCostEquipment(value.equipmentName, value.cost); // чтоб если в здании вообще появилось новое снаряжение, мы обновляли его цену и имя
-                    nameOfEquipment.gameObject.SetActive(true);
-                    costOfEquipment.gameObject.SetActive(!value.isEquipmentASpell); // не устанавливаем цену для снаряжения типа Spell
+                    // nameOfEquipment.gameObject.SetActive(true); // убрали в рамках расстановки снаряжения на полу... 
+                    //costOfEquipment.gameObject.SetActive(!value.isEquipmentASpell); // не устанавливаем цену для снаряжения типа Spell // убрали в рамках расстановки снаряжения на полу...
                     value.ParametersOfEquipmentWasAssigned += ChangeNameAndCostEquipment; // если место для снаряжения не в здании и снаряжение появилось на данном месте, подписываемся на
                                                                                           // изменение его параметров (вот этого нового экземпляра снаряжения)
                 }
@@ -99,7 +99,7 @@ public class PlaceForEquipment : MonoBehaviour
         }
         else if (Equipment.isEquipmentASpell)
         {
-            nameOfEquipment.gameObject.SetActive(true);
+            // nameOfEquipment.gameObject.SetActive(true);  // убрали в рамках расстановки снаряжения на полу...
             costOfEquipment.gameObject.SetActive(false);
         }
 

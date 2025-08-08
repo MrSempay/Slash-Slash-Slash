@@ -134,6 +134,7 @@
     <Compile Include="Assets\Scripts\Test\NewEmptyCSharpScript.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\Move_Player.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
+    <Compile Include="Assets\Scripts\AreaDetectEnteringExiting.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponCategory.cs" />
     <Compile Include="Assets\Scripts\Attributes\ReadOnlyAttribute.cs" />

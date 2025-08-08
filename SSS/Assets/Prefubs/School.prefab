@@ -133,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1291450085612112921
 RectTransform:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7505316440373750295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5674927502056600402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1573,6 +1573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBue
       objectReference: {fileID: 0}
+    - target: {fileID: 119058711046123347, guid: ff9c58e165b2fee4b9e4d6268c2a95b8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3304855616188526769, guid: ff9c58e165b2fee4b9e4d6268c2a95b8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1678,6 +1682,10 @@ PrefabInstance:
     - target: {fileID: 815669075519134456, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Name
       value: SpellPlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2853885846529086191, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Enabled
@@ -1793,6 +1801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellPlace
       objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1902,6 +1914,10 @@ PrefabInstance:
     - target: {fileID: 815669075519134456, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Name
       value: SpellPlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233313597862493324, guid: cacf95ee725376147a098c25cbc86851, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8937193332880116596, guid: cacf95ee725376147a098c25cbc86851, type: 3}
       propertyPath: m_Pivot.x

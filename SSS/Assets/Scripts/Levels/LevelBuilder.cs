@@ -81,7 +81,7 @@ public class LevelBuilder : MonoBehaviour
         //percentageIncreaseEnemiesParametersBySpawnIteration = new Dictionary<string, float>(AdjustLevelParameters.levelParameters[selfName][C.DK.percentageIncreaseEnemiesParametersBySpawnIteration]);
         AssignParametersAndProperties(AdjustLevelParameters.levelParameters, this, selfName);
 
-        BoxSplitTargetPointsForEnemies = InstanceEmptyObjectAndGetTransform(transform, C.NamesSpawningObjects.BoxSplitTargetPointsForEnemies, Vector3.zero);
+        BoxSplitTargetPointsForEnemies = InstanceEmptyObjectAndGetTransform(transform, C.NamesObjects.BoxSplitTargetPointsForEnemies, Vector3.zero);
         //foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
         //{
         //    Debug.Log(item.Value);

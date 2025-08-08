@@ -199,11 +199,13 @@ public class C
         public const string Stune = "Stune";
     }
 
-    public static class NamesSpawningObjects
+    public static class NamesObjects
     {
         public const string Stune = "Stune";
         public const string RandomTargetForSplit = "RandomTargetForSplit";
         public const string BoxSplitTargetPointsForEnemies = "BoxSplitTargetPointsForEnemies";
+        public const string AreaDetectEnteringExiting = "AreaDetectEnteringExiting";
+        public const string CallDownIcon = "CallDownIcon";
     }
 
     public static class AppSprite

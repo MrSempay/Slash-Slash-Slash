@@ -140,15 +140,17 @@ public class FsmStateEnemy : FsmStateUnit
                 enemy.isPathValid = false; //—брасываем флаг
                 if (enemy.currentMainTarget != null)
                 {
+                    Debug.Log("≈банутьс€0");
                     if (!enemy.currentMainTarget.WasDestroyed)
                     {
                         Debug.Log("≈банутьс€");
                         return;
                     }
                 }
-
+                Debug.Log("≈банутьс€1");
                 if (!enemy.isInRazbrestisState)
                 {
+                    Debug.Log("≈банутьс€2");
                     SpawnTemporaryTargetForRazbrestis();
                 }
                 else
@@ -157,14 +159,17 @@ public class FsmStateEnemy : FsmStateUnit
                     enemy.isInRazbrestisState = false;
                     if (enemy.temporaryTargetForRazbrestis)
                     {
+                        
                         GameManager.DestroyObject(enemy.temporaryTargetForRazbrestis);
                     }
                     if (enemy.currentMainTarget != null) // если это была целева€ конечна€ точка, 
                     {
+                        Debug.Log("≈банутьс€3");
                         ProcessReachingMainTarget();
                     }
                     else
                     {
+                        Debug.Log("≈банутьс€4");
                         fsm.SetState<FsmStateIdleEnemy>();
                     }
                 }
@@ -200,7 +205,7 @@ public class FsmStateEnemy : FsmStateUnit
         enemy.isInRazbrestisState = true;
         float randomPositionNearLastTarget = UnityEngine.Random.Range(-6f, 6f);
         Vector3 positionNewTarget = new Vector3(enemy.CurrentTargetTransform.position.x + randomPositionNearLastTarget, enemy.CurrentTargetTransform.position.y, enemy.CurrentTargetTransform.position.z);
-        enemy.CurrentTargetTransform = StaticClassForAdditionalFunctions.InstanceEmptyObjectAndGetTransform(LevelBuilder.instance.BoxSplitTargetPointsForEnemies, C.NamesSpawningObjects.RandomTargetForSplit, positionNewTarget, false);
+        enemy.CurrentTargetTransform = StaticClassForAdditionalFunctions.InstanceEmptyObjectAndGetTransform(LevelBuilder.instance.BoxSplitTargetPointsForEnemies, C.NamesObjects.RandomTargetForSplit, positionNewTarget, false);
         enemy.temporaryTargetForRazbrestis = enemy.CurrentTargetTransform.gameObject;
         GameManager.Instance.ShakeSomething(enemy.temporaryTargetForRazbrestis, 7f, -1f, 0.3f, false);
         //CoroutineManager.Instance.StartManagedCoroutine(gameObject, BiasForSpawnTemporaryTarget());
