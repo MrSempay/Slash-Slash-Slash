@@ -41,7 +41,7 @@ public class School : Building, IMainTarget
         base.Start();
     }
 
-    protected override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
+    public override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
         onUpdateAssortment?.Invoke(null, this); // подписываемся на событие в ScenarioScript, чтоб знать, когда отписываться от прослушивания события прошлой партии ассортимента, пока
                                                 // та ещё не была удалена

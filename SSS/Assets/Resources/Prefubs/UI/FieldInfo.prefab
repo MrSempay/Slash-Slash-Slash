@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 878367499176669528}
   - component: {fileID: 8926572559061241104}
   m_Layer: 0
-  m_Name: AmountScore
+  m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 8203066287316303387}
   - component: {fileID: 811175004566240230}
   m_Layer: 0
-  m_Name: FieldLeaderboard
+  m_Name: FieldInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,5 +507,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageIcon: {fileID: 1510400004589936808}
-  textName: {fileID: 5214719427639197044}
-  textScore: {fileID: 878367499176669528}
+  textNameInfo: {fileID: 5214719427639197044}
+  textValueInfo: {fileID: 878367499176669528}

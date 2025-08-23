@@ -80,9 +80,9 @@ public class SaveLoadManager : MonoBehaviour
             Debug.Log("Найден юнит: " + unit.gameObject.name + " c типом: " + type);
 
             // Получаем все поля класса
-            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic); // Instance - для экземпляра класса, Public/NonPublic - чтобы получить все поля
+            System.Reflection.FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic); // Instance - для экземпляра класса, Public/NonPublic - чтобы получить все поля
 
-            foreach (FieldInfo field in fields)
+            foreach (System.Reflection.FieldInfo field in fields)
             {
                 // Получаем значение поля
                 object value = field.GetValue(unit);
@@ -126,7 +126,7 @@ public class SaveLoadManager : MonoBehaviour
         GameManager.Instance.dataWrapperSettings.allTogglesData = new();
 
         GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings)); // родительский RectTransform окон с настройками
-        GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.toggleGroup)); // родительский RectTransform нижней группы тумблеров
+        GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.toggleClusterGroup)); // родительский RectTransform нижней группы тумблеров
 
         GameManager.Instance.dataWrapperSettings.allSlidersData = new();
 
@@ -135,6 +135,11 @@ public class SaveLoadManager : MonoBehaviour
         GameManager.Instance.dataWrapperSettings.allChoseListsData = new();
 
         GameManager.Instance.dataWrapperSettings.allChoseListsData.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
+
+        GameManager.Instance.dataWrapperSettings.internetData = StoreInternetSettings();
+        Debug.Log(StoreInternetSettings());
+
+
     }
 
     public void LoadSettingsFromFile()
@@ -163,9 +168,12 @@ public class SaveLoadManager : MonoBehaviour
 
     public void ImplementStoredSettings()
     {
+        GameManager.Instance.currentSettings.isLoadingSettings = true;
         ImplementStoredSettingsToggle();
         ImplementStoredSettingsSliders();
         ImplementStoredSettingsChoseLists();
+        ImplementStoredInternetSettings();
+        GameManager.Instance.currentSettings.isLoadingSettings = false; 
     }
 
 
@@ -205,7 +213,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             List<RectTransform> rectTransformsRootes = new List<RectTransform>();
             rectTransformsRootes.Add(SettingsMenu.Instance.rectTransformPlacementForSettings);
-            rectTransformsRootes.Add(SettingsMenu.Instance.toggleGroup);
+            rectTransformsRootes.Add(SettingsMenu.Instance.toggleClusterGroup);
             //Debug.Log(rectTransformsRootes.Count);
             foreach (DataWrapperToggle wrapToggle in GameManager.Instance.dataWrapperSettings.allTogglesData)
             {
@@ -321,7 +329,7 @@ public class SaveLoadManager : MonoBehaviour
             ParameterChoseList scriptChoseList = childRectTransform.GetComponent<ParameterChoseList>();
             if (scriptChoseList != null)
             {
-                Debug.Log(scriptChoseList.CurrentTextValue);
+                //Debug.Log(scriptChoseList.CurrentTextValue);
                 DataWrapperChoseList wrapper = new DataWrapperChoseList();
                 Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
                 Dictionary<string, object> fieldsAndPropertiesOfScriptSlider = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, scriptChoseList);
@@ -381,6 +389,32 @@ public class SaveLoadManager : MonoBehaviour
     }
         
     
+    private DataWrapperInternetSettings StoreInternetSettings()
+    {
+        DataWrapperInternetSettings wrapper = new DataWrapperInternetSettings();
+        Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
+        Dictionary<string, object> fieldsAndPropertiesOfScriptSlider = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, SettingsMenu.Instance.parameterInternetSettings);
+        AssignParametersAndProperties(fieldsAndPropertiesOfScriptSlider, wrapper);
+        return wrapper;
+    }
+
+    public void ImplementStoredInternetSettings()
+    {
+        {
+            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            {
+                SettingsMenu.Instance.parameterInternetSettings.Awake();
+                DataWrapperInternetSettings wrapper = new DataWrapperInternetSettings();
+                Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
+                Dictionary<string, object> fieldsAndPropertiesOfInternetSettings = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, GameManager.Instance.dataWrapperSettings.internetData);
+                Debug.Log(fieldsAndPropertiesOfInternetSettings);
+                Debug.Log(GameManager.Instance.currentSettings);
+
+                AssignParametersAndProperties(fieldsAndPropertiesOfInternetSettings, GameManager.Instance.currentSettings);
+            }
+        }
+    }
+
     public void LoadGame()
     {
         Debug.Log("Game was loaded!");

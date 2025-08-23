@@ -25,7 +25,7 @@ public class DefaultLevelScenario : ScenarioScript
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); 
 
         instance = this;
 
@@ -107,10 +107,10 @@ public class DefaultLevelScenario : ScenarioScript
 
     protected override void EnemiesWaveWasDestroyed(string nameWave)
     {
-
+        base.EnemiesWaveWasDestroyed(nameWave);
         if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1)
         {
-            JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeNextWave");
+            JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
         }
         else
         {
@@ -132,6 +132,8 @@ public class DefaultLevelScenario : ScenarioScript
             {
                 dictionaryTargetsAndEnemies[targetCountPair.target] = targetCountPair.enemyCount;
             }
+
+            LevelBuilder.instance.timeBetweenEnemySpawnIteration = _listInfoAboutEnemiesWaves[_currentNumberWave].timeBetweenEnemySpawnIteration;
 
             StartWaveEnemies(dictionaryTargetsAndEnemies,
                              _currentNumberWave.ToString());

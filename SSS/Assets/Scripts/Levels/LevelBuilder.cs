@@ -30,7 +30,6 @@ public class LevelBuilder : MonoBehaviour
 
     public static LevelBuilder instance;
 
-    [NonSerialized] public string nameOfMainMusicTeam;
     [NonSerialized] public string currentWave;
     [NonSerialized] public float timeBetweenEnemySpawnIteration = 2;
     [NonSerialized] public Dictionary<string, float> percentageIncreaseEnemiesParametersBySpawnIteration = new(); // увеличение параметров на %
@@ -85,14 +84,17 @@ public class LevelBuilder : MonoBehaviour
         //foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
         //{
         //    Debug.Log(item.Value);
-            
+
         //}
+
     }
 
 
     protected virtual void Start()
     {
-        
+
+        AudioManager.Instance.UpdateMusicLevelSet();
+        AudioManager.Instance.StartBeginningMusic();
     }
 
     // Update is called once per frame

@@ -21,6 +21,8 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
 
         building.buttonEnter.SetActive(false);
 
+        building.rectTransformEquipmentPlaces.gameObject.SetActive(false);
+
         IMainTarget mainTarget = building as IMainTarget;
         if (mainTarget != null)
         {

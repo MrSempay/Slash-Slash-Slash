@@ -49,6 +49,7 @@ public class Player : Unit, IMainTarget
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform UI; //
+    public RectTransform notificationPlacement;
     public RankStyle rankStyle; //
     //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
@@ -378,7 +379,8 @@ public class Player : Unit, IMainTarget
         if (_amountEnemiesWasKilledInCombo > 1)
         {
             ScoreManager.Instance.UpCombo((int)(_amountEnemiesWasKilledInCombo * comboOneHitKillMultiplayer));
-            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
+            //ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
+            ScoreManager.Instance.InvokeAppearingText(ScoreManager.TYPE_APPEARING_MESSAGE.ComboMultyKill);
         }
         _amountEnemiesWasKilledInCombo = 0;
         _zeroizeComboKillCoroutine = null;

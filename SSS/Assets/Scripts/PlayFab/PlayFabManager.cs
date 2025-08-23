@@ -1,4 +1,4 @@
-using PlayFab;
+﻿using PlayFab;
 using PlayFab.AuthenticationModels;
 using PlayFab.ClientModels;
 using PlayFab.PfEditor.Json;
@@ -11,15 +11,21 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using static GameManager;
+using static StaticClassForAdditionalFunctions;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class PlayFabManager : MonoBehaviour
 {
+    private readonly string _generalPassword = "DefaultPass123";
+
     private static PlayFabManager _instance;
-    private string _userEmail;
-    private string _userPassword;
-    private string _userName;
+    private string _userEmail = "";
+    //private string _userPassword;
+    private string _userName = "DefaultName";
+    private string _displayName = "";
+
+    public event Action<string> OnGetDisplayNameFromEmailLogin;
 
     public static PlayFabManager Instance
     {
@@ -60,8 +66,134 @@ public class PlayFabManager : MonoBehaviour
             */
             PlayFabSettings.staticSettings.TitleId = "1C0876";
         }
+        LoginOrRegisterEmailIfFailureLoginMobile(_userEmail);
         //var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true };
         //PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
+
+    }
+
+# region Change credentials settings
+
+    public void LoginOrRegisterDeviceID()
+    {
+
+    }
+    public void DisplayNameWasChanged(string displayName)
+    {
+
+    }
+
+# endregion
+
+
+# region Login/Registration/Linking email
+
+
+    public static PlayFabAuthenticationContext contextCurrentSession;
+    private string _lastEmail = "";
+    //private Action _OnLinkEmailSuccess;
+    //private Action _OnLinkEmailFailure;
+
+    public void LinkEmail(string email)
+    {
+        if (email != "")
+        {
+            if (email == _userEmail) // это - если мы уже залогинились, знаем наш локальный email и говорим, что наш аккаунт уже привязан
+            {
+                Debug.Log("Текущий аккаунт УЖЕ привязан к заданному Email-у!");
+                GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountAlreadyLinkedToSpecifiedEmail, TYPE_NOTIFICATION.Warning, 4, false);
+                return;
+            }
+            _userEmail = email;
+            var linkEmail = new AddUsernamePasswordRequest { Email = email, Password = _generalPassword, Username = _userName };
+            PlayFabClientAPI.AddUsernamePassword(linkEmail, OnEmailLinkSuccess, OnEmailLinkFailure);
+        }
+    }
+
+
+    private void OnEmailLinkSuccess(AddUsernamePasswordResult result)
+    {
+        Debug.Log("Привязали к аккаунту почту...");
+        GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountLinked, TYPE_NOTIFICATION.Success, 4, false);
+
+        //LoginOrRegisterEmailIfFailureLoginMobile(_userEmail);
+        //_OnLinkEmailSuccess?.Invoke(); 
+        //contextCurrentSession = result.AuthenticationContext;
+    }
+
+    private void OnEmailLinkFailure(PlayFabError error)
+    {
+        //_userEmail = ""; // если привязать к почте не удалось, то сбрасываем текущее значение Email-а до значения по умолчанию
+        Debug.Log(error.ToString() + " Ошибка привязки почты к аккаунту!");
+        //Debug.Log(error.Error);
+        if (error.Error == PlayFabErrorCode.AccountAlreadyLinked)
+        {
+            GetEmailFromServer(); // это - если мы ещё не залогинились, не знаем наш локальный email и хотим получить его с сервера и проверить, то ли мы пытаемся привязать аккаунт к какому-то
+                                  // уже привязанному email-у, то ли хотим привязать к email-у, к которому этот аккаунт уже привязан - в таком случае скажем, что просто залогиньтесь.
+            return;
+        }
+
+        if (error.Error == PlayFabErrorCode.InvalidParams) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
+        {
+            Debug.Log("Неправильный формат электронной почты!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidEmailAddress, TYPE_NOTIFICATION.Failure, 4, false);
+            return;
+        }
+        //_OnLinkEmailFailure?.Invoke();
+        //Debug.Log(error.GetType());
+        //Debug.Log(error.GenerateErrorReport());
+
+    }
+
+    public void LoginOrRegisterEmailIfFailureLoginMobile(string email)
+    {
+        if (email != "")
+        {
+            _userEmail = email;
+            //if (email != _lastEmail)
+            {
+                var request = new LoginWithEmailAddressRequest { Email = email, Password = _generalPassword };
+                PlayFabClientAPI.LoginWithEmailAddress(request, OnEmailLoginSuccess, OnEmailLoginFailure);
+            }
+        }
+        else
+        {
+            LoginOrRegisterMobile();
+        }
+    }
+
+    private void OnEmailLoginSuccess(LoginResult result)
+    {
+        Debug.Log("Залогинились (Email)");
+        GameManager.Instance.InvokeAppearingNotification(C.Notifications.SignIn, TYPE_NOTIFICATION.Success, 4, false);
+        GetDisplayNameFromServer();
+        //OnGetDisplayNameFromEmailLogin.Invoke(result.InfoResultPayload.AccountInfo.Username); // подписываемся в ParameterLinkEmail, будем обновлять там текстовое поле DisplayName
+        //contextCurrentSession = result.AuthenticationContext;
+    }
+
+
+    private void OnEmailLoginFailure(PlayFabError error)
+    {
+        Debug.Log(error.ToString());
+        Debug.Log(error.Error);
+        if (error.Error == PlayFabErrorCode.InvalidParams) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
+        {
+            Debug.Log("Неправильный формат электронной почты!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidEmailAddress, TYPE_NOTIFICATION.Failure, 4, false);
+        }
+        if (error.Error == PlayFabErrorCode.AccountNotFound) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
+        {
+            Debug.Log("Для данной электронной почты аккаунт не найден!"); 
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountNotFound, TYPE_NOTIFICATION.Failure, 4, false);
+        }
+        LoginOrRegisterMobile();
+        
+    }
+
+
+    public void LoginOrRegisterMobile()
+    {
+
 #if UNITY_ANDROID
         var requestAndroid = new LoginWithAndroidDeviceIDRequest { AndroidDeviceId = ReturnMobileID(), CreateAccount = true };
         PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnLoginMobileSuccess, OnLoginMobileFailure);
@@ -74,46 +206,17 @@ public class PlayFabManager : MonoBehaviour
   
 
 #endif
-    }
 
-
-
-# region Login/Registration
-
-    public static PlayFabAuthenticationContext contextCurrentSession;
-
-    private void OnLoginSuccess(LoginResult result)
-    {
-        Debug.Log("������������");
-        //contextCurrentSession = result.AuthenticationContext;
     }
 
     private void OnLoginMobileSuccess(LoginResult result)
     {
-        Debug.Log("������������ (Mobile)");
+        Debug.Log("Залогинились (Mobile)");
+        //Debug.Log(OnGetDisplayNameFromEmailLogin);
+        //Debug.Log(result);
+        // Получаем инфо об аккаунте
+        GetDisplayNameFromServer();
         //contextCurrentSession = result.AuthenticationContext;
-    }
-
-    private void OnRegisterSuccess(RegisterPlayFabUserResult result)
-    {
-        Debug.Log("����������");
-        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = _userName }, OnDisplayName, OnLoginFailure);
-    }
-
-
-    private void OnDisplayName(UpdateUserTitleDisplayNameResult result)
-    {
-        Debug.Log(result.DisplayName + " is your display name");
-    }
-
-    private void OnLoginFailure(PlayFabError error)
-    {
-        //Debug.Log(error.ToString());
-        //Debug.Log(error.ToString());
-        //Debug.Log(error.GetType());
-        var registerRequest = new RegisterPlayFabUserRequest { Email = _userEmail, Password = _userPassword, Username = _userName };
-
-        PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
     }
 
     private void OnLoginMobileFailure(PlayFabError error)
@@ -123,12 +226,125 @@ public class PlayFabManager : MonoBehaviour
         Debug.Log(error.GenerateErrorReport());
     }
 
+# region Check Email From Server
 
-
-    private void OnRegisterFailure(PlayFabError error)
+    private void GetEmailFromServer()
     {
-        Debug.LogError(error.GenerateErrorReport());
+        var request = new GetAccountInfoRequest(); // пустой → значит про текущего игрока
+        PlayFabClientAPI.GetAccountInfo(request, OnGetAccountEmailSuccess, OnGetAccountEmailFailure);
     }
+    private void OnGetAccountEmailSuccess(GetAccountInfoResult result)
+    {
+        string email = result.AccountInfo?.PrivateInfo?.Email;
+        //string username = result.AccountInfo?.Username; // Username тоже может быть, если задавался при регистрации
+
+
+        if (email == _userEmail)
+        {
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountAlreadyLinkedToSpecifiedEmail, TYPE_NOTIFICATION.Warning, 4, false);
+            Debug.Log("Данный аккаунт уже привязан к заданному Email-у: " + email + ". Нажмите Логин.");
+            return;
+        }
+        else
+        {
+            Debug.Log("Текщий аккаунт уже привязан к другой почте!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountAlreadyLinked, TYPE_NOTIFICATION.Failure, 4, false);
+            return;
+        }
+
+        //if (!string.IsNullOrEmpty(username))
+        //    Debug.Log("Username: " + username);
+        //else
+        //    Debug.Log("Username ещё не задан");
+    }
+    private void OnGetAccountEmailFailure(PlayFabError error)
+    {
+        Debug.LogError("Ошибка при получении инфо об аккаунте: " + error.GenerateErrorReport());
+    }
+
+# endregion
+
+# region Get Display Name From Server
+
+    private void GetDisplayNameFromServer()
+    {
+        var request = new GetAccountInfoRequest(); // пустой → значит про текущего игрока
+        PlayFabClientAPI.GetAccountInfo(request, OnGetAccountDisplayNameSuccess, OnGetAccountDisplayNameFailure);
+    }
+    private void OnGetAccountDisplayNameSuccess(GetAccountInfoResult result)
+    {
+        string displayName = result.AccountInfo?.TitleInfo?.DisplayName; 
+        //string username = result.AccountInfo?.Username; // Username тоже может быть, если задавался при регистрации
+
+
+        if (!string.IsNullOrEmpty(displayName)) 
+        { 
+            Debug.Log("DisplayName: " + displayName);
+            OnGetDisplayNameFromEmailLogin?.Invoke(displayName); // подписываемся в ParameterLinkEmail, будем обновлять там текстовое поле DisplayName
+        }
+        else
+        {
+            Debug.Log(OnGetDisplayNameFromEmailLogin);
+            OnGetDisplayNameFromEmailLogin?.Invoke(""); // подписываемся в ParameterLinkEmail, будем обновлять там текстовое поле DisplayName
+            Debug.Log("DisplayName ещё не задан");
+        }
+
+        //if (!string.IsNullOrEmpty(username))
+        //    Debug.Log("Username: " + username);
+        //else
+        //    Debug.Log("Username ещё не задан");
+    }
+    private void OnGetAccountDisplayNameFailure(PlayFabError error)
+    {
+        Debug.LogError("Ошибка при получении инфо об аккаунте: " + error.GenerateErrorReport());
+    }
+
+# endregion
+
+
+
+
+    //private void OnRegisterSuccess(RegisterPlayFabUserResult result)
+    //{
+    //    Debug.Log("Зарегались");
+    //    PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = _userName }, OnDisplayName, OnUpdatingDisplayNameFailure);
+    //}
+
+
+
+    //private void OnRegisterFailure(PlayFabError error)
+    //{
+    //    Debug.LogError(error.GenerateErrorReport());
+    //}
+
+    public bool ChangeDisplayName(string displayName)
+    {
+        Debug.Log("Меняем Display Name");
+        if (displayName.Length < 4)
+        {
+            Debug.Log("Display Name должен состоять из не менее 3-ёх символов!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.DisplayNameTooShort, TYPE_NOTIFICATION.Failure, 4, false);
+            return false;
+        }
+        _displayName = displayName;
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName }, OnUpdateDisplayNameSuccess, OnUpdateDisplayNameFailure);
+        return true;
+    }
+
+    private void OnUpdateDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
+    {
+        Debug.Log(result.DisplayName + " is your display name");
+    }
+
+    private void OnUpdateDisplayNameFailure(PlayFabError error)
+    {
+        Debug.Log(error.ToString() + "Не удалось обновить DISPLAY NAME!");
+        //Debug.Log(error.ToString());
+        //Debug.Log(error.GetType());
+    }
+
+
+
 
     public void GetUserEmail(string userEmail)
     {
@@ -136,7 +352,7 @@ public class PlayFabManager : MonoBehaviour
     }
     public void GetUserPassword(string userPassword)
     {
-        this._userPassword = userPassword;
+        //this._userPassword = userPassword;
     }
 
     public void GetUserName(string userName)
@@ -144,12 +360,6 @@ public class PlayFabManager : MonoBehaviour
         this._userName = userName;
     }
 
-    public void OnClickLogin()
-    {
-        var request = new LoginWithEmailAddressRequest { Email = _userEmail, Password = _userPassword  };
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
-
-    }
 
     public static string ReturnMobileID()
     {
@@ -166,7 +376,7 @@ public class PlayFabManager : MonoBehaviour
     public int secondStat;
     
 
-    // ������-���. �������� ���������� ������ �������� �� �������. ������ ���������� ��� ����� ����� � ��������. ���������� � ���������������� API ������� � StartCloudUpdatePlayerStats
+    // Легаси-код. Изменяет статистику игрока напрямую из клиента. Теперь используем для этого вызов с серверга. Обращаемся к соответствующему API сервера в StartCloudUpdatePlayerStats
     public void StoreStats(string nameLevel)
     {
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
@@ -187,7 +397,7 @@ public class PlayFabManager : MonoBehaviour
     }
 
 
-    // �� ���������, ��� ��� ��� ��������� ����� ���������� ����, � �� �� �����. ������������� ������� ������������ ����: StartCloudUpdatePlayerStatsNEW
+    // Не актуально, так как все параметры нужно передавать явно, а не по имени. Универсальная функция представлена ниже: StartCloudUpdatePlayerStatsNEW
     //public void StartCloudUpdatePlayerStats()
     //{
     //    PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
@@ -199,19 +409,19 @@ public class PlayFabManager : MonoBehaviour
     //}
 
 
-    // ������� ��� ������ Cloud Script. ���������� �� ����������. ��� ����������� ��������� ������ ��� ���������� ����������� (������ �� � �������) ����� ������������ �������,
-    // �������������� ����: StartCloudUpdatePlayerStatsNEWAsync.
+    // Функция для вызова Cloud Script. Вызывается не асинхронно. Для асинхронной обработки только что обновлённых результатов (взятия их с сервера) нужно использовать функцию,
+    // представленную ниже: StartCloudUpdatePlayerStatsNEWAsync.
 
-    // ��� ���: StartCloudUpdatePlayerStatsNEW - ���������� �� ���������, � ������� ��� await, ������� �� ����� ����� ������� ����������� � ������� ��� ��������� (��� ���) ������ 
-    // ������ �������.
+    // Ещё раз: StartCloudUpdatePlayerStatsNEW - вызывается из контексте, в котором нет await, который не будет ждать прихода результатов с сервера для успешнего (или нет) вызова 
+    // данной функции.
 
-    // StartCloudUpdatePlayerStatsNEWAsync - ���������� �� ������������ ���������. ���������� ���� � ������ ��������� ����������� ����� ��������� ���������� ���������� ������ 
-    // ������� �� ������� (��������� ��� ���).
+    // StartCloudUpdatePlayerStatsNEWAsync - вызывается из асинхронного контекста. Выполнение кода в данном контексте продолжится после получения результата выполнения данной 
+    // функции на сервере (успешного или нет).
 
     public void StartCloudUpdatePlayerStatsNEW()
     {
         string nameLevel = LevelBuilder.instance.selfName;
-        // ������� � ��������� ������� ��� �������� ����������
+        // Создаем и заполняем словарь для хранения статистики
         Dictionary<string, object> stats = new Dictionary<string, object>()
         {
             { "CurrentScore" + nameLevel, ScoreManager.Instance.CurrentScore },
@@ -221,19 +431,19 @@ public class PlayFabManager : MonoBehaviour
             { "currentMonth" + nameLevel, DateTime.Now.Month },
         };
 
-        // �������� Cloud Script
+        // Вызываем Cloud Script
         PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
         {
-            FunctionName = "UpdatePlayerStatsNEW", // ��� Cloud Script �������
-            FunctionParameter = stats, // �������� ������� �� �����������
-            GeneratePlayStreamEvent = true, // ����������� - ���������� ������� � PlayStream
+            FunctionName = "UpdatePlayerStatsNEW", // Имя Cloud Script функции
+            FunctionParameter = stats, // Передаем словарь со статистикой
+            GeneratePlayStreamEvent = true, // Опционально - Отображать событие в PlayStream
         }, OnCloudUpdateStats, OnErrorShared);
     }
 
 
     public async Task StartCloudUpdatePlayerStatsNEWAsync()
     {
-        //Debug.Log("����");
+        //Debug.Log("Неее");
         string nameLevel = LevelBuilder.instance.selfName;
         Dictionary<string, object> stats = new Dictionary<string, object>()
         {
@@ -281,12 +491,12 @@ public class PlayFabManager : MonoBehaviour
         foreach (LogStatement log in result.Logs)
         {
             //Debug.Log(log.Data);   
-            //Debug.Log(log.Message); // ������ ��� ����� ������� ��������, ���������� � log.info()
-            //Debug.Log(log.Level);   // ��� ����� ���������� ������� �������� log - info, error � �.�
+            //Debug.Log(log.Message); // только эта штука выводит значение, переданное в log.info()
+            //Debug.Log(log.Level);   // эта штука обозначает степень важности log - info, error и т.п
         }
         ISerializerPlugin serializer = PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer);
         //Debug.Log(serializer);
-        //Debug.Log("�� ���...");
+        //Debug.Log("Не уря...");
         Dictionary<string, object> jsonResult = serializer.DeserializeObject<Dictionary<string, object>>(result.FunctionResult.ToString());
 
         if (jsonResult != null && jsonResult.ContainsKey("messageValue"))
@@ -303,7 +513,7 @@ public class PlayFabManager : MonoBehaviour
     }
 
 
-    // �������� �������� ��� ���������� �������� ������������, ������ ��� ����, ��������
+    // получаем напрямую всю статистику текущего пользователя, вообще все поля, напрямую
     void GetStats()
     {
         PlayFabClientAPI.GetPlayerStatistics(
@@ -342,19 +552,19 @@ public class PlayFabManager : MonoBehaviour
 # region Leaderboard
 
 
-    // � ����������� ����� �� ����� ����� ��������� ����������� � �������. ����������� ����� ��������� ���������� ���� �� ��������� �����������.
+    // в асинхронной среде не будет ждать получения результатов с сервера. Асинхронная среда продолжит выполнение кода не дожидаясь результатов.
     public void GetScoreLeaderboarder()
     {
-        //Debug.Log("������");
+        //Debug.Log("УРЯЯЯЯ");
         string nameLevel = LevelBuilder.instance.selfName;
         var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = "CurrentScore" + nameLevel, MaxResultsCount = 10 };
         PlayFabClientAPI.GetLeaderboard(requestLeaderboard, OnGetLeaderboard, OnErrorLeaderbpard);
     }
 
-    // ����������� ����� ����� �������������� �� ��� ���, ���� ������ ���������� � ������� � ����� ��������� �� �������� ���� ������. �� ��� ��� ����������� �������� ����� �����
+    // асинхронная среда будет приостановлена до тех пор, пока придут результаты с сервера и метод полностью не закончит свою работу. До тех пор асинхронный контекст будет ждать
     public async Task GetScoreLeaderboarderAsync()
     {
-        //Debug.Log("������");
+        //Debug.Log("УРЯЯЯЯ");
         string nameLevel = LevelBuilder.instance.selfName;
 
         var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = "CurrentScore" + nameLevel, MaxResultsCount = 10 };
@@ -389,11 +599,11 @@ public class PlayFabManager : MonoBehaviour
 
 
 
-    public Dictionary<string, int> lastLeaderboardStatsInfo; // string_���_������: int_��������_����������
+    public Dictionary<string, int> lastLeaderboardStatsInfo; // string_ИМЯ_ИГРОКА: int_ЗНАЧЕНИЕ_СТАТИСТИКИ
 
     void OnGetLeaderboard(GetLeaderboardResult result)
     {
-        //Debug.Log("mdaaaaaaaaaaaaaaaaaa");
+        Debug.Log("mdaaaaaaaaaaaaaaaaaa");
         //Debug.Log(result);
         //Debug.Log(result.Leaderboard);
         //Debug.Log(result.Leaderboard.Count);

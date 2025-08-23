@@ -14,7 +14,8 @@ public class Equipment : MonoBehaviour
     private Coroutine _callDownAnimationCoroutine; // иконка для анимации таймера КД.
     private bool _startWasCalledAlready = false; // иконка для анимации таймера КД.
     private bool _awakeWasCalledAlready = false; // иконка для анимации таймера КД.
-    private AreaDetectEnteringExiting _areaDetectEnteringExiting;
+    [NonSerialized] public AreaDetectEnteringExiting _areaDetectEnteringExiting;
+    private EquipmentInfoPanel _equipmentInfoPanel;
 
     public Animator mdaaa;
 
@@ -22,6 +23,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
                                      // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
+    [NonSerialized] public Transform transformPlaceInfoPanel;
     [NonSerialized] public SpriteRenderer selfSprite; // свой компонент спрайта
     [NonSerialized] public UnityEngine.Sprite sprite; // свой спрайт, назначается в здании при спавне
     [NonSerialized] public Vector3 startLocalPosition;
@@ -157,9 +159,10 @@ public class Equipment : MonoBehaviour
             mdaaa = animator;
 
             _callDownIcon = transform.Find(C.NamesObjects.CallDownIcon).GetComponent<Image>();
-            //_areaDetectEnteringExiting = transform.Find(C.NamesObjects.AreaDetectEnteringExiting).GetComponent<AreaDetectEnteringExiting>();
+            _areaDetectEnteringExiting = transform.Find(C.NamesObjects.AreaDetectEnteringExiting).GetComponent<AreaDetectEnteringExiting>();
+            transformPlaceInfoPanel = transform.Find(C.NamesObjects.PlaceInfoPanel).GetComponent<Transform>();
 
-            //_areaDetectEnteringExiting.somethingEnterExitArea += PlayerEnteredInfoArea;
+            _areaDetectEnteringExiting.somethingEnterExitArea += PlayerEnteredInfoArea;
 
             //spriteCallDown = callDownIcon.sprite; // на тот случай, если мы не найдём спрайт по имени + Disabled при спавне снаряжения. Спрайт должен быть всегда!
             sprite = selfSprite.sprite; // на тот случай, если мы не найдём спрайт по имени при спавне снаряжения. Спрайт должен быть всегда!
@@ -398,9 +401,27 @@ public class Equipment : MonoBehaviour
 
     private void PlayerEnteredInfoArea(bool isEnter, GameObject obj, Transform transformArea)
     {
-        if (obj.CompareTag("Player")) 
+        if (obj.CompareTag("Player") && !WasSold)
         {
-            
+            if (isEnter)
+            {
+                if (_equipmentInfoPanel)
+                {
+                    _equipmentInfoPanel.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _equipmentInfoPanel = Instantiate(GameManager.Instance.prefubEquipmentInfoPanel, transformPlaceInfoPanel, false);
+                    _equipmentInfoPanel.FillInfoForm(this);
+                }
+            }
+            else
+            {
+                if (_equipmentInfoPanel) // хотя null, по идее, оно тут не может быть, ибо перед тем как из зоны выйти, нужно в неё зайти
+                {
+                    _equipmentInfoPanel.gameObject.SetActive(false);
+                }
+            }
         }
     }
 
@@ -410,6 +431,7 @@ public class Equipment : MonoBehaviour
         //Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
 
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+        _areaDetectEnteringExiting.somethingEnterExitArea -= PlayerEnteredInfoArea;
         _fsm.StateCurrent.Exit(); // Если снаряжении находится в состоянии Selected, то дабы корректно завершить состояние Translate у Player необходимо выйти из состояния Selected.
 
         StopAllCoroutines();

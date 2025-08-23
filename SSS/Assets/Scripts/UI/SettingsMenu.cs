@@ -6,6 +6,10 @@ using static StaticClassForAdditionalFunctions;
 
 public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
 {
+    public ParameterInternetSettings parameterInternetSettings;
+    public RectTransform toggleClusterGroup;
+    public RectTransform rectTransformPlacementForSettings;
+    public List<RectTransform> togglesInGroup; // сделали public для сохранения
 
     private static SettingsMenu _instance;
     private RectTransform _rectTransformLastToggle;
@@ -14,10 +18,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     private GameObject _objectSonicSettingsPanel;
     private GameObject _objectVideoSettingsPanel;
     private GameObject _objectLanguageSettingsPanel;
+    private GameObject _objectInternetSettingsPanel;
 
-    public RectTransform toggleGroup;
-    public RectTransform rectTransformPlacementForSettings;
-    public List<RectTransform> togglesInGroup; // сделали public для сохранения
 
     public bool awakeWasCalledAlready { get; set; }
 
@@ -44,12 +46,15 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             }
             _instance = this;
 
-            toggleGroup = transform.Find("DownTogglesGroup").GetComponent<RectTransform>();
+            toggleClusterGroup = transform.Find("DownTogglesClaster").GetComponent<RectTransform>();
             rectTransformPlacementForSettings = transform.Find("PlacementForSettings").GetComponent<RectTransform>();
 
-            foreach (RectTransform rectTransformToggle in toggleGroup) // пока что хз зачем нам массив всех тумблеров, ведь можно контролировать визуализацию лишь предпоследнего
+            foreach (RectTransform rectTransformToggleGroup in toggleClusterGroup) // пока что хз зачем нам массив всех тумблеров, ведь можно контролировать визуализацию лишь предпоследнего
             {
-                togglesInGroup.Add(rectTransformToggle);
+                foreach (RectTransform rectTransformToggle in rectTransformToggleGroup)
+                {
+                    togglesInGroup.Add(rectTransformToggle);
+                }
             }
 
             RectTransform _rectTransformPlacementForSettings = transform.Find("PlacementForSettings").GetComponent<RectTransform>(); // компонент RectTransform родителя для панелей настроек
@@ -58,11 +63,13 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             _objectSonicSettingsPanel = _rectTransformPlacementForSettings.Find("SonicSettings").gameObject; // звуковые настройки
             _objectVideoSettingsPanel = _rectTransformPlacementForSettings.Find("VideoSettings").gameObject; // графические настройки
             _objectLanguageSettingsPanel = _rectTransformPlacementForSettings.Find("LanguageSettings").gameObject; // графические настройки
+            _objectInternetSettingsPanel = _rectTransformPlacementForSettings.Find("InternetSettings").gameObject; // графические настройки
 
             EventBus.Instance.ToggleSonicOfSettingsMenuWasToggled.AddListener(ButtonSonicOfSettingsMenuToggled);
             EventBus.Instance.ToggleGameOfSettingsMenuWasToggled.AddListener(ButtonGameOfSettingsMenuToggled);
             EventBus.Instance.ToggleVideoOfSettingsMenuWasToggled.AddListener(ButtonVideoOfSettingsMenuToggled);
             EventBus.Instance.ToggleLanguageOfSettingsMenuWasToggled.AddListener(ButtonLanguageOfSettingsMenuToggled);
+            EventBus.Instance.ToggleInternetOfSettingsMenuWasToggled.AddListener(ButtonInternetOfSettingsMenuToggled);
 
             EventBus.Instance.ValueBrightnessWasChanged.AddListener(ValueBrightnessWasChanged);
             EventBus.Instance.ValueCameraShakingWasChanged.AddListener(ValueCameraShakingWasChanged);
@@ -71,6 +78,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             EventBus.Instance.ValueVibrationWasChanged.AddListener(ValueVibrationWasChanged);
             EventBus.Instance.ValueVolumEffectsWasChanged.AddListener(ValueVolumEffectsWasChanged);
             EventBus.Instance.ValueVolumMusicWasChanged.AddListener(ValueVolumMusicWasChanged);
+            EventBus.Instance.EmailForLinkWasChanged.AddListener(TryingLinkEmail);
+            EventBus.Instance.DisplayNameWasChanged.AddListener(DiaplayNameWasChanged);
 
 
             awakeWasCalledAlready = true;
@@ -98,6 +107,10 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     public void ButtonLanguageOfSettingsMenuToggled(bool wasToggled, RectTransform rectTransformToggle)
     {
         _objectLanguageSettingsPanel.SetActive(wasToggled);
+    }
+    public void ButtonInternetOfSettingsMenuToggled(bool wasToggled, RectTransform rectTransformToggle)
+    {
+        _objectInternetSettingsPanel.SetActive(wasToggled);
     }
 
     // от кнопок для изменения параметров настроек
@@ -140,6 +153,17 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     {
         if (GameManager.Instance.currentSettings.Language != value)
             GameManager.Instance.currentSettings.Language = value;
+    }
+    
+    private void TryingLinkEmail(string value, RectTransform rectTransformToggle)
+    {
+        if (GameManager.Instance.currentSettings.Email != value)
+            GameManager.Instance.currentSettings.Email = value;
+    }
+    private void DiaplayNameWasChanged(string value, RectTransform rectTransformToggle)
+    {
+        if (GameManager.Instance.currentSettings.DisplayName != value)
+            GameManager.Instance.currentSettings.DisplayName = value;
     }
 
     // также вызываем на данный момент при нажатии на стрелку BackButton в SettingsMenu

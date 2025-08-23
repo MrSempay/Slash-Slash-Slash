@@ -10,14 +10,11 @@ public class LevelBuildDefaultLevel : LevelBuilder
 {
 
     [SerializeField] private string _nameLevel; // название уровня, переменная нужна для задания названия через редактор
-    [SerializeField] private string _nameMainMusicTheme; // название музыкальной темы для уровня, без расширения файла (например файл полностью называется "STAND.mp4", а вписать нужно просто "STAND"
-
-
+    
     protected override void Awake()
     {
 
         selfName = _nameLevel;
-        nameOfMainMusicTeam = _nameMainMusicTheme;
 
         base.Awake();
         instance = this;
@@ -64,7 +61,6 @@ public class LevelBuildDefaultLevel : LevelBuilder
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
         SaveLoadManager.Instance.ImplementStoredSettings(); // чтоб настройки применялись при загрузке сцены сразу, а не после открытия меню настроек 
-        AudioManager.Instance.StartMusic(nameOfMainMusicTeam);
     }
 
 }

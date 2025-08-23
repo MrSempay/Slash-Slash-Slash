@@ -14,6 +14,8 @@ public class DataWrapperSettings
 
     public List<DataWrapperChoseList> allChoseListsData;
 
+    public DataWrapperInternetSettings internetData;
+
     [System.Serializable]
 
     // ИМЕНА ДОЛЖНЫ ТОЧНО СООТВЕТСТВОВАТЬ ПОЛЯМ/СВОЙСТВАМ серриализуемого класса!
@@ -42,6 +44,12 @@ public class DataWrapperSettings
         public string CurrentTextValue;
         public LANGUAGE CurrentValue;
         public int _indexCurrentString;
+    }
+    [System.Serializable]
+    public class DataWrapperInternetSettings : Wrapper
+    {
+        public string Email;
+        public string DisplayName;
     }
 
     // проверяем, является ли объект девственным (чтоб, если чего вдруг, не пытались мы загружать настройки из такового

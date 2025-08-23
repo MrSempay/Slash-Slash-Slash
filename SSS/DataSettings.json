@@ -34,7 +34,7 @@
         },
         {
             "selfName": "ToggleSonicOfSettingsMenu",
-            "IsToggled": true
+            "IsToggled": false
         },
         {
             "selfName": "ToggleVideoOfSettingsMenu",
@@ -43,6 +43,10 @@
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
             "IsToggled": false
+        },
+        {
+            "selfName": "ToggleInternetOfSettingsMenu",
+            "IsToggled": true
         }
     ],
     "allSlidersData": [
@@ -56,15 +60,20 @@
         },
         {
             "selfName": "ParameterBrightness",
-            "CurrentValue": 0.352396696805954
+            "CurrentValue": 0.0
         }
     ],
     "allChoseListsData": [
         {
             "selfName": "ParameterOrientation",
-            "CurrentTextValue": "",
-            "CurrentValue": 0,
-            "_indexCurrentString": 0
+            "CurrentTextValue": "Horizontal",
+            "CurrentValue": 3,
+            "_indexCurrentString": 1
         }
-    ]
+    ],
+    "internetData": {
+        "selfName": "ParameterInternetSettings",
+        "Email": "a@a.a​​",
+        "DisplayName": "1​​"
+    }
 }

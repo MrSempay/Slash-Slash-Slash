@@ -122,7 +122,7 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.Axe, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 25f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandartAttackPercentage, 5f }, { C.DK.CurrentIncreasingStamina, -20f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 5f }, { C.DK.CurrentIncreasingStamina, -20f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
                                     { C.DK.cost, 20 } } },
                             {
                                 C.DK.Sword, new Dictionary<string, object>()
@@ -136,7 +136,7 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.ThunderAxe, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 35f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandartAttackPercentage, 15f }, { C.DK.CurrentIncreasingStamina, -20f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 15f }, { C.DK.CurrentIncreasingStamina, -20f } } },
                                     { C.DK.cost, 70 } } },
                             {
                                 C.DK.FireSword, new Dictionary<string, object>()
@@ -181,7 +181,7 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.ThunderArmor, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {  } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandartAttackPercentage, 5f }, { C.DK.DamageReductionPercentage, 40f }, { C.DK.CurrentIncreasingStamina, -25f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 5f }, { C.DK.DamageReductionPercentage, 40f }, { C.DK.CurrentIncreasingStamina, -25f } } },
                                     { C.DK.cost, 70 } } },
                             {
                                 C.DK.DragonArmor, new Dictionary<string, object>()
@@ -332,7 +332,8 @@ public static class AdjustEquipmentParameters : object
             // Вызываем метод
             ScoreManager.Instance.UpCombo((int)(amountUpCombo * scriptEquipment.multiplierFreshness));
             ScoreManager.Instance.UpActionCombo(1, nameOfSpell);
-            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+            //ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+            ScoreManager.Instance.InvokeAppearingText(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
 
             if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
             {
@@ -359,7 +360,8 @@ public static class AdjustEquipmentParameters : object
                                           // (второй раз эффект активации всё равно не применить). Логика данного контроля также реализована в FsmStateEquipmentAtUnit
         {
             ScoreManager.Instance.UpActionCombo(1, scriptEquipment.equipmentName);
-            ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+            //ScoreManager.Instance.InvokeAppearingSprite(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
+            ScoreManager.Instance.InvokeAppearingText(ScoreManager.TYPE_APPEARING_MESSAGE.SkillUsed); // вызовется как при прожатии скила, так и при прожатии активки аммуниции
 
             if (scriptEquipment.isEquipmentASpell) // только для спелов мы ищем комбо Master Of Skills
             {

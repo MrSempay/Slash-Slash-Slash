@@ -11,6 +11,7 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
     private Image _selfSprite;
 
     [SerializeField] private Color _colorToggledSprite;
+    [SerializeField] private TogglesGroup _toggleGroup;
     [SerializeField] private bool _shouldBeToggledAtStart = false;
     [SerializeField] private bool _justCheckMark = false; // влияет тупо на изображение нашего тумблера. Если установлено в true, то это будет просто галка
 
@@ -29,12 +30,11 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
                 if (this.GetType() == typeof(ToggleFixedOneWay)) // если это тумблер для вжатия в одну сторону, то мы проверяем, не находится ли он в группе тумблеров,
                                                                  // где одновременно вжат может быть только один
                 {
-                    TogglesGroup toggleGroup = transform.parent.gameObject.GetComponent<TogglesGroup>();
-                    if (toggleGroup != null) // если это так (родительский элемент олицетворяет группу тумблеров, где вжат может быть только один)
+                    if (_toggleGroup != null) // если это так (родительский элемент олицетворяет группу тумблеров, где вжат может быть только один)
                     {
-                        toggleGroup.Awake(); // чтоб группа тумблеров была точно инициализированна, ибо обращаемся мы к ней часто из Awake одного из подотчётных тумблеров
-                        toggleGroup.ControllOnlyOneToggledToggle((ToggleFixedOneWay)this); // контролируем вжатие только текущего тумблера. Остальные отожмутся 
-                        toggleGroup.InvokeGroupFunction(this); // там уже мы вызываем функцию (эмулируем сигнал) для группы тумблеров, если такая функция есть
+                        _toggleGroup.Awake(); // чтоб группа тумблеров была точно инициализированна, ибо обращаемся мы к ней часто из Awake одного из подотчётных тумблеров
+                        _toggleGroup.ControllOnlyOneToggledToggle((ToggleFixedOneWay)this); // контролируем вжатие только текущего тумблера. Остальные отожмутся 
+                        _toggleGroup.InvokeGroupFunction(this); // там уже мы вызываем функцию (эмулируем сигнал) для группы тумблеров, если такая функция есть
 
                     }
                 }

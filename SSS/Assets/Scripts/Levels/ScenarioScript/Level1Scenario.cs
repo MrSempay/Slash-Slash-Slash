@@ -108,6 +108,7 @@ public class Level1Scenario : ScenarioScript
 
     protected override void EnemiesWaveWasDestroyed(string nameWave)
     {
+        base.EnemiesWaveWasDestroyed(nameWave);
         switch (nameWave)
         {
             case "WaveAfterAmmunitionBue":

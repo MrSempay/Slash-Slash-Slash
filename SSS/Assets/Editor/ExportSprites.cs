@@ -6,7 +6,7 @@ using System.Linq;
 
 public class SpriteExporter : EditorWindow
 {
-    [MenuItem("Tools/Export First Sprite From Atlas")]
+    [MenuItem("Tools/Export All Sprites From Atlas")]
     public static void ExportFirstSprite()
     {
         if (Selection.activeObject == null)

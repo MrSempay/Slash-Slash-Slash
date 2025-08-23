@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringWeaponInfoDictionary.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\DamageDealer.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipmentInfoPanel.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingDestroyed.cs" />
     <Compile Include="Assets\Scripts\Levels\ScenarioScript\DefaultLevelScenario.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\InterstitialAds.cs" />
@@ -116,11 +117,14 @@
     <Compile Include="Assets\Scripts\UI\CustomCombo.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
+    <Compile Include="Assets\Scripts\UI\AppearingNotification.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\Wrapper.cs" />
+    <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterInputString.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentAtPlayer.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixed.cs" />
+    <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterInternetSettings.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
     <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\InventoryStatic.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
+    <Compile Include="Assets\Scripts\UI\AppearingText.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IInventoryPlayer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
@@ -160,6 +165,7 @@
     <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\FloorDetector.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\MovingCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldInfo.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponInfo.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponType.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\BannerAds.cs" />
@@ -168,7 +174,6 @@
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponDatabase.cs" />
     <Compile Include="Assets\Scripts\UI\Leaderboard.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateDoor.cs" />
-    <Compile Include="Assets\Scripts\UI\FieldLeaderboard.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterSlider.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\Healing.cs" />
@@ -224,6 +229,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\SampleScene\Dialogue1.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Resources\Fonts\LICENSE.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
@@ -245,6 +251,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Resources\Fonts\COPYRIGHT.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level3\DialogueFinish.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level5\DialogueFinish.txt" />
     <None Include="Assets\README.txt" />

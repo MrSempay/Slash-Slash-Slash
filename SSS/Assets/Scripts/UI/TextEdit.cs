@@ -20,9 +20,12 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
             awakeWasCalledAlready = true;
 
             textComponent = gameObject.GetComponent<TextMeshProUGUI>();
+
+            textComponent.font = GameManager.Instance.globalFont;
+
             if (baseLocalizationKey == "")
             {
-                baseLocalizationKey = gameObject.name;
+            //    baseLocalizationKey = gameObject.name;
             }
             Text = ""; // просто начальна€ инициализаци€ текста
         }
@@ -35,7 +38,7 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
     // по идее этому свойству мы должны присваивать не сам текст, а ключ его локализации, по нему уже само свойство будет находить нужную строку 
     public string Text
     {
-        get { return additionalLocalizationKey; }
+        get { return textComponent.text; } // было return additionalLocalizationKey;
         set
         {
             if (!awakeWasCalledAlready)
@@ -57,11 +60,12 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
                 string settingValue = LocalizationManager.Instance.GetText(value);
                 if (settingValue != "")
                 {
-                //Debug.Log("ћƒјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјј");
-                //Debug.Log(value);
-                //Debug.Log(textComponent);
-                //Debug.Log(textComponent.text);
-                //Debug.Log(LocalizationManager.Instance.GetText(value));
+                    //Debug.Log("≈банина1");
+                    //Debug.Log("ћƒјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјјј");
+                    //Debug.Log(value);
+                    //Debug.Log(textComponent);
+                    //Debug.Log(textComponent.text);
+                    //Debug.Log(LocalizationManager.Instance.GetText(value));
                     textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey) + " " + LocalizationManager.Instance.GetText(value);
                 }
                 else
@@ -77,7 +81,18 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
         //Debug.Log("SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
         //Debug.Log(additionalLocalizationKey);
         Text = additionalLocalizationKey;
-        if (notLocalizableText != "") textComponent.text += " " + notLocalizableText;
+        //textComponent.text += " " + notLocalizableText;
+        if (notLocalizableText != "")
+        {
+            if (additionalLocalizationKey != "")
+            {
+                textComponent.text += " " + notLocalizableText;
+            }
+            else
+            {
+                textComponent.text += notLocalizableText;
+            }
+        }
     }
     public void SetNotLocalizableText(string text)
     {
@@ -88,6 +103,7 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
     }
     public void SetBaseText(string text)
     {
+        //Debug.Log("≈банина");
         baseLocalizationKey = text;
         UpdateText();
     }

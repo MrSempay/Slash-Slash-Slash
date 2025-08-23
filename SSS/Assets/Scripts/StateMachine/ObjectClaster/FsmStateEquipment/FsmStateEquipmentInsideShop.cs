@@ -5,9 +5,12 @@ using static DialogueParser;
 
 public class FsmStateEquipmentInsideShop : FsmStateEquipment
 {
+
+    private Vector3 _baseLocalPositionInfoPanel;
+
     public FsmStateEquipmentInsideShop(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-     
+        _baseLocalPositionInfoPanel = equipment.transformPlaceInfoPanel.localPosition;
     }
 
 
@@ -20,6 +23,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
             equipment.ownerUnit.Inventory.RemoveEquipmentFromInventory(equipment); 
         }
         equipment.transform.localPosition = equipment.startLocalPosition;
+        equipment._areaDetectEnteringExiting.enabled = true;
         equipment.selfSprite.sortingOrder = 11; // ряд UI элементов могут быть над снаряжением, пока то в магазине
     }
 
@@ -27,6 +31,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
     {
         Debug.Log("Equipment inside shop state [EXIT]");
         equipment.selfSprite.sortingOrder = 11;
+        equipment._areaDetectEnteringExiting.enabled = false; 
     }
 
     public override void Update()
@@ -48,6 +53,15 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
             }
 
         }
+
+        if (equipment.transform.position.x < Player.instance.transform.position.x) // если игрок справа от снаряжения, то направо и перемещаем информационную панельку
+        {
+            equipment.transformPlaceInfoPanel.localPosition = _baseLocalPositionInfoPanel;
+        }
+        else
+        {
+            equipment.transformPlaceInfoPanel.localPosition = new Vector3(_baseLocalPositionInfoPanel.x * -1f, _baseLocalPositionInfoPanel.y, _baseLocalPositionInfoPanel.z);
+        } 
 
     }
 

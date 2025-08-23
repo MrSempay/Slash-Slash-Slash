@@ -42,7 +42,7 @@ public class Treasury : Building, IMainTarget
         //Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, )
     }
 
-    protected override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
+    public override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
         List<EquipmentChance> randomCategoryAndRarityTypesOfEquipment = GenerateItems(rectTransformEquipmentPlaces.childCount); 
         int i = 0;

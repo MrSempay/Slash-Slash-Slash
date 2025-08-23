@@ -8,9 +8,7 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     private Fsm _fsm;
-    private Coroutine _coroutineUpdateAssortimentInBuilding;
     private bool _isAroundBuilding = false;
-    private RectTransform rectTransformEquipmentPlaces;
 
     [SerializeField] private Door _selfDoor;
 
@@ -22,6 +20,7 @@ public class Building : MonoBehaviour
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public List<Equipment> equipmentInBuilding = new List<Equipment>(); // список всего снаряжения в здании
 
+    public RectTransform rectTransformEquipmentPlaces;
     public string selfName;
     public GameObject prefubOfEquipment;
     public Animator animator;
@@ -79,7 +78,7 @@ public class Building : MonoBehaviour
 
     protected virtual void Start()
     {
-        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(rectTransformEquipmentPlaces));
+        
         _fsm.SetState<FsmStateBuildingNormal>();
     }
 
@@ -106,16 +105,8 @@ public class Building : MonoBehaviour
     }
 
 
-    IEnumerator TimerUpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
-    {
-        while (true)
-        {
-            UpdateAssortmentInBuilding(rectTransformEquipmentPlaces);
-            yield return new WaitForSeconds(timeForUpdateAssortiment); // Ждем 15 секунд
-        }
-    }
 
-    protected virtual void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
+    public virtual void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
         onUpdateAssortment?.Invoke(null, this); // подписываемся на событие в ScenarioScript, чтоб знать, когда отписываться от прослушивания события прошлой партии ассортимента, пока
                                           // та ещё не была удалена
@@ -196,10 +187,6 @@ public class Building : MonoBehaviour
     public virtual void OnDestroy()
     {
         _fsm.StateCurrent?.OnDestroy();
-        if (_coroutineUpdateAssortimentInBuilding != null)
-        {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineUpdateAssortimentInBuilding);
-            _coroutineUpdateAssortimentInBuilding = null;
-        }
+
     }
 }

@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
         allObjects[0].Awake(); // ну и фигн€, нельз€ к Instance обратитьс€, бо он инициализируетс€ у нас в Awake
         SaveLoadManager.Instance.ImplementStoredSettings();
         //Debug.Log("Ёто чЄ за ебун€ча€ параша?");
-        AudioManager.Instance.StartMusic(nameOfMainMusicTeam);
+        //AudioManager.Instance.StartMusic(nameOfMainMusicTeam); // - что тут делать пока что хз
     }
 
     public void StartGame()

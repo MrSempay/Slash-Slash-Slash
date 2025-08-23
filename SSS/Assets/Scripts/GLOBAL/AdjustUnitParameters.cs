@@ -17,7 +17,7 @@ public static class AdjustUnitParameters
                 { C.DK.moneyFromKill, 0 },
                 { C.DK.experienceToNextLevel, 200 },
                 { C.DK.experienceFromKill, 0 },
-                { C.DK.stuneChanceByStandartAttackPercentage, 0 },
+                { C.DK.stuneChanceByStandardAttackPercentage, 0 },
                 { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.evasionPercentage, 0 },
                 { C.DK.comboOneHitKillMultiplayer, 10f },
@@ -43,7 +43,7 @@ public static class AdjustUnitParameters
                 { C.DK.healthMax, 25 },
                 { C.DK.DamageReductionPercentage, 0 },
                 { C.DK.speed, 8 },
-                { C.DK.stuneChanceByStandartAttackPercentage, 10 }, 
+                { C.DK.stuneChanceByStandardAttackPercentage, 10 }, 
                 { C.DK.evasionPercentage, 0 }, 
                 { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.jumpForce, 75 }, // 14 при массе 1

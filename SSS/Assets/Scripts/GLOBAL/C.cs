@@ -101,7 +101,7 @@ public class C
         public const string speed = "speed";
         public const string evasionPercentage = "evasionPercentage";
         public const string timeStuneByStanartAttack = "timeStuneByStanartAttack";
-        public const string stuneChanceByStandartAttackPercentage = "stuneChanceByStandartAttackPercentage";
+        public const string stuneChanceByStandardAttackPercentage = "stuneChanceByStandardAttackPercentage";
         public const string jumpForce = "jumpForce";
         public const string moneyFromKill = "moneyFromKill";
         public const string experienceToNextLevel = "experienceToNextLevel";
@@ -170,6 +170,7 @@ public class C
         public const string Cast = "Cast";
         public const string Peak = "Peak";
         public const string Disabled = "Disabled";
+        public const string Description = "Description";
 
     }
     public static class Paths
@@ -180,17 +181,22 @@ public class C
         public const string FolderImagesForRankStyles = "Images/UI/RankStyle/";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayer";
-        public const string PrefubAppearingSprite = "Prefubs/AppearingSprite";
+        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
+        public const string PrefubAppearingSprite = "Prefubs/UI/AppearingSprite";
+        public const string PrefubAppearingText = "Prefubs/UI/AppearingText";
+        public const string PrefubAppearingNotification = "Prefubs/UI/AppearingNotification";
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
+        public const string PrefubFieldEquipmentInfo = "Prefubs/UI/FieldEquipmentInfo";
         public const string PrefubLeaderboard = "Prefubs/UI/Leaderboard";
+        public const string PrefubEquipmentInfoPanel = "Prefubs/UI/EquipmentInfoPanel";
         public const string PrefubPlaceForEquipment = "Prefubs/UI/PlaceForEquipment"; 
         public const string PrefubAmmunition = "Prefubs/Ammunition"; 
         public const string PrefubSpell = "Prefubs/Spell"; 
-        public const string FieldLeaderboard = "Prefubs/UI/FieldLeaderboard";
+        public const string FieldLeaderboard = "Prefubs/UI/FieldInfo";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
         public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";
+        public const string FontMonocraft = "Fonts/Monocraft SDF";
 
     }
 
@@ -206,16 +212,39 @@ public class C
         public const string BoxSplitTargetPointsForEnemies = "BoxSplitTargetPointsForEnemies";
         public const string AreaDetectEnteringExiting = "AreaDetectEnteringExiting";
         public const string CallDownIcon = "CallDownIcon";
+        public const string PlaceInfoPanel = "PlaceInfoPanel";
     }
 
     public static class AppSprite
     {
         public const string BerserkerEyes = "BerserkerEyes";
     }
+    public static class Notifications
+    {
+        public const string Success = "Success";
+        public const string SignIn = "SignIn";
+        public const string AccountAlreadyLinked = "AccountAlreadyLinked";
+        public const string AccountAlreadyLinkedToSpecifiedEmail = "AccountAlreadyLinkedToSpecifiedEmail";
+        public const string AccountNotFound = "AccountNotFound";
+        public const string InvalidEmailAddress = "InvalidEmailAddress";
+        public const string DisplayNameTooShort = "DisplayNameTooShort";
+        public const string AccountLinked = "AccountLinked";
+    }
     public static class Dilogues
     {
         public const string DialogueStart = "DialogueStart";
         public const string DialogueFinish = "DialogueFinish";
     }
+    public static class NameFunc
+    {
+        public const string TriggerEmailForLinkWasChanged = "TriggerEmailForLinkWasChanged";
+        public const string TriggerDisplayNameWasChanged = "TriggerDisplayNameWasChanged";
+    }
+    public static class Just
+    {
+        public const string Infinite = "Infinite";
+    }
+
+
 
 }

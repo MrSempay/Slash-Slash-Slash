@@ -71,7 +71,7 @@ public class ScenarioScript : MonoBehaviour
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
-    protected virtual void EnemiesWaveWasDestroyed(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
+    protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void DialogueFinished(string nameDialogueWithFolder) { ScriptCurrentDialogue = null; } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit)
@@ -194,6 +194,8 @@ public class ScenarioScript : MonoBehaviour
 
     protected virtual void StartWaveEnemies(Dictionary<Transform, int> targetPointsForEnemy, string nameWave)
     {
+        AudioManager.Instance.PlayFightOrAmbientMusic(true);
+
         levelBuildScript.currentWave = nameWave;
         levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
     }

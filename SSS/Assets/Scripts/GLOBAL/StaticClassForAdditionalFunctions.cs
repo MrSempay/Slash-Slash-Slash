@@ -14,6 +14,7 @@ public static class StaticClassForAdditionalFunctions : object
 {
     public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical }
     public enum TYPES_INCREASING { Percentage, Absolute }
+    public enum TYPE_NOTIFICATION { Success, Warning, Failure };
 
     // Рассчитывает угол наклона прямой между двумя точками
     public static float GetAngle(Vector2 point1, Vector2 point2)
@@ -51,7 +52,7 @@ public static class StaticClassForAdditionalFunctions : object
             object parameterOrPropertyValue = kvp.Value;
 
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
+            System.Reflection.FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
 
             if (fieldInfo != null)
             {
@@ -115,7 +116,7 @@ public static class StaticClassForAdditionalFunctions : object
             object parameterOrPropertyValue = kvp.Value;
 
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+            System.Reflection.FieldInfo fieldInfo = type.GetField(parameterOrPropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
             if (fieldInfo != null)
             {
@@ -171,8 +172,8 @@ public static class StaticClassForAdditionalFunctions : object
         Type type = obj.GetType();
 
         // Получаем все поля объекта
-        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        foreach (FieldInfo field in fields)
+        System.Reflection.FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        foreach (System.Reflection.FieldInfo field in fields)
         {
             try
             {
@@ -222,7 +223,7 @@ public static class StaticClassForAdditionalFunctions : object
             string nameFieldOrProperty = fieldSelectiveDictionary.Key;
 
             // Пытаемся получить поле
-            FieldInfo field = type.GetField(nameFieldOrProperty, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            System.Reflection.FieldInfo field = type.GetField(nameFieldOrProperty, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (field != null)
             {
                 try

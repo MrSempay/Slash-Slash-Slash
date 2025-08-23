@@ -280,7 +280,7 @@ public abstract class Unit : MonoBehaviour, IInventory
             float parameterIncreasing = kvp.Value;
 
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterName);
+            System.Reflection.FieldInfo fieldInfo = type.GetField(parameterName);
 
             if (fieldInfo != null)
             {
@@ -326,7 +326,7 @@ public abstract class Unit : MonoBehaviour, IInventory
             string parameterOrPropertyName = kvp.Key;
             float parameterOrPropertyIncreasing = kvp.Value;
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
+            System.Reflection.FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
 
             if (fieldInfo != null)
             {
@@ -399,7 +399,7 @@ public abstract class Unit : MonoBehaviour, IInventory
             string parameterOrPropertyName = kvp.Key;
             float parameterOrPropertyIncreasing = kvp.Value;
             // Получаем поле с именем, соответствующим ключу словаря
-            FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
+            System.Reflection.FieldInfo fieldInfo = type.GetField(parameterOrPropertyName);
 
             if (fieldInfo != null)
             {
@@ -468,7 +468,7 @@ public abstract class Unit : MonoBehaviour, IInventory
 
         Type type = this.GetType(); // Получаем тип текущего класса
         PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
-        FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
+        System.Reflection.FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
 
         //Debug.Log(nameOfCurrentProperty);
         //Debug.Log(currentPropertyInfo);
@@ -514,7 +514,7 @@ public abstract class Unit : MonoBehaviour, IInventory
 
         Type type = this.GetType(); // Получаем тип текущего класса
         PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
-        FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
+        System.Reflection.FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
 
         //Debug.Log(nameOfCurrentProperty);
         //Debug.Log(currentPropertyInfo);

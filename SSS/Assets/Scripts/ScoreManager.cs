@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int _currentScore = 0;
     [SerializeField] private STYLE_RANK _currentRankStyle = STYLE_RANK.D;
 
-    public static FieldLeaderboard prefubFieldLeaderboard; // используем в Leaderboard, чтоб там не получать префаб при каждом создании лидерборда
+    public static FieldInfo prefubFieldLeaderboard; // используем в Leaderboard, чтоб там не получать префаб при каждом создании лидерборда
 
     [NonSerialized] public RectTransform transformSpawnComboAdd;
     [NonSerialized] public RectTransform transformSpawnSkillUsed;
@@ -86,7 +86,8 @@ public class ScoreManager : MonoBehaviour
             }
             else if (value > 1) // если комбо активностей равно 1 или 0, ничего не спавним
             {
-                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.SkillCombo);
+                //InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.SkillCombo);
+                InvokeAppearingText(TYPE_APPEARING_MESSAGE.SkillCombo);
             }
 
             _currentActionsCombo = value;
@@ -214,7 +215,8 @@ public class ScoreManager : MonoBehaviour
 
             if (allSpellsInCD)
             {
-                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.MasterOfSkills);
+                //InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.MasterOfSkills);
+                InvokeAppearingText(TYPE_APPEARING_MESSAGE.MasterOfSkills);
                 UpCombo(amountUpKomboMasterOfSkills);
                 StartCoroutine(CallDownMasterOfSkills());
             }
@@ -329,7 +331,8 @@ public class ScoreManager : MonoBehaviour
 
             if (value != STYLE_RANK.D)
             {
-                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.RankImproved);
+                //InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.RankImproved);
+                InvokeAppearingText(TYPE_APPEARING_MESSAGE.RankImproved);
             }
 
 
@@ -384,7 +387,8 @@ public class ScoreManager : MonoBehaviour
             if (value > 0)
             {
                 //Debug.Log(value);
-                InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.ComboAdded);
+                //InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.ComboAdded);
+                InvokeAppearingText(TYPE_APPEARING_MESSAGE.ComboAdded);
             }
 
             // ¬ызываем событие, если есть подписчики
@@ -423,9 +427,10 @@ public class ScoreManager : MonoBehaviour
         AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
         _prefubLeaderboard = Resources.Load<GameObject>(C.Paths.PrefubLeaderboard);
-        prefubFieldLeaderboard = Resources.Load<FieldLeaderboard>(C.Paths.FieldLeaderboard);
+        prefubFieldLeaderboard = Resources.Load<FieldInfo>(C.Paths.FieldLeaderboard);
 
         AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные дл€ dictionaryPropertiesSprites
+        AppearingText.Initialize(); // инициализируем в тамошнем классе справочные данные дл€ dictionaryPropertiesSprites
     }
 
     private void Start()
@@ -464,6 +469,12 @@ public class ScoreManager : MonoBehaviour
     {
         AppearingSprite sciptAppearingSprite = Instantiate(GameManager.Instance.prefubAppearingSprite).GetComponent<AppearingSprite>();
         sciptAppearingSprite.SetProperlyAnimationAndPosition(typeAppearingMessage);
+    }
+
+    public void InvokeAppearingText(TYPE_APPEARING_MESSAGE typeAppearingMessage)
+    {
+        AppearingText sciptAppearingSprite = Instantiate(GameManager.Instance.prefubAppearingText).GetComponent<AppearingText>();
+        sciptAppearingSprite.SetProperlyPosition(typeAppearingMessage);
     }
 
     public void UpCombo(int addictingCombo)

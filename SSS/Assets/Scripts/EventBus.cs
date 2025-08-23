@@ -41,6 +41,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<bool, RectTransform> ToggleGameOfSettingsMenuWasToggled { get; } = new();
     public UnityEvent<bool, RectTransform> ToggleVideoOfSettingsMenuWasToggled { get; } = new();
     public UnityEvent<bool, RectTransform> ToggleLanguageOfSettingsMenuWasToggled { get; } = new();
+    public UnityEvent<bool, RectTransform> ToggleInternetOfSettingsMenuWasToggled { get; } = new();
 
     public UnityEvent<bool, RectTransform> ValueVibrationWasChanged { get; } = new();
     public UnityEvent<bool, RectTransform> ValueCameraShakingWasChanged { get; } = new();
@@ -49,6 +50,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<float, RectTransform> ValueVolumEffectsWasChanged { get; } = new();
     public UnityEvent<LANGUAGE, RectTransform> ValueLanguageWasChanged { get; } = new();
     public UnityEvent<LANGUAGE, RectTransform> ValueOrientationWasChanged { get; } = new();
+    public UnityEvent<string, RectTransform> EmailForLinkWasChanged { get; } = new();
+    public UnityEvent<string, RectTransform> DisplayNameWasChanged { get; } = new();
 
 
     public UnityEvent<int> OnKillKomboWasChanged { get; } = new();
@@ -65,6 +68,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void TriggerToggleGameOfSettingsMenu(bool wasToggled, RectTransform rectTransformToggle) { ToggleGameOfSettingsMenuWasToggled.Invoke(wasToggled, rectTransformToggle); }
     public void TriggerToggleVideoOfSettingsMenu(bool wasToggled, RectTransform rectTransformToggle) { ToggleVideoOfSettingsMenuWasToggled.Invoke(wasToggled, rectTransformToggle); }
     public void TriggerToggleLanguageOfSettingsMenu(bool wasToggled, RectTransform rectTransformToggle) { ToggleLanguageOfSettingsMenuWasToggled.Invoke(wasToggled, rectTransformToggle); }
+    public void TriggerToggleInternetOfSettingsMenu(bool wasToggled, RectTransform rectTransformToggle) { ToggleInternetOfSettingsMenuWasToggled.Invoke(wasToggled, rectTransformToggle); }
 
     public void TriggerToggleParameterVibration(bool vibrationOn, RectTransform rectTransformToggle) { ValueVibrationWasChanged.Invoke(vibrationOn, rectTransformToggle); }
     public void TriggerToggleParameterCameraShaking(bool cameraShakingOn, RectTransform rectTransformToggle) { ValueCameraShakingWasChanged.Invoke(cameraShakingOn, rectTransformToggle); }
@@ -73,6 +77,8 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void TriggerParameterVolumEffects(float value, RectTransform rectTransformToggle) { ValueVolumEffectsWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterLanguage(LANGUAGE value, RectTransform rectTransformToggle) { ValueLanguageWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterOrientation(LANGUAGE value, RectTransform rectTransformToggle) { ValueOrientationWasChanged.Invoke(value, rectTransformToggle); }
+    public void TriggerEmailForLinkWasChanged(string value, RectTransform rectTransformToggle) { EmailForLinkWasChanged.Invoke(value, rectTransformToggle); }
+    public void TriggerDisplayNameWasChanged(string value, RectTransform rectTransformToggle) { DisplayNameWasChanged.Invoke(value, rectTransformToggle); }
 
     public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }
     public void RankWasChanged(STYLE_RANK value) { OnRankWasChanged.Invoke(value); }

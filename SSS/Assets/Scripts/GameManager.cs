@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,7 +23,10 @@ public class GameManager : MonoBehaviour
     public GameObject prefubAmmunition;
     public GameObject prefubSpell;
     public GameObject prefubAppearingSprite;
+    public GameObject prefubAppearingText;
+    public GameObject prefubAppearingNotification;
     public CustomCombo prefubCustomCombo;
+    public EquipmentInfoPanel prefubEquipmentInfoPanel;
     public PlaceForEquipment prefubPlaceForEquipment;
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
@@ -34,12 +38,14 @@ public class GameManager : MonoBehaviour
     public CurrentSettings currentSettings;
     public PlayFabManager playFabManager;
     public LocalizationManager localizationManager;
+    public TMP_FontAsset globalFont;
 
     [System.Serializable] public class CurrentSettings
     {
         private static CurrentSettings _instance; // Сделай _instance статическим
 
         public LiftGammaGain _liftGammaGain;
+        public bool isLoadingSettings;
 
         public bool vibrationOn = true;
         public bool cameraShakingOn = true;
@@ -48,6 +54,8 @@ public class GameManager : MonoBehaviour
         public float volumeBrightness = 1;
         public LANGUAGE orientation = LANGUAGE.Horizontal;
         public LANGUAGE language; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
+        public string displayName = ""; 
+        public string email = "";
 
         public static CurrentSettings Instance
         {
@@ -104,7 +112,7 @@ public class GameManager : MonoBehaviour
             set
             {
                 volumeMusic = value;
-                AudioManager.Instance._audioMusicComponent.volume = value;
+                AudioManager.Instance.audioMusicComponent.volume = value;
             }
         }
         public float VolumeEffects
@@ -113,7 +121,32 @@ public class GameManager : MonoBehaviour
             set
             {
                 volumeEffects = value;
-                AudioManager.Instance._audioEffectsComponent.volume = value;
+                AudioManager.Instance.audioEffectsComponent.volume = value;
+            }
+        }
+        public string DisplayName
+        {
+            get { return displayName; }
+            set
+            {
+                displayName = value;
+                if (isLoadingSettings && value != null)
+                {
+                    SettingsMenu.Instance.parameterInternetSettings.DisplayNameLoaded = value;
+                }
+            }
+        }
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+
+                if (isLoadingSettings && value != null)
+                {
+                    SettingsMenu.Instance.parameterInternetSettings.EmailLoaded = value;
+                }
             }
         }
 
@@ -160,11 +193,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefubAppearingSprite);
+        prefubAppearingText = Resources.Load<GameObject>(C.Paths.PrefubAppearingText);
+        prefubAppearingNotification = Resources.Load<GameObject>(C.Paths.PrefubAppearingNotification);
         prefubCustomCombo = Resources.Load<CustomCombo>(C.Paths.PrefubCustomCombo);
         prefubPlaceForEquipment = Resources.Load<PlaceForEquipment>(C.Paths.PrefubPlaceForEquipment);
         prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
+        prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
         _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
+
+        globalFont = Resources.Load<TMP_FontAsset>(C.Paths.FontMonocraft);
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
@@ -235,6 +273,17 @@ public class GameManager : MonoBehaviour
 
         return sciptAppearingSprite;
     }
+    public AppearingNotification InvokeAppearingNotification(string text,
+                                                             TYPE_NOTIFICATION typeNotification,
+                                                             float liveTime,
+                                                             bool shouldBeOnlyOneTextInGroup,
+                                                             bool shouldBeSpecifyControlPositionTextsInGroup = false)
+    {
+        AppearingNotification sciptAppearingSprite = Instantiate(prefubAppearingNotification).GetComponent<AppearingNotification>();
+        sciptAppearingSprite.SetProperlyPositionAndType(text, typeNotification, liveTime, shouldBeOnlyOneTextInGroup, shouldBeSpecifyControlPositionTextsInGroup);
+
+        return sciptAppearingSprite;
+    }
 
     public void PauseGame(bool setPause)
     {
@@ -263,7 +312,7 @@ public class GameManager : MonoBehaviour
         float elapsed = 0.0f;
         Vector3 initialLocalPositionObject = objTransform.localPosition;
 
-        float shakeDuration = 0.7f; // Длительность тряски
+        //float shakeDuration = 0.7f; // Длительность тряски
         float shakeMagnitude = 0.1f; // Интенсивность тряски
 
         if (timeDuration == -1)
@@ -295,7 +344,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            while (elapsed < shakeDuration)
+            while (elapsed < timeDuration)
             {
                 // Генерируем случайное смещение в пределах сферы
                 float x = UnityEngine.Random.Range(-1f * radiusShaking, 1f * radiusShaking) * shakeMagnitude;
@@ -315,7 +364,7 @@ public class GameManager : MonoBehaviour
                 //Затухание: Уменьшаем величину тряски со временем
                 if (shouldBeAttenuation)
                 {
-                    shakeMagnitude = Mathf.Lerp(shakeMagnitude, 0, elapsed / shakeDuration);
+                    shakeMagnitude = Mathf.Lerp(shakeMagnitude, 0, elapsed / timeDuration);
                 }
 
                 if (tickTime == -1f)
