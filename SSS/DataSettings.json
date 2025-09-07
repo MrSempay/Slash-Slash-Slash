@@ -6,7 +6,7 @@
         },
         {
             "selfName": "ToggleParameterVibration",
-            "IsToggled": true
+            "IsToggled": false
         },
         {
             "selfName": "Russian",
@@ -42,11 +42,11 @@
         },
         {
             "selfName": "ToggleLanguageOfSettingsMenu",
-            "IsToggled": false
+            "IsToggled": true
         },
         {
             "selfName": "ToggleInternetOfSettingsMenu",
-            "IsToggled": true
+            "IsToggled": false
         }
     ],
     "allSlidersData": [
@@ -60,20 +60,20 @@
         },
         {
             "selfName": "ParameterBrightness",
-            "CurrentValue": 0.0
+            "CurrentValue": 0.45471256971359255
         }
     ],
     "allChoseListsData": [
         {
             "selfName": "ParameterOrientation",
-            "CurrentTextValue": "Horizontal",
-            "CurrentValue": 3,
-            "_indexCurrentString": 1
+            "CurrentTextValue": "",
+            "CurrentValue": 0,
+            "_indexCurrentString": 0
         }
     ],
     "internetData": {
         "selfName": "ParameterInternetSettings",
-        "Email": "a@a.a​​",
-        "DisplayName": "1​​"
+        "Email": "a@a.a",
+        "DisplayName": ""
     }
 }

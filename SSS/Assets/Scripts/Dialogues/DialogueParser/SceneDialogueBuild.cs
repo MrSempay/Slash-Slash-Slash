@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class SceneDialogueBuild : DialogueParser
 {
+    [SerializeField] private RectTransform notificationPlacement;
+
     protected override void Awake()
     {
         base.Awake();
+        GameManager.Instance.notificationPlacement = notificationPlacement;
         LoadAndParseDialogueAndShowPhrase();
 
     }

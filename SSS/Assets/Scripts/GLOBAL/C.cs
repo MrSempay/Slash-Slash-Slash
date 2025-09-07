@@ -183,6 +183,8 @@ public class C
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
         public const string PrefubAppearingSprite = "Prefubs/UI/AppearingSprite";
+        public const string PrefubTextButtonScaled = "Prefubs/UI/TextButtonScaled";
+        public const string PrefubTextButton = "Prefubs/UI/TextButton";
         public const string PrefubAppearingText = "Prefubs/UI/AppearingText";
         public const string PrefubAppearingNotification = "Prefubs/UI/AppearingNotification";
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
@@ -193,6 +195,7 @@ public class C
         public const string PrefubAmmunition = "Prefubs/Ammunition"; 
         public const string PrefubSpell = "Prefubs/Spell"; 
         public const string FieldLeaderboard = "Prefubs/UI/FieldInfo";
+        public const string FieldLeaderboardScaled = "Prefubs/UI/FieldInfoScaled";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
         public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";
@@ -222,7 +225,8 @@ public class C
     public static class Notifications
     {
         public const string Success = "Success";
-        public const string SignIn = "SignIn";
+        public const string SignInEmail = "SignInEmail";
+        public const string SignInIDMobile = "SignInIDMobile";
         public const string AccountAlreadyLinked = "AccountAlreadyLinked";
         public const string AccountAlreadyLinkedToSpecifiedEmail = "AccountAlreadyLinkedToSpecifiedEmail";
         public const string AccountNotFound = "AccountNotFound";
@@ -243,6 +247,8 @@ public class C
     public static class Just
     {
         public const string Infinite = "Infinite";
+        public const string NextLevel = "NextLevel";
+        public const string ShowLeaderboard = "ShowLeaderboard";
     }
 
 

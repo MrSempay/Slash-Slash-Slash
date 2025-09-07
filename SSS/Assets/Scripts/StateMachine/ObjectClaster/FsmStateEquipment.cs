@@ -5,11 +5,14 @@ using UnityEngine.AI;
 public class FsmStateEquipment : FsmState
 {
     protected Equipment equipment;
+    protected Vector3 baseLocalPositionInfoPanel;
 
     public FsmStateEquipment(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
         //Debug.Log("≈бал€ва€ пиздаЄбка");
         equipment = gameObject.GetComponent<Equipment>();
+        baseLocalPositionInfoPanel = equipment.transformPlaceInfoPanel.localPosition;
+
         //Debug.Log(equipment.GetInstanceID());
         //Debug.Log(equipment.GetInstanceID());
         //Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment + "" + equipment.GetInstanceID());
@@ -51,6 +54,18 @@ public class FsmStateEquipment : FsmState
         }
 
         return null;
+    }
+
+    protected void SetPositionDescriptionPanel()
+    {
+        if (equipment.transform.position.x < Player.instance.transform.position.x) // если игрок справа от снар€жени€, то направо и перемещаем информационную панельку
+        {
+            equipment.transformPlaceInfoPanel.localPosition = baseLocalPositionInfoPanel;
+        }
+        else
+        {
+            equipment.transformPlaceInfoPanel.localPosition = new Vector3(baseLocalPositionInfoPanel.x * -1f, baseLocalPositionInfoPanel.y, baseLocalPositionInfoPanel.z);
+        }
     }
 
  

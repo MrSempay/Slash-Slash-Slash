@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\FsmState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringWeaponInfoPair.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad\WrapperGeneralData.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateTranslatingEquipment.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustScoreManagerParameters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk.cs" />
@@ -125,11 +126,14 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentAtPlayer.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixed.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterInternetSettings.cs" />
+    <Compile Include="Assets\Scripts\UI\AvailableLevelSet.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
     <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\InventoryStatic.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
+    <Compile Include="Assets\Scripts\SaveLoad\WrapperGlobal.cs" />
+    <Compile Include="Assets\Scripts\UI\UIController\UIPlayerManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentSelected.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\ArcLightning.cs" />
@@ -137,12 +141,14 @@
     <Compile Include="Assets\Scripts\Test\ScenarioCreator.cs" />
     <Compile Include="Assets\Scripts\Test\NewEmptyCSharpScript.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\Move_Player.cs" />
+    <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
     <Compile Include="Assets\Scripts\AreaDetectEnteringExiting.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponCategory.cs" />
     <Compile Include="Assets\Scripts\Attributes\ReadOnlyAttribute.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateFallEnemy.cs" />
+    <Compile Include="Assets\Scripts\UI\SyncManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateFall.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateStuneUnit.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateIdleEnemy.cs" />
@@ -155,6 +161,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ICleanUp.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingText.cs" />
@@ -162,6 +169,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding.cs" />
     <Compile Include="Assets\Scripts\Fsm.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser.cs" />
+    <Compile Include="Assets\Scripts\CleanupManager.cs" />
     <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Unit\AreaDetectors\FloorDetector.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\MovingCamera.cs" />
@@ -205,7 +213,7 @@
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringStringWeaponInfoDictionaryPair.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateJumpEnemy.cs" />
-    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIController\UISceneManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateWalkEnemy.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\DamageReceiver.cs" />
     <Compile Include="Assets\Scripts\Test\EventDialogue.cs" />
@@ -246,7 +254,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\Level2\DialogueFinish.txt" />
     <None Include="Assets\Scripts\UI\README_PARAMETERS.txt" />
-    <None Include="Assets\Resources\Dialogues\English\MainMenu-SampleScene.txt" />
+    <None Include="Assets\Resources\Dialogues\English\MainMenu-Level1.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />

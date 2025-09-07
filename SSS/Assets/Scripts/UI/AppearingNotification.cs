@@ -37,9 +37,6 @@ public class AppearingNotification : AppearingText
         StartCoroutine(StartRisingOrFadingNotification(true));
         textMessage.SetBaseText(text);
 
-        // Устанавливаем родительский Transform
-        transform.SetParent(Player.instance.notificationPlacement);
-
         // Дополнительные настройки (необязательно)
         transform.localPosition = Vector3.zero; // Обнуляем локальную позицию
         transform.localRotation = Quaternion.identity; // Обнуляем локальный поворот
@@ -54,7 +51,7 @@ public class AppearingNotification : AppearingText
 
                 float height = size;
 
-                BiasAllAnotherAppearingTextInGroupDown(height, Player.instance.notificationPlacement);
+                BiasAllAnotherAppearingTextInGroupDown(height, GameManager.Instance.notificationPlacement);
             }
             else // для специфического контроля позиции текстов в группе тут пока что ничего не делаем, логику определяет управление свыше
             {
@@ -63,7 +60,7 @@ public class AppearingNotification : AppearingText
         }
         else
         {
-            foreach (Transform transformChildSprite in Player.instance.notificationPlacement)
+            foreach (Transform transformChildSprite in GameManager.Instance.notificationPlacement)
             {
                 if (transformChildSprite != transform)
                 {

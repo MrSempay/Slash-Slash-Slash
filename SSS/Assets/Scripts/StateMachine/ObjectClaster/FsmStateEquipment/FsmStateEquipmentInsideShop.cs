@@ -6,11 +6,10 @@ using static DialogueParser;
 public class FsmStateEquipmentInsideShop : FsmStateEquipment
 {
 
-    private Vector3 _baseLocalPositionInfoPanel;
 
     public FsmStateEquipmentInsideShop(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        _baseLocalPositionInfoPanel = equipment.transformPlaceInfoPanel.localPosition;
+
     }
 
 
@@ -53,15 +52,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
             }
 
         }
-
-        if (equipment.transform.position.x < Player.instance.transform.position.x) // если игрок справа от снаряжения, то направо и перемещаем информационную панельку
-        {
-            equipment.transformPlaceInfoPanel.localPosition = _baseLocalPositionInfoPanel;
-        }
-        else
-        {
-            equipment.transformPlaceInfoPanel.localPosition = new Vector3(_baseLocalPositionInfoPanel.x * -1f, _baseLocalPositionInfoPanel.y, _baseLocalPositionInfoPanel.z);
-        } 
+        SetPositionDescriptionPanel();
 
     }
 

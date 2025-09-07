@@ -33,7 +33,8 @@ public class Player : Unit, IMainTarget
     [SerializeField] private int _currentStamina = 0;
     [SerializeField] private RectTransform _rectTransformStaminaBar;
     [SerializeField] private GameObject _prefubOfStaminaPoint;
-    
+    [SerializeField] private RectTransform _notificationPlacement;
+
     public static Player instance;
 
     [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
@@ -42,6 +43,7 @@ public class Player : Unit, IMainTarget
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
     [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
 
+    public RectTransform buttonShowLeaderboardPlacement;
     public RectTransform rectTransformPlaceCustomCombos;
     public InterstitialAds interstitialAds;
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
@@ -49,7 +51,6 @@ public class Player : Unit, IMainTarget
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform UI; //
-    public RectTransform notificationPlacement;
     public RankStyle rankStyle; //
     //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
@@ -244,6 +245,7 @@ public class Player : Unit, IMainTarget
         instance = this;
         nameOfUnit = "Player";
         base.Awake();
+        GameManager.Instance.notificationPlacement = _notificationPlacement;
         CurrentStamina = staminaMax;
         selfSprite = GetComponent<SpriteRenderer>();
         _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();

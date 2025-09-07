@@ -10,14 +10,15 @@ public class TogglesGroup : MonoBehaviour, IControlLifeCicleFunctions
     private ToggleFixedOneWay _toggleFixedOneWayLast;
     private string _nameInvokingFunction;
 
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; }
 
     public void Awake()
     {
-        if (!awakeWasCalledAlready)
+        if (!AwakeWasCalledAlready)
         { 
             _nameInvokingFunction = "Trigger" + gameObject.name;
-            awakeWasCalledAlready = true;   
+            AwakeWasCalledAlready = true;   
             //AssignParametersAndProperties(AdjustSettingsParameters.settingsParameters[name], this);
         }
     }

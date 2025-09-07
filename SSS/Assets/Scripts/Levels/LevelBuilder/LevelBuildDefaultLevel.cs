@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public class LevelBuildDefaultLevel : LevelBuilder
 {
 
-    [SerializeField] private string _nameLevel; // название уровня, переменная нужна для задания названия через редактор
+    //[SerializeField] private readonly string _nameLevel = SceneManager.GetActiveScene().name; // багается, нужно вызывать это в Awake() или Start() 
     
     protected override void Awake()
     {
-
-        selfName = _nameLevel;
+        selfName = SceneManager.GetActiveScene().name;
 
         base.Awake();
         instance = this;
@@ -57,10 +57,6 @@ public class LevelBuildDefaultLevel : LevelBuilder
     protected override void Start()
     {
         base.Start();
-
-        SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
-        allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
-        SaveLoadManager.Instance.ImplementStoredSettings(); // чтоб настройки применялись при загрузке сцены сразу, а не после открытия меню настроек 
     }
 
 }

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,8 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
     private string _nameDisplayNameUpdateFunction;
 
 
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; } 
     public string Email
     {
         get { return _email; }
@@ -63,12 +65,12 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
     public void Awake()
     {
         PlayFabManager.Instance.OnGetDisplayNameFromEmailLogin += OnEmailLoginSuccess;
-        if (!awakeWasCalledAlready)
+        if (!AwakeWasCalledAlready)
         {
             selfName = gameObject.name;
             _nameEmailUpdateFunction = C.NameFunc.TriggerEmailForLinkWasChanged;
             _nameDisplayNameUpdateFunction = C.NameFunc.TriggerDisplayNameWasChanged;
-            awakeWasCalledAlready = true;
+            AwakeWasCalledAlready = true;
         }
 
     }
@@ -88,32 +90,42 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
     public void DisplayNameWasChanged()
     {
         bool isLongEnoughDisplayName = PlayFabManager.Instance.ChangeDisplayName(_textDisplayName.Text);
-        DisplayName = _textDisplayName.Text;
+        //DisplayName = _textDisplayName.Text;
+        DisplayName = GetCleanText(_textDisplayName.Text);
         if (!isLongEnoughDisplayName)
         {
-            Debug.Log("Таки тут...");
+            //Debug.Log("Таки тут...");
         }
     }
     public void EmailWasChanged() // только для сохранения в настройках сделали это. Вызывается при окончании редактирования
     {
-        Email = _textEmail.Text;
+        //Email = _textEmail.Text;
+        Email = GetCleanText(_textEmail.Text);
     }
 
     public void ButtonLinkEmailWasPressed()
     {
-        PlayFabManager.Instance.LinkEmail(_textEmail.Text);
-        Email = _textEmail.Text;
+        Email = GetCleanText(_textEmail.Text);
+        PlayFabManager.Instance.LinkEmail(Email);
     }
     public void ButtonLoginEmail()
     {
-        PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(_textEmail.Text);
-        Email = _textEmail.Text;
+        Email = GetCleanText(_textEmail.Text);
+        PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email); 
     }
 
     private void OnEmailLoginSuccess(string displayName)
     {
         
         _textInputFieldDisplayName.text = displayName; 
+    }
+
+    private string GetCleanText(string wrongText)
+    {
+        string raw = wrongText;
+        // Удаляем zero-width символы
+        string cleaned = Regex.Replace(raw, "[\u200B-\u200D\uFEFF]", "");
+        return cleaned.Trim();
     }
 
     private void OnDestroy()

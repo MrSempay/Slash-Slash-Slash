@@ -17,6 +17,7 @@ public class Building : MonoBehaviour
     [NonSerialized] public string folderImagesOfEquipment;  // ќтносительный путь к папке с изображени€ми из папки Assets/Resources
     [NonSerialized] public GameObject entirePanel;
     [NonSerialized] public GameObject buttonEnter;
+    [NonSerialized] public GameObject pedestals;
     [NonSerialized] public RectTransform rectTransformTargetEquipmentPanelPlayer; // чтоб отличать панели магазинов/аммуниции/заклинаний у игрока
     [NonSerialized] public List<Equipment> equipmentInBuilding = new List<Equipment>(); // список всего снар€жени€ в здании
 
@@ -57,13 +58,14 @@ public class Building : MonoBehaviour
         rectTransformTargetEquipmentPanelPlayer = GameObject.Find(nameTargetEquipmentPanelPlayer).GetComponent<RectTransform>();
         entirePanel = transform.Find("EntirePanel").gameObject; 
         buttonEnter = transform.Find("CanvasButtonEnter").gameObject;
+        pedestals = transform.Find("EntirePanel/Pedestals").gameObject;
         //Debug.Log("ћџ “””””””””””””“ " + Quaternion.identity);
         foreach (Transform equipmentTransform in rectTransformEquipmentPlaces)
         {
             equipmentTransform.rotation = Quaternion.identity;
         }
         _selfDoor.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
-        buttonEnter.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
+        buttonEnter.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity;
         //entirePanel.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
 
 

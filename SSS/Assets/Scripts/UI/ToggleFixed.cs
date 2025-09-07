@@ -16,7 +16,8 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
     [SerializeField] private bool _justCheckMark = false; // вли€ет тупо на изображение нашего тумблера. ≈сли установлено в true, то это будет просто галка
 
     public string selfName;
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; }
     public bool IsToggled
     {   get { return _isToggled; }
         set
@@ -46,9 +47,9 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
     {
         //Debug.Log(_shouldBeToggledAtStart);
         //Debug.Log(gameObject.name);
-        if (!awakeWasCalledAlready) {
+        if (!AwakeWasCalledAlready) {
             selfName = name;
-            awakeWasCalledAlready = true;
+            AwakeWasCalledAlready = true;
 
             _selfSprite = GetComponent<Image>();
 
@@ -68,7 +69,7 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
             _nameInvokingFunction = "Trigger" + name;
 
 
-            if (_shouldBeToggledAtStart) // пусть всегда в самом начале тумблер, если он должен быть нажат, вызывает прив€занный к нему метод. ≈сли кнопка не должна быть прожата
+            if (_shouldBeToggledAtStart && !GameManager.Instance.currentSettings.isLoadingSettings) // пусть всегда в самом начале тумблер, если он должен быть нажат, вызывает прив€занный к нему метод. ≈сли кнопка не должна быть прожата
             {                            // в начале, то просто ничего не делаем
                 IsToggled = true;
                 return;

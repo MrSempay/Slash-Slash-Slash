@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2202034002022514071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2248903212491848626}
+  - component: {fileID: 2140770627095823151}
+  m_Layer: 0
+  m_Name: GlobalGameScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2248903212491848626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202034002022514071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 391.06897, y: 412.05212, z: -7.971106}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2140770627095823151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202034002022514071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4f0b43522227445ae3dcc4cc46946c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefubAmmunition: {fileID: 0}
+  prefubSpell: {fileID: 0}
+  prefubAppearingSprite: {fileID: 0}
+  prefubAppearingText: {fileID: 0}
+  prefubAppearingNotification: {fileID: 0}
+  prefubTextButton: {fileID: 0}
+  prefubTextButtonScaled: {fileID: 0}
+  prefubCustomCombo: {fileID: 0}
+  prefubEquipmentInfoPanel: {fileID: 0}
+  prefubPlaceForEquipment: {fileID: 0}
+  currentLevelInOrder: 0
+  nameDialogueCurrent: 
+  wrapperGlobal:
+    wrapperGeneralData:
+      currentLevelInOrder: 0
+    wrapperSettings:
+      allTogglesData: []
+      allSlidersData: []
+      allChoseListsData: []
+      internetData:
+        selfName: 
+        Email: 
+        DisplayName: 
+  currentSettings:
+    _liftGammaGain: {fileID: 0}
+    isLoadingSettings: 0
+    wasUploaded: 0
+    vibrationOn: 1
+    cameraShakingOn: 1
+    volumeMusic: 1
+    volumeEffects: 1
+    volumeBrightness: 1
+    orientation: 3
+    language: 0
+    displayName: 
+    email: 
+  playFabManager: {fileID: 0}
+  globalFont: {fileID: 0}
+  notificationPlacement: {fileID: 0}

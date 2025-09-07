@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransformPlaceForFields;
 
     private FieldInfo _prefubField;
+    private GameObject _buttonShowLeaderboard;
 
     private void Awake()
     {
@@ -23,12 +26,30 @@ public class Leaderboard : MonoBehaviour
 
 
         }
+        _buttonShowLeaderboard = GameManager.Instance.InstanceTextButton(false, Player.instance.buttonShowLeaderboardPlacement, C.Just.ShowLeaderboard, ShowLeaderboardButtonClick);
+        _buttonShowLeaderboard.SetActive(false);
     }
 
 
-    public void CloseLeaderboard()
+    public void CloseLeaderboardButtonClick()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        _buttonShowLeaderboard.SetActive(true);
+    }
+
+    public void NextLevel()
+    {
+        GameManager.Instance.GoToRequiredLevel();
+    }
+
+    private void ShowLeaderboardButtonClick()
+    {
+        gameObject.SetActive(true);
+        _buttonShowLeaderboard.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
     }
 
 

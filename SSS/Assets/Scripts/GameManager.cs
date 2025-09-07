@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static DialogueArea;
 using static GameManager;
 using static ScoreManager;
@@ -13,6 +17,7 @@ using static StaticClassForAdditionalFunctions;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    private static bool _isShuttingDown = false;
 
     private string _nameCurrentScene;
     private string _nameTargetScene;
@@ -20,25 +25,32 @@ public class GameManager : MonoBehaviour
     private GameObject _prefubPlayerDialogue;
     private LiftGammaGain _liftGammaGain;
 
+    [SerializeField] private int _maxReachedLevel = 0; 
+
+    public readonly List<string> orderLevels = new List<string> { "Level1", "Level2", "Level3", "Level4", "Level5", };
+
     public GameObject prefubAmmunition;
     public GameObject prefubSpell;
     public GameObject prefubAppearingSprite;
     public GameObject prefubAppearingText;
     public GameObject prefubAppearingNotification;
+    public GameObject prefubTextButton;
+    public GameObject prefubTextButtonScaled;
     public CustomCombo prefubCustomCombo;
     public EquipmentInfoPanel prefubEquipmentInfoPanel;
     public PlaceForEquipment prefubPlaceForEquipment;
+    public int currentLevelInOrder = 0;
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
     public event DialogueStarted onDialogueStarted;         // экземляр(?) функции/сигнала(?)
 
     public string nameDialogueCurrent;
-    public DataWrapperSettings dataWrapperSettings = new(); // оболочка настроек для последующей загрузки сохранённых настроек. При каждом сохранении настроек перезаписываем
-                                                            // данное поле
+    public WrapperGlobal wrapperGlobal = new(); // оболочка для всех данных, которые будут сохранятся и загружаться на локальном устройстве
     public CurrentSettings currentSettings;
     public PlayFabManager playFabManager;
     public LocalizationManager localizationManager;
     public TMP_FontAsset globalFont;
+    public RectTransform notificationPlacement;
 
     [System.Serializable] public class CurrentSettings
     {
@@ -46,6 +58,7 @@ public class GameManager : MonoBehaviour
 
         public LiftGammaGain _liftGammaGain;
         public bool isLoadingSettings;
+        public bool wasUploaded = false;
 
         public bool vibrationOn = true;
         public bool cameraShakingOn = true;
@@ -53,7 +66,7 @@ public class GameManager : MonoBehaviour
         public float volumeEffects = 1;
         public float volumeBrightness = 1;
         public LANGUAGE orientation = LANGUAGE.Horizontal;
-        public LANGUAGE language; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
+        public LANGUAGE language = LANGUAGE.Russian; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
         public string displayName = ""; 
         public string email = "";
 
@@ -91,7 +104,6 @@ public class GameManager : MonoBehaviour
             get { return language; }
             set
             {
-                //Debug.Log(value);
                 language = value;
                 GameManager.Instance.localizationManager.SetLanguage(value);
             }
@@ -130,6 +142,7 @@ public class GameManager : MonoBehaviour
             set
             {
                 displayName = value;
+                PlayFabManager.Instance.GetDisplayName(value);
                 if (isLoadingSettings && value != null)
                 {
                     SettingsMenu.Instance.parameterInternetSettings.DisplayNameLoaded = value;
@@ -142,7 +155,7 @@ public class GameManager : MonoBehaviour
             set
             {
                 email = value;
-
+                PlayFabManager.Instance.GetUserEmail(value);
                 if (isLoadingSettings && value != null)
                 {
                     SettingsMenu.Instance.parameterInternetSettings.EmailLoaded = value;
@@ -168,13 +181,28 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if (_instance == null)
+            if (_instance == null && !_isShuttingDown)
             {
+                Debug.Log("И, блять?");
                 var obj = new GameObject("GameManager");
                 _instance = obj.AddComponent<GameManager>();
                 DontDestroyOnLoad(obj);
             }
             return _instance;
+        }
+    }
+
+    public int MaxReachedLevel
+    {
+        get { return _maxReachedLevel; }
+        set
+        {
+            if (value > _maxReachedLevel)
+            {
+                _maxReachedLevel = value;
+            }
+
+            MainMenu.instance?.availableLevelSet.UpdateLevelSet();
         }
     }
 
@@ -199,6 +227,8 @@ public class GameManager : MonoBehaviour
         prefubPlaceForEquipment = Resources.Load<PlaceForEquipment>(C.Paths.PrefubPlaceForEquipment);
         prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
+        prefubTextButton = Resources.Load<GameObject>(C.Paths.PrefubTextButton);
+        prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonScaled);
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
         _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
 
@@ -206,6 +236,7 @@ public class GameManager : MonoBehaviour
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
+        SyncManager.Instance.Initialize();
         localizationManager = LocalizationManager.Instance; // создаём менеджер локализации
         SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
         
@@ -217,6 +248,9 @@ public class GameManager : MonoBehaviour
             currentSettings._liftGammaGain = liftGammaGain;
         }
         SaveLoadManager.Instance.LoadSettingsFromFile();
+        SaveLoadManager.Instance.LoadGeneralLocalDataFromFile();
+        SaveLoadManager.Instance.ImplementStoredGeneralLocalData(); 
+        MainMenu.instance.availableLevelSet.UpdateLevelSet();
         AudioManager.Instance.Initialize();
 
     }
@@ -227,13 +261,25 @@ public class GameManager : MonoBehaviour
         // так и для всех объектов. Если у объекта изменить слой у одного из дочерних элементов, будет происходить детекция коллизий коллайдеров и зон только для этого элемента
         
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
-        currentSettings.Language = LANGUAGE.Russian;
+
+        if (currentSettings.Language == default)
+        {
+            currentSettings.Language = currentSettings.Language;
+        }   
+
     }
 
-    // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
-    public void ChangeSceneToDialogue(string nameTargetScene)
+    public void ResetMaxReachedLevelToZeroAndSetNewValue(int value)
     {
+        _maxReachedLevel = 0;
+        MaxReachedLevel = value;
+    }
 
+
+    // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
+    public void ChangeSceneTroughDialogue(string nameTargetScene)
+    {
+        Debug.Log("Тут мы : " + nameTargetScene);
         _nameCurrentScene = SceneManager.GetActiveScene().name;
         _nameTargetScene = nameTargetScene;
         nameDialogueCurrent = _nameCurrentScene + "-" + nameTargetScene;
@@ -279,10 +325,26 @@ public class GameManager : MonoBehaviour
                                                              bool shouldBeOnlyOneTextInGroup,
                                                              bool shouldBeSpecifyControlPositionTextsInGroup = false)
     {
-        AppearingNotification sciptAppearingSprite = Instantiate(prefubAppearingNotification).GetComponent<AppearingNotification>();
+
+        // Устанавливаем родительский Transform
+        if (notificationPlacement == null)
+        {
+            Debug.LogError("Нет родительского объекта для уведомления");
+            return null;
+        }
+
+        AppearingNotification sciptAppearingSprite = Instantiate(prefubAppearingNotification, notificationPlacement, false).GetComponent<AppearingNotification>();
         sciptAppearingSprite.SetProperlyPositionAndType(text, typeNotification, liveTime, shouldBeOnlyOneTextInGroup, shouldBeSpecifyControlPositionTextsInGroup);
 
         return sciptAppearingSprite;
+    }
+
+    public GameObject InstanceTextButton(bool isScaled, Transform parent, string baseLocalizationKey, UnityAction onClickFunction)
+    {
+        GameObject objectButton = Instantiate(isScaled? prefubTextButtonScaled : prefubTextButton, parent, false);
+        objectButton.transform.GetChild(0).GetComponent<TextEdit>().SetBaseText(baseLocalizationKey);
+        objectButton.GetComponent<Button>().onClick.AddListener(onClickFunction);
+        return objectButton;
     }
 
     public void PauseGame(bool setPause)
@@ -296,6 +358,20 @@ public class GameManager : MonoBehaviour
         {
             Destroy(obj);
         }
+    }
+
+    public void GoToRequiredLevel()
+    {
+        if (currentLevelInOrder == orderLevels.Count - 1) // если достигли последнего уровня
+        {
+            Debug.Log("Конец игры!");
+        }
+        else
+        {
+            currentLevelInOrder++;
+            ChangeSceneTroughDialogue(orderLevels[currentLevelInOrder]);
+        }
+
     }
 
 
@@ -383,5 +459,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Игра закрывается!...");
+        _isShuttingDown = true;
+        SaveLoadManager.Instance.SaveGeneralData();
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+        CleanupManager.DisposeAll();
+    }
 
+    private void OnDestroy()
+    {
+        _isShuttingDown = true;
+    }
 }

@@ -92,6 +92,9 @@ public class LevelBuilder : MonoBehaviour
 
     protected virtual void Start()
     {
+        SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
+        allObjects[0].Awake();
+        SettingsMenu.Instance.Start();
 
         AudioManager.Instance.UpdateMusicLevelSet();
         AudioManager.Instance.StartBeginningMusic();
@@ -154,12 +157,12 @@ public class LevelBuilder : MonoBehaviour
                 Enemy newEnemy = Instantiate(enemy, spawnPointTransform.position, spawnPointTransform.rotation);
 
                 // уменьшаем количество врагов для заданной врагу позиции
-                Debug.Log(targetsForRandom.Count);
+                //Debug.Log(targetsForRandom.Count);
                 targetPointsForEnemy[randomTarget]--;
                 // присваиваем случайный Transform врагу
                 newEnemy.CurrentTargetTransform = randomTarget;
                 newEnemy.isInstancedByLevel = true;
-                Debug.Log(targetsForRandom.Count);
+                //Debug.Log(targetsForRandom.Count);
                 newEnemy.transformTargets = allTransformTargetPoints;
                 listEnemiesFromLastWave.Add(newEnemy);
                 //Debug.Log(listEnemiesFromLastWave.Count);

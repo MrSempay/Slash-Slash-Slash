@@ -56,10 +56,6 @@ public class LevelBuildLevel1 : LevelBuilder
     protected override void Start()
     {
         base.Start();
-
-        SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
-        allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
-        SaveLoadManager.Instance.ImplementStoredSettings(); // чтоб настройки применялись при загрузке сцены сразу, а не после открытия меню настроек 
     }
 
 }

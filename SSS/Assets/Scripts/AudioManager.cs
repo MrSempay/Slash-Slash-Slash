@@ -11,12 +11,14 @@ public class AudioManager : MonoBehaviour
 
     private static AudioManager _instance;
     private float _timeTickOfChangingVolumeBetweenMusic = 0.03f;
+    private bool _musicWasEndedByItself = true;
     private Dictionary<string, AudioClip> _sourcesSounds = new();
     private Dictionary<string, AudioClip> _dictionaryFightMusic = new();
     private Dictionary<string, AudioClip> _dictionaryAmbientMusic = new();
     private AudioClip _currentMusic; // Ссылка на аудиофайл для взрыва
     private AudioClip _beginningMusic; // Ссылка на аудиофайл для взрыва
     private AudioClip _transitionMusic; // Ссылка на аудиофайл для взрыва
+    private AudioClip _certainMusic; // Ссылка на аудиофайл для какой-то конкретной музыки
     private string _pathToMusicFolder = "Music/Musics/";
     private string _pathToSoundsEffect = "Music/Effects/";
     private string _nameBeginningMusic = "BeginningLevelMusic";
@@ -170,6 +172,11 @@ public class AudioManager : MonoBehaviour
         _beginningMusic = Resources.Load<AudioClip>(_pathToMusicFolder + LevelBuilder.instance.selfName + "/" + _nameBeginningMusic);
         _transitionMusic = Resources.Load<AudioClip>(_pathToMusicFolder + LevelBuilder.instance.selfName + "/" + _nameTransitionMusic);
 
+        if (_beginningMusic == null || _transitionMusic == null)
+        {
+            Debug.LogError("Отсутствует музыка перехода или начальная музыка для уровня!");
+        }
+
         string fightMusicFolder = _pathToMusicFolder + LevelBuilder.instance.selfName + "/FightMusic/";
         string ambientMusicFolder = _pathToMusicFolder + LevelBuilder.instance.selfName + "/AmbientMusic/";
 
@@ -182,14 +189,29 @@ public class AudioManager : MonoBehaviour
     {
         //Debug.Log(nameMusic);
         StopAllCoroutines();
-        audioMusicComponent.volume = 0;
+
+        if (!_musicWasEndedByItself)
+        {
+            StartCoroutine(FadePreviousMusicAndStartBeginning());
+            return;
+        }
+
+        _musicWasEndedByItself = false;
+
+        //audioMusicComponent.volume = 0;
         StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_beginningMusic, null));
     }
-
-
     public void PlayFightOrAmbientMusic(bool isFightMusic)
     {
         StopAllCoroutines();
+
+        if (!_musicWasEndedByItself)
+        {
+            StartCoroutine(FadePreviousMusicAndStartAmbientOrFight(isFightMusic));
+            return;
+        }
+
+        _musicWasEndedByItself = false;
 
         List<string> keys;
 
@@ -221,6 +243,35 @@ public class AudioManager : MonoBehaviour
         }
 
 
+    }
+    public void StartCertainMusicInLoop(string nameMusic)
+    {
+        StopAllCoroutines();
+
+
+        if (_certainMusic == null)
+        {
+            _certainMusic = Resources.Load<AudioClip>(_pathToMusicFolder + nameMusic);
+
+            if (_certainMusic == null)
+            {
+                Debug.LogError("Музыки с именем " + nameMusic + " в заданной директории " + _pathToMusicFolder + " не найдено!");
+                return;
+            }
+        }
+
+        if (!_musicWasEndedByItself)
+        {
+            StartCoroutine(FadePreviousMusicCertain(nameMusic));
+            return;
+        }
+
+        _musicWasEndedByItself = false;
+
+        _currentMusic = _certainMusic;
+        audioMusicComponent.clip = _certainMusic;
+        audioMusicComponent.Play();
+        StartCoroutine(WaitForMusicEndByItself(_certainMusic, nameMusic));
     }
 
 
@@ -256,8 +307,74 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private IEnumerator FadePreviousMusicAndStartBeginning()
+    {
+        while (audioMusicComponent.volume > 0.03f)
+        {
+            audioMusicComponent.volume -= 0.015f;
+            yield return new WaitForSecondsRealtime(_timeTickOfChangingVolumeBetweenMusic);
+        }
+        audioMusicComponent.volume = GameManager.Instance.currentSettings.volumeMusic;
 
-    IEnumerator FadeCurrentMusicTickStartTransitionAndStartTargetMusic(AudioClip targetMusic, bool? isFightMusic)
+        StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_beginningMusic, null));
+    }
+    private IEnumerator FadePreviousMusicAndStartAmbientOrFight(bool isFightMusic)
+    {
+        while (audioMusicComponent.volume > 0.03f)
+        {
+            audioMusicComponent.volume -= 0.015f;
+            yield return new WaitForSecondsRealtime(_timeTickOfChangingVolumeBetweenMusic);
+        }
+        audioMusicComponent.volume = GameManager.Instance.currentSettings.volumeMusic;
+
+        List<string> keys;
+
+        if (isFightMusic)
+        {
+            keys = new List<string>(_dictionaryFightMusic.Keys);
+            if (keys.Count > 0)
+            {
+                string randomKey = keys[Random.Range(0, keys.Count)];
+                StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_dictionaryFightMusic[randomKey], isFightMusic));
+            }
+            else
+            {
+                Debug.Log("ПАПКА С МУЗЫКОЙ !!!!!!!!!!!!!!!!!!!!! ПУСТАААААААААААААААААААААААААААААААААААААААААААААААА");
+            }
+        }
+        else
+        {
+            keys = new List<string>(_dictionaryAmbientMusic.Keys);
+            if (keys.Count > 0)
+            {
+                string randomKey = keys[Random.Range(0, keys.Count)];
+                StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_dictionaryAmbientMusic[randomKey], isFightMusic));
+            }
+            else
+            {
+                Debug.Log("ПАПКА С МУЗЫКОЙ !!!!!!!!!!!!!!!!!!!!! ПУСТАААААААААААААААААААААААААААААААААААААААААААААААА");
+            }
+        }
+    }
+    private IEnumerator FadePreviousMusicCertain(string nameMusic)
+    {
+        while (audioMusicComponent.volume > 0.03f)
+        {
+            audioMusicComponent.volume -= 0.015f;
+            yield return new WaitForSecondsRealtime(_timeTickOfChangingVolumeBetweenMusic);
+        }
+        audioMusicComponent.volume = GameManager.Instance.currentSettings.volumeMusic;
+
+        StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_beginningMusic, null));
+
+        _currentMusic = _certainMusic;
+        audioMusicComponent.clip = _certainMusic;
+        audioMusicComponent.Play();
+        StartCoroutine(WaitForMusicEndByItself(_certainMusic, nameMusic));
+    }
+
+
+    private IEnumerator FadeCurrentMusicTickStartTransitionAndStartTargetMusic(AudioClip targetMusic, bool? isFightMusic)
     {
         yield return null;
         //while (audioMusicComponent.volume > 0.03f)
@@ -280,7 +397,11 @@ public class AudioManager : MonoBehaviour
     private IEnumerator WaitForTransitionMusicEnd(AudioClip targetMusic, bool? isFightMusic = null)
     {
         yield return new WaitForSecondsRealtime(_transitionMusic.length);
+
         Debug.Log("Музыка перехода закончилась!");
+
+        _musicWasEndedByItself = true;
+
         if (isFightMusic != null) // вообще, дичь это. Нужно поменять на какой-нибудь enum. На данный момент у нас может быть лишь 3 состояния: true (боевая), false (мирная) и null - начальная
         {
             JustStartAmbientOrFightMusic(targetMusic, (bool)isFightMusic);
@@ -291,7 +412,6 @@ public class AudioManager : MonoBehaviour
         }
         // Выполните нужные действия...
     }
-
     private IEnumerator WaitForAmbientOrFightMusicEnd(AudioClip targetMusic, bool isFightMusic)
     {
         yield return new WaitForSecondsRealtime(targetMusic.length);
@@ -299,16 +419,33 @@ public class AudioManager : MonoBehaviour
         Debug.Log("Закончившаяся мелодия: " + targetMusic.name);
         Debug.Log("Длилась " + targetMusic.length + " секунд");
         Debug.Log("Начинаем музыкальный цикл заново!");
+
+        _musicWasEndedByItself = true;
+
         PlayFightOrAmbientMusic(isFightMusic);
     }
     private IEnumerator WaitForBeginningMusicEnd()
     {
         yield return new WaitForSecondsRealtime(_beginningMusic.length);
+
+        _musicWasEndedByItself = true;
+
         Debug.Log("Переходим из начальной музыки в эмбиент");
         PlayFightOrAmbientMusic(false);
     }
 
-    // -------------------------------------------- КОНЕЦ НОВОГО УПРАВЛЯТОРА ----------------------------------------------- // 
+    private IEnumerator WaitForMusicEndByItself(AudioClip music, string nameMusic)
+    {
+        yield return new WaitForSecondsRealtime(music.length);
+
+        _musicWasEndedByItself = true;
+
+        Debug.Log("Закончившаяся мелодия в главном меню: " + music.name);
+
+        StartCertainMusicInLoop(nameMusic);
+    }
+
+    // -------------------------------------------- КОНЕЦ НОВОГО УПРАВЛЯТОРА --------------------------------------------- // 
 
     void Start()
     {

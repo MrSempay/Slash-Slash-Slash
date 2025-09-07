@@ -427,7 +427,7 @@ public class ScoreManager : MonoBehaviour
         AssignParametersAndProperties(AdjustScoreManagerParameters.scoreManagerParameters, this);
 
         _prefubLeaderboard = Resources.Load<GameObject>(C.Paths.PrefubLeaderboard);
-        prefubFieldLeaderboard = Resources.Load<FieldInfo>(C.Paths.FieldLeaderboard);
+        prefubFieldLeaderboard = Resources.Load<FieldInfo>(C.Paths.FieldLeaderboardScaled);
 
         AppearingSprite.Initialize(); // инициализируем в тамошнем классе справочные данные дл€ dictionaryPropertiesSprites
         AppearingText.Initialize(); // инициализируем в тамошнем классе справочные данные дл€ dictionaryPropertiesSprites
@@ -496,6 +496,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(timeZeroizeKillComboTicks); // ∆дем 1 секунду
 
         // —брасываем комбо после задержки
+        Debug.Log(GetInstanceID());
         CurrentKillCombo = CurrentMinimumAmountCombo;
         _zeroizeKillComboTicksCoroutine = null; // —брасываем ссылку на корутину
     }
@@ -504,7 +505,7 @@ public class ScoreManager : MonoBehaviour
     {
         await PlayFabManager.Instance.GetScoreLeaderboarderAsync(); // там информаци€ о текущем лидерборде запишетс€ в переменную объекта PlayFabManager.Instance. ќбъект Leaderboard будет
                                                                     // пр€мо на неЄ ссылатьс€
-        Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI);
+        Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); 
 
         //                           ¬¬¬¬¬¬¬¬¬¬ЌЌЌЌЌЌЌЌЌ»»»»»»»»»»»ћћћћћћћћћћјјјјјјјјјјЌЌЌЌЌЌЌЌЌЌЌ»»»»»»»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈!!!!!!!!!!!! !!!!!!!!!!!!!
         // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); «јƒј®“ √ЋќЅјЋ№Ќ”ё ѕќ«»÷»ё ƒЋя ќЅЏ≈ “ј. “ќ ≈—“№ „“ќЅ ќЌ «ј—ѕј¬Ќ»Ћ—я ¬ Ќ”Ћ≈¬ќ… “ќ„ ≈
@@ -514,6 +515,9 @@ public class ScoreManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        //Debug.Log(GetInstanceID()); 
+        if (_instance == this) _instance = null;
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
         StopAllCoroutines();
     }
 

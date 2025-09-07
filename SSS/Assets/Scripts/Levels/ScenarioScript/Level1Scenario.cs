@@ -51,7 +51,10 @@ public class Level1Scenario : ScenarioScript
         };
     }
 
-
+    protected override void Start()
+    {
+        base.Start();
+    }
 
     /* ############################# ¡ÀŒ  ‘”Õ ÷»…-—»√Õ¿ÀŒ¬, »Õ‘Œ–Ã»–”ﬁŸ»’ Œ “ŒÃ, ◊“Œ —ﬁ∆≈“ ƒ¬»∆≈“—ﬂ “¿  »À» »Õ¿◊≈ ############################# */
 
@@ -78,8 +81,8 @@ public class Level1Scenario : ScenarioScript
             case "waitTimeAfterFirstAmmunitionBue":
                 Debug.Log("Study was finished");
                 StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 1 }, 
-                                                                     { _transformSchool, 1 },
-                                                                     { _transformTreasury, 1 } },
+                                                                     { _transformSchool, 0 },
+                                                                     { _transformTreasury, 0 } },
                                  "WaveAfterAmmunitionBue");
 
                 JustTimeWait(10f, "justWait");
@@ -91,9 +94,9 @@ public class Level1Scenario : ScenarioScript
                 TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                 break;
             case "justWait":
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } },
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 1 },
+                                                                     { _transformSchool, 0 },
+                                                                     { _transformTreasury, 0 } },
                                  "JustSecondWave");
                 break;
         }

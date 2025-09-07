@@ -6,10 +6,14 @@ using System.Collections.Generic;
 using static DataWrapperSettings;
 using static StaticClassForAdditionalFunctions;
 using UnityEngine.UI;
+using PlayFab;
 
 public class SaveLoadManager : MonoBehaviour
 {
+    public Action OnLoadAndImplementGeneralSyncDataFinished;
+
     private static SaveLoadManager _instance;
+
 
 
     public static SaveLoadManager Instance
@@ -41,74 +45,109 @@ public class SaveLoadManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+        PlayFabManager.Instance.OnGetIDTitleAccountLogin += LoadAndImplementGeneralSyncData;
     }
 
 
+    #region Public API
 
 
-    [System.Serializable]
-    public class AllUnitsData
+    #region Save General Data Public
+
+    private void Update()
     {
-        //public List<Unit> unitDataArray = new List<Unit>();
-        public List<UnitData> unitDataArray = new List<UnitData>();
-        //public UnitData[] unitDataArray = new UnitData[3];
+        //Debug.Log(PlayFabManager.Instance.IDTitleAccountLast); 
     }
 
-    [System.Serializable]
-    public class UnitData
+    public void SaveGeneralData()
     {
-        public string ibo = "asdasd";
-        public float ibo2 = 3;
-        public float ibo3 = 4;
-    }
-
-
-    public void SaveGame()
-    {
-        Unit[] allUnits = MonoBehaviour.FindObjectsByType<Unit>(FindObjectsSortMode.None);
-        AllUnitsData allUnitsData = new AllUnitsData();
-        //allUnitsData.unitDataArray.Add(new Player());
-        //allUnitsData.unitDataArray.Add();
-        foreach (Unit unit in allUnits)
+        try
         {
-            //allUnitsData.unitDataArray.Add(new Unit());
-            allUnitsData.unitDataArray.Add(new UnitData());
-            // Сериализация
+            Debug.Log("Сохраняем общие настройки (как локальные, так и синхронизации)");
+            //Debug.Log(GameManager.Instance);
 
+            GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel = GameManager.Instance.MaxReachedLevel;
+            GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount = PlayFabManager.Instance.IDTitleAccountLast;
+            Debug.Log(PlayFabManager.Instance.IDTitleAccountLast);
+            string jsonGeneralData = JsonUtility.ToJson(GameManager.Instance.wrapperGlobal.wrapperGeneralData, prettyPrint: true);
 
-            Type type = unit.GetType(); // Получаем тип текущего класса
-            Debug.Log("Найден юнит: " + unit.gameObject.name + " c типом: " + type);
+            // Сохранение в файл для локального пользования. Происходит всегда.
+            string filePathLocalData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json";
+            File.WriteAllText(filePathLocalData, jsonGeneralData);
 
-            // Получаем все поля класса
-            System.Reflection.FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic); // Instance - для экземпляра класса, Public/NonPublic - чтобы получить все поля
+            string filePathSyncData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData\\" + PlayFabManager.Instance.IDTitleAccountLast + ".json";
 
-            foreach (System.Reflection.FieldInfo field in fields)
+            if (PlayFabClientAPI.IsClientLoggedIn()) // если мы уже залогинены и сохраняем данные, то сохраняем как в локальный файл, так и в файл синхронизации
             {
-                // Получаем значение поля
-                object value = field.GetValue(unit);
-
-                // Выводим информацию о поле
-                Debug.Log("  Поле: " + field.Name + ", Тип: " + field.FieldType + ", Значение: " + value);
+                File.WriteAllText(filePathSyncData, jsonGeneralData);
+            }
+            else // если не залогинены и сохраняем данные
+            {
+                if (PlayFabManager.Instance.IDTitleAccountLast == "") // по идее, если мы ещё ни разу не логинились и у нас нет файла для синхронизации локальных данных с аккаунтом, то
+                                                                  // сохраняем только в локальный файл
+                {
+                    // Сохранение в файл для локального пользования произошло при входе в функцию, вне условных операторов
+                    
+                }
+                else // если мы ранее были залогинены, но по какой-то причине в текущей сессии мы не авторизованы, сохраняем в локальный файл и файл для синхронизации, который связан
+                     // с прошлой активной сессией 
+                {
+                    File.WriteAllText(filePathSyncData, jsonGeneralData);
+                }
             }
         }
-        string json = JsonUtility.ToJson(allUnitsData, prettyPrint: false);
-        // Сохранение в файл
-        string filePath = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\data.json";
-        File.WriteAllText(filePath, json);
-        Debug.Log("Data saved to: " + filePath);
-        Debug.Log("Game was saved!");
+        catch (Exception ex)
+        {
+            Debug.LogError($"Ошибка при сохранении глобальных данных: {ex.Message}");
+        }
     }
 
+    public void LoadGeneralLocalDataFromFile()
+    {
+        if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json"))
+        {
+
+            Debug.Log("Загружаем и применяем общие локальные настройки");
+            string json = File.ReadAllText("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json");
+
+            if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
+            {
+                try
+                {
+                    GameManager.Instance.wrapperGlobal.wrapperGeneralData = JsonUtility.FromJson<WrapperGeneralData>(json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
+            }
+        }
+    }    
+
+    public void ImplementStoredGeneralLocalData()
+    {
+        GameManager.Instance.MaxReachedLevel = GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel;
+        PlayFabManager.Instance.IDTitleAccountLast = GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount;
+    }
+
+
+    #endregion Save General Data Public
+
+    #region Save Settings Public
 
     public void SaveSettingsMenu() // пока что publuc
     {
         try
         {
-            // объект с массивами оболочек различных параметров настроек (тумблера/кнопки/ползунки) создаётся в GameManager - .Instance.dataWrapperSettings
+            // объект с массивами оболочек различных параметров настроек (тумблера/кнопки/ползунки) создаётся в GameManager - .Instance.wrapperSettings
 
-            FindAndStoreAllInfoInSettingsMenu(); // эта штука как раз записывает данные о тумблерах в GameManager.Instance.dataWrapperSettings.allTogglesData
+            FindAndStoreAllInfoInSettingsMenu(); // эта штука как раз записывает данные о тумблерах в GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData
 
-            string json = JsonUtility.ToJson(GameManager.Instance.dataWrapperSettings, prettyPrint: true);
+            string json = JsonUtility.ToJson(GameManager.Instance.wrapperGlobal.wrapperSettings, prettyPrint: true);
 
             // Сохранение в файл
             string filePath = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json";
@@ -120,27 +159,7 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    // функция записывает значения всех тумблеров меню настроек в список нашей оболочки для сохранения настроек тумблеров GameManager.Instance.dataWrapperSettings.allTogglesData 
-    private void FindAndStoreAllInfoInSettingsMenu()
-    {
-        GameManager.Instance.dataWrapperSettings.allTogglesData = new();
-
-        GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings)); // родительский RectTransform окон с настройками
-        GameManager.Instance.dataWrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.toggleClusterGroup)); // родительский RectTransform нижней группы тумблеров
-
-        GameManager.Instance.dataWrapperSettings.allSlidersData = new();
-
-        GameManager.Instance.dataWrapperSettings.allSlidersData.AddRange(FindAndStoreAllSlidersInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
-        
-        GameManager.Instance.dataWrapperSettings.allChoseListsData = new();
-
-        GameManager.Instance.dataWrapperSettings.allChoseListsData.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
-
-        GameManager.Instance.dataWrapperSettings.internetData = StoreInternetSettings();
-        Debug.Log(StoreInternetSettings());
-
-
-    }
+    // функция записывает значения всех тумблеров меню настроек в список нашей оболочки для сохранения настроек тумблеров GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData 
 
     public void LoadSettingsFromFile()
     {
@@ -152,11 +171,11 @@ public class SaveLoadManager : MonoBehaviour
             {
                 try
                 {
-                    GameManager.Instance.dataWrapperSettings = JsonUtility.FromJson<DataWrapperSettings>(json);
+                    GameManager.Instance.wrapperGlobal.wrapperSettings = JsonUtility.FromJson<DataWrapperSettings>(json);
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning("Error parsing JSON: " + e.Message);
+                    Debug.LogWarning("Error parsing JSON DataSettings: " + e.Message);
                 }
             }
             else
@@ -168,6 +187,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void ImplementStoredSettings()
     {
+        //Debug.Log("Implemented");
         GameManager.Instance.currentSettings.isLoadingSettings = true;
         ImplementStoredSettingsToggle();
         ImplementStoredSettingsSliders();
@@ -176,6 +196,40 @@ public class SaveLoadManager : MonoBehaviour
         GameManager.Instance.currentSettings.isLoadingSettings = false; 
     }
 
+    #endregion Save Settings Public
+
+
+    #endregion Public API
+
+
+
+
+    # region Private Function
+
+
+    #region Save Settings Private
+
+
+    private void FindAndStoreAllInfoInSettingsMenu()
+    {
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData = new();
+
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings)); // родительский RectTransform окон с настройками
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData.AddRange(FindAndStoreAllTogglesInGivenRectTransformRecursivly(SettingsMenu.Instance.toggleClusterGroup)); // родительский RectTransform нижней группы тумблеров
+
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allSlidersData = new();
+
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allSlidersData.AddRange(FindAndStoreAllSlidersInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
+        
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allChoseListsData = new();
+
+        GameManager.Instance.wrapperGlobal.wrapperSettings.allChoseListsData.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
+
+        GameManager.Instance.wrapperGlobal.wrapperSettings.internetData = StoreInternetSettings();
+        Debug.Log(StoreInternetSettings());
+
+
+    }
 
 
     private List<DataWrapperToggle> FindAndStoreAllTogglesInGivenRectTransformRecursivly(RectTransform rootRectTransform)
@@ -207,22 +261,29 @@ public class SaveLoadManager : MonoBehaviour
         return toggles;
     }
 
-    public void ImplementStoredSettingsToggle()
+    private void ImplementStoredSettingsToggle()
     {
-        if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+        if (!GameManager.Instance.wrapperGlobal.wrapperSettings.IsPristine())
         {
+            //Debug.Log("Блядство");
             List<RectTransform> rectTransformsRootes = new List<RectTransform>();
             rectTransformsRootes.Add(SettingsMenu.Instance.rectTransformPlacementForSettings);
             rectTransformsRootes.Add(SettingsMenu.Instance.toggleClusterGroup);
             //Debug.Log(rectTransformsRootes.Count);
-            foreach (DataWrapperToggle wrapToggle in GameManager.Instance.dataWrapperSettings.allTogglesData)
+            foreach (DataWrapperToggle wrapToggle in GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData)
             {
+                //Debug.Log(wrapToggle.selfName);
+                //Debug.Log(wrapToggle.IsToggled);
                 foreach (RectTransform rootRectTransform in rectTransformsRootes) // можно было бы в глобальном трансформ нашей SettingsMenu искать, но так искало бы дольше. В целях
                                                                                   // оптимизации вручную задаём в rectTransformsRootes локальные трансформы, в детях которых будут тумблеры
                 {
                     // так как функция вызывается рекурсивно, чтоб постоянно не вызывать в ней GetPropertiesAndFields, мы вызовем это до первого входа в функцию и передадим
                     // словарь fieldsAndPropertiesOfWrapper как параметр в эту функцию (сделано в целях оптимизации)
                     Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapToggle);
+                    //Debug.Log("ебанушка");
+                    //Debug.Log(rootRectTransform); 
+                    //Debug.Log(wrapToggle); 
+                    //Debug.Log(fieldsAndPropertiesOfWrapper); 
                     FindAndImplementAllTogglesInGivenRectTransformRecursivly(rootRectTransform, wrapToggle, fieldsAndPropertiesOfWrapper);
                 }
             }
@@ -242,7 +303,7 @@ public class SaveLoadManager : MonoBehaviour
 
                 scriptToggle.Awake(); // дабы если на данный момент объекты будут не активны, то мы бы их инициализировали 
                 AssignParametersAndProperties(fieldsAndPropertiesOfWrapper, scriptToggle);
-
+                //Debug.Log(wrapToggle.selfName);
                 //scriptToggle.IsToggled = wrapToggle.isToggled;
 
                 continue; // предположим, что у тумблера не будут дочерние тумблеры...
@@ -282,12 +343,12 @@ public class SaveLoadManager : MonoBehaviour
         return sliders;
     }
 
-    public void ImplementStoredSettingsSliders()
+    private void ImplementStoredSettingsSliders()
     {
         {
-            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            if (!GameManager.Instance.wrapperGlobal.wrapperSettings.IsPristine())
             {
-                foreach (DataWrapperSlider wrapSlider in GameManager.Instance.dataWrapperSettings.allSlidersData)
+                foreach (DataWrapperSlider wrapSlider in GameManager.Instance.wrapperGlobal.wrapperSettings.allSlidersData)
                 {
                     foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
                     {
@@ -346,12 +407,12 @@ public class SaveLoadManager : MonoBehaviour
         return choseLists;
     }
 
-    public void ImplementStoredSettingsChoseLists()
+    private void ImplementStoredSettingsChoseLists()
     {
         {
-            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            if (!GameManager.Instance.wrapperGlobal.wrapperSettings.IsPristine())
             {
-                foreach (DataWrapperChoseList wrapChoseList in GameManager.Instance.dataWrapperSettings.allChoseListsData)
+                foreach (DataWrapperChoseList wrapChoseList in GameManager.Instance.wrapperGlobal.wrapperSettings.allChoseListsData)
                 {
                     foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
                     {
@@ -398,25 +459,68 @@ public class SaveLoadManager : MonoBehaviour
         return wrapper;
     }
 
-    public void ImplementStoredInternetSettings()
+    private void ImplementStoredInternetSettings()
     {
         {
-            if (!GameManager.Instance.dataWrapperSettings.IsPristine())
+            if (!GameManager.Instance.wrapperGlobal.wrapperSettings.IsPristine())
             {
                 SettingsMenu.Instance.parameterInternetSettings.Awake();
                 DataWrapperInternetSettings wrapper = new DataWrapperInternetSettings();
                 Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
-                Dictionary<string, object> fieldsAndPropertiesOfInternetSettings = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, GameManager.Instance.dataWrapperSettings.internetData);
-                Debug.Log(fieldsAndPropertiesOfInternetSettings);
-                Debug.Log(GameManager.Instance.currentSettings);
+                Dictionary<string, object> fieldsAndPropertiesOfInternetSettings = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, GameManager.Instance.wrapperGlobal.wrapperSettings.internetData);
+                //Debug.Log(fieldsAndPropertiesOfInternetSettings);
+                //Debug.Log(GameManager.Instance.currentSettings);
 
                 AssignParametersAndProperties(fieldsAndPropertiesOfInternetSettings, GameManager.Instance.currentSettings);
             }
         }
     }
 
-    public void LoadGame()
+    #endregion Save Settings Private
+
+    #region Save General Data Private
+
+    private void LoadAndImplementGeneralSyncData(string IDTitleAccount) // по идее у нас всегда последовательно должна идти подгрузка, а после применение синхронизирующих данных, по отдельности
+                                                                        // это не имеет смысла
     {
-        Debug.Log("Game was loaded!");
+        Debug.Log("Чё за херота2?");
+        if (IDTitleAccount != "")
+        {
+            Debug.Log("Загружаем и применяем настройки синхронизации");
+            string filePathSyncData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData\\" + IDTitleAccount + ".json";
+
+            if (File.Exists(filePathSyncData))
+            {
+                string json = File.ReadAllText(filePathSyncData);
+
+                if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
+                {
+                    try
+                    {
+                        Debug.Log("mda?");
+                        GameManager.Instance.wrapperGlobal.wrapperGeneralData = JsonUtility.FromJson<WrapperGeneralData>(json);
+
+                        GameManager.Instance.MaxReachedLevel = GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel;
+                        PlayFabManager.Instance.IDTitleAccountLast = GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount;
+
+                        OnLoadAndImplementGeneralSyncDataFinished?.Invoke(); 
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
+                }
+            }
+        }
     }
+
+    #endregion Save General Data Private
+
+
+    #endregion Private Function
+
 }

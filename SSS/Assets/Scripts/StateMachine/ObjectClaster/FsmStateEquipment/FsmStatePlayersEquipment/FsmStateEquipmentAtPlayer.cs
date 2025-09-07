@@ -30,7 +30,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
         if (!equipment.WasSold) // не устанавливаем WasSold в true, если снаряжение уже у нас типа в инвентаре. По идее WasSold маркирует снаряжение, true только если продан и в инвентаре
         {
             equipment.WasSold = true; // может, стоит WasSold заменить просто на AtPlayer.
-            player.Inventory.SetEquipmentToInventory(equipment);
+            player.Inventory.SetEquipmentToInventory(equipment); 
         }
 
         //if (equipment.isEquipmentASpell)

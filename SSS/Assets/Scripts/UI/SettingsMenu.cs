@@ -21,7 +21,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     private GameObject _objectInternetSettingsPanel;
 
 
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; }
 
     public static SettingsMenu Instance
     {
@@ -37,7 +38,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
    
     public void Awake()
     {
-        if (!awakeWasCalledAlready)
+        if (!AwakeWasCalledAlready)
         {
             if (_instance != null && _instance != this)
             {
@@ -49,6 +50,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             toggleClusterGroup = transform.Find("DownTogglesClaster").GetComponent<RectTransform>();
             rectTransformPlacementForSettings = transform.Find("PlacementForSettings").GetComponent<RectTransform>();
 
+            //Debug.Log(toggleClusterGroup);
+            //Debug.Log(rectTransformPlacementForSettings); 
             foreach (RectTransform rectTransformToggleGroup in toggleClusterGroup) // пока что хз зачем нам массив всех тумблеров, ведь можно контролировать визуализацию лишь предпоследнего
             {
                 foreach (RectTransform rectTransformToggle in rectTransformToggleGroup)
@@ -82,12 +85,23 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             EventBus.Instance.DisplayNameWasChanged.AddListener(DiaplayNameWasChanged);
 
 
-            awakeWasCalledAlready = true;
+            AwakeWasCalledAlready = true;
         }
     }
-    void Start()
+    // чё за хрень 
+    public void Start()
     {
-        SaveLoadManager.Instance.ImplementStoredSettings();
+        if (!StartWasCalledAlready)     
+        {
+            //if (!GameManager.Instance.currentSettings.wasUploaded)
+            {
+                //Debug.Log("ебала"); 
+                //SaveLoadManager.Instance.LoadSettingsFromFile(); // Загрузим из файла один раз в GameManager
+                SaveLoadManager.Instance.ImplementStoredSettings();
+            }
+
+            StartWasCalledAlready = true;
+        }
 
     }
 
@@ -172,9 +186,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         SaveLoadManager.Instance.SaveSettingsMenu();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
-        SaveLoadManager.Instance.LoadSettingsFromFile();
     }
 
     private void OnDisable()
@@ -184,10 +197,22 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     private void OnDestroy()
     {
         SaveCurrentSettings();
+
         EventBus.Instance.ToggleSonicOfSettingsMenuWasToggled.RemoveListener(ButtonSonicOfSettingsMenuToggled);
         EventBus.Instance.ToggleGameOfSettingsMenuWasToggled.RemoveListener(ButtonGameOfSettingsMenuToggled);
         EventBus.Instance.ToggleVideoOfSettingsMenuWasToggled.RemoveListener(ButtonVideoOfSettingsMenuToggled);
         EventBus.Instance.ToggleLanguageOfSettingsMenuWasToggled.RemoveListener(ButtonLanguageOfSettingsMenuToggled);
+        EventBus.Instance.ToggleInternetOfSettingsMenuWasToggled.RemoveListener(ButtonInternetOfSettingsMenuToggled);
+
+        EventBus.Instance.ValueBrightnessWasChanged.RemoveListener(ValueBrightnessWasChanged);
+        EventBus.Instance.ValueCameraShakingWasChanged.RemoveListener(ValueCameraShakingWasChanged);
+        EventBus.Instance.ValueLanguageWasChanged.RemoveListener(ValueLanguageWasChanged);
+        EventBus.Instance.ValueOrientationWasChanged.RemoveListener(ValueOrientationWasChanged);
+        EventBus.Instance.ValueVibrationWasChanged.RemoveListener(ValueVibrationWasChanged);
+        EventBus.Instance.ValueVolumEffectsWasChanged.RemoveListener(ValueVolumEffectsWasChanged);
+        EventBus.Instance.ValueVolumMusicWasChanged.RemoveListener(ValueVolumMusicWasChanged);
+        EventBus.Instance.EmailForLinkWasChanged.RemoveListener(TryingLinkEmail);
+        EventBus.Instance.DisplayNameWasChanged.RemoveListener(DiaplayNameWasChanged);
     }
 
 }

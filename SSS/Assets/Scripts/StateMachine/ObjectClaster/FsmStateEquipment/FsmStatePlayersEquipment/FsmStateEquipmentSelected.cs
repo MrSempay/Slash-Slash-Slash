@@ -59,6 +59,9 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
         mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0) - new Vector3(0, 0, 3) - new Vector3(0, 0, 0);
         equipment.transform.position = mousePosition;
 
+        SetPositionDescriptionPanel(); 
+
+
         if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши
         {
             // получаем ссылку на компонент RectTransform места для снаряжения, либо null, если такового места не нашлось

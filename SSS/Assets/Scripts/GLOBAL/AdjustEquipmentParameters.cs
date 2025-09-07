@@ -297,15 +297,87 @@ public static class AdjustEquipmentParameters : object
         }
         
         if (ammunitionNames.Count == 0)
-           {
-               //Debug.LogError("No ammunition names available in equipmentParameters!");
-               Debug.Log("No ammunition names available in equipmentParameters!");
-               return null; // Или какое-то значение по умолчанию
-           }
+        {
+            //Debug.LogError("No ammunition names available in equipmentParameters!");
+            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentCategory);
+            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.chance);
+            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentRarityType);
+            //Debug.Log("No ammunition names available in equipmentParameters!");
+            EquipmentChance someChance = GenerateItems(1)[0];
+            string nameItem = GetRandomAmmunitionName(someChance);
+            if (nameItem != null)
+            {
+                return nameItem;
+            }
+            else
+            {
+                return GetRandomAmmunitionName(someChance);
+            }
+        }
         
         int randomIndex = UnityEngine.Random.Range(0, ammunitionNames.Count);
         return ammunitionNames[randomIndex];                
     }
+
+
+    public static List<EquipmentChance> GenerateItems(int numberOfItems)
+    {
+        List<EquipmentChance> possibleItems = new List<EquipmentChance>(allEquipmentTypesAndCategoriesChance);
+
+        List<EquipmentChance> generatedItems = new List<EquipmentChance>();
+
+        // 1. Нормализуем вероятности (если они не нормализованы)
+        float totalChance = 0;
+        foreach (var item in possibleItems)
+        {
+            totalChance += item.chance;
+        }
+
+        if (Math.Abs(totalChance - 100) > 0.01f) // Проверяем, что сумма близка к 100
+        {
+            Debug.LogWarning("Сумма вероятностей не равна 100%. Нормализуем...");
+            // Нормализуем
+            float normalizationFactor = 100f / totalChance;
+            for (int i = 0; i < possibleItems.Count; i++)
+            {
+                EquipmentChance item = possibleItems[i];
+                item.chance *= normalizationFactor;
+                possibleItems[i] = item;
+            }
+        }
+
+        // 2. Генерируем предметы
+        for (int i = 0; i < numberOfItems; i++)
+        {
+            float randomValue = UnityEngine.Random.Range(0f, 100f);
+            float cumulativeChance = 0f;
+            EquipmentChance selectedItem = default;
+
+            foreach (var item in possibleItems)
+            {
+                //Debug.Log(item.chance);
+                cumulativeChance += item.chance;
+                if (randomValue <= cumulativeChance)
+                {
+                    selectedItem = item;
+                    break; // Выбираем первый подходящий предмет
+                }
+            }
+
+            if (selectedItem.equipmentCategory != null) // Проверяем, что предмет был выбран (selectedItem не остался default)
+            {
+                generatedItems.Add(selectedItem);
+            }
+            else
+            {
+                Debug.LogError("Не удалось выбрать предмет! Проверьте вероятности.");
+            }
+        }
+
+        return generatedItems;
+    }
+
+
 
 
 

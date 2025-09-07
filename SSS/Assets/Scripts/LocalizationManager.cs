@@ -26,7 +26,7 @@ public class LocalizationManager
         }
     }
 
-    public LANGUAGE currentLanguage = LANGUAGE.English;
+    public LANGUAGE currentLanguage = LANGUAGE.Russian;
 
     private Dictionary<string, Dictionary<LANGUAGE, string>> localization = new Dictionary<string, Dictionary<LANGUAGE, string>>();
 
@@ -447,9 +447,14 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Ваш аккаунт был успешно привязан к Email-у!" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
         });
-        localization.Add(C.Notifications.SignIn, new Dictionary<LANGUAGE, string>() {
-            { LANGUAGE.English, "Successfull signing in account!" },
-            { LANGUAGE.Russian, "Успешный вход в аккаунт!" },
+        localization.Add(C.Notifications.SignInEmail, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Successfull signing in account by Email!" },
+            { LANGUAGE.Russian, "Успешный вход в аккаунт через Email!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.SignInIDMobile, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Successfull signing in account by mobile ID!" },
+            { LANGUAGE.Russian, "Успешный вход в аккаунт c помощью ID устройства!" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
         });
         localization.Add(C.Notifications.AccountAlreadyLinked, new Dictionary<LANGUAGE, string>() {
@@ -476,6 +481,46 @@ public class LocalizationManager
             { LANGUAGE.English, "Nickname should be no shorter than 3 symbols!" },
             { LANGUAGE.Russian, "Ник должен состоять из не менее 3-ёх символов!" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Just.NextLevel, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Next level" },
+            { LANGUAGE.Russian, "Следующий уровень" },
+            { LANGUAGE.Spanish, "Uhu-hu" }
+        });
+        localization.Add(C.Just.ShowLeaderboard, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Show leaderboard" },
+            { LANGUAGE.Russian, "Показать таблицу лидеров" },
+            { LANGUAGE.Spanish, "Uhu-hu" }
+        });
+        localization.Add("ChooseLevel", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Choose level" },
+            { LANGUAGE.Russian, "Выберите уровень" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("Level1", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level 1" },
+            { LANGUAGE.Russian, "Уровень 1" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("Level2", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level 2" },
+            { LANGUAGE.Russian, "Уровень 2" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("Level3", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level 3" },
+            { LANGUAGE.Russian, "Уровень 3" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("Level4", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level 4" },
+            { LANGUAGE.Russian, "Уровень 4" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("Level5", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Level 5" },
+            { LANGUAGE.Russian, "Уровень 5" },
+            { LANGUAGE.Spanish, "Ура!" }
         });
 
     }

@@ -35,6 +35,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
 
     public override void OnDestroy()
     {
+        CoroutineManager.Instance.StopCoroutine(waitBeforeDisableColliderAndRigidBodyCoroutine);
         base.OnDestroy();
     }
 

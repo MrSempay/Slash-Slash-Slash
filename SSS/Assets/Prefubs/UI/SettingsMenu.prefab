@@ -1335,6 +1335,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3209139225060636541}
     m_Modifications:
+    - target: {fileID: 1682558818749594078, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
+      propertyPath: m_text
+      value: "\u200B"
+      objectReference: {fileID: 0}
     - target: {fileID: 2127218555425014996, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
       propertyPath: _textEmail
       value: 
@@ -1410,6 +1414,10 @@ PrefabInstance:
     - target: {fileID: 3610568496065625767, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -54.335
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290067573905259, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
+      propertyPath: m_text
+      value: "\u200B"
       objectReference: {fileID: 0}
     - target: {fileID: 6814219643790273838, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
       propertyPath: m_Pivot.x
@@ -1506,6 +1514,18 @@ PrefabInstance:
     - target: {fileID: 7597173960626231186, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -314.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029041813675939384, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
+      propertyPath: m_ContentType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029041813675939384, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
+      propertyPath: m_KeyboardType
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029041813675939384, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8468465086374037772, guid: 9ae8c69217b2f104e8634bf378f4be9e, type: 3}
       propertyPath: m_Name

@@ -69,6 +69,13 @@ public class ScenarioScript : MonoBehaviour
 
     }
 
+
+    protected virtual void Start()
+    {
+
+        FinishLevel();
+    }
+
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
     protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
@@ -158,6 +165,15 @@ public class ScenarioScript : MonoBehaviour
     }
     protected virtual async void FinishLevel()
     {
+
+        if (GameManager.Instance.currentLevelInOrder < GameManager.Instance.orderLevels.Count - 1) // при прохождении последнего уровня счётчик не увеличиваем
+                                                                                                   // после окончания уровня увеличиваем количества пройденных уровень, показатель же
+                                                                                                   // текущего уровня GameManager.Instance.currentLevelInOrder увеличиваем в функции
+                                                                                                   // GoToRequiredLevel() при нажатии соответствующей кнопки
+        {
+            GameManager.Instance.MaxReachedLevel = GameManager.Instance.currentLevelInOrder + 1;
+        }
+        PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
         await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
         await Task.Delay(2000); // К сожалению лидерборд не обновляется синхронно с обновлением статистик. Нужна задержка в несколько секунд. Константа 2000 была подобрана произвольно
         ScoreManager.Instance.ShowActualLeaderboard();
@@ -250,20 +266,25 @@ public class ScenarioScript : MonoBehaviour
     {
         if (_moveCameraCoroutine != null)
         {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _moveCameraCoroutine);
+            CoroutineManager.Instance?.StopManagedCoroutine(this.gameObject, _moveCameraCoroutine);
         }
         if (_moveObjectCoroutine != null)
         {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _moveObjectCoroutine);
+            CoroutineManager.Instance?.StopManagedCoroutine(this.gameObject, _moveObjectCoroutine);
         }
         if (_moveObjectCoroutine != null)
         {
-            CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _justTimeWaitCoroutine);
+            CoroutineManager.Instance?.StopManagedCoroutine(this.gameObject, _justTimeWaitCoroutine);
         }
         _moveCameraCoroutine = null;
         _moveObjectCoroutine = null;
         _justTimeWaitCoroutine = null;
-        GameManager.Instance.onDialogueStarted -= DialogueWasStarted;
+        CoroutineManager.Instance?.StopAllCoroutinesFor(gameObject);
+
+        if (GameManager.Instance != null) // а вот так GameManager.Instance?.onDialogueStarted -= DialogueWasStarted; нельзя, сука
+        {
+            GameManager.Instance.onDialogueStarted -= DialogueWasStarted;
+        }
         scriptPlayer.onUnitWasKilled -= UnitWasKilled;
         scriptPlayer.OnEnemiesWaveWasDestroyedWithoutLosingMainTargets -= EnemiesWaveWasDestroyedWithoutLosingMainTargets;
     }

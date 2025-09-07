@@ -22,7 +22,8 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     public List<LANGUAGE> listChosing;
     public string selfName;
 
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; }
 
     public string CurrentTextValue
     {
@@ -49,7 +50,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
     public void Awake()
     {
         //Debug.Log("3");
-        if (!awakeWasCalledAlready)
+        if (!AwakeWasCalledAlready)
         {
             _textButton.Awake();
             //Debug.Log("1");
@@ -57,7 +58,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
             StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustSettingsParameters.settingsParameters[selfName], this);
             _nameInvokingFunction = C.Prefixes.PrefixTrigger + selfName;
             SetValue();
-            awakeWasCalledAlready = true;
+            AwakeWasCalledAlready = true;
         }
 
     }

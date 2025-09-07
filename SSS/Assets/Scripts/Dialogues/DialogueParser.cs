@@ -106,14 +106,14 @@ public class DialogueParser : MonoBehaviour
         dialogueLines.Clear();
 
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
-        string fullPathToDialogueFile = _nameDialogueFolder + LocalizationManager.Instance.currentLanguage + "/" + _nameDialogueFileWithParentFolder;
-        //Debug.Log(fullPathToDialogueFile);
+        string fullPathToDialogueFile = _nameDialogueFolder + GameManager.Instance.currentSettings.Language + "/" + _nameDialogueFileWithParentFolder;
+        Debug.Log(fullPathToDialogueFile);
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)
         {
             // по идее можно просто мен€ть сцену далее, если диалог тут не предусмотрен
-            Debug.Log(" Ќет ‘вйликјјјјјјјјјјјј  Text file not found in Resources/Dialogues/" + _nameDialogueFileWithParentFolder + ".txt");
+            Debug.Log(" Ќет ‘вйликјјјјјјјјјјјј  Text file not found in " + fullPathToDialogueFile + ".txt");
             FinishDialogue();
             return;
         }
@@ -214,6 +214,7 @@ public class DialogueParser : MonoBehaviour
 
     protected virtual void FinishDialogue() 
     {
+        Debug.Log("«акончили");
         onDialogueWasFinished?.Invoke(_nameDialogueFileWithParentFolder);
     }
 

@@ -41,9 +41,9 @@ public class DefaultLevelScenario : ScenarioScript
         //StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueStart}"); 
     }
 
-    protected void Start()
+    protected override void Start()
     {
-
+        base.Start();
         StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueStart}");
     }
 

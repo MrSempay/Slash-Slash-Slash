@@ -12,7 +12,8 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
 
     public string selfName;
 
-    public bool awakeWasCalledAlready { get; set; }
+    public bool AwakeWasCalledAlready { get; set; }
+    public bool StartWasCalledAlready { get; set; }
 
     public float CurrentValue
     {
@@ -28,11 +29,11 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
 
     public void Awake()
     {
-        if (!awakeWasCalledAlready)
+        if (!AwakeWasCalledAlready)
         {
             selfName = gameObject.name;
             _nameInvokingFunction = C.Prefixes.PrefixTrigger + selfName;
-            awakeWasCalledAlready = true;
+            AwakeWasCalledAlready = true;
             //Debug.Log(_slider);
             ValueOfSliderWasChanged();
         }
