@@ -427,6 +427,11 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Ваш Email" },
             { LANGUAGE.Spanish, "Muda-dada-da?" }
         });
+        localization.Add("YourPassword", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Your password" },
+            { LANGUAGE.Russian, "Ваш пароль" },
+            { LANGUAGE.Spanish, "Muda-dada-da?" }
+        });
         localization.Add("Login", new Dictionary<LANGUAGE, string>() {
             { LANGUAGE.English, "Login" },
             { LANGUAGE.Russian, "Логин" },
@@ -462,9 +467,44 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Данный аккаунт уже привязан к другом Email-у!" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
         });
+        localization.Add(C.Notifications.InvalidFormatEmailAddressOrPassword, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Invalid format of Email address or password!" },
+            { LANGUAGE.Russian, "Неверный формат электронной почты или пароля!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.InvalidEmailAddressOrPassword, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Can't find account with such Email and password pair!" },
+            { LANGUAGE.Russian, "Не удаётся найти аккаунт с заданными Email-ом и паролем!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
         localization.Add(C.Notifications.InvalidEmailAddress, new Dictionary<LANGUAGE, string>() {
-            { LANGUAGE.English, "Invalid format of Email address, required format is: 'a@a.a'!" },
-            { LANGUAGE.Russian, "Неверный формат электронной почты, требуется формат: 'a@a.a'!" },
+            { LANGUAGE.English, "Invalid password!" },
+            { LANGUAGE.Russian, "Неверный пароль!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.NoInternetConnection, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "No internet connection!" },
+            { LANGUAGE.Russian, "Нет соединения с интернетом!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.EmailPasswordRecoveyrWasSent, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Letter password recovery was sent at specified Email!" },
+            { LANGUAGE.Russian, "Письмо для восстановления пароля было отправлено на указанный Email адрес!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.EmailPasswordRecoverFailure, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Email password recover wasn't sent by some failure!" },
+            { LANGUAGE.Russian, "Email для восстановления пароля был отправлен из-за неведомой ошибки!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.ServiceUnavailable, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Server is temporary unavailable or missing internet connection!" },
+            { LANGUAGE.Russian, "Сервер временно недоступен либо отсутствует подключение к интернету!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.CantGetLeaderboard, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Can't get actual leaderboard, please, check internet connection" },
+            { LANGUAGE.Russian, "Не получилось получить актуальную таблицу лидеров, пожалуйста, проверьте соединение с интернетом" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
         });
         localization.Add(C.Notifications.AccountNotFound, new Dictionary<LANGUAGE, string>() {
@@ -480,6 +520,16 @@ public class LocalizationManager
         localization.Add(C.Notifications.DisplayNameTooShort, new Dictionary<LANGUAGE, string>() {
             { LANGUAGE.English, "Nickname should be no shorter than 3 symbols!" },
             { LANGUAGE.Russian, "Ник должен состоять из не менее 3-ёх символов!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.PasswordTooShort, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Password must contains at least 7 characters!" },
+            { LANGUAGE.Russian, "Пароль должен содержать не менее 7 символов!" },
+            { LANGUAGE.Spanish, "ughhhhh....?" }
+        });
+        localization.Add(C.Notifications.EmailAddressNotAvailable, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "This Email is already linked to some another account!" },
+            { LANGUAGE.Russian, "Даннаый Email уже привязан к другому аккаунту!" },
             { LANGUAGE.Spanish, "ughhhhh....?" }
         });
         localization.Add(C.Just.NextLevel, new Dictionary<LANGUAGE, string>() {
@@ -520,6 +570,11 @@ public class LocalizationManager
         localization.Add("Level5", new Dictionary<LANGUAGE, string>() {
             { LANGUAGE.English, "Level 5" },
             { LANGUAGE.Russian, "Уровень 5" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
+        localization.Add("RecoveryPassword", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Recovery password" },
+            { LANGUAGE.Russian, "Восстановить пароль" },
             { LANGUAGE.Spanish, "Ура!" }
         });
 

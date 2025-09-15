@@ -9,4 +9,10 @@ public class WrapperGeneralData // дл€ записи информаци€ дл€ локального пользова
 {
     public int MaxReachedLevel;
     public string IDTitleLastSignedAccount;
+
+    public WrapperGeneralData(int MaxReachedLevel, string IDTitleLastSignedAccount)
+    {
+        this.MaxReachedLevel = MaxReachedLevel;
+        this.IDTitleLastSignedAccount = IDTitleLastSignedAccount;
+    }
 }

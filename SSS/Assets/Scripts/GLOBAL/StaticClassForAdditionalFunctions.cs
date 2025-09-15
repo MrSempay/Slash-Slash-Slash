@@ -7,12 +7,12 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Collections;
 using Unity.VisualScripting;
 using System.Linq;
-using static UnityEngine.LightTransport.IProbeIntegrator;
+using System.IO;
 
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
 public static class StaticClassForAdditionalFunctions : object
 {
-    public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical }
+    public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical } // БОЖЕ, КАК ЖЕ УЁБИЩНО. Это ПИЗДЕЦ.
     public enum TYPES_INCREASING { Percentage, Absolute }
     public enum TYPE_NOTIFICATION { Success, Warning, Failure };
 
@@ -257,6 +257,15 @@ public static class StaticClassForAdditionalFunctions : object
         }
 
         return result;
+    }
+
+    public static bool HasAnyFile(string path)
+    {
+        if (!Directory.Exists(path))
+            return false;
+
+        string[] files = Directory.GetFiles(path);
+        return files.Length > 0;
     }
 
     public static void Vibrate()

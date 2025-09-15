@@ -1,4 +1,3 @@
-using UnityEditor.Rendering;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +10,8 @@ public class EventDialogue : BaseEvent
 
     public override void DrawEditorGUI()
     {
+#if UNITY_EDITOR
         mudadayo = EditorGUILayout.IntField("Duration", mudadayo);
+#endif
     }
 }

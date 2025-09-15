@@ -296,9 +296,15 @@ public class Player : Unit, IMainTarget
         //Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
     }
-    void asd(bool asd)
+    public override void SomeAnimationUnitWasFinished(string nameFinishedAnimation) 
     {
-     
+        base.SomeAnimationUnitWasFinished(nameFinishedAnimation);
+        switch (nameFinishedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Animations.PlayerDied:
+                YandexMobileAdsInterstitialDemoScript.Instance.ShowInterstitial();
+                break;
+        }
     }
 
     private void FixedUpdate()

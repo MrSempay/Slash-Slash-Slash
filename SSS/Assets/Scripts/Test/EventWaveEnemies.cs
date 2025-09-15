@@ -10,7 +10,9 @@ public class EventWaveEnemies : BaseEvent
 
     public override void DrawEditorGUI()
     {
+#if UNITY_EDITOR
         arara = EditorGUILayout.IntField("Duration", arara);
+#endif
     }
 
 }

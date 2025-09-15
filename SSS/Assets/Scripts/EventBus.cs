@@ -51,6 +51,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<LANGUAGE, RectTransform> ValueLanguageWasChanged { get; } = new();
     public UnityEvent<LANGUAGE, RectTransform> ValueOrientationWasChanged { get; } = new();
     public UnityEvent<string, RectTransform> EmailForLinkWasChanged { get; } = new();
+    public UnityEvent<string, RectTransform> PasswordWasChanged { get; } = new();
     public UnityEvent<string, RectTransform> DisplayNameWasChanged { get; } = new();
 
 
@@ -78,6 +79,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public void TriggerParameterLanguage(LANGUAGE value, RectTransform rectTransformToggle) { ValueLanguageWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterOrientation(LANGUAGE value, RectTransform rectTransformToggle) { ValueOrientationWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerEmailForLinkWasChanged(string value, RectTransform rectTransformToggle) { EmailForLinkWasChanged.Invoke(value, rectTransformToggle); }
+    public void TriggerPasswordWasChanged(string value, RectTransform rectTransformToggle) { PasswordWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerDisplayNameWasChanged(string value, RectTransform rectTransformToggle) { DisplayNameWasChanged.Invoke(value, rectTransformToggle); }
 
     public void KillComboWasChanged(int value) { OnKillKomboWasChanged.Invoke(value); }

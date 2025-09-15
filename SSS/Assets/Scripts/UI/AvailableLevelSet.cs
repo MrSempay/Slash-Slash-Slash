@@ -1,26 +1,36 @@
+using System;
 using UnityEngine;
 
 public class AvailableLevelSet : MonoBehaviour
 {
-    [SerializeField] private RectTransform _scrollContainer; 
+    public Action OnStartLevel;
+
+    [SerializeField] private RectTransform _scrollContainer;
+    private int _currentAmountLevels = 0;
 
     public void UpdateLevelSet()
     {
-        foreach (RectTransform child in _scrollContainer)
+        if (_currentAmountLevels != GameManager.Instance.MaxReachedLevel + 1) // чтоб только если значение изменилось в необходимом количестве уровней, мы обновляли список.
         {
-            Destroy(child.gameObject);
-        }
+            foreach (RectTransform child in _scrollContainer)
+            {
+                Destroy(child.gameObject);
+            }
 
-        for (int i = 0; i <= GameManager.Instance.MaxReachedLevel; i++)
-        {
-            int index = i; // <-- локальная копия
-            string levelName = GameManager.Instance.orderLevels[index]; // ещё лучше сразу взять строку
-            GameManager.Instance.InstanceTextButton(true, _scrollContainer, levelName, () => OnChooseLevel(levelName));
+            for (int i = 0; i <= GameManager.Instance.MaxReachedLevel; i++)
+            {
+                int index = i; // <-- локальная копия
+                string levelName = GameManager.Instance.orderLevels[index]; // ещё лучше сразу взять строку
+                GameManager.Instance.InstanceTextButton(true, _scrollContainer, levelName, () => OnChooseLevel(levelName));
+            }
+            _currentAmountLevels = GameManager.Instance.MaxReachedLevel + 1;
         }
     }
 
     private void OnChooseLevel(string nameLevel)
     {
+        OnStartLevel?.Invoke();
+
         GameManager.Instance.currentLevelInOrder = GameManager.Instance.orderLevels.IndexOf(nameLevel);
         GameManager.Instance.ChangeSceneTroughDialogue(nameLevel);
     }

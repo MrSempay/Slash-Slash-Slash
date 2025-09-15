@@ -50,6 +50,7 @@ public class DataWrapperSettings
     {
         public string Email;
         public string DisplayName;
+        public string Password;
     }
 
     // проверяем, является ли объект девственным (чтоб, если чего вдруг, не пытались мы загружать настройки из такового

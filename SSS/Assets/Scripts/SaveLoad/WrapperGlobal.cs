@@ -8,7 +8,7 @@ public class WrapperGlobal
 
     public WrapperGlobal()
     {
-        wrapperGeneralData = new WrapperGeneralData();
+        wrapperGeneralData = new WrapperGeneralData(0, "");
         wrapperSettings = new DataWrapperSettings();        
     }
 }

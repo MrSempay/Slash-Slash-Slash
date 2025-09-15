@@ -6,8 +6,8 @@ public class DefaultLevelScenario : ScenarioScript
 {
     private int _currentNumberWave = 0;
 
-    [SerializeField, ReadOnly] private string _nameDialogueStart = C.Dilogues.DialogueStart;
-    [SerializeField, ReadOnly] private string _nameDialogueFinish = C.Dilogues.DialogueFinish;
+    [SerializeField] private readonly string _nameDialogueStart = C.Dilogues.DialogueStart;
+    [SerializeField] private readonly string _nameDialogueFinish = C.Dilogues.DialogueFinish;
     [SerializeField] private float _timeAfterFirstDialogueBeforeFirstWave = 15f;
     [SerializeField] private float _timeAfterLastWaveBeforeFinishDialogue = 3f;
     [SerializeField] private float _timeAfterFinishDialogueBeforePassLevel = 15f;

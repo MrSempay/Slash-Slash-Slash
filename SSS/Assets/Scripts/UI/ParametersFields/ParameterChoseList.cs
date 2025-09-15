@@ -68,12 +68,21 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         SetValue();
     }
 
+    private bool _lock;
     public void SetValue()
     {
-        //Debug.Log("2");
-        CurrentTextValue = listChosing[_indexCurrentString].ToString();
-        CurrentValue = listChosing[_indexCurrentString];
-        _indexCurrentString++;
-        if (_indexCurrentString == listChosing.Count) _indexCurrentString = 0;
+        if (!_lock) // чтоб из этого метода этот же не вызывать, если мы из этого класса его вызываем через CurrentValue
+        {
+            _lock = true;
+            Debug.Log("изменили хуйню");
+            //Debug.Log("2");
+            CurrentTextValue = listChosing[_indexCurrentString].ToString();
+            CurrentValue = listChosing[_indexCurrentString]; // при вызове этого метода из currentSettings этот вызов не пройдёт, так как у нас стоит проверка на то же значение
+            _indexCurrentString++;
+            if (_indexCurrentString == listChosing.Count) _indexCurrentString = 0;
+            _lock = false;
+
+
+        }
     }
 }

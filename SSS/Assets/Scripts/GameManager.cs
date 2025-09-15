@@ -62,13 +62,14 @@ public class GameManager : MonoBehaviour
 
         public bool vibrationOn = true;
         public bool cameraShakingOn = true;
-        public float volumeMusic = 1;
-        public float volumeEffects = 1;
-        public float volumeBrightness = 1;
+        public float volumeMusic = 0.5f;
+        public float volumeEffects = 0.5f;
+        public float volumeBrightness = 0.5f;
         public LANGUAGE orientation = LANGUAGE.Horizontal;
         public LANGUAGE language = LANGUAGE.Russian; //установится в значение по умолчанию в методе Start GameManager, чтоб всегда применялись настройки по умполчанию
         public string displayName = ""; 
         public string email = "";
+        public string password = "";
 
         public static CurrentSettings Instance
         {
@@ -86,16 +87,23 @@ public class GameManager : MonoBehaviour
             get { return orientation; }
             set
             {
-                orientation = value;
-                switch (value)
+                if (value != orientation) // чтоб не пытаться установить в то же значение ориентацию, в котором она уже находится, ибо багнет UI-ку. Нужно ещё тут устанавливать, ибо не всегда
+                                          // изменям через SettingsMenu
                 {
-                    case LANGUAGE.Horizontal:
-                        Screen.orientation = ScreenOrientation.LandscapeLeft;
-                        break;
+                    orientation = value;
+                    switch (value)
+                    {
+                        case LANGUAGE.Horizontal:
+                            Screen.orientation = ScreenOrientation.LandscapeLeft;
+                            break;
 
-                    case LANGUAGE.Vertical:
-                        Screen.orientation = ScreenOrientation.Portrait;
-                        break;
+                        case LANGUAGE.Vertical:
+                            Screen.orientation = ScreenOrientation.Portrait;
+                            break;
+                    }
+
+                    MainMenu.instance?.OrientationWasChanged(value);
+                    SettingsMenu.Instance.parameterOrientation.SetValue();
                 }
             }
         }
@@ -162,6 +170,19 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                PlayFabManager.Instance.GetUserPassword(value);
+                if (isLoadingSettings && value != null)
+                {
+                    SettingsMenu.Instance.parameterInternetSettings.PasswordLoaded = value;
+                }
+            }
+        }
 
         // Приватный конструктор - запрещает создание экземпляров класса извне
         private CurrentSettings()
@@ -183,7 +204,6 @@ public class GameManager : MonoBehaviour
         {
             if (_instance == null && !_isShuttingDown)
             {
-                Debug.Log("И, блять?");
                 var obj = new GameObject("GameManager");
                 _instance = obj.AddComponent<GameManager>();
                 DontDestroyOnLoad(obj);
@@ -228,7 +248,7 @@ public class GameManager : MonoBehaviour
         prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
         prefubTextButton = Resources.Load<GameObject>(C.Paths.PrefubTextButton);
-        prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonScaled);
+        prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
         _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
 
@@ -236,7 +256,8 @@ public class GameManager : MonoBehaviour
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
-        SyncManager.Instance.Initialize();
+        YandexMobileAdsInterstitialDemoScript.Instance.Initialize(); // создаём объект PlayFabManager
+        SyncManager sm = SyncManager.Instance;
         localizationManager = LocalizationManager.Instance; // создаём менеджер локализации
         SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
         
@@ -249,7 +270,7 @@ public class GameManager : MonoBehaviour
         }
         SaveLoadManager.Instance.LoadSettingsFromFile();
         SaveLoadManager.Instance.LoadGeneralLocalDataFromFile();
-        SaveLoadManager.Instance.ImplementStoredGeneralLocalData(); 
+        SaveLoadManager.Instance.ImplementStoredGeneralData(); 
         MainMenu.instance.availableLevelSet.UpdateLevelSet();
         AudioManager.Instance.Initialize();
 
@@ -279,7 +300,7 @@ public class GameManager : MonoBehaviour
     // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
     public void ChangeSceneTroughDialogue(string nameTargetScene)
     {
-        Debug.Log("Тут мы : " + nameTargetScene);
+        //Debug.Log("Тут мы : " + nameTargetScene);
         _nameCurrentScene = SceneManager.GetActiveScene().name;
         _nameTargetScene = nameTargetScene;
         nameDialogueCurrent = _nameCurrentScene + "-" + nameTargetScene;

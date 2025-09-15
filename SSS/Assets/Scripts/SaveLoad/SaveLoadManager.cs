@@ -14,7 +14,9 @@ public class SaveLoadManager : MonoBehaviour
 
     private static SaveLoadManager _instance;
 
-
+    private string _pathToFileGeneralLocalData;
+    private string _pathToFileDataSettings;
+    private string _pathToSyncFolder;
 
     public static SaveLoadManager Instance
     {
@@ -45,7 +47,22 @@ public class SaveLoadManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
-        PlayFabManager.Instance.OnGetIDTitleAccountLogin += LoadAndImplementGeneralSyncData;
+        //PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin += LoadAndImplementGeneralSyncData;
+        PlayFabManager.Instance.OnLoginSuccess += SaveGeneralData;
+
+        _pathToFileGeneralLocalData = Path.Combine(Application.persistentDataPath, "GeneralLocalData.json");
+        _pathToFileDataSettings = Path.Combine(Application.persistentDataPath, "DataSettings.json");
+        _pathToSyncFolder = Path.Combine(Application.persistentDataPath, "SyncGeneralData");
+
+        if (!Directory.Exists(_pathToSyncFolder))
+        {
+            Directory.CreateDirectory(_pathToSyncFolder);
+        }
+    }
+
+    private void Update()
+    {
+        //Debug.Log(PlayFabManager.Instance.IDTitleAccountLast); 
     }
 
 
@@ -54,28 +71,25 @@ public class SaveLoadManager : MonoBehaviour
 
     #region Save General Data Public
 
-    private void Update()
-    {
-        //Debug.Log(PlayFabManager.Instance.IDTitleAccountLast); 
-    }
-
     public void SaveGeneralData()
     {
         try
         {
-            Debug.Log("Сохраняем общие настройки (как локальные, так и синхронизации)");
+            Debug.Log("Сохраняем общие данные (как локальные, так и синхронизации)");
             //Debug.Log(GameManager.Instance);
 
             GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel = GameManager.Instance.MaxReachedLevel;
             GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount = PlayFabManager.Instance.IDTitleAccountLast;
-            Debug.Log(PlayFabManager.Instance.IDTitleAccountLast);
+            Debug.Log("Сохраняем  синхронизационные данные для аккаунта с ID: " + PlayFabManager.Instance.IDTitleAccountLast);
             string jsonGeneralData = JsonUtility.ToJson(GameManager.Instance.wrapperGlobal.wrapperGeneralData, prettyPrint: true);
 
             // Сохранение в файл для локального пользования. Происходит всегда.
-            string filePathLocalData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json";
+            //string filePathLocalData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json";
+            string filePathLocalData = _pathToFileGeneralLocalData;
             File.WriteAllText(filePathLocalData, jsonGeneralData);
 
-            string filePathSyncData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData\\" + PlayFabManager.Instance.IDTitleAccountLast + ".json";
+            //string filePathSyncData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData\\" + PlayFabManager.Instance.IDTitleAccountLast + ".json";
+            string filePathSyncData = Path.Combine(_pathToSyncFolder, string.IsNullOrEmpty(PlayFabManager.Instance.IDTitleAccountLast) ? "default.json" : PlayFabManager.Instance.IDTitleAccountLast + ".json");
 
             if (PlayFabClientAPI.IsClientLoggedIn()) // если мы уже залогинены и сохраняем данные, то сохраняем как в локальный файл, так и в файл синхронизации
             {
@@ -104,11 +118,12 @@ public class SaveLoadManager : MonoBehaviour
 
     public void LoadGeneralLocalDataFromFile()
     {
-        if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json"))
+        //if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json"))
+        if (File.Exists(_pathToFileGeneralLocalData))
         {
 
-            Debug.Log("Загружаем и применяем общие локальные настройки");
-            string json = File.ReadAllText("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData.json");
+            Debug.Log("Загружаем общие локальные настройки");
+            string json = File.ReadAllText(_pathToFileGeneralLocalData);
 
             if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
             {
@@ -128,8 +143,9 @@ public class SaveLoadManager : MonoBehaviour
         }
     }    
 
-    public void ImplementStoredGeneralLocalData()
+    public void ImplementStoredGeneralData()
     {
+        Debug.Log("Применяем общие локальные настройки");
         GameManager.Instance.MaxReachedLevel = GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel;
         PlayFabManager.Instance.IDTitleAccountLast = GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount;
     }
@@ -150,7 +166,7 @@ public class SaveLoadManager : MonoBehaviour
             string json = JsonUtility.ToJson(GameManager.Instance.wrapperGlobal.wrapperSettings, prettyPrint: true);
 
             // Сохранение в файл
-            string filePath = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json";
+            string filePath = _pathToFileDataSettings;
             File.WriteAllText(filePath, json);
         }
         catch (Exception ex)
@@ -163,9 +179,9 @@ public class SaveLoadManager : MonoBehaviour
 
     public void LoadSettingsFromFile()
     {
-        if (File.Exists("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json"))
+        if (File.Exists(_pathToFileDataSettings))
         {
-            string json = File.ReadAllText("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\DataSettings.json");
+            string json = File.ReadAllText(_pathToFileDataSettings);
 
             if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
             {
@@ -226,10 +242,10 @@ public class SaveLoadManager : MonoBehaviour
         GameManager.Instance.wrapperGlobal.wrapperSettings.allChoseListsData.AddRange(FindAndStoreAllChoseListsInGivenRectTransformRecursivly(SettingsMenu.Instance.rectTransformPlacementForSettings));
 
         GameManager.Instance.wrapperGlobal.wrapperSettings.internetData = StoreInternetSettings();
-        Debug.Log(StoreInternetSettings());
 
 
     }
+
 
 
     private List<DataWrapperToggle> FindAndStoreAllTogglesInGivenRectTransformRecursivly(RectTransform rootRectTransform)
@@ -483,11 +499,10 @@ public class SaveLoadManager : MonoBehaviour
     private void LoadAndImplementGeneralSyncData(string IDTitleAccount) // по идее у нас всегда последовательно должна идти подгрузка, а после применение синхронизирующих данных, по отдельности
                                                                         // это не имеет смысла
     {
-        Debug.Log("Чё за херота2?");
         if (IDTitleAccount != "")
         {
             Debug.Log("Загружаем и применяем настройки синхронизации");
-            string filePathSyncData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData\\" + IDTitleAccount + ".json";
+            string filePathSyncData = Path.Combine(_pathToSyncFolder, string.IsNullOrEmpty(PlayFabManager.Instance.IDTitleAccountLast) ? "default.json" : PlayFabManager.Instance.IDTitleAccountLast + ".json");
 
             if (File.Exists(filePathSyncData))
             {
@@ -497,7 +512,6 @@ public class SaveLoadManager : MonoBehaviour
                 {
                     try
                     {
-                        Debug.Log("mda?");
                         GameManager.Instance.wrapperGlobal.wrapperGeneralData = JsonUtility.FromJson<WrapperGeneralData>(json);
 
                         GameManager.Instance.MaxReachedLevel = GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel;

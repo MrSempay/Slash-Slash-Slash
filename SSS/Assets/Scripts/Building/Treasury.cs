@@ -44,7 +44,7 @@ public class Treasury : Building, IMainTarget
 
     public override void UpdateAssortmentInBuilding(RectTransform rectTransformEquipmentPlaces)
     {
-        List<EquipmentChance> randomCategoryAndRarityTypesOfEquipment = GenerateItems(rectTransformEquipmentPlaces.childCount); 
+        //List<EquipmentChance> randomCategoryAndRarityTypesOfEquipment = GenerateItems(rectTransformEquipmentPlaces.childCount); 
         int i = 0;
         onUpdateAssortment?.Invoke(null, this);
         foreach (Equipment equipment in equipmentInBuilding)
@@ -54,10 +54,13 @@ public class Treasury : Building, IMainTarget
         equipmentInBuilding.Clear();
         foreach (RectTransform placeForEquipment in rectTransformEquipmentPlaces)
         {
-            string randomEquipmentName = GetRandomAmmunitionName(randomCategoryAndRarityTypesOfEquipment[i]);
-            if (randomEquipmentName == null) // ıòî çíà÷èò, ÷òî â çàäàííîé êàòåãîğèè è ğåäêîñòè íåò íè îäíîãî ïğåäìåòà!!! Ôóíêöèÿ GetRandomAmmunitionName íå íàøëà íè îäíîãî èìåíè òàì!!!
+
+            string randomEquipmentName = null;
+            EquipmentChance randomCategoryAndRarityTypesOfEquipment = default;
+            while (randomEquipmentName == null)
             {
-                continue;
+                randomCategoryAndRarityTypesOfEquipment = GenerateItems(1)[0];
+                randomEquipmentName = GetRandomAmmunitionName(randomCategoryAndRarityTypesOfEquipment);
             }
 
             // ÑÎÇÄÀ¨Ì ÎÁÚÅÊÒ ÑÍÀĞßÆÅÍÈß, ÏÎËÓ×ÀÅÌ ÅÃÎ ÈÌß, RectTransform, ÑÏÀÂÍÈÌ Ó ÇÀÄÀÍÍÎÃÎ ĞÎÄÈÒÅËß (ÌÅÑÒÀ ÑÍÀĞßÆÅÍÈß)
@@ -99,7 +102,7 @@ public class Treasury : Building, IMainTarget
             scriptOfEquipment.BuildingWhereEquipmentIs = this;
             scriptOfEquipment.rectTransformTargetEquipmentPanelPlayer = rectTransformTargetEquipmentPanelPlayer;
             scriptOfEquipment.transformCurrentEquipmentPlace = placeForEquipment;
-            scriptOfEquipment.categoryAndRarityTypesOfEquipment = randomCategoryAndRarityTypesOfEquipment[i];
+            scriptOfEquipment.categoryAndRarityTypesOfEquipment = randomCategoryAndRarityTypesOfEquipment;
 
 
             // ÈÇÌÅÍßÅÌ ÏÀĞÀÌÅÒĞÛ ÇÄÀÍÈß ÏĞÈ ÄÎÁÀÂËÅÍÈÈ Â ÍÅÃÎ ÍÎÂÎÃÎ ÑÍÀĞßÆÅÍÈß

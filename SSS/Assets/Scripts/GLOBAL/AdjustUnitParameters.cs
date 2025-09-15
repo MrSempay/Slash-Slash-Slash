@@ -9,7 +9,7 @@ public static class AdjustUnitParameters
         {
             C.DK.Player, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 250 },
+                { C.DK.healthMax, 50 },
                 { C.DK.staminaMax, 2 },
                 { C.DK.DamageReductionPercentage, 0 }, // Процент блокировки урона! Любого! 0 - дефолт, наносится полный урон
                 { C.DK.speed, 2 },

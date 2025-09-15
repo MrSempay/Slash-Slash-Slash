@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static StaticClassForAdditionalFunctions;
 
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu instance;
 
-    [SerializeField] private RectTransform notificationPlacement;
-
+    public AvailableLevelSet availableLevelSet;
     [NonSerialized] public string nameOfMainMusicTeam = "Project_1";
 
-    public AvailableLevelSet availableLevelSet;
-
+    private Vector3 _initialPositionMenu;
+    [SerializeField] private RectTransform _notificationPlacement;
+    [SerializeField] private RectTransform _transformPositionMenuVerticalOrientation;
 
     private void Awake()
     {
@@ -25,19 +26,28 @@ public class MainMenu : MonoBehaviour
 
         GameManager.Instance.Initialize(); 
 
-        GameManager.Instance.notificationPlacement = notificationPlacement;
+        GameManager.Instance.notificationPlacement = _notificationPlacement;
+
+        availableLevelSet.OnStartLevel += StartingGameplay;
+
+        _initialPositionMenu = transform.position;
     }
     private void Start()
     {
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake(); // ну и фигн€, нельз€ к Instance обратитьс€, бо он инициализируетс€ у нас в Awake
+        //Debug.Log(allObjects[0]);
+        //Debug.Log(allObjects[0].GetInstanceID());
+        //Debug.Log(SettingsMenu.Instance);
         SettingsMenu.Instance.OnEnable();
         SettingsMenu.Instance.Start();
 
         //SaveLoadManager.Instance.ImplementStoredSettings();
         //SaveLoadManager.Instance.LoadSettingsFromFile();
         //SaveLoadManager.Instance.ImplementStoredSettings();
-        AudioManager.Instance.StartCertainMusicInLoop("STAND");
+        AudioManager.Instance.StartCertainMusicInLoop("MainMenuTheme");
+
+        availableLevelSet.UpdateLevelSet();
         //Debug.Log("Ёто чЄ за ебун€ча€ параша?");
         //AudioManager.Instance.StartMusic(nameOfMainMusicTeam); // - что тут делать пока что хз  
     }
@@ -60,9 +70,35 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void OrientationWasChanged(LANGUAGE orientation)
+    {
+        Debug.Log(" ну и шо за хрень это?");
+        Debug.Log(orientation);
+        switch (orientation)
+        {
+            case LANGUAGE.Vertical:
+                transform.position = _transformPositionMenuVerticalOrientation.position;
+                break;
+            case LANGUAGE.Horizontal:
+                transform.position = _initialPositionMenu;
+                break;
+        }
+    }
+
+
+    private void StartingGameplay()
+    {
+        GameManager.Instance.currentSettings.Orientation = LANGUAGE.Horizontal;
+    }
+
     private void OnDestroy()
     {
+        if (availableLevelSet != null)
+        {
+            availableLevelSet.OnStartLevel -= StartingGameplay;
+        }
         instance = null;
     }
+
 
 }

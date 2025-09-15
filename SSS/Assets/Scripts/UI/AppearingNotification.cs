@@ -198,4 +198,10 @@ public class AppearingNotification : AppearingText
 
     }
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+    }
+
 }

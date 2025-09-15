@@ -84,13 +84,13 @@ public static class AdjustEquipmentParameters : object
     public static List<EquipmentChance> allEquipmentTypesAndCategoriesChance = new List<EquipmentChance>() { 
         new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Standart, chance = 25f } ,
         new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
-        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
+        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Legendary, chance = 11111.79f } ,
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Standart, chance = 25f } ,
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
-        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
+        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 11111.79f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Standart, chance = 20f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Rare, chance = 7.14f } ,
-        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1.43f } ,   
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 11111.43f } ,   
     };
 
     // increasingUnitParametersByAmmunitionAbsolute - увеличиваем на абсолютное значение параметры в словаре 
@@ -303,16 +303,19 @@ public static class AdjustEquipmentParameters : object
             //Debug.Log(randomCategoryAndRarityTypesOfEquipment.chance);
             //Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentRarityType);
             //Debug.Log("No ammunition names available in equipmentParameters!");
-            EquipmentChance someChance = GenerateItems(1)[0];
-            string nameItem = GetRandomAmmunitionName(someChance);
-            if (nameItem != null)
-            {
-                return nameItem;
-            }
-            else
-            {
-                return GetRandomAmmunitionName(someChance);
-            }
+
+            //EquipmentChance someChance = GenerateItems(1)[0];
+            //string nameItem = GetRandomAmmunitionName(someChance);
+            //if (nameItem != null)
+            //{
+            //    return nameItem;
+            //}
+            //else
+            //{
+            //    return GetRandomAmmunitionName(someChance);
+            //}
+
+            return null;
         }
         
         int randomIndex = UnityEngine.Random.Range(0, ammunitionNames.Count);

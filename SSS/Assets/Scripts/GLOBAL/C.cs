@@ -183,14 +183,14 @@ public class C
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
         public const string PrefubAppearingSprite = "Prefubs/UI/AppearingSprite";
-        public const string PrefubTextButtonScaled = "Prefubs/UI/TextButtonScaled";
+        public const string PrefubTextButtonBigScaled = "Prefubs/UI/TextButtonBigScaled";
         public const string PrefubTextButton = "Prefubs/UI/TextButton";
         public const string PrefubAppearingText = "Prefubs/UI/AppearingText";
         public const string PrefubAppearingNotification = "Prefubs/UI/AppearingNotification";
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
         public const string PrefubFieldEquipmentInfo = "Prefubs/UI/FieldEquipmentInfo";
         public const string PrefubLeaderboard = "Prefubs/UI/Leaderboard";
-        public const string PrefubEquipmentInfoPanel = "Prefubs/UI/EquipmentInfoPanel";
+        public const string PrefubEquipmentInfoPanel = "Prefubs/UI/EquipmentInfoPanelFixedSize";
         public const string PrefubPlaceForEquipment = "Prefubs/UI/PlaceForEquipment"; 
         public const string PrefubAmmunition = "Prefubs/Ammunition"; 
         public const string PrefubSpell = "Prefubs/Spell"; 
@@ -202,12 +202,10 @@ public class C
         public const string FontMonocraft = "Fonts/Monocraft SDF";
 
     }
-
     public static class Other
     {
         public const string Stune = "Stune";
     }
-
     public static class NamesObjects
     {
         public const string Stune = "Stune";
@@ -217,7 +215,6 @@ public class C
         public const string CallDownIcon = "CallDownIcon";
         public const string PlaceInfoPanel = "PlaceInfoPanel";
     }
-
     public static class AppSprite
     {
         public const string BerserkerEyes = "BerserkerEyes";
@@ -227,10 +224,19 @@ public class C
         public const string Success = "Success";
         public const string SignInEmail = "SignInEmail";
         public const string SignInIDMobile = "SignInIDMobile";
+        public const string PasswordTooShort = "PasswordTooShort";
         public const string AccountAlreadyLinked = "AccountAlreadyLinked";
+        public const string EmailAddressNotAvailable = "EmailAddressNotAvailable";
+        public const string ServiceUnavailable = "ServiceUnavailable";
+        public const string InvalidEmailAddress = "InvalidEmailAddress";
+        public const string CantGetLeaderboard = "CantGetLeaderboard";
+        public const string EmailPasswordRecoveyrWasSent = "EmailPasswordRecoveyrWasSent";
+        public const string EmailPasswordRecoverFailure = "EmailPasswordRecoverFailure";
+        public const string NoInternetConnection = "NoInternetConnection";
         public const string AccountAlreadyLinkedToSpecifiedEmail = "AccountAlreadyLinkedToSpecifiedEmail";
         public const string AccountNotFound = "AccountNotFound";
-        public const string InvalidEmailAddress = "InvalidEmailAddress";
+        public const string InvalidFormatEmailAddressOrPassword = "InvalidFormatEmailAddressOrPassword";
+        public const string InvalidEmailAddressOrPassword = "InvalidEmailAddressOrPassword";
         public const string DisplayNameTooShort = "DisplayNameTooShort";
         public const string AccountLinked = "AccountLinked";
     }
@@ -243,6 +249,7 @@ public class C
     {
         public const string TriggerEmailForLinkWasChanged = "TriggerEmailForLinkWasChanged";
         public const string TriggerDisplayNameWasChanged = "TriggerDisplayNameWasChanged";
+        public const string TriggerPasswordWasChanged = "TriggerPasswordWasChanged";
     }
     public static class Just
     {
@@ -250,7 +257,11 @@ public class C
         public const string NextLevel = "NextLevel";
         public const string ShowLeaderboard = "ShowLeaderboard";
     }
+    public static class Animations
+    {
+        public const string PlayerDied = "PlayerDied";
 
+    }
 
 
 }

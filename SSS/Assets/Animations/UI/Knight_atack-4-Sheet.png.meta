@@ -305,6 +305,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1685,7 +1698,69 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knight_atack-4-Sheet_0: 7087793198850643238
+      Knight_atack-4-Sheet_1: -632153336655962791
+      Knight_atack-4-Sheet_10: 7848749241271219363
+      Knight_atack-4-Sheet_11: 8495731732348367672
+      Knight_atack-4-Sheet_12: -7963900293543774446
+      Knight_atack-4-Sheet_13: -8041984746513623637
+      Knight_atack-4-Sheet_14: 5717606628422954499
+      Knight_atack-4-Sheet_15: 1609059052229402950
+      Knight_atack-4-Sheet_16: -1304786851411073759
+      Knight_atack-4-Sheet_17: -1000091277257782493
+      Knight_atack-4-Sheet_18: 7220550893377254261
+      Knight_atack-4-Sheet_19: 3770087616109563360
+      Knight_atack-4-Sheet_2: -4792865262347460710
+      Knight_atack-4-Sheet_20: -5994272611348446238
+      Knight_atack-4-Sheet_21: 6782437768536382376
+      Knight_atack-4-Sheet_22: 722251455310997328
+      Knight_atack-4-Sheet_23: 6491779093564701880
+      Knight_atack-4-Sheet_24: -809430818350430211
+      Knight_atack-4-Sheet_25: 3771138217141239853
+      Knight_atack-4-Sheet_26: -8320980883330900336
+      Knight_atack-4-Sheet_27: 1425498573284574731
+      Knight_atack-4-Sheet_28: 1198717442388830120
+      Knight_atack-4-Sheet_29: 4181992405931056018
+      Knight_atack-4-Sheet_3: 9189905346415376058
+      Knight_atack-4-Sheet_30: 1663096376173209597
+      Knight_atack-4-Sheet_31: 5313306304922806283
+      Knight_atack-4-Sheet_32: 1243304625700502918
+      Knight_atack-4-Sheet_33: -7789759969128550542
+      Knight_atack-4-Sheet_34: -972398513333480507
+      Knight_atack-4-Sheet_35: 5488935591594116660
+      Knight_atack-4-Sheet_36: 2643717784494080610
+      Knight_atack-4-Sheet_37: 4952063229283261771
+      Knight_atack-4-Sheet_38: -6623676111258743595
+      Knight_atack-4-Sheet_39: -1758955548693386427
+      Knight_atack-4-Sheet_4: 9179949492922213880
+      Knight_atack-4-Sheet_40: -8072326902788345773
+      Knight_atack-4-Sheet_41: 2766379936622857655
+      Knight_atack-4-Sheet_42: 4113522726076210497
+      Knight_atack-4-Sheet_43: -1437553547801154304
+      Knight_atack-4-Sheet_44: -9183605264305217216
+      Knight_atack-4-Sheet_45: -7867666589262645466
+      Knight_atack-4-Sheet_46: 4836963174433214630
+      Knight_atack-4-Sheet_47: -4869329377600750826
+      Knight_atack-4-Sheet_48: -7046199550225466555
+      Knight_atack-4-Sheet_49: 3955604298537239495
+      Knight_atack-4-Sheet_5: -4999491422757968682
+      Knight_atack-4-Sheet_50: -1803816719322594121
+      Knight_atack-4-Sheet_51: -1647966757020677449
+      Knight_atack-4-Sheet_52: -5210944381532627519
+      Knight_atack-4-Sheet_53: 2855141282065314304
+      Knight_atack-4-Sheet_54: 838202663911287628
+      Knight_atack-4-Sheet_55: -3548677675044871030
+      Knight_atack-4-Sheet_56: -5772084621345011373
+      Knight_atack-4-Sheet_57: -5998039659370263571
+      Knight_atack-4-Sheet_58: -3141663244476748374
+      Knight_atack-4-Sheet_59: 3235864587382643469
+      Knight_atack-4-Sheet_6: 7338920480865365431
+      Knight_atack-4-Sheet_60: 5230932535059850285
+      Knight_atack-4-Sheet_61: -5019756411603487349
+      Knight_atack-4-Sheet_7: -1414351939430703221
+      Knight_atack-4-Sheet_8: -3633791917391389784
+      Knight_atack-4-Sheet_9: 5450155956917362404
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

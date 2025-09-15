@@ -67,11 +67,11 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
                     //Debug.Log(textComponent);
                     //Debug.Log(textComponent.text);
                     //Debug.Log(LocalizationManager.Instance.GetText(value));
-                    textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey) + " " + LocalizationManager.Instance.GetText(value);
+                    textComponent.text = baseText + " " + settingValue;
                 }
                 else
                 {
-                    textComponent.text = LocalizationManager.Instance.GetText(baseLocalizationKey);
+                    textComponent.text = baseText;
                 }
             }
         }

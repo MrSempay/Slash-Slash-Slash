@@ -305,6 +305,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1685,7 +1698,69 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knight_atack-4-Sheet 1_0: 7521025190112433966
+      Knight_atack-4-Sheet 1_1: 3348452561944028591
+      Knight_atack-4-Sheet 1_10: -3125934251692069597
+      Knight_atack-4-Sheet 1_11: -1604232105259590354
+      Knight_atack-4-Sheet 1_12: 3189502051064340310
+      Knight_atack-4-Sheet 1_13: -2772545606572420469
+      Knight_atack-4-Sheet 1_14: -2909676601555855759
+      Knight_atack-4-Sheet 1_15: -8617363422953200169
+      Knight_atack-4-Sheet 1_16: 1708335965515522546
+      Knight_atack-4-Sheet 1_17: 1235287305000946084
+      Knight_atack-4-Sheet 1_18: 6018497707677652612
+      Knight_atack-4-Sheet 1_19: 727586627777842036
+      Knight_atack-4-Sheet 1_2: 3767965285091410238
+      Knight_atack-4-Sheet 1_20: 4826512003098946425
+      Knight_atack-4-Sheet 1_21: -1871543694707759801
+      Knight_atack-4-Sheet 1_22: -4999498927836541951
+      Knight_atack-4-Sheet 1_23: -7059808088232204936
+      Knight_atack-4-Sheet 1_24: -7780089404560331817
+      Knight_atack-4-Sheet 1_25: -1059102203100716154
+      Knight_atack-4-Sheet 1_26: -7422115815276957890
+      Knight_atack-4-Sheet 1_27: 7518482121672943484
+      Knight_atack-4-Sheet 1_28: 3930081386536227242
+      Knight_atack-4-Sheet 1_29: 7095242122626419344
+      Knight_atack-4-Sheet 1_3: 717538401063225129
+      Knight_atack-4-Sheet 1_30: -605704522322044544
+      Knight_atack-4-Sheet 1_31: 9049156586156802085
+      Knight_atack-4-Sheet 1_32: -511184199914930051
+      Knight_atack-4-Sheet 1_33: -8588695907620002719
+      Knight_atack-4-Sheet 1_34: 6120988241393363626
+      Knight_atack-4-Sheet 1_35: -7292275981244941984
+      Knight_atack-4-Sheet 1_36: 7227922766690329037
+      Knight_atack-4-Sheet 1_37: -1226028052134435601
+      Knight_atack-4-Sheet 1_38: -4841129713564632973
+      Knight_atack-4-Sheet 1_39: -5915707260152336412
+      Knight_atack-4-Sheet 1_4: -7347685779824480762
+      Knight_atack-4-Sheet 1_40: -5262666029616212704
+      Knight_atack-4-Sheet 1_41: -94589445274896412
+      Knight_atack-4-Sheet 1_42: 4197235323127785880
+      Knight_atack-4-Sheet 1_43: 5480378366237294473
+      Knight_atack-4-Sheet 1_44: 512063848505433308
+      Knight_atack-4-Sheet 1_45: -1331685217128424715
+      Knight_atack-4-Sheet 1_46: 4534460686797817539
+      Knight_atack-4-Sheet 1_47: -5626187745842689168
+      Knight_atack-4-Sheet 1_48: 6326467705113313129
+      Knight_atack-4-Sheet 1_49: -1663424338849080930
+      Knight_atack-4-Sheet 1_5: 9127042214420764388
+      Knight_atack-4-Sheet 1_50: -6381201495839769168
+      Knight_atack-4-Sheet 1_51: 5422698471238075038
+      Knight_atack-4-Sheet 1_52: 7521793066817926382
+      Knight_atack-4-Sheet 1_53: -5901745982032964296
+      Knight_atack-4-Sheet 1_54: 6302759563870772964
+      Knight_atack-4-Sheet 1_55: 391305519095677373
+      Knight_atack-4-Sheet 1_56: 6825640421642225400
+      Knight_atack-4-Sheet 1_57: -7546866525728561868
+      Knight_atack-4-Sheet 1_58: -1094253923609403912
+      Knight_atack-4-Sheet 1_59: -1907591104094180641
+      Knight_atack-4-Sheet 1_6: -5197714126838940830
+      Knight_atack-4-Sheet 1_60: -5224824072796301814
+      Knight_atack-4-Sheet 1_61: 3048906387529733793
+      Knight_atack-4-Sheet 1_7: -3129151058047085956
+      Knight_atack-4-Sheet 1_8: 6032916343240374037
+      Knight_atack-4-Sheet 1_9: 4415562704493512407
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     public ParameterInternetSettings parameterInternetSettings;
     public RectTransform toggleClusterGroup;
     public RectTransform rectTransformPlacementForSettings;
+    public ParameterChoseList parameterOrientation;
     public List<RectTransform> togglesInGroup; // сделали public для сохранения
 
     private static SettingsMenu _instance;
@@ -18,10 +20,10 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     private GameObject _objectSonicSettingsPanel;
     private GameObject _objectVideoSettingsPanel;
     private GameObject _objectLanguageSettingsPanel;
-    private GameObject _objectInternetSettingsPanel;
+    private GameObject _objectInternetSettingsPanel; 
 
-
-    public bool AwakeWasCalledAlready { get; set; }
+    [NonSerialized]private bool a = false;
+    public bool AwakeWasCalledAlready { get { return a; } set { a = value; Debug.Log("ну и дичь..."); } }
     public bool StartWasCalledAlready { get; set; }
 
     public static SettingsMenu Instance
@@ -38,13 +40,18 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
    
     public void Awake()
     {
+        //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!AwakeWasCalledAlready)
         {
+            //Debug.Log(GetInstanceID());
+            //Debug.Log(AwakeWasCalledAlready);
             if (_instance != null && _instance != this)
             {
+                //Debug.Log("Чё за нах?"); 
                 Destroy(gameObject);
                 return;
             }
+            //Debug.Log(GetInstanceID());
             _instance = this;
 
             toggleClusterGroup = transform.Find("DownTogglesClaster").GetComponent<RectTransform>();
@@ -82,6 +89,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             EventBus.Instance.ValueVolumEffectsWasChanged.AddListener(ValueVolumEffectsWasChanged);
             EventBus.Instance.ValueVolumMusicWasChanged.AddListener(ValueVolumMusicWasChanged);
             EventBus.Instance.EmailForLinkWasChanged.AddListener(TryingLinkEmail);
+            EventBus.Instance.PasswordWasChanged.AddListener(PasswordWasChanged);
             EventBus.Instance.DisplayNameWasChanged.AddListener(DiaplayNameWasChanged);
 
 
@@ -91,6 +99,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     // чё за хрень 
     public void Start()
     {
+        //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!StartWasCalledAlready)     
         {
             //if (!GameManager.Instance.currentSettings.wasUploaded)
@@ -173,6 +182,11 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     {
         if (GameManager.Instance.currentSettings.Email != value)
             GameManager.Instance.currentSettings.Email = value;
+    }
+    private void PasswordWasChanged(string value, RectTransform rectTransformToggle)
+    {
+        if (GameManager.Instance.currentSettings.Password != value)
+            GameManager.Instance.currentSettings.Password = value;
     }
     private void DiaplayNameWasChanged(string value, RectTransform rectTransformToggle)
     {

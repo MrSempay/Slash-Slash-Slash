@@ -2310,7 +2310,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -3843,6 +3843,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1170272415049676526}
     m_Modifications:
+    - target: {fileID: 223114066769252138, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 763917988766288114, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: selfName
       value: ToggleParameterCameraShaking
@@ -4198,6 +4202,14 @@ PrefabInstance:
     - target: {fileID: 5039914263478975081, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Color.r
       value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103851052204000368, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1513597530069859800}
+    - target: {fileID: 5103851052204000368, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 5142859794132323670, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Sprite

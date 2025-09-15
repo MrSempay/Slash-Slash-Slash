@@ -1,5 +1,8 @@
+using PlayFab;
+using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static StaticClassForAdditionalFunctions;
@@ -7,15 +10,22 @@ using static StaticClassForAdditionalFunctions;
 public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctions
 {
     public string selfName;
+    public ButtonText recoveryButton;
 
     [SerializeField] private TextEdit _textDisplayName;
     [SerializeField] private TextEdit _textEmail;
+    [SerializeField] private TextEdit _textPassword;
     [SerializeField] private TMP_InputField _textInputFieldEmail;
     [SerializeField] private TMP_InputField _textInputFieldDisplayName;
+    [SerializeField] private TMP_InputField _textInputFieldPassword;
 
+    private int _cooldownRecoverButton = 30;
+    private bool _lockRecoveryButton = false;
     private string _email;
+    private string _password;
     private string _displayName;
     private string _nameEmailUpdateFunction;
+    private string _namePasswordUpdateFunction;
     private string _nameDisplayNameUpdateFunction;
 
 
@@ -30,6 +40,17 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
             _textEmail.Text = value;
             object[] parameters = new object[] { value, (RectTransform)transform };
             CallFunctionByName(_nameEmailUpdateFunction, EventBus.Instance, parameters);
+        }
+    }
+    public string Password
+    {
+        get { return _password; }
+        set
+        {
+            _password = value;
+            _textPassword.Text = value;
+            object[] parameters = new object[] { value, (RectTransform)transform };
+            CallFunctionByName(_namePasswordUpdateFunction, EventBus.Instance, parameters);
         }
     }
     public string DisplayName // Ќе при вс€ком изменении DisplayName необходимо пытатьс€ изменить его на сервере. ѕоэтому логика разделена дл€ загрузки/визуализации и логики вызова сервера
@@ -51,6 +72,14 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
             _textInputFieldEmail.text = value;
         }
     }
+    public string PasswordLoaded
+    {
+        set
+        {
+            _password = value;
+            _textInputFieldPassword.text = value;
+        }
+    }
     public string DisplayNameLoaded
     {
         set
@@ -62,30 +91,6 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
 
 
 
-    public void Awake()
-    {
-        PlayFabManager.Instance.OnGetDisplayNameFromEmailLogin += OnEmailLoginSuccess;
-        if (!AwakeWasCalledAlready)
-        {
-            selfName = gameObject.name;
-            _nameEmailUpdateFunction = C.NameFunc.TriggerEmailForLinkWasChanged;
-            _nameDisplayNameUpdateFunction = C.NameFunc.TriggerDisplayNameWasChanged;
-            AwakeWasCalledAlready = true;
-        }
-
-    }
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void DisplayNameWasChanged()
     {
@@ -102,16 +107,48 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
         //Email = _textEmail.Text;
         Email = GetCleanText(_textEmail.Text);
     }
+    public void PasswordWasChanged() // только дл€ сохранени€ в настройках сделали это. ¬ызываетс€ при окончании редактировани€
+    {
+        //Email = _textEmail.Text;
+        Password = GetCleanText(_textInputFieldPassword.text); // нужно из InputField брать напр€мую, иначе € получаю *********
+    }
 
     public void ButtonLinkEmailWasPressed()
     {
-        Email = GetCleanText(_textEmail.Text);
-        PlayFabManager.Instance.LinkEmail(Email);
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            if (ApplyCredentials())
+            {
+                PlayFabManager.Instance.LinkEmail(Email, Password);
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.ServiceUnavailable, TYPE_NOTIFICATION.Failure, 3, false);
+        }   
     }
+
     public void ButtonLoginEmail()
     {
-        Email = GetCleanText(_textEmail.Text);
-        PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email); 
+        if (ApplyCredentials())
+        {
+            PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email, Password); 
+        }
+    }
+    public void ButtonRecoveryPasswordWasPressed()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            if (!_lockRecoveryButton) // рудиментна€ защита, мы делаем кнопку не кликабельной при нажатии ибо
+            {
+                PlayFabManager.Instance.RecoverPassword();
+                CoroutineManager.Instance.StartManagedCoroutine(gameObject, CooldownTickRecoveryButton());
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.ServiceUnavailable, TYPE_NOTIFICATION.Failure, 3, false);
+        }
     }
 
     private void OnEmailLoginSuccess(string displayName)
@@ -127,10 +164,70 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
         string cleaned = Regex.Replace(raw, "[\u200B-\u200D\uFEFF]", "");
         return cleaned.Trim();
     }
+    private bool ApplyCredentials()
+    {
+        if (GetCleanText(_textPassword.Text).Length < 7)
+        {
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.PasswordTooShort, TYPE_NOTIFICATION.Failure, 4, false);
+            return false;
+        }
+
+        Email = GetCleanText(_textEmail.Text);
+        Password = GetCleanText(_textInputFieldPassword.text); // нужно из InputField брать напр€мую, иначе € получаю *********
+
+        return true;
+    }
+
+    private IEnumerator CooldownTickRecoveryButton()
+    {
+        _lockRecoveryButton = true;
+
+        recoveryButton.buttonComponent.interactable = false;
+
+        int timePassedInSeconds = 0;
+
+        while (timePassedInSeconds < _cooldownRecoverButton)
+        {
+            recoveryButton.textButton.SetNotLocalizableText("(" + (_cooldownRecoverButton - timePassedInSeconds).ToString() + ")");
+            timePassedInSeconds++;
+            yield return new WaitForSecondsRealtime(1); // каждую секунду на 1 уменьшаем счЄтчик и обновл€ем UI-ку
+        }
+        recoveryButton.textButton.SetNotLocalizableText("");
+
+        recoveryButton.buttonComponent.interactable = true;
+
+        _lockRecoveryButton = false;
+    }
+
+
+    public void Awake()
+    {
+        PlayFabManager.Instance.OnGetDisplayNameFromEmailLogin += OnEmailLoginSuccess;
+        if (!AwakeWasCalledAlready)
+        {
+            selfName = gameObject.name;
+            _nameEmailUpdateFunction = C.NameFunc.TriggerEmailForLinkWasChanged;
+            _nameDisplayNameUpdateFunction = C.NameFunc.TriggerDisplayNameWasChanged;
+            _namePasswordUpdateFunction = C.NameFunc.TriggerPasswordWasChanged;
+            AwakeWasCalledAlready = true;
+        }
+
+    }
+    void Start()
+    {
+
+    }
+    void Update()
+    {
+
+    }
+
 
     private void OnDestroy()
     {
         PlayFabManager.Instance.OnGetDisplayNameFromEmailLogin -= OnEmailLoginSuccess;
+
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
     }
 
 }

@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using static AdjustEquipmentParameters;
 using static UnityEngine.Rendering.DebugUI;
 

@@ -71,7 +71,6 @@ public class EquipmentInfoPanel : MonoBehaviour
 
             _textRarity.Text = equipmentRarityType;
 
-
             foreach (var parameter in AdjustEquipmentParameters.ammunitionParameters[equipmentCategory][equipmentRarityType][ammunitionScript.equipmentName])
             {
                 if (parameter.Key == C.DK.increasingUnitParametersByAmmunitionPercentage)
@@ -156,9 +155,10 @@ public class EquipmentInfoPanel : MonoBehaviour
                     fieldInfo.textNameInfo.Text = parameter.Key;
                     if (parameter.Key == C.DK.durationActiveState)
                     {
-                        if ((float)parameter.Value != -1)
+                        float value = Convert.ToSingle(parameter.Value);
+                        if (value != -1f)
                         {
-                            fieldInfo.textValueInfo.SetNotLocalizableText(parameter.Value.ToString());
+                            fieldInfo.textValueInfo.SetNotLocalizableText(value.ToString());
                         }
                         else
                         {

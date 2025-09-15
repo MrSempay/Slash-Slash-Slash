@@ -1,7 +1,6 @@
 ﻿using PlayFab;
 using PlayFab.AuthenticationModels;
 using PlayFab.ClientModels;
-using PlayFab.PfEditor.Json;
 using PlayFab.SharedModels;
 using System;
 using System.Collections;
@@ -10,11 +9,9 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using static GameManager;
 using static StaticClassForAdditionalFunctions;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class PlayFabManager : MonoBehaviour
@@ -23,13 +20,15 @@ public class PlayFabManager : MonoBehaviour
 
     private static PlayFabManager _instance;
     private string _userEmail = "";
+    private string _userPassword = "";
     //private string _userPassword;
-    private string _userName = "DefaultName";
+    private string _userName = "DefaultName"; // увы, не используем. Эта штука должна быть уникальной
     private string _displayName = "";
     private string _successEmail = "";
+    private float _timeRepeatTryingLogin = 30f;
 
     public event Action<string> OnGetDisplayNameFromEmailLogin;
-    public event Action<string> OnGetIDTitleAccountLogin;
+    public event Action<string> OnGetIDTitleAccountAfterLogin;
     public event Action OnLoginSuccess;
     public string IDTitleAccountLast = "";
     public GetAccountInfoResult accountInfoResult;
@@ -77,6 +76,7 @@ public class PlayFabManager : MonoBehaviour
         }
         //Debug.Log(ReturnMobileID());
         StartCoroutine(StupidDelay());
+        StartCoroutine(RepeatLogin());
         //var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true };
         //PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
 
@@ -85,7 +85,7 @@ public class PlayFabManager : MonoBehaviour
     private IEnumerator StupidDelay()
     {
         yield return null;
-        LoginOrRegisterEmailIfFailureLoginMobile(_userEmail);
+        LoginOrRegisterEmailIfFailureLoginMobile(_userEmail, _userPassword, OnEmailLoginFailureAtStart);
          
     }
 
@@ -109,7 +109,7 @@ public class PlayFabManager : MonoBehaviour
     public static PlayFabAuthenticationContext contextCurrentSession;
     private string _lastEmail = "";
 
-    public void LinkEmail(string email)
+    public void LinkEmail(string email, string password)
     {
         if (email != "")
         {
@@ -121,7 +121,7 @@ public class PlayFabManager : MonoBehaviour
                 return;
             }
             _userEmail = email;
-            var linkEmail = new AddUsernamePasswordRequest { Email = email, Password = _generalPassword, Username = _userName };
+            var linkEmail = new AddUsernamePasswordRequest { Email = email, Password = password, Username = UserNameGenerator.GenerateRandomName(4) };
             PlayFabClientAPI.AddUsernamePassword(linkEmail, OnEmailLinkSuccess, OnEmailLinkFailure);
         }
     }
@@ -137,7 +137,7 @@ public class PlayFabManager : MonoBehaviour
     private void OnEmailLinkFailure(PlayFabError error)
     {
         //_userEmail = ""; // если привязать к почте не удалось, то сбрасываем текущее значение Email-а до значения по умолчанию
-        Debug.Log(error.ToString() + " Ошибка привязки почты к аккаунту!");
+        Debug.Log(error.ToString() + " Ошибка привязки почты к аккаунту!" + " Код ошибки: " + error.Error);
         //Debug.Log(error.Error);
         if (error.Error == PlayFabErrorCode.AccountAlreadyLinked)
         {
@@ -146,11 +146,23 @@ public class PlayFabManager : MonoBehaviour
             return;
         }
 
-        if (error.Error == PlayFabErrorCode.InvalidParams) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
+        if (error.Error == PlayFabErrorCode.InvalidParams) // пароль али почта не корректный формат имеют
         {
-            Debug.Log("Неправильный формат электронной почты!");
-            GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidEmailAddress, TYPE_NOTIFICATION.Failure, 4, false);
+            Debug.Log("Неправильный формат электронной почты или пароля!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidFormatEmailAddressOrPassword, TYPE_NOTIFICATION.Failure, 4, false);
             return;
+        }
+        if (error.Error == PlayFabErrorCode.EmailAddressNotAvailable) // если мы УЖЕ залогинены и пытаемся привязать к аккаунту почту, которая уже привязана к какому-то другому аккаунту
+        {
+            Debug.Log("Данная электронная почту уже привязана к другому аккаунту");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.EmailAddressNotAvailable, TYPE_NOTIFICATION.Failure, 4, false);
+            return;
+        }
+        if (error.Error == PlayFabErrorCode.UsernameNotAvailable)
+        {
+            Debug.LogWarning("Имя пользователя уже занято, пробуем другое.");
+            var linkEmail = new AddUsernamePasswordRequest { Email = _userEmail, Password = _generalPassword, Username = UserNameGenerator.GenerateRandomName(4) };
+            PlayFabClientAPI.AddUsernamePassword(linkEmail, OnEmailLinkSuccess, OnEmailLinkFailure);
         }
         //_OnLinkEmailFailure?.Invoke();
         //Debug.Log(error.GetType());
@@ -158,27 +170,35 @@ public class PlayFabManager : MonoBehaviour
 
     }
 
-    public void LoginOrRegisterEmailIfFailureLoginMobile(string email)
+
+    public void LoginOrRegisterEmailIfFailureLoginMobile(string email, string password) // для публичного доступа к методу логина со стандартной CallBack функцией OnEmailLoginFailure
+    {
+        LoginOrRegisterEmailIfFailureLoginMobile(email, password, OnEmailLoginFailure);
+    }
+    private void LoginOrRegisterEmailIfFailureLoginMobile(string email, string password, Action<PlayFabError> FailureEmailFunction) // для возможности задания в Start своей CallBack функции
     {
         if (email != "")
         {
             _userEmail = email;
-            var request = new LoginWithEmailAddressRequest { Email = email, Password = _generalPassword };
-            PlayFabClientAPI.LoginWithEmailAddress(request, OnEmailLoginSuccess, OnEmailLoginFailure);
+            var request = new LoginWithEmailAddressRequest { Email = email, Password = password };
+            PlayFabClientAPI.LoginWithEmailAddress(request, OnEmailLoginSuccess, FailureEmailFunction);
         }
         else
         {
             LoginOrRegisterMobile();
         }
-    }
+    } 
     private void OnEmailLoginSuccess(LoginResult result)
     {
         Debug.Log("Залогинились (Email)"); 
+        OnLoginSuccess?.Invoke();
         GameManager.Instance.InvokeAppearingNotification(C.Notifications.SignInEmail, TYPE_NOTIFICATION.Success, 4, false);
         _successEmail = _userEmail;
+
         GetDisplayNameFromServer();
 
-        OnLoginSuccess?.Invoke();
+
+
         //OnGetDisplayNameFromEmailLogin.Invoke(result.InfoResultPayload.AccountInfo.Username); // подписываемся в ParameterLinkEmail, будем обновлять там текстовое поле DisplayName
         //contextCurrentSession = result.AuthenticationContext;
     }
@@ -186,9 +206,16 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log(error.ToString());
         Debug.Log(error.Error);
-        if (error.Error == PlayFabErrorCode.InvalidParams) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
+        if (error.Error == PlayFabErrorCode.InvalidParams) // пароль али почта не корректный формат имеют
         {
-            Debug.Log("Неправильный формат электронной почты!");
+            Debug.Log(_userPassword);
+            Debug.Log(_userEmail);
+            Debug.Log("Неправильный формат электронной почты или пароля!" + " Пароль: " + _userPassword + ", Email: " + _userEmail);
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidFormatEmailAddressOrPassword, TYPE_NOTIFICATION.Failure, 4, false);
+        }
+        if (error.Error == PlayFabErrorCode.InvalidEmailOrPassword) // не удаётся (но формат верный!) найти в базе данных аккаунт с таким Email-ом и паролем
+        { // Я НЕ ПОНИМАЮ, ЧТО ЗА ДИЧЬ. ПО ИДЕЕ ЭТО ТОЛЬКО КОГДА НЕПРАВИЛЬНЫЙ ПАРОЛЬ. Ибо на несуществующий (но по формату верный!) Email оно выдаёт ошибку PlayFabErrorCode.AccountNotFound
+            Debug.Log("Не удаётся найти аккаунт с заданными Email-ом и паролем!" + " Пароль: " + _userPassword + ", Email: " + _userEmail);
             GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidEmailAddress, TYPE_NOTIFICATION.Failure, 4, false);
         }
         if (error.Error == PlayFabErrorCode.AccountNotFound) // подразумевается, что тут будет проблема только с электронной почтой, ибо пароль у нас по-умолчанию
@@ -196,7 +223,37 @@ public class PlayFabManager : MonoBehaviour
             Debug.Log("Для данной электронной почты аккаунт не найден!"); 
             GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountNotFound, TYPE_NOTIFICATION.Failure, 4, false);
         }
-        LoginOrRegisterMobile();
+        if (!PlayFabClientAPI.IsClientLoggedIn()) // нужно для того, чтобы если мы уже в каком-то аккаунте находимся (условно в третьем) и пытаемся зайти в другой (условно второй),
+                                                  // и у нас это не получилось - нас автоматом не логинило на базовый аккаунт этого телефона (первый), а осталвляло в текущем (третьем)
+        {
+            LoginOrRegisterMobile();
+        }
+        
+    }
+    private void OnEmailLoginFailureAtStart(PlayFabError error)
+    {
+        Debug.Log(error.ToString());
+        Debug.Log(error.Error);
+        if (error.Error == PlayFabErrorCode.InvalidParams) // пароль али почта не корректный формат имеют
+        {
+            Debug.Log("Неправильный формат электронной почты или пароля!" + " Пароль: " + _userPassword + ", Email: " + _userEmail);
+
+            if (_userPassword != "" || _userEmail != "") // собсна, только ради этой проверки функцию другую и бахнули
+            {
+                GameManager.Instance.InvokeAppearingNotification(C.Notifications.InvalidFormatEmailAddressOrPassword, TYPE_NOTIFICATION.Failure, 4, false);
+            }
+
+        }
+        if (error.Error == PlayFabErrorCode.AccountNotFound) // в этой функции такой проблемы вообще быть не может. А может и может)
+        {
+            Debug.Log("Для данной электронной почты аккаунт не найден!"); 
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.AccountNotFound, TYPE_NOTIFICATION.Failure, 4, false);
+        }
+        if (!PlayFabClientAPI.IsClientLoggedIn()) // нужно для того, чтобы если мы уже в каком-то аккаунте находимся (условно в третьем) и пытаемся зайти в другой (условно второй),
+                                                  // и у нас это не получилось - нас автоматом не логинило на базовый аккаунт этого телефона (первый), а осталвляло в текущем (третьем)
+        {
+            LoginOrRegisterMobile();
+        }
         
     }
 
@@ -235,7 +292,14 @@ public class PlayFabManager : MonoBehaviour
     {
         //Debug.Log(error.ToString());
         //Debug.Log(error.GetType());
+        Debug.Log(error.Error);
         Debug.Log(error.GenerateErrorReport());
+
+        if (error.Error == PlayFabErrorCode.ServiceUnavailable) // если сервис PlayFab недоступен по той или иной причине (хоть даже из-за интернета)
+        {
+            Debug.Log("Сервис PlayFab недоступен!");
+            GameManager.Instance.InvokeAppearingNotification(C.Notifications.ServiceUnavailable, TYPE_NOTIFICATION.Failure, 4, false);
+        }
     }
 
 # region Check Email From Server
@@ -249,6 +313,10 @@ public class PlayFabManager : MonoBehaviour
     {
         string email = result.AccountInfo?.PrivateInfo?.Email;
         //string username = result.AccountInfo?.Username; // Username тоже может быть, если задавался при регистрации
+        Debug.Log("Чё за дичь?");
+        Debug.Log(email);
+        Debug.Log(_userEmail);
+
 
         if (email == _userEmail)
         {
@@ -296,7 +364,6 @@ public class PlayFabManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(OnGetDisplayNameFromEmailLogin);
             OnGetDisplayNameFromEmailLogin?.Invoke(""); // подписываемся в ParameterLinkEmail, будем обновлять там текстовое поле DisplayName
             Debug.Log("DisplayName ещё не задан");
         }
@@ -311,9 +378,35 @@ public class PlayFabManager : MonoBehaviour
         Debug.LogError("Ошибка при получении инфо об аккаунте: " + error.GenerateErrorReport());
     }
 
-# endregion
+    #endregion
 
+    #region RecoverPassword
 
+    public void RecoverPassword()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            Debug.Log(_userEmail);
+            Debug.Log(PlayFabSettings.TitleId);
+            var request = new SendAccountRecoveryEmailRequest
+            {
+                Email = _userEmail,          // почта, на которую зарегистрирован аккаунт
+                TitleId = PlayFabSettings.TitleId
+            };
+
+            PlayFabClientAPI.SendAccountRecoveryEmail(request, result =>
+            {
+                Debug.Log("Письмо для восстановления пароля отправлено!");
+                GameManager.Instance.InvokeAppearingNotification(C.Notifications.EmailPasswordRecoveyrWasSent, TYPE_NOTIFICATION.Success, 4, false);
+            }, error =>
+            {
+                Debug.Log("Ошибка при запросе восстановления пароля: " + error.GenerateErrorReport() + " Тип ошибки: " + error.Error);
+                GameManager.Instance.InvokeAppearingNotification(C.Notifications.EmailPasswordRecoverFailure, TYPE_NOTIFICATION.Failure, 4, false);
+            });
+        }
+    }
+
+    #endregion
 
 
     //private void OnRegisterSuccess(RegisterPlayFabUserResult result)
@@ -360,20 +453,20 @@ public class PlayFabManager : MonoBehaviour
 
     public void GetUserEmail(string userEmail)
     {
-        this._userEmail = userEmail;
+        _userEmail = userEmail;
     }
     public void GetUserPassword(string userPassword)
     {
-        //this._userPassword = userPassword;
+        _userPassword = userPassword;
     }
 
     public void GetUserName(string userName)
     {
-        this._userName = userName;
+        _userName = userName;
     }
     public void GetDisplayName(string displayName)
     {
-        this._displayName = displayName;
+        _displayName = displayName;
     }
 
 
@@ -455,8 +548,6 @@ public class PlayFabManager : MonoBehaviour
             GeneratePlayStreamEvent = true, // Опционально - Отображать событие в PlayStream
         }, OnCloudUpdateStats, OnErrorShared);
     }
-
-
     public async Task StartCloudUpdatePlayerStatsNEWAsync()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
@@ -505,9 +596,6 @@ public class PlayFabManager : MonoBehaviour
         }
 
     }
-
-
-
     private static void OnCloudUpdateStats(ExecuteCloudScriptResult result)
     {
         //Debug.Log(result);
@@ -537,7 +625,6 @@ public class PlayFabManager : MonoBehaviour
             Debug.Log("Message Value: " + (string)messageValue);
         }
     }
-
     private static void OnErrorShared(PlayFabError error)
     {
         Debug.Log(error.GenerateErrorReport());
@@ -706,8 +793,8 @@ public class PlayFabManager : MonoBehaviour
         accountInfoResult = result; // на будущее, при получении информации об аккаунте будем обновлять локальную переменную
 
         this.IDTitleAccountLast = IDTitleAccount;
-        Debug.Log("Чё за херота1?"); 
-        OnGetIDTitleAccountLogin?.Invoke(IDTitleAccount);
+
+        OnGetIDTitleAccountAfterLogin?.Invoke(IDTitleAccount);
         
     }
     private void OnGetIDTitleAccountFailure(PlayFabError error)
@@ -715,7 +802,17 @@ public class PlayFabManager : MonoBehaviour
         Debug.LogError("Ошибка при получении инфо об аккаунте при попытке получить Title account ID: " + error.GenerateErrorReport());
     }
 
-
+    private IEnumerator RepeatLogin()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(_timeRepeatTryingLogin);
+            if (!PlayFabClientAPI.IsClientLoggedIn())
+            {
+                LoginOrRegisterEmailIfFailureLoginMobile(_userEmail, _userPassword);
+            }
+        }
+    }
 
     private void OnDestroy()
     {
