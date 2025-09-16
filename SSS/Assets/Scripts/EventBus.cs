@@ -47,6 +47,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<bool, RectTransform> ValueCameraShakingWasChanged { get; } = new();
     public UnityEvent<float, RectTransform> ValueBrightnessWasChanged { get; } = new();
     public UnityEvent<float, RectTransform> ValueVolumMusicWasChanged { get; } = new();
+    public UnityEvent<bool, RectTransform> ValueShowNotificationsWasChanged { get; } = new();
     public UnityEvent<float, RectTransform> ValueVolumEffectsWasChanged { get; } = new();
     public UnityEvent<LANGUAGE, RectTransform> ValueLanguageWasChanged { get; } = new();
     public UnityEvent<LANGUAGE, RectTransform> ValueOrientationWasChanged { get; } = new();
@@ -73,6 +74,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
 
     public void TriggerToggleParameterVibration(bool vibrationOn, RectTransform rectTransformToggle) { ValueVibrationWasChanged.Invoke(vibrationOn, rectTransformToggle); }
     public void TriggerToggleParameterCameraShaking(bool cameraShakingOn, RectTransform rectTransformToggle) { ValueCameraShakingWasChanged.Invoke(cameraShakingOn, rectTransformToggle); }
+    public void TriggerToggleParameterShowNotifications(bool value, RectTransform rectTransformToggle) { ValueShowNotificationsWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterBrightness(float value, RectTransform rectTransformToggle) { ValueBrightnessWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterVolumMusic(float value, RectTransform rectTransformToggle) { ValueVolumMusicWasChanged.Invoke(value, rectTransformToggle); }
     public void TriggerParameterVolumEffects(float value, RectTransform rectTransformToggle) { ValueVolumEffectsWasChanged.Invoke(value, rectTransformToggle); }

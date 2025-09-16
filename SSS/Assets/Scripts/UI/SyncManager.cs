@@ -13,14 +13,24 @@ public class SyncManager : ICleanUp
 
     private static SyncManager _instance;
 
-    private readonly string _pathToSyncDataFolder = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData";
-    private readonly string _pathToLocalDataFolder = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData";
+    //private readonly string _pathToSyncDataFolder = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\SyncGeneralData";
+    //private readonly string _pathToFileGeneralLocalData = "C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\GeneralLocalData";
+    private string _pathToFileGeneralLocalData;
+    private string _pathToSyncDataFolder;
 
     private SyncManager()
     {
         PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin += SyncroniseGeneralData;
 
         CleanupManager.Register(this);
+
+        _pathToFileGeneralLocalData = Path.Combine(Application.persistentDataPath, C.Paths.GeneralLocalDataJSON);
+        _pathToSyncDataFolder = Path.Combine(Application.persistentDataPath, C.Paths.SyncGeneralDataFOLDER);
+
+        if (!Directory.Exists(_pathToSyncDataFolder))
+        {
+            Directory.CreateDirectory(_pathToSyncDataFolder);
+        }
     }
 
     public void Initialize()
@@ -73,7 +83,7 @@ public class SyncManager : ICleanUp
                                                    // как минимум будет значить, что это уже не первый аккаунт, с которого играли на этом устройстве, и поэтому просто синхронизировать
                                                    // данные с сервера с GeneralLocalData не выйдет
             {
-                string pathGeneralSyncData = _pathToSyncDataFolder + "//" + IDTitleAccount + ".json";
+                string pathGeneralSyncData = Path.Combine(_pathToSyncDataFolder, string.IsNullOrEmpty(IDTitleAccount) ? C.Paths.defaultJSON : IDTitleAccount + ".json");
                 if (File.Exists(pathGeneralSyncData)) // если файл синхронизации для ID-шника текущего аккаунта (в который мы зашли) уже есть - то есть мы логинились в этот аккаунт на
                                                       // данном устройстве
                 {
@@ -164,11 +174,11 @@ public class SyncManager : ICleanUp
                  // это достижения игрока и мы их подтягиваем к нему в аккаунт на сервер. Если аккаунт не чистый (то есть maxReachedLevelServer != null), то мы уже решаем, чего больше - 
                  // наигранного локально или того, чего записано на сервере. Оставляем больший результат и синхронизируем его с сервером.
             {
-                if (File.Exists(_pathToLocalDataFolder)) // если у нас вообще есть этот локальный файл, то есть хоть раз мы нечто сохраняли. Но по идее должен быть всегда, ибо ВСЕГДА перед
+                if (File.Exists(_pathToFileGeneralLocalData)) // если у нас вообще есть этот локальный файл, то есть хоть раз мы нечто сохраняли. Но по идее должен быть всегда, ибо ВСЕГДА перед
                                                          // логином мы СОХРАНЯЕМ РЕЗУЛЬТАТ ДЛЯ ПРЕДЫДУЩЕЙ СЕССИИ, пусть даже там ID аккаунта будет "".
                 {
                     Debug.Log("Загружаем локальные настройки с устройства, сравниваем с данными сервера");
-                    string json = File.ReadAllText(_pathToLocalDataFolder);
+                    string json = File.ReadAllText(_pathToFileGeneralLocalData);
 
                     if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
                     {

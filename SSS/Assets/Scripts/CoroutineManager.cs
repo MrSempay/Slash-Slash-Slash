@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class CoroutineManager : MonoBehaviour
     {
         get
         {
+            //Debug.Log("CoroutineManager created! Stack: " + Environment.StackTrace);
+            //Debug.Log(_instance);
+            
             if (_instance == null)
             {
                 var obj = new GameObject("CoroutineManager");

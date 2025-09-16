@@ -556,16 +556,16 @@ public class PlayFabManager : MonoBehaviour
             string nameLevel = LevelBuilder.instance.selfName;
             Dictionary<string, object> stats = new Dictionary<string, object>()
             {
-                { "CurrentScore" + nameLevel, ScoreManager.Instance.CurrentScore },
-                { "maxKillCombo" + nameLevel, ScoreManager.Instance.maxKillCombo },
-                { "timeFromStartLevel" + nameLevel, (int)ScoreManager.Instance.timeFromStartLevel },
-                { "currentYear" + nameLevel, DateTime.Now.Year },
-                { "currentMonth" + nameLevel, DateTime.Now.Month },
+                { C.Other.CurrentScore + nameLevel, ScoreManager.Instance.CurrentScore },
+                { C.Other.maxKillCombo + nameLevel, ScoreManager.Instance.maxKillCombo },
+                { C.Other.timeFromStartLevel + nameLevel, (int)ScoreManager.Instance.timeFromStartLevel },
+                { C.Other.currentYear + nameLevel, DateTime.Now.Year },
+                { C.Other.currentMonth + nameLevel, DateTime.Now.Month },
             };
 
             var request = new ExecuteCloudScriptRequest()
             {
-                FunctionName = "UpdatePlayerStatsNEW",
+                FunctionName = C.NameFunc.UpdatePlayerStatsNEW,
                 FunctionParameter = stats,
                 GeneratePlayStreamEvent = true,
             };
@@ -666,12 +666,12 @@ public class PlayFabManager : MonoBehaviour
         {
             Dictionary<string, object> stats = new Dictionary<string, object>()
             {
-                { "MaxReachedLevel", GameManager.Instance.MaxReachedLevel },
+                { C.Other.MaxReachedLevel, GameManager.Instance.MaxReachedLevel },
             };
 
             PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
             {
-                FunctionName = "UpdateMaxReachedLevel", // Имя Cloud Script функции
+                FunctionName = C.NameFunc.UpdateMaxReachedLevel, // Имя Cloud Script функции
                 FunctionParameter = stats, // Передаем словарь со статистикой
                 GeneratePlayStreamEvent = true, // Опционально - Отображать событие в PlayStream
             }, result => { Debug.Log("Успешно обновили на сервере максимальный достигнутый игроком уровень!"); },
@@ -697,7 +697,7 @@ public class PlayFabManager : MonoBehaviour
     {
         //Debug.Log("УРЯЯЯЯ");
         string nameLevel = LevelBuilder.instance.selfName;
-        var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = "CurrentScore" + nameLevel, MaxResultsCount = 10 };
+        var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = C.Other.CurrentScore + nameLevel, MaxResultsCount = 10 };
         PlayFabClientAPI.GetLeaderboard(requestLeaderboard, OnGetLeaderboard, OnErrorLeaderbpard);
     }
 
@@ -714,7 +714,7 @@ public class PlayFabManager : MonoBehaviour
         //Debug.Log("УРЯЯЯЯ");
         string nameLevel = LevelBuilder.instance.selfName;
 
-        var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = "CurrentScore" + nameLevel, MaxResultsCount = 10 };
+        var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = C.Other.CurrentScore + nameLevel, MaxResultsCount = 10 };
         
         var taskCompletionSource = new TaskCompletionSource<GetLeaderboardResult>();
 
@@ -746,7 +746,7 @@ public class PlayFabManager : MonoBehaviour
 
     private void OnGetLeaderboard(GetLeaderboardResult result)
     {
-        Debug.Log("mdaaaaaaaaaaaaaaaaaa"); 
+        //Debug.Log("mdaaaaaaaaaaaaaaaaaa"); 
         //Debug.Log(result);
         //Debug.Log(result.Leaderboard);
         //Debug.Log(result.Leaderboard.Count);
@@ -817,5 +817,6 @@ public class PlayFabManager : MonoBehaviour
     private void OnDestroy()
     {
         OnLoginSuccess -= LoginSuccess;
+        StopAllCoroutines();
     }
 }

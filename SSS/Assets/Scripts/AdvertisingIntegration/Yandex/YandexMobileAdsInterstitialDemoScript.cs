@@ -106,7 +106,7 @@ public class YandexMobileAdsInterstitialDemoScript : MonoBehaviour
         // Attempting to load a new ad from the OnAdFailedToLoad event is strongly discouraged.
     }
 
-    #endregion
+    #endregion 
 
     #region Interstitial interactive callbacks
 

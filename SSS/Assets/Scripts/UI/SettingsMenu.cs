@@ -86,6 +86,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
             EventBus.Instance.ValueLanguageWasChanged.AddListener(ValueLanguageWasChanged);
             EventBus.Instance.ValueOrientationWasChanged.AddListener(ValueOrientationWasChanged);
             EventBus.Instance.ValueVibrationWasChanged.AddListener(ValueVibrationWasChanged);
+            EventBus.Instance.ValueShowNotificationsWasChanged.AddListener(ValueShowNotificationsWasChanged);
             EventBus.Instance.ValueVolumEffectsWasChanged.AddListener(ValueVolumEffectsWasChanged);
             EventBus.Instance.ValueVolumMusicWasChanged.AddListener(ValueVolumMusicWasChanged);
             EventBus.Instance.EmailForLinkWasChanged.AddListener(TryingLinkEmail);
@@ -172,6 +173,11 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         if (GameManager.Instance.currentSettings.Orientation != value)
             GameManager.Instance.currentSettings.Orientation = value;
     }
+    private void ValueShowNotificationsWasChanged(bool value, RectTransform rectTransformToggle)
+    {
+        if (GameManager.Instance.currentSettings.ShowNotifications != value)
+            GameManager.Instance.currentSettings.ShowNotifications = value;
+    }
     private void ValueLanguageWasChanged(LANGUAGE value, RectTransform rectTransformToggle)
     {
         if (GameManager.Instance.currentSettings.Language != value)
@@ -225,6 +231,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         EventBus.Instance.ValueVibrationWasChanged.RemoveListener(ValueVibrationWasChanged);
         EventBus.Instance.ValueVolumEffectsWasChanged.RemoveListener(ValueVolumEffectsWasChanged);
         EventBus.Instance.ValueVolumMusicWasChanged.RemoveListener(ValueVolumMusicWasChanged);
+        EventBus.Instance.ValueShowNotificationsWasChanged.RemoveListener(ValueShowNotificationsWasChanged);
         EventBus.Instance.EmailForLinkWasChanged.RemoveListener(TryingLinkEmail);
         EventBus.Instance.DisplayNameWasChanged.RemoveListener(DiaplayNameWasChanged);
     }

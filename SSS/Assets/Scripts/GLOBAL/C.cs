@@ -200,11 +200,20 @@ public class C
         public const string PathFolderImagesForAppearingSprites = "Images/UI/AppearingSprites/";
         public const string IboPostProcessProfile = "IboPostProcessProfile";
         public const string FontMonocraft = "Fonts/Monocraft SDF";
+        public const string GeneralLocalDataJSON = "GeneralLocalData.json";
+        public const string SyncGeneralDataFOLDER = "SyncGeneralData";
+        public const string defaultJSON = "default.json";
 
     }
     public static class Other
     {
         public const string Stune = "Stune";
+        public const string CurrentScore = "CurrentScore";
+        public const string maxKillCombo = "maxKillCombo";
+        public const string timeFromStartLevel = "timeFromStartLevel";
+        public const string currentYear = "currentYear";
+        public const string MaxReachedLevel = "MaxReachedLevel";
+        public const string currentMonth = "currentMonth";
     }
     public static class NamesObjects
     {
@@ -250,6 +259,8 @@ public class C
         public const string TriggerEmailForLinkWasChanged = "TriggerEmailForLinkWasChanged";
         public const string TriggerDisplayNameWasChanged = "TriggerDisplayNameWasChanged";
         public const string TriggerPasswordWasChanged = "TriggerPasswordWasChanged";
+        public const string UpdatePlayerStatsNEW = "UpdatePlayerStatsNEW";
+        public const string UpdateMaxReachedLevel = "UpdateMaxReachedLevel";
     }
     public static class Just
     {

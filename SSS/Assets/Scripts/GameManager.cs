@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 
         public bool vibrationOn = true;
         public bool cameraShakingOn = true;
+        public bool showNotifications = true;
         public float volumeMusic = 0.5f;
         public float volumeEffects = 0.5f;
         public float volumeBrightness = 0.5f;
@@ -114,6 +115,18 @@ public class GameManager : MonoBehaviour
             {
                 language = value;
                 GameManager.Instance.localizationManager.SetLanguage(value);
+            }
+        }
+        public bool ShowNotifications
+        {
+            get { return showNotifications; }
+            set
+            {
+                showNotifications = value;
+                if (!value)
+                {
+                    GameManager.Instance.DestroyAllNotifications();
+                }
             }
         }
 
@@ -354,6 +367,11 @@ public class GameManager : MonoBehaviour
             return null;
         }
 
+        if (!currentSettings.ShowNotifications)
+        {
+            return null;
+        }
+
         AppearingNotification sciptAppearingSprite = Instantiate(prefubAppearingNotification, notificationPlacement, false).GetComponent<AppearingNotification>();
         sciptAppearingSprite.SetProperlyPositionAndType(text, typeNotification, liveTime, shouldBeOnlyOneTextInGroup, shouldBeSpecifyControlPositionTextsInGroup);
 
@@ -404,7 +422,19 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ShakeCoroutine(obj.transform, radiusShaking, timeDuration, tickTime, shouldBeAttenuation));
     }
 
-    IEnumerator ShakeCoroutine(Transform objTransform, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation)
+    public void DestroyAllNotifications()
+    {
+        if (notificationPlacement.childCount > 0)
+        {
+            foreach (RectTransform rectTransofrmNotification in notificationPlacement)
+            {
+                Destroy(rectTransofrmNotification.gameObject);
+            }
+        }
+    }
+
+
+    private IEnumerator ShakeCoroutine(Transform objTransform, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation)
     {
         float elapsed = 0.0f;
         Vector3 initialLocalPositionObject = objTransform.localPosition;

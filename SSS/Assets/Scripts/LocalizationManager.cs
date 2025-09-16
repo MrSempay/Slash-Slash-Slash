@@ -577,6 +577,11 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Восстановить пароль" },
             { LANGUAGE.Spanish, "Ура!" }
         });
+        localization.Add("ShowNotifications", new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Show notifications" },
+            { LANGUAGE.Russian, "Показывать уведомления" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
 
     }
 
