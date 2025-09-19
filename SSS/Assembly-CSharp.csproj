@@ -131,6 +131,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\MainThreadDispatcher.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringStringWeaponInfoDictionaryDictionary.cs" />
+    <Compile Include="Assets\Scripts\UI\PanelChoose.cs" />
     <Compile Include="Assets\Scripts\LocalizationManager.cs" />
     <Compile Include="Assets\Move_Player.cs" />
     <Compile Include="Assets\Scripts\Test\SelectableObjectDrawer.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Assets\Scripts\UI\AppearingNotification.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\C.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\AppStateObserverClient.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonTextPanelChoose.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IBannerAdSizeClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\Constants.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\Wrapper.cs" />

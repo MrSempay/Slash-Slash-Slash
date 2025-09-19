@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
@@ -174,6 +175,25 @@ public class EquipmentInfoPanel : MonoBehaviour
         return this;
     }
 
+    private void Update()
+    {
+        //Canvas.ForceUpdateCanvases();
+        //LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
+    }
 
+    private void OnEnable()
+    {
+        CoroutineManager.Instance.StartManagedCoroutine(gameObject, RebuildNextFrame((RectTransform)transform));
+    }
+
+
+    private IEnumerator RebuildNextFrame(RectTransform rectTransformPIP)
+    {
+        yield return null; // ждём конца кадра
+        yield return null; // ждём конца кадра
+        //Debug.Log("Мы блять тут вообще?");
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransformPIP);
+    }
 
 }

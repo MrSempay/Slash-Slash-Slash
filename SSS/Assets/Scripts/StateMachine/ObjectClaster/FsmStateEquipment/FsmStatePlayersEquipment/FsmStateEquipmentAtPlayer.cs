@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна быть именно для игрока, так как тут проверяем нажатие по снаряжению. Для прочих юнитов другое состояние нужно
 {
 
     private Coroutine _coroutineDeleyBeforeSelectedState;
     private float _timeDeleyBeforeChangingState = 2f;
+    private bool _showingChoosePanel = false;
+    private RectTransform _rectTransformPanelInfo;
+    private Vector3 _enterPivot = new Vector2(0.5f, 0f);
+    private Vector3 _exitPivot = new Vector2(0.5f, 0.5f);
     //private bool _enteredToStateJustNow = true;
 
     public FsmStateEquipmentAtPlayer(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        
+        _rectTransformPanelInfo = (RectTransform)equipment.equipmentInfoPanel.transform;
     }
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
@@ -33,33 +39,20 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
             player.Inventory.SetEquipmentToInventory(equipment); 
         }
 
-        //if (equipment.isEquipmentASpell)
-        //{
-        //    if (player.listSpellsInInventory.Contains((Spell)equipment))
-        //    {
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        player.listSpellsInInventory.Add((Spell)equipment);
-        //    }
-        //}
+        ControlPositionPanelInfo(true);
+
+        equipment.OnMoveEquipment += MoveEquipment;
 
     }
-
     public override void Exit()
     {
         Debug.Log("Equipment At Player state [EXIT]");
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
         _coroutineDeleyBeforeSelectedState = null;
 
-        //if (equipment.isEquipmentASpell)
-        //{
-        //    if (player.listSpellsInInventory.Contains((Spell)equipment))
-        //    {
-        //        player.listSpellsInInventory.Remove((Spell)equipment);
-        //    }
-        //}
+        ControlPositionPanelInfo(false);
+
+        equipment.OnMoveEquipment -= MoveEquipment;
 
     }
 
@@ -75,7 +68,6 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
             fsm.SetState<FsmStateEquipmentInsideShop>();
         }
 
-
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -83,7 +75,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
             if (touch.phase == TouchPhase.Began)
             {
                 if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
-                    _coroutineDeleyBeforeSelectedState = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeSelectedState());
+                    _coroutineDeleyBeforeSelectedState = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeShowChoosePanel());
             }
             else if (touch.phase == TouchPhase.Ended)
             {
@@ -93,7 +85,14 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
                 //    return;
                 //}
 
+                if (_showingChoosePanel) // чтоб предмет не прожался, если мы только что активировали панель выбора
+                {
+                    _showingChoosePanel = false;
+                    return;
+                }
+
                 // где бы мы не отпустили кнопку, если мы всё ещё не выделили наше снаряжение, отменяем попытку выделения его.
+
                 CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
                 _coroutineDeleyBeforeSelectedState = null;
                 if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y))
@@ -112,7 +111,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
         if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
         {
              if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y))
-                _coroutineDeleyBeforeSelectedState = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeSelectedState()); 
+                _coroutineDeleyBeforeSelectedState = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeShowChoosePanel()); 
         }
         if (Input.GetMouseButtonUp(0)) // Когда нажата левая кнопка мыши
         {
@@ -123,6 +122,12 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
             //    _enteredToStateJustNow = false;
             //    return;
             //}
+
+            if (_showingChoosePanel)
+            {
+                _showingChoosePanel = false;
+                return;
+            }
 
             // где бы мы не отпустили кнопку, если мы всё ещё не выделили наше снаряжение, отменяем попытку выделения его.
             CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeSelectedState);
@@ -140,10 +145,23 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
 
     }
 
-    private IEnumerator DeleyBeforeSelectedState()
+    private void MoveEquipment()
+    {
+        fsm.SetState<FsmStateEquipmentSelected>();
+    }
+    private void ControlPositionPanelInfo(bool isEnter)
+    {
+        equipment.transformPlaceInfoPanel.localPosition = isEnter? new Vector3(0f, 0.75f, 0f) : baseLocalPositionInfoPanel;
+        _rectTransformPanelInfo.pivot = isEnter? new Vector2(0.5f, 0f) : new Vector2(0.5f, 0.5f);
+    }
+
+    private IEnumerator DeleyBeforeShowChoosePanel()
     {
         yield return new WaitForSeconds(_timeDeleyBeforeChangingState);
-        fsm.SetState<FsmStateEquipmentSelected>();
 
+        _showingChoosePanel = true;
+
+        InventoryPlayer inventoryPlayer = (InventoryPlayer)Player.instance.Inventory;
+        inventoryPlayer.ShowPanelChoose((RectTransform)equipment.panelChoose.gameObject.transform);
     }
 }

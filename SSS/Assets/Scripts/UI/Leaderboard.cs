@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
-    [SerializeField] private RectTransform _rectTransformPlaceForFields;
+    [SerializeField] private RectTransform _rectTransformPlaceForFields;  
     [SerializeField] private TextEdit _textNotification;
+    [SerializeField] private Sprite place_1;
+    [SerializeField] private Sprite place_2;
+    [SerializeField] private Sprite place_3;
+    [SerializeField] private Sprite place_another;
 
     private FieldInfo _prefubField;
     private bool _lastLoginingWasFailed = false;
@@ -59,6 +63,7 @@ public class Leaderboard : MonoBehaviour
     {
         if (PlayFabManager.Instance.lastLeaderboardStatsInfo.Count > 0)
         {
+            int place_number = 0;
             foreach (var fieldLeaderboardInfo in PlayFabManager.Instance.lastLeaderboardStatsInfo)
             {
                 FieldInfo scriptFieldLeaderboard = Instantiate(_prefubField, Vector3.zero, Quaternion.identity, _rectTransformPlaceForFields);
@@ -68,6 +73,23 @@ public class Leaderboard : MonoBehaviour
                 //Debug.Log(fieldLeaderboardInfo.Key);
                 scriptFieldLeaderboard.textNameInfo.SetNotLocalizableText(fieldLeaderboardInfo.Key);
                 scriptFieldLeaderboard.textValueInfo.SetNotLocalizableText(fieldLeaderboardInfo.Value.ToString());
+                switch (place_number)
+                {
+                    case 0:
+                        scriptFieldLeaderboard.imageIcon.sprite = place_1;
+                        break;
+                    case 1:
+                        scriptFieldLeaderboard.imageIcon.sprite = place_2;
+                        break;
+                    case 2:
+                        scriptFieldLeaderboard.imageIcon.sprite = place_3;
+                        break;
+                }
+
+                if (place_number > 2)
+                {
+                    scriptFieldLeaderboard.imageIcon.sprite = place_another;
+                }
 
                 _textNotification.Text = "";
 
@@ -75,7 +97,7 @@ public class Leaderboard : MonoBehaviour
                 LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
                 //scriptFieldLeaderboard.imageIcon
 
-
+                place_number++;
             }
         }
         else

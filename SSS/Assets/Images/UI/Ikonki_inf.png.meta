@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 036a8d39d3c0dd94080a80758f13dc7a
+guid: d24f63a1f05c4c3419cd1f24cc4e343e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1378521658571115459
-    second: Crown_0
+      213: -6633740969541636305
+    second: Ikonki_inf_0
   - first:
-      213: -1144310634911421452
-    second: Crown_1
+      213: 4185737142619146684
+    second: Ikonki_inf_1
   - first:
-      213: 4790031771275356536
-    second: Crown_2
-  - first:
-      213: -4023145912612234318
-    second: Crown_3
-  - first:
-      213: -2752122884701434288
-    second: Crown_4
-  - first:
-      213: 5194175233302292754
-    second: Crown_5
+      213: 7914432303712555651
+    second: Ikonki_inf_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,7 +90,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Standalone
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -125,7 +116,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -138,7 +129,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: iOS
+    buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -154,133 +145,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crown_0
+      name: Ikonki_inf_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 19
-        width: 13
-        height: 11
+        x: 0
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d34bfa1fad18edce0800000000000000
-      internalID: -1378521658571115459
+      spriteID: cdfe46bf50e57294fa1c9771e9a6fc71
+      internalID: -6633740969541636305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crown_1
+      name: Ikonki_inf_1
       rect:
         serializedVersion: 2
-        x: 18
-        y: 19
-        width: 13
-        height: 11
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4fb27655a879e10f0800000000000000
-      internalID: -1144310634911421452
+      spriteID: a7b30d805f461bf49a9ee774091e64de
+      internalID: 4185737142619146684
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crown_2
+      name: Ikonki_inf_2
       rect:
         serializedVersion: 2
-        x: 34
-        y: 19
-        width: 13
-        height: 11
+        x: 0
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 879e3bd648c997240800000000000000
-      internalID: 4790031771275356536
+      spriteID: e38cd98eb0ebf8c489fa80c9afca9778
+      internalID: 7914432303712555651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crown_3
+      name: Ikonki_inf_3
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 13
-        height: 11
+        x: 0
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2bbde27ab1aea28c0800000000000000
-      internalID: -4023145912612234318
+      spriteID: 2db02695101e61a4384706e96a4bc6b5
+      internalID: -819776486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crown_4
+      name: Ikonki_inf_4
       rect:
         serializedVersion: 2
-        x: 18
-        y: 3
-        width: 13
-        height: 10
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 05ec52751de7ec9d0800000000000000
-      internalID: -2752122884701434288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crown_5
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 3
-        width: 13
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2196d12dada651840800000000000000
-      internalID: 5194175233302292754
+      spriteID: 333e7320388f8ff41bdad47e48774a19
+      internalID: -1683093579
       vertices: []
       indices: 
       edges: []
@@ -289,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1b60bcc9d1a68254583cecada47ef4f4
     internalID: 0
     vertices: []
     indices: 
@@ -299,12 +268,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Crown_0: -1378521658571115459
-      Crown_1: -1144310634911421452
-      Crown_2: 4790031771275356536
-      Crown_3: -4023145912612234318
-      Crown_4: -2752122884701434288
-      Crown_5: 5194175233302292754
+      Ikonki_inf_0: -6633740969541636305
+      Ikonki_inf_1: 4185737142619146684
+      Ikonki_inf_2: 7914432303712555651
+      Ikonki_inf_3: -819776486
+      Ikonki_inf_4: -1683093579
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

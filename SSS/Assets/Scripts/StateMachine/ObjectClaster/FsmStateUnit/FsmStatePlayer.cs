@@ -92,6 +92,8 @@ public class FsmStatePlayer : FsmStateUnit
     {
         player.wasEnemyDamagedByLastSwipe = false;
 
+        player.OnMove();
+
         ScoreManager.Instance.UpActionCombo();
 
         if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
@@ -191,6 +193,5 @@ public class FsmStatePlayer : FsmStateUnit
             player.attackAreaTransform.localPosition = new Vector3(-1 * player.attackAreaTransform.localPosition.x, player.attackAreaTransform.localPosition.y, player.attackAreaTransform.localPosition.z);
         }
     }
-
 
 }

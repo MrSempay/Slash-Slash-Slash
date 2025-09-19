@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public GameObject prefubAppearingText;
     public GameObject prefubAppearingNotification;
     public GameObject prefubTextButton;
+    public GameObject prefubTextButtonPanelChoose;
     public GameObject prefubTextButtonScaled;
     public CustomCombo prefubCustomCombo;
     public EquipmentInfoPanel prefubEquipmentInfoPanel;
@@ -261,6 +262,7 @@ public class GameManager : MonoBehaviour
         prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
         prefubTextButton = Resources.Load<GameObject>(C.Paths.PrefubTextButton);
+        prefubTextButtonPanelChoose = Resources.Load<GameObject>(C.Paths.PrefubTextButtonPanelChoose);
         prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
         _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);

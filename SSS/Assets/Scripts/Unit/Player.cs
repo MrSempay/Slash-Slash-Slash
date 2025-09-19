@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 using static ScoreManager;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -34,6 +35,7 @@ public class Player : Unit, IMainTarget
     [SerializeField] private RectTransform _rectTransformStaminaBar;
     [SerializeField] private GameObject _prefubOfStaminaPoint;
     [SerializeField] private RectTransform _notificationPlacement;
+    [SerializeField] private Image _imageFillExperience;
 
     public static Player instance;
 
@@ -69,6 +71,7 @@ public class Player : Unit, IMainTarget
     public int staminaMax;
     public Dictionary<string, float> increasingParametersByLevelUpPercentage;
     public event Action<float> OnExperienceChanged; // Событие для изменения опыта
+    public event Action OnPlayerMove; // Событие для изменения опыта
     public event Action<float> OnMoneyChanged;     // Событие для изменения денег
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
@@ -99,7 +102,6 @@ public class Player : Unit, IMainTarget
 
     #endregion
 
-
     public float CurrentExperience
     {
         get { return _currentExperience; }
@@ -114,6 +116,8 @@ public class Player : Unit, IMainTarget
                 CurrentLevel++; // Повышаем уровень
                 ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage, true);
             }
+
+            _imageFillExperience.fillAmount = _currentExperience/experienceToNextLevel;
 
             // Вызываем событие, если есть подписчики
             OnExperienceChanged?.Invoke(_currentExperience);
@@ -296,6 +300,12 @@ public class Player : Unit, IMainTarget
         //Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
     }
+
+    public void OnMove()
+    {
+        OnPlayerMove.Invoke();
+    }
+
     public override void SomeAnimationUnitWasFinished(string nameFinishedAnimation) 
     {
         base.SomeAnimationUnitWasFinished(nameFinishedAnimation);

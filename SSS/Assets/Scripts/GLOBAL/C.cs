@@ -188,6 +188,7 @@ public class C
         public const string PrefubAppearingText = "Prefubs/UI/AppearingText";
         public const string PrefubAppearingNotification = "Prefubs/UI/AppearingNotification";
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
+        public const string PrefubTextButtonPanelChoose = "Prefubs/UI/TextButtonPanelChoose";
         public const string PrefubFieldEquipmentInfo = "Prefubs/UI/FieldEquipmentInfo";
         public const string PrefubLeaderboard = "Prefubs/UI/Leaderboard";
         public const string PrefubEquipmentInfoPanel = "Prefubs/UI/EquipmentInfoPanelFixedSize";
@@ -222,6 +223,7 @@ public class C
         public const string BoxSplitTargetPointsForEnemies = "BoxSplitTargetPointsForEnemies";
         public const string AreaDetectEnteringExiting = "AreaDetectEnteringExiting";
         public const string CallDownIcon = "CallDownIcon";
+        public const string PanelChoose = "PanelChoose";
         public const string PlaceInfoPanel = "PlaceInfoPanel";
     }
     public static class AppSprite

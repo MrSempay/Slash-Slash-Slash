@@ -15,7 +15,6 @@ public class Equipment : MonoBehaviour
     private bool _startWasCalledAlready = false; // иконка для анимации таймера КД.
     private bool _awakeWasCalledAlready = false; // иконка для анимации таймера КД.
     [NonSerialized] public AreaDetectEnteringExiting _areaDetectEnteringExiting;
-    private EquipmentInfoPanel _equipmentInfoPanel;
 
     public Animator mdaaa;
 
@@ -40,7 +39,9 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public BoxCollider2D selfCollider;
     [NonSerialized] public Equipment newScriptOfEquipment;
 
+    public EquipmentInfoPanel equipmentInfoPanel;
     public int amountUpCombo;
+    public PanelChoose panelChoose;
     public bool isActivated; // флаг активированных снаряжений. Типа переключаемой способности
     public bool shouldBeCastedAtStartUnitAnimation; // флаг, определяющий, должен ли эффект каста начать так или иначе работать сразу при начале анимации каста персонажа, или только после её полного завершения
     public float timeCallDown;
@@ -48,6 +49,7 @@ public class Equipment : MonoBehaviour
     public Dictionary<string, float> increasingUnitParametersByAmmunitionPercentageByCast = new Dictionary<string, float>();
     public event Action<string, int> ParametersOfEquipmentWasAssigned;
     public event Action<Equipment> OnEquipmentShouldBeActivate;
+    public event Action OnMoveEquipment;
     public event Action<Equipment> onEquipmentWasSold;         // экземляр(?) функции/сигнала(?)
     public event Action<List<Equipment>> onUpdateAssortment;
 
@@ -160,12 +162,17 @@ public class Equipment : MonoBehaviour
 
             _callDownIcon = transform.Find(C.NamesObjects.CallDownIcon).GetComponent<Image>();
             _areaDetectEnteringExiting = transform.Find(C.NamesObjects.AreaDetectEnteringExiting).GetComponent<AreaDetectEnteringExiting>();
+            panelChoose = transform.Find(C.NamesObjects.PanelChoose).GetComponent<PanelChoose>();
             transformPlaceInfoPanel = transform.Find(C.NamesObjects.PlaceInfoPanel).GetComponent<Transform>();
 
             _areaDetectEnteringExiting.somethingEnterExitArea += PlayerEnteredInfoArea;
 
             //spriteCallDown = callDownIcon.sprite; // на тот случай, если мы не найдём спрайт по имени + Disabled при спавне снаряжения. Спрайт должен быть всегда!
             sprite = selfSprite.sprite; // на тот случай, если мы не найдём спрайт по имени при спавне снаряжения. Спрайт должен быть всегда!
+
+            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", null, null, MoveEquipment);
+            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", null, ShowInfoPanelFromPlayerInventory, null);
+
             _awakeWasCalledAlready = true;
         }
 
@@ -195,11 +202,6 @@ public class Equipment : MonoBehaviour
     {
         if (!_startWasCalledAlready)
         {
-            _fsm = new Fsm();
-
-            _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
-            _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
-            _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
             // Короче, план таков: если в списке анимаций есть анимация с именем текущего снаряжения, мы воспроизводим её. Если таковой анимации не было найдено, то мы
             // ищем анимацию для активного состояния данного снаряжения (ибо снаряжение может иметь 2 вида анимации: активное и деактивированное, когда, например, в КД),
             // если нашли - воспроизводим её. Если нет и таковой, то просто устанавливаем спрайт для данного снаряжения. Спрайт по умолчанию назначается в скрипте здания,
@@ -229,6 +231,18 @@ public class Equipment : MonoBehaviour
             //callDownIcon.sprite = spriteCallDown;
 
 
+            equipmentInfoPanel = Instantiate(GameManager.Instance.prefubEquipmentInfoPanel, transformPlaceInfoPanel, false);
+            equipmentInfoPanel.FillInfoForm(this);
+            equipmentInfoPanel.gameObject.SetActive(false);
+
+            _startWasCalledAlready = true;
+
+            _fsm = new Fsm();
+
+            _fsm.AddState(new FsmStateEquipmentSelected(_fsm, gameObject));
+            _fsm.AddState(new FsmStateEquipmentInsideShop(_fsm, gameObject));
+            _fsm.AddState(new FsmStateEquipmentAtPlayer(_fsm, gameObject));
+
             if (BuildingWhereEquipmentIs)
             {
                 ParametersOfEquipmentWasAssigned?.Invoke(equipmentName, cost); // если снаряжение заспавнилось в здании, то эмулируем вызов сигнала 
@@ -238,7 +252,6 @@ public class Equipment : MonoBehaviour
             {
                 _fsm.SetState<FsmStateEquipmentAtPlayer>();
             }
-            _startWasCalledAlready = true;
         }
 
 
@@ -396,7 +409,10 @@ public class Equipment : MonoBehaviour
 
     #endregion
 
-
+    public void MoveEquipment()
+    {
+        OnMoveEquipment.Invoke();
+    }
 
 
     private void PlayerEnteredInfoArea(bool isEnter, GameObject obj, Transform transformArea)
@@ -405,26 +421,34 @@ public class Equipment : MonoBehaviour
         {
             if (isEnter)
             {
-                if (_equipmentInfoPanel)
+                if (equipmentInfoPanel)
                 {
-                    _equipmentInfoPanel.gameObject.SetActive(true);
+                    equipmentInfoPanel.gameObject.SetActive(true);
                 }
                 else
                 {
-                    _equipmentInfoPanel = Instantiate(GameManager.Instance.prefubEquipmentInfoPanel, transformPlaceInfoPanel, false);
-                    _equipmentInfoPanel.FillInfoForm(this);
+                    //_equipmentInfoPanel = Instantiate(GameManager.Instance.prefubEquipmentInfoPanel, transformPlaceInfoPanel, false);
+                    //_equipmentInfoPanel.FillInfoForm(this);
                 }
             }
             else
             {
-                if (_equipmentInfoPanel) // хотя null, по идее, оно тут не может быть, ибо перед тем как из зоны выйти, нужно в неё зайти
+                if (equipmentInfoPanel) // хотя null, по идее, оно тут не может быть, ибо перед тем как из зоны выйти, нужно в неё зайти
                 {
-                    _equipmentInfoPanel.gameObject.SetActive(false);
+                    equipmentInfoPanel.gameObject.SetActive(false);
                 }
             }
         }
     }
 
+    private void ShowInfoPanelFromPlayerInventory()
+    {
+        if (ownerUnit as Player)
+        {
+            InventoryPlayer inventoryPlayer = Player.instance.Inventory as InventoryPlayer;
+            inventoryPlayer.ShowInfoPanel((RectTransform)equipmentInfoPanel.gameObject.transform);
+        }
+    }
 
     public virtual void OnDestroy()
     {

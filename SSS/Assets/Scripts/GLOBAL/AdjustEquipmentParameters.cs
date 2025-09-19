@@ -260,6 +260,7 @@ public static class AdjustEquipmentParameters : object
 
 
     // Метод для получения случайного ключа из словаря spellParameters
+    private static List<string> spellsForTest = new() { "SomeSpell2" };
     public static string GetRandomSpellName()
     {
         List<string> spellNames = new List<string>(spellParameters.Keys);
@@ -267,6 +268,13 @@ public static class AdjustEquipmentParameters : object
         {
             Debug.LogError("No spell names available in unitParameters!");
             return null; // Или какое-то значение по умолчанию
+        }
+        foreach (string spellForTestName in spellsForTest)
+        {
+            if (spellNames.Contains(spellForTestName))
+            {
+                spellNames.Remove(spellForTestName);
+            }
         }
         int randomIndex = UnityEngine.Random.Range(0, spellNames.Count);
         return spellNames[randomIndex];
