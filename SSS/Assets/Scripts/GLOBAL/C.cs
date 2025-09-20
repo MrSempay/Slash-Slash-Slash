@@ -179,6 +179,8 @@ public class C
         public const string FolderImagesForAmmunition = "Images/Ammunition/";
         public const string FolderBWImagesForAmmunition = "Images/Ammunition/AmmunitionBW/";
         public const string FolderImagesForRankStyles = "Images/UI/RankStyle/";
+        public const string ChangeSlotButton = "Images/UI/Buttons/ChangeSlot";
+        public const string ShowInfoButton = "Images/UI/Buttons/ShowInfo";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
         public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
@@ -273,6 +275,12 @@ public class C
     public static class Animations
     {
         public const string PlayerDied = "PlayerDied";
+
+    }
+    public static class MusicSounds
+    {
+        public const string PlayerGotDamage = "PlayerGotDamage";
+        public const string OnButtonClick = "OnButtonClick";
 
     }
 

@@ -156,6 +156,11 @@ public class GameManager : MonoBehaviour
             {
                 volumeEffects = value;
                 AudioManager.Instance.audioEffectsComponent.volume = value;
+
+                foreach (AudioSource audioSoundComponent in AudioManager.Instance.dictionaryObjectsAndTheirAudioSources.Values)
+                {
+                    audioSoundComponent.volume = value;
+                }
             }
         }
         public string DisplayName
@@ -271,11 +276,18 @@ public class GameManager : MonoBehaviour
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
-        YandexMobileAdsInterstitialDemoScript.Instance.Initialize(); // создаём объект PlayFabManager
+        ButtonTextPanelChoose.Initialize(); // там подгружаем все изображения для кнопок панели и оттуда будем их тянуть
+        YandexMobileAdsInterstitialDemoScript.Instance.Initialize(); // создаём объект YandexMobileAdsInterstitialDemoScript
+        //GlobalClickSound.Instance.Initialize(); 
         SyncManager sm = SyncManager.Instance;
         localizationManager = LocalizationManager.Instance; // создаём менеджер локализации
         SaveLoadManager.Instance.Initialize(); // просто создаём наш менеджер по управлению загрузки/сохранения сразу же, как только создаётся у нас GameManager
-        
+        CoroutineManager.Instance.Initialize(); // у нас бывает так, что иногда мы заканчиваем сцену, когда CoroutineManager ещё не инициализирован, но при этом некоторые объекты
+                                                // пытаются остановить свои условные коротины в OnDestroy, при этом через Instance пытаясь создать объект CoroutineManager, чего, по словам
+                                                // Unity, в OnDestroy (при уничтожении сцены!) лучше не делать. Оно в таком случае ошибку выдаёт. Это может возникнуть, например, когда
+                                                // мы не запускаем никаких корутин при старте объектов, а только через какую-то кастомную логику, если логика не будет выполнена - CoroutineManager
+                                                // не будет инициализирован, но при этом в OnDestroy мы всё равно пытаетмся от чего-то отписаться, тем самым создавая его. Вот этот код нужен для
+                                                // явной инициализации данного синглтона, чтоб не ловить подобные висяки
         Volume volumeRender = gameObject.AddComponent<Volume>();
         VolumeProfile profile = Resources.Load<VolumeProfile>(C.Paths.IboPostProcessProfile);
         volumeRender.sharedProfile = profile;

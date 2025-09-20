@@ -220,7 +220,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
 
                 CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage / 100); // Уменьшаем здоровье
-                AudioManager.Instance.StartSoundEffect(nameSoundGettingDamage);
+                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundGettingDamage, gameObject);
 
                 if (CurrentHealth <= 0)
                 {

@@ -23,7 +23,7 @@ public static class AdjustUnitParameters
                 { C.DK.comboOneHitKillMultiplayer, 10f },
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
-                { C.DK.nameSoundGettingDamage, "PlayerGotDamage" }, // и какого хрена я это константой не делаю... шиза
+                { C.DK.nameSoundGettingDamage, C.MusicSounds.PlayerGotDamage }, // и какого хрена я это константой не делаю... шиза. 20.09 - Делаю!
                 { C.DK.increasingGettingExperienceByKillComboTickPercentage, 20f },
                 { C.DK.increasingGettingMoneyByKillComboTickPercentage, 20f },
                 { C.DK.increasingParametersByLevelUpPercentage, new Dictionary<string, float>()

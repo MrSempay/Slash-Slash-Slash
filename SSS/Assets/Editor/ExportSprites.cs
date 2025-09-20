@@ -72,7 +72,7 @@ public class SpriteExporter : EditorWindow
                 sprite.texture.height,
                 0,
                 RenderTextureFormat.Default,
-                RenderTextureReadWrite.Linear
+                RenderTextureReadWrite.sRGB
             );
 
             Graphics.Blit(sprite.texture, rt);

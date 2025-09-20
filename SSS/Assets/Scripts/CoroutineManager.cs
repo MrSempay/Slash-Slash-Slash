@@ -11,8 +11,8 @@ public class CoroutineManager : MonoBehaviour
     {
         get
         {
-            //Debug.Log("CoroutineManager created! Stack: " + Environment.StackTrace);
-            //Debug.Log(_instance);
+            Debug.Log("CoroutineManager created! Stack: " + Environment.StackTrace);
+            Debug.Log(_instance);
             
             if (_instance == null)
             {
@@ -26,6 +26,9 @@ public class CoroutineManager : MonoBehaviour
 
     // Dictionary для хранения корутин по объектам
     private Dictionary<GameObject, List<Coroutine>> activeCoroutines = new Dictionary<GameObject, List<Coroutine>>();
+
+
+    public void Initialize() { }
 
     // Метод для запуска корутины с указанием владельца
     public Coroutine StartManagedCoroutine(GameObject owner, IEnumerator coroutine)

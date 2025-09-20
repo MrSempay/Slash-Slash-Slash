@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8740135425865518593}
   - component: {fileID: 3322241009185737475}
   - component: {fileID: 8152456365076910789}
+  - component: {fileID: 6855900780843213596}
   m_Layer: 0
   m_Name: ButtonMenu
   m_TagString: Untagged
@@ -179,3 +180,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6855900780843213596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163430527785535146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8256ad515fb083841a869a0c04e83520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

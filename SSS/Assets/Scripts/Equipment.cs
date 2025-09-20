@@ -170,8 +170,8 @@ public class Equipment : MonoBehaviour
             //spriteCallDown = callDownIcon.sprite; // на тот случай, если мы не найдём спрайт по имени + Disabled при спавне снаряжения. Спрайт должен быть всегда!
             sprite = selfSprite.sprite; // на тот случай, если мы не найдём спрайт по имени при спавне снаряжения. Спрайт должен быть всегда!
 
-            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", null, null, MoveEquipment);
-            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", null, ShowInfoPanelFromPlayerInventory, null);
+            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", ButtonTextPanelChoose.spriteChangeSlotButton, null, MoveEquipment);
+            PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", ButtonTextPanelChoose.spriteShowInfoButton, ShowInfoPanelFromPlayerInventory, null);
 
             _awakeWasCalledAlready = true;
         }

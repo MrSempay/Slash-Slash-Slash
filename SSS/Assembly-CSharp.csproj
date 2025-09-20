@@ -109,7 +109,6 @@
     <Compile Include="Assets\YandexMobileAds\Common\RewardedAdLoadedEventArgs.cs" />
     <Compile Include="Assets\YandexMobileAds\AppOpenAdLoader.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\AdInfoFactory.cs" />
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AppOpenAdLoadedEventArgs.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdPosition.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IReadOnlyEventBus.cs" />
@@ -168,6 +167,7 @@
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterInternetSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AvailableLevelSet.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\BannerAdSizeUtils.cs" />
+    <Compile Include="Assets\Scripts\Music\GlobalClickSound.cs" />
     <Compile Include="Assets\Scripts\Unit\Door\AreaDetectors\AreaEnterButton.cs" />
     <Compile Include="Assets\Scripts\UI\PlaceForEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\InventoryStatic.cs" />
@@ -186,6 +186,7 @@
     <Compile Include="Assets\YandexMobileAds\Common\IInterstitialAdLoaderClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\ScreenBridge.cs" />
     <Compile Include="Assets\Scripts\Test\ScenarioCreator.cs" />
+    <Compile Include="Assets\Scripts\Music\AutoSoundButton.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdSize.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\RewardedAdLoaderBridge.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyMobileAdsClient.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\BannerClient.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\MovingCamera.cs" />
     <Compile Include="Assets\Scripts\UI\FieldInfo.cs" />
+    <Compile Include="Assets\Scripts\Music\AudioManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdFailureEventArgs.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyBannerClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AdRequestClient.cs" />
@@ -287,6 +289,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\AdInfo.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyAppOpenAdClient.cs" />
     <Compile Include="Assets\Scripts\Unit\Door.cs" />
+    <Compile Include="Assets\Scripts\Music\ButtonClickSoundInitializer.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IControlLifeCicleFunctions.cs" />
     <Compile Include="Assets\Scripts\Building\Treasury.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\PitDetector.cs" />

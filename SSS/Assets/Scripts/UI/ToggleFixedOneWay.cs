@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ToggleFixedOneWay : ToggleFixed
 {
@@ -9,7 +10,14 @@ public class ToggleFixedOneWay : ToggleFixed
         if (!IsToggled) // если тумблер не прожат, то мы можем его прожать. В обратную сторону отжать нельзя, оттого и OneWay
         {
             IsToggled = true;
+            PlaySound();
         }
+    }
+
+    private void PlaySound()
+    {
+        //Debug.Log("Ну что за параша такая-то");
+        AudioManager.Instance.StartSoundEffect(C.MusicSounds.OnButtonClick);
     }
 
 

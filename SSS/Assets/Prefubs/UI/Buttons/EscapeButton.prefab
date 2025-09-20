@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8338204274491656851}
   - component: {fileID: 7958478492108528095}
   - component: {fileID: 1967246983924317661}
+  - component: {fileID: 4731292843754723879}
   m_Layer: 5
   m_Name: EscapeButton
   m_TagString: Untagged
@@ -132,3 +133,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4731292843754723879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7198591341338963444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8256ad515fb083841a869a0c04e83520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
