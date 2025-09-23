@@ -132,7 +132,11 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
     {
         if (ApplyCredentials())
         {
-            PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email, Password); 
+            PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email, Password);
+        }
+        else
+        {
+            PlayFabManager.Instance.LoginOrRegisterMobile();
         }
     }
     public void ButtonRecoveryPasswordWasPressed()
@@ -166,14 +170,15 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
     }
     private bool ApplyCredentials()
     {
-        if (GetCleanText(_textPassword.Text).Length < 7)
+        string passwordForCheck = GetCleanText(_textInputFieldPassword.text);
+        if (passwordForCheck.Length < 7 && passwordForCheck.Length != 0)
         {
             GameManager.Instance.InvokeAppearingNotification(C.Notifications.PasswordTooShort, TYPE_NOTIFICATION.Failure, 4, false);
             return false;
         }
 
         Email = GetCleanText(_textEmail.Text);
-        Password = GetCleanText(_textInputFieldPassword.text); // нужно из InputField брать напрямую, иначе я получаю *********
+        Password = passwordForCheck; // нужно из InputField брать напрямую, иначе я получаю *********
 
         return true;
     }
