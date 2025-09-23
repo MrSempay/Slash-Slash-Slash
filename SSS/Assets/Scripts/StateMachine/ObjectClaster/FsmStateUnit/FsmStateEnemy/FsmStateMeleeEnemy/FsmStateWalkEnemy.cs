@@ -21,7 +21,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Walk state [ENTER]");
+        Debug.Log("Enemy Walk state [ENTER]");
         enemy.currentCornerIndex = 1; // Начинаем со второй точки (индекс 1)
         enemy.isPathValid = false; // Сбрасываем флаг валидности пути при входе
         enemy.animator.Play("EnemyWalk");
@@ -29,7 +29,8 @@ public class FsmStateWalkEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Walk state [EXIT]");
+        Debug.Log("Enemy Walk state [EXIT]");
+        AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
     }
 
     public override void Update()

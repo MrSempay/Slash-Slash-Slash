@@ -24,6 +24,9 @@ public static class AdjustUnitParameters
                 { C.DK.timeRecoverStaminaPoint, 0.5f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.PlayerGotDamage }, // и какого хрена я это константой не делаю... шиза. 20.09 - Делаю!
+                { C.DK.nameSoundDeath, C.MusicSounds.PlayerDeath },
+                { C.DK.nameSoundAttakPeaked, C.MusicSounds.PlayerAttackPeak },
+                { C.DK.nameSoundWalk, C.MusicSounds.PlayerWalk },
                 { C.DK.increasingGettingExperienceByKillComboTickPercentage, 20f },
                 { C.DK.increasingGettingMoneyByKillComboTickPercentage, 20f },
                 { C.DK.increasingParametersByLevelUpPercentage, new Dictionary<string, float>()
@@ -52,7 +55,12 @@ public static class AdjustUnitParameters
                 { C.DK.scoreFromKill, 50 },
                 { C.DK.som, 14 },
                 { C.DK.damage, 5 },
+                //{ C.DK.nameSoundAttakPeaked, C.MusicSounds.DogMakeDamage },
+                { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
+                { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
+                { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
                 { C.DK.callDownMeleeAttack, 0.5f }
+
             }
         },
         {

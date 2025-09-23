@@ -30,7 +30,7 @@ AnimationClip:
       value: {fileID: 3154108456949594810, guid: deb8caf0f6a319549871a3f25333338a, type: 3}
     - time: 0.15
       value: {fileID: 887788747633879970, guid: deb8caf0f6a319549871a3f25333338a, type: 3}
-    - time: 0.2
+    - time: 0.18333334
       value: {fileID: 3496564903069110720, guid: deb8caf0f6a319549871a3f25333338a, type: 3}
     - time: 0.23333333
       value: {fileID: 1919949046205846007, guid: deb8caf0f6a319549871a3f25333338a, type: 3}
@@ -126,4 +126,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.2
+    functionName: SomeAnimationUnitWasPeaked
+    data: AttackPeaked
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

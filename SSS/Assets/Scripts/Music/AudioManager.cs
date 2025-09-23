@@ -5,11 +5,13 @@ using UnityEngine.Rendering;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using static AudioManager;
 
 public class AudioManager : MonoBehaviour
 {
 
     private static AudioManager _instance;
+
     private float _timeTickOfChangingVolumeBetweenMusic = 0.03f;
     private float _timeCleanUpSoundSourcesDictionary = 60f;
     private bool _musicWasEndedByItself = true;
@@ -25,7 +27,9 @@ public class AudioManager : MonoBehaviour
     private string _nameBeginningMusic = "BeginningLevelMusic";
     private string _nameTransitionMusic = "TransitionMusic";
 
-    public Dictionary<GameObject, AudioSource> dictionaryObjectsAndTheirAudioSources = new();
+    public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, Death};
+    public enum TYPE_AUDIO_SOURCE { _2DStandard, _3DStandard };
+    public Dictionary<GameObject, Dictionary<TYPE_SOUND, AudioSource>> dictionaryObjectsAndTheirAudioSourcesByTypes = new();
     public AudioSource audioMusicComponent; // Ссылка на AudioSource для музыки
     public AudioSource audioEffectsComponent; // Ссылка на AudioSource для звуковых эффектов
 
@@ -65,7 +69,9 @@ public class AudioManager : MonoBehaviour
         audioEffectsComponent = gameObject.AddComponent<AudioSource>();
 
         CoroutineManager.Instance.StartManagedCoroutine(gameObject, ControlSoundSourcesDictionary());
-        //ButtonClickSoundInitializer.SetButtonsSound(C.MusicSounds.PlayerGotDamage);
+
+
+        LoadSoundsDictionary(_pathToSoundsEffect, _sourcesSounds);
     }
 
     // 14.08.2025 - возможно уже рудиментная функция
@@ -128,47 +134,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StartSoundEffectAtSpecifiedObject(string nameEffect, GameObject gameObject)
-    {
-        if (string.IsNullOrEmpty(nameEffect))
-        {
-            return;
-        }
-
-        AudioSource audioSourceTarget;
-
-        if (dictionaryObjectsAndTheirAudioSources.ContainsKey(gameObject))
-        {
-            audioSourceTarget = dictionaryObjectsAndTheirAudioSources[gameObject];
-        }
-        else
-        {
-            audioSourceTarget = gameObject.AddComponent<AudioSource>();
-            audioSourceTarget.volume = GameManager.Instance.currentSettings.volumeEffects;
-            dictionaryObjectsAndTheirAudioSources[gameObject] = audioSourceTarget;
-        }
-
-        if (!_sourcesSounds.ContainsKey(nameEffect))
-        {
-            AudioClip _currentEffect = Resources.Load<AudioClip>(_pathToSoundsEffect + nameEffect);
-            _sourcesSounds[nameEffect] = _currentEffect;
-        }
-        audioSourceTarget.PlayOneShot(_sourcesSounds[nameEffect]);
-    }
 
     private void FadeCurrentMusicAndAfterRise(AudioClip explosionSound)
     {
         StartCoroutine(FadeCurrentMusicTickAndAfterRise(explosionSound));
     }
+
     private void FadeCurrentMusic(AudioClip explosionSound)
     {
         StartCoroutine(FadeCurrentMusicTick(explosionSound));
     }
+
     private void RiseCurrentMusic(AudioClip explosionSound)
     {
         StartCoroutine(RiseCurrentMusicTick(explosionSound));
     }
-
 
     IEnumerator FadeCurrentMusicTickAndAfterRise(AudioClip explosionSound)
     {
@@ -179,6 +159,7 @@ public class AudioManager : MonoBehaviour
         }
         StartCoroutine(RiseCurrentMusicTick(explosionSound));
     }
+
     IEnumerator FadeCurrentMusicTick(AudioClip explosionSound)
     {
         while (audioMusicComponent.volume > 0.03f)
@@ -218,9 +199,8 @@ public class AudioManager : MonoBehaviour
         string fightMusicFolder = _pathToMusicFolder + LevelBuilder.instance.selfName + "/FightMusic/";
         string ambientMusicFolder = _pathToMusicFolder + LevelBuilder.instance.selfName + "/AmbientMusic/";
 
-        LoadMusicDictionary(fightMusicFolder, _dictionaryFightMusic);
-        LoadMusicDictionary(ambientMusicFolder, _dictionaryAmbientMusic);
-
+        LoadSoundsDictionary(fightMusicFolder, _dictionaryFightMusic);
+        LoadSoundsDictionary(ambientMusicFolder, _dictionaryAmbientMusic);
     }
 
     public void StartBeginningMusic()
@@ -239,6 +219,7 @@ public class AudioManager : MonoBehaviour
         //audioMusicComponent.volume = 0;
         StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_beginningMusic, null));
     }
+
     public void PlayFightOrAmbientMusic(bool isFightMusic)
     {
         StopAllCoroutines();
@@ -282,6 +263,7 @@ public class AudioManager : MonoBehaviour
 
 
     }
+
     public void StartCertainMusicInLoop(string nameMusic)
     {
         StopAllCoroutines();
@@ -312,6 +294,59 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(WaitForMusicEndByItself(_certainMusic, nameMusic));
     }
 
+    public void StartSoundEffectAtSpecifiedObject(string nameEffect, GameObject obj, TYPE_SOUND typeSound, TYPE_AUDIO_SOURCE typeAudioSource, List<TYPE_SOUND> typeSoundsToStop = null)
+    {
+        if (string.IsNullOrEmpty(nameEffect))
+        {
+            return;
+        }
+
+        AudioSource audioSourceTarget;
+
+        if (dictionaryObjectsAndTheirAudioSourcesByTypes.ContainsKey(obj))
+        {
+            if (dictionaryObjectsAndTheirAudioSourcesByTypes[obj].ContainsKey(typeSound))
+            {
+                audioSourceTarget = dictionaryObjectsAndTheirAudioSourcesByTypes[obj][typeSound];
+            }
+            else
+            {
+                audioSourceTarget = AttachToObjectAndCashAudioSource(obj, typeSound, typeAudioSource);
+            }
+        }
+        else
+        {
+            dictionaryObjectsAndTheirAudioSourcesByTypes[obj] = new Dictionary<TYPE_SOUND, AudioSource>();
+
+            audioSourceTarget = AttachToObjectAndCashAudioSource(obj, typeSound, typeAudioSource);
+        }
+
+        if (typeSoundsToStop != null)
+        {
+            foreach (var typeSoundToStop in typeSoundsToStop)
+            {
+                if (dictionaryObjectsAndTheirAudioSourcesByTypes[obj].ContainsKey(typeSoundToStop))
+                {
+                    dictionaryObjectsAndTheirAudioSourcesByTypes[obj][typeSoundToStop].Stop();
+                }
+            }
+        }
+
+        audioSourceTarget.PlayOneShot(_sourcesSounds[nameEffect]);
+    }
+
+    public void StopSomeTypeSoundOnObject(TYPE_SOUND typeSound, GameObject obj)
+    {
+        if (dictionaryObjectsAndTheirAudioSourcesByTypes.ContainsKey(obj))
+        {
+            if (dictionaryObjectsAndTheirAudioSourcesByTypes[obj].ContainsKey(typeSound))
+            {
+                dictionaryObjectsAndTheirAudioSourcesByTypes[obj][typeSound].Stop();
+            }
+        }
+    }
+
+
 
     private void JustStartAmbientOrFightMusic(AudioClip targetMusic, bool isFightMusic)
     {
@@ -320,6 +355,7 @@ public class AudioManager : MonoBehaviour
         audioMusicComponent.Play();
         StartCoroutine(WaitForAmbientOrFightMusicEnd(targetMusic, isFightMusic));
     }
+
     private void JustStartBeginningMusic()
     {
         audioMusicComponent.clip = _beginningMusic;
@@ -328,7 +364,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(WaitForBeginningMusicEnd());
     }
 
-    private void LoadMusicDictionary(string path, Dictionary<string, AudioClip> dict)
+    private void LoadSoundsDictionary(string path, Dictionary<string, AudioClip> dict)
     {
         // Загружаем все AudioClip из указанной папки
         AudioClip[] clipsFight = Resources.LoadAll<AudioClip>(path);
@@ -345,6 +381,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private AudioSource AttachToObjectAndCashAudioSource(GameObject obj, TYPE_SOUND typeSound, TYPE_AUDIO_SOURCE typeAudioSource)
+    {
+        AudioSource audioSourceTarget = obj.AddComponent<AudioSource>();
+        audioSourceTarget.volume = GameManager.Instance.currentSettings.volumeEffects;
+
+        dictionaryObjectsAndTheirAudioSourcesByTypes[obj][typeSound] = audioSourceTarget;
+
+        switch (typeAudioSource)
+        {
+            case TYPE_AUDIO_SOURCE._3DStandard:
+                audioSourceTarget.spatialBlend = 1;
+                audioSourceTarget.rolloffMode = AudioRolloffMode.Linear;
+                audioSourceTarget.minDistance = 4f;
+                audioSourceTarget.maxDistance = 21f;
+                break;
+            case TYPE_AUDIO_SOURCE._2DStandard:
+                break; // по умолчанию тот компонент, который создаётся, нас устраивает
+        }
+
+        return audioSourceTarget;
+    }
+
     private IEnumerator FadePreviousMusicAndStartBeginning()
     {
         while (audioMusicComponent.volume > 0.03f)
@@ -356,6 +414,7 @@ public class AudioManager : MonoBehaviour
 
         StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusic(_beginningMusic, null));
     }
+
     private IEnumerator FadePreviousMusicAndStartAmbientOrFight(bool isFightMusic)
     {
         while (audioMusicComponent.volume > 0.03f)
@@ -394,6 +453,7 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
     private IEnumerator FadePreviousMusicCertain(string nameMusic)
     {
         while (audioMusicComponent.volume > 0.03f)
@@ -411,7 +471,6 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(WaitForMusicEndByItself(_certainMusic, nameMusic));
     }
 
-
     private IEnumerator FadeCurrentMusicTickStartTransitionAndStartTargetMusic(AudioClip targetMusic, bool? isFightMusic)
     {
         yield return null;
@@ -428,9 +487,6 @@ public class AudioManager : MonoBehaviour
         }
         StartCoroutine(WaitForTransitionMusicEnd(targetMusic, isFightMusic)); // здесь должно быть transition
     }
-
-
-
 
     private IEnumerator WaitForTransitionMusicEnd(AudioClip targetMusic, bool? isFightMusic = null)
     {
@@ -450,7 +506,9 @@ public class AudioManager : MonoBehaviour
         }
         // Выполните нужные действия...
     }
+
     private IEnumerator WaitForAmbientOrFightMusicEnd(AudioClip targetMusic, bool isFightMusic)
+
     {
         yield return new WaitForSecondsRealtime(targetMusic.length);
 
@@ -462,6 +520,7 @@ public class AudioManager : MonoBehaviour
 
         PlayFightOrAmbientMusic(isFightMusic);
     }
+
     private IEnumerator WaitForBeginningMusicEnd()
     {
         yield return new WaitForSecondsRealtime(_beginningMusic.length);
@@ -493,7 +552,7 @@ public class AudioManager : MonoBehaviour
 
             var toRemove = new List<GameObject>();
 
-            foreach (var kvp in dictionaryObjectsAndTheirAudioSources)
+            foreach (var kvp in dictionaryObjectsAndTheirAudioSourcesByTypes)
             {
                 if (kvp.Key == null)
                 {
@@ -503,10 +562,11 @@ public class AudioManager : MonoBehaviour
 
             foreach (var dead in toRemove)
             {
-                dictionaryObjectsAndTheirAudioSources.Remove(dead);
+                dictionaryObjectsAndTheirAudioSourcesByTypes.Remove(dead);
             }
         }
     }
+
 
 
     void Start()

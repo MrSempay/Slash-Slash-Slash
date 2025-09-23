@@ -78,30 +78,50 @@ public class Level1Scenario : ScenarioScript
         base.TimerFinished(markerTimeWait);
         switch (markerTimeWait)
         {
-            case "waitTimeAfterFirstAmmunitionBue":
-                Debug.Log("Study was finished");
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 1 }, 
-                                                                     { _transformSchool, 0 },
-                                                                     { _transformTreasury, 0 } },
-                                 "WaveAfterAmmunitionBue");
-
-                JustTimeWait(10f, "justWait");
-
-                break;
             case "waitTimeAfterFirstEnemyKill":
                 MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
                                                                                // MovingCameraPlayerToPoint и ждём 1 кадр)
                 TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                 break;
+
             case "justWait":
                 StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 1 },
                                                                      { _transformSchool, 0 },
                                                                      { _transformTreasury, 0 } },
                                  "JustSecondWave");
                 break;
+
+            //        АНДРЕЙ!!! ТРОГАЙ ТОЛЬКО ТО, ЧТО ВНИЗУ!       //
+
+            case "waitTimeAfterFirstAmmunitionBue":
+                Debug.Log("Study was finished");
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 15 }, 
+                                                                     { _transformSchool, 15 },
+                                                                     { _transformTreasury, 15 } },
+                                 "WaveAfterLearning");
+                break;
+
+            case "waitBefore2Wave":
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
+                                 "SecondWave");
+                break;
+
+            case "waitBefore3Wave":
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
+                                 "ThirdWave");
+                break;
+            case "waitBefore4Wave":
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
+                                 "FourWave");
+                break;
         }
     }
-
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
@@ -114,12 +134,19 @@ public class Level1Scenario : ScenarioScript
         base.EnemiesWaveWasDestroyed(nameWave);
         switch (nameWave)
         {
-            case "WaveAfterAmmunitionBue":
+            case "WaveAfterLearning":
+                JustTimeWait(10f, "waitBefore2Wave");
                 break;
-                
-            case "JustSecondWave":
+            case "SecondWave":
+                JustTimeWait(10f, "waitBefore3Wave");
+                break;
+            case "ThirdWave":
+                JustTimeWait(8f, "waitBefore4Wave");
+                break;
+            case "FourWave":
                 FinishLevel();
                 break;
+                
         }
     }
 

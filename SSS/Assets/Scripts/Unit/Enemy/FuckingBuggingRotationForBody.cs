@@ -10,7 +10,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class FuckingBuggingRotationForBody : MonoBehaviour
 {
     public event Action onEnemyLandingAnimationFinished;  // Событие для определения, закончилась ли анимация преземления в состоянии FsmStateFallEnemy
-    public event Action onAttackAnimationAtRightPointForGetDamage;  // Событие для определения, в нужном ли месте анимация атаки и требуется ли наносить урон.
+    public event Action onAttackAnimationAtRightPointForGetDamage;  // Событие для определения, в нужном ли месте анимация атаки и требуется ли наносить урон.    
+
+    private Enemy enemy;
 
     // Этот метод будет вызван Animation Event в конце анимации
     public void EnemyLandingAnimationFinished()
@@ -23,5 +25,15 @@ public class FuckingBuggingRotationForBody : MonoBehaviour
     {
         onAttackAnimationAtRightPointForGetDamage?.Invoke(); // подписываемся в состоянии FsmStateMeleeAttacklEnemy
         Debug.Log("MeleeEnemyAttack animation at right point!");
+    }
+
+    public virtual void SomeAnimationWasStarted(string nameStartedAnimation) // Когда какая-то анимация началась. Делаем через event в самой анимации
+    {
+        enemy.SomeAnimationWasStarted(nameStartedAnimation);
+    }
+
+    private void Awake()
+    {
+        enemy = transform.parent.GetComponent<Enemy>();
     }
 }

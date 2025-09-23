@@ -125,7 +125,15 @@ public class FsmStatePlayer : FsmStateUnit
         //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
         player.rb.linearVelocityX = -player.speed * 10;
         OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-        fsmPlayer.SetState<FsmStateWalk>();
+        if (player.isEnemyNear)
+        {
+            fsmPlayer.SetState<FsmStateWalkAndAttack>();
+
+        }
+        else
+        {
+            fsmPlayer.SetState<FsmStateWalk>();
+        }
     }
 
     private void MoveRight()
@@ -134,7 +142,15 @@ public class FsmStatePlayer : FsmStateUnit
         //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
         player.rb.linearVelocityX = player.speed * 10;
         OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-        fsmPlayer.SetState<FsmStateWalk>();
+        if (player.isEnemyNear)
+        {
+            fsmPlayer.SetState<FsmStateWalkAndAttack>();
+
+        }
+        else
+        {
+            fsmPlayer.SetState<FsmStateWalk>();
+        }
     }
 
     public void IsAtSpecifiedPosition()

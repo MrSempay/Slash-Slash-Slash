@@ -113,6 +113,9 @@ public class C
         public const string increasingParametersByLevelUpPercentage = "increasingParametersByLevelUpPercentage";
         public const string damage = "damage";
         public const string nameSoundGettingDamage = "nameSoundGettingDamage";
+        public const string nameSoundAttakPeaked = "nameSoundAttakPeaked";
+        public const string nameSoundDeath = "nameSoundDeath";
+        public const string nameSoundWalk = "nameSoundWalk";
         public const string CountAccessToUpInSchool = "CountAccessToUpInSchool"; // Это исключение, так как строка начинается с заглавной (все свойства будут такими)
         public const string CurrentMoney = "CurrentMoney"; // Это исключение, так как строка начинается с заглавной
         public const string CurrentMinimumAmountCombo = "CurrentMinimumAmountCombo"; 
@@ -272,16 +275,34 @@ public class C
         public const string NextLevel = "NextLevel";
         public const string ShowLeaderboard = "ShowLeaderboard";
     }
-    public static class Animations
+    public static class Animations // на самом деле тут плохое разделение. Ибо в этом подклассе у нас как названия именно файлов анимации, так и смысловые названия, передаваемые в качестве
+                                   // параметров в функции, которые вызываются при активации event в ходе анимации. Анимация может иметь название PlayerWalk и DogWalk, а как параметр
+                                   // передадим просто как Walk для унификации работы с анимациями
     {
         public const string PlayerDied = "PlayerDied";
+        public const string PlayerAttackNew = "PlayerAttackNew";
 
+        public const string AttackPeaked = "AttackPeaked";
+        public const string Walk = "Walk";
+        public const string Attack = "Attack";
     }
     public static class MusicSounds
     {
         public const string PlayerGotDamage = "PlayerGotDamage";
         public const string OnButtonClick = "OnButtonClick";
+        public const string DogAttackPeak = "DogAttackPeak";
+        public const string DogGotDamage = "DogGotDamage";
+        public const string DogDeath = "DogDeath";
+        public const string DogWalk = "DogWalk";
+        public const string PlayerDeath = "PlayerDeath";
+        public const string PlayerAttackPeak = "PlayerAttackPeak";
+        public const string PlayerAttackPeakHitEnemies = "PlayerAttackPeakHitEnemies";
+        public const string PlayerWalk = "PlayerWalk";
 
+    }
+    public static class Tags
+    {
+        public const string EnemyDied = "EnemyDied";
     }
 
 

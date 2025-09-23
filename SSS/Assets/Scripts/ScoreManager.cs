@@ -496,7 +496,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(timeZeroizeKillComboTicks); // ∆дем 1 секунду
 
         // —брасываем комбо после задержки
-        Debug.Log(GetInstanceID());
+        //Debug.Log(GetInstanceID());
         CurrentKillCombo = CurrentMinimumAmountCombo;
         _zeroizeKillComboTicksCoroutine = null; // —брасываем ссылку на корутину
     }

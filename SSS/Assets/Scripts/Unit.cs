@@ -32,6 +32,9 @@ public abstract class Unit : MonoBehaviour, IInventory
     public Dictionary<string, object> unitParameters;
     public string nameOfUnit;
     public string nameSoundGettingDamage;
+    public string nameSoundAttakPeaked;
+    public string nameSoundDeath;
+    public string nameSoundWalk;
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
     public bool isInvicible = false; // неуязвимость к УРОНУ (но не к эффектам, наверное)
     public Fsm _fsm;
@@ -191,6 +194,11 @@ public abstract class Unit : MonoBehaviour, IInventory
 
     }
 
+    public virtual void MakeDamageToUnit(Unit unitWhichIsAttacked)
+    {
+
+    }
+
     // делаем unitFromWhoWasGottenDamage по умолчанию null, ибо в теории могут наносить в дальнейшем урон объекты, которые не будут наследоваться от Unit
     // Возвращает bool оттого, что необходимо нам проверять в производной функции, нужно ли завершать её досрочно. Если базовая возвращает true, значит производную функцию нужно прервать
     public virtual bool GetDamage(float damageSize, Unit unitFromWhoWasGottenDamage = null, bool wasDamageByStandartAttack = true)
@@ -220,7 +228,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
 
                 CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage / 100); // Уменьшаем здоровье
-                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundGettingDamage, gameObject);
+                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundGettingDamage, gameObject, AudioManager.TYPE_SOUND.GetDamage, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
 
                 if (CurrentHealth <= 0)
                 {
@@ -244,6 +252,11 @@ public abstract class Unit : MonoBehaviour, IInventory
         if (isAlive) // по идее когда помирает юнит, у него коллайдер отключается, но в ряде случаев это происходит не сразу (например, когда юнит умирает в падении и нужно чтоб он корректно приземлился (его останки))
         {
             Debug.Log(gameObject.name + " уничтожен!");
+
+            isAlive = false;
+
+            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundDeath, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+
             if (unitFromWhoWasGottenDamage)
             {
                 if (unitFromWhoWasGottenDamage.gameObject.CompareTag("Player")) // пока что только игрок пусть сможет получать что-то за смерть врагов. После это можно будет расширить
@@ -585,6 +598,23 @@ public abstract class Unit : MonoBehaviour, IInventory
                 break;
         }
     }
+    public virtual void SomeAnimationWasStarted(string nameStartedAnimation) // Когда анимация достигла целевой точки, но не конца. Для Peak такая точка может быть только одна в анимации
+    {        
+        switch (nameStartedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Animations.Walk:
+                //Debug.Log("Пик!");
+                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundWalk, gameObject, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                break;
+            case C.Animations.Attack: // по идее это та же атака, что и AttackPeaked. Просто звук именно атаки у нас начинается при достижении ею пикового значения, а отменяем прочие
+                                      // звуковые эффекты мы по её старту. Делаем это потому, что тяжело найти звуковой эффект, который бы сочетался полностью с началом анимации и действовал
+                                      // на протяжении всей её длительности. А, к чёрту, передумал - лучше бахну я тупо для анимации атаки у героя отдельное состояние, а то вся текущая
+                                      // проблема заключается в том, что у нас в одном состоянии могут быть сразу 2 анимации, оттого тяжко Герою звуки настроить
+                //Debug.Log("Пик!");
+                //AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
+                break;
+        }
+    }
     public virtual void SomeAnimationUnitWasPeaked(string namePeackedAnimation) // Когда анимация достигла целевой точки, но не конца. Для Peak такая точка может быть только одна в анимации
     {
         //Debug.Log("FAISFHJASKJHASK:FAJS:KFAK:FAS:KFASK:F"); 
@@ -597,6 +627,13 @@ public abstract class Unit : MonoBehaviour, IInventory
         {
             case C.Prefixes.Peak:
                 CastAnimationPeaked(namePeackedAnimation); // просто обёртка над сигналом, определён в Unit
+                break;
+        }
+        switch (namePeackedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Animations.AttackPeaked:
+                //Debug.Log("Пик!");
+                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundAttakPeaked, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 break;
         }
     }

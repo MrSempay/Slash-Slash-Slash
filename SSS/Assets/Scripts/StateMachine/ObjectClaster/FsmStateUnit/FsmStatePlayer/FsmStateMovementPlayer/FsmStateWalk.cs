@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static C;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
@@ -8,7 +10,6 @@ public class FsmStateWalk : FsmStateMovementPlayer
 {
     public FsmStateWalk(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
-        player.attackAreaScript.isEnemyInAttackArea += MakeDamageToEnemy;
     }
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
@@ -21,14 +22,9 @@ public class FsmStateWalk : FsmStateMovementPlayer
         HandleSwipe(player.endTouchPosition - player.startTouchPosition); // по идее любой вход в данное состояние подразумевает, что свайп был сделан в состоянии покоя и мы
                                                                           // далее работает с полями объекта, которые уже были изменены в ходе этого свайпа. Далее в FixedUpdate
                                                                           // мы мониторим факт дальнеших свайпов
-        if (player.isEnemyNear)
-        {
-            player.animator.Play("PlayerAttack");
-        }
-        else
-        {
-            player.animator.Play("PlayerWalkAggressive");
-        }
+        player.OnChangeNearEnemyStatus += CheckNearEnemyStatus;
+
+        player.animator.Play("PlayerWalkAggressive");
     }
 
     public override void Exit()
@@ -37,6 +33,9 @@ public class FsmStateWalk : FsmStateMovementPlayer
 
         UnsubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment -= SomeTranslateEquipment;
+        player.OnChangeNearEnemyStatus -= CheckNearEnemyStatus;
+
+        AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
     }
 
     public override void Update()
@@ -48,16 +47,21 @@ public class FsmStateWalk : FsmStateMovementPlayer
         //if (!player.isGrounded) fsmPlayer.SetState<FsmStateFall>();
     }
 
-    private void MakeDamageToEnemy(bool isEnemyInArea, Unit enemy)
+    private void CheckNearEnemyStatus()
     {
-        // так как урон можем наносить только во время свайпа, а иметь мгновенную скорость по оси Х также только во время свайпа, проверяем в условии скорость на неравенство нулю.
-        if (isEnemyInArea) { enemy.GetDamage(player.damage, player); }
+        if (player.isEnemyNear)
+        {
+            fsmPlayer.SetState<FsmStateWalkAndAttack>();
+        }
+        else
+        {
+            fsmPlayer.SetState<FsmStateWalk>();
+        }
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
-        player.attackAreaScript.isEnemyInAttackArea -= MakeDamageToEnemy;
 
     }
 

@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Interfaces\IReadOnlyEventBus.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustBuildingParameters.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\Utils.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk\FsmStateWalkAndAttack.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateJump.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IScreenClient.cs" />
     <Compile Include="Assets\Scripts\Equipment\Ammunition\ThirstySakura.cs" />

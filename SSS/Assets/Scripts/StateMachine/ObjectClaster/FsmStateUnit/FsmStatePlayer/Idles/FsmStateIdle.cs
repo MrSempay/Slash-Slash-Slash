@@ -38,7 +38,15 @@ public class FsmStateIdle : FsmStatePlayer
     private void SetStateWalk()
     {
         //Debug.Log("Shit ibo");
-        fsmPlayer.SetState<FsmStateWalk>();
+        if (player.isEnemyNear)
+        {
+            fsmPlayer.SetState<FsmStateWalkAndAttack>();
+
+        }
+        else
+        {
+            fsmPlayer.SetState<FsmStateWalk>();
+        }
     }
 
     public override void OnDestroy()

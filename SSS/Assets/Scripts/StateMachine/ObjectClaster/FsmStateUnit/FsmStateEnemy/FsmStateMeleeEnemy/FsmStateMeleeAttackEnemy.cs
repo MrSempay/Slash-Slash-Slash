@@ -11,7 +11,8 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     public FsmStateMeleeAttackEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
-        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += AttackUnit;
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += MakeDamageToUnit;
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += PlayMakeDamageSound;
     }
 
 
@@ -69,7 +70,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
     //    }
     //}
 
-    private void AttackUnit()
+    private void MakeDamageToUnit()
     {
         List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
                                                      //lock (_lock)
@@ -93,10 +94,16 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
         if (enemy.listOfUnitsInAttackArea.Count == 0) fsmEnemy.SetState<FsmStateWalkEnemy>();
     }
 
+    private void PlayMakeDamageSound()
+    {
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(enemy.nameSoundAttakPeaked, enemy.gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+    }
+
     public override void OnDestroy()
     {
         base.OnDestroy();
-        enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= AttackUnit;
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= MakeDamageToUnit;
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= PlayMakeDamageSound;
         //CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
         //attackUnitByTimeCoroutine = null;
     }

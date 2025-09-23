@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 9189368894907530154}
   - component: {fileID: 8343899552791607959}
   - component: {fileID: 3280507700225465049}
+  - component: {fileID: 683453677023416375}
   m_Layer: 0
   m_Name: 'Up lvl:'
   m_TagString: Untagged
@@ -294,6 +295,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!223 &683453677023416375
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621862602398679176}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 21
+  m_TargetDisplay: 0
 --- !u!1 &1507470679606963890
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +693,7 @@ GameObject:
   - component: {fileID: 7670599260679625118}
   - component: {fileID: 5161583019568945478}
   - component: {fileID: 5031300730558526447}
+  - component: {fileID: 1769899401025495384}
   m_Layer: 0
   m_Name: 'Experience:'
   m_TagString: Untagged
@@ -810,6 +835,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!223 &1769899401025495384
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200532673538363698}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 21
+  m_TargetDisplay: 0
 --- !u!1 &4405538553600016952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1463,7 @@ GameObject:
   - component: {fileID: 417355459223507763}
   - component: {fileID: 5418873125393748355}
   - component: {fileID: 6668415406354742949}
+  - component: {fileID: 2126815170460790968}
   m_Layer: 0
   m_Name: 'Level:'
   m_TagString: Untagged
@@ -1485,7 +1534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 932d1668018eadb4d87d27430fd15b42, type: 2}
   m_sharedMaterial: {fileID: -2140881220289797374, guid: 932d1668018eadb4d87d27430fd15b42, type: 2}
@@ -1556,6 +1605,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!223 &2126815170460790968
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182549297543639070}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 21
+  m_TargetDisplay: 0
 --- !u!1 &6578762412861290923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1738,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 21
   m_Sprite: {fileID: -6633740969541636305, guid: d24f63a1f05c4c3419cd1f24cc4e343e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1885,7 +1957,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 21
   m_Sprite: {fileID: -1683093579, guid: d24f63a1f05c4c3419cd1f24cc4e343e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2052,6 +2124,7 @@ GameObject:
   - component: {fileID: 5394342434820026844}
   - component: {fileID: 6138097922778250140}
   - component: {fileID: 5921168650510245652}
+  - component: {fileID: 8639173573422305776}
   m_Layer: 0
   m_Name: Money
   m_TagString: Untagged
@@ -2193,6 +2266,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!223 &8639173573422305776
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415767223687663834}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 21
+  m_TargetDisplay: 0
 --- !u!1 &7865092657412607342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,7 +2465,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 21
   m_TargetDisplay: 0
 --- !u!1 &8145680595745843220
 GameObject:
@@ -3144,6 +3240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3727670641214279077, guid: b7d63de8c54afed43bdce7ca022b9153, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 5010244753362279791, guid: b7d63de8c54afed43bdce7ca022b9153, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3814,6 +3914,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 7914432303712555651, guid: d24f63a1f05c4c3419cd1f24cc4e343e, type: 3}
+    - target: {fileID: 3727670641214279077, guid: b7d63de8c54afed43bdce7ca022b9153, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 5010244753362279791, guid: b7d63de8c54afed43bdce7ca022b9153, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

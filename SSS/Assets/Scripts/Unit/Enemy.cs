@@ -180,8 +180,8 @@ public class Enemy : Unit
 
     public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
-        base.Die(unitFromWhoWasGottenDamage);
         _fsm.SetState<FsmStateDiedEnemy>();
+        base.Die(unitFromWhoWasGottenDamage);
         //Destroy(gameObject); // Уничтожаем объект
     }
 

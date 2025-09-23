@@ -58,6 +58,7 @@ public class Player : Unit, IMainTarget
     //[SerializeField] public TextEdit texxt; //   
 
     public List<Enemy> nearEnemies = new();
+    public List<Enemy> enemiesInAttackArea = new();
     public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
     public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
     public static bool isTransitingEquipment = false; // флаг, идентифицирующий, переносим ли мы сейчас какое-либо снаряжение
@@ -76,6 +77,7 @@ public class Player : Unit, IMainTarget
     public event Action<int> OnLevelChanged;       // Событие для изменения уровня
     public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
     public event Action<bool> OnTranslateEquipment;       // когда начали или окончили двигать снаряжение из мест для снаряжения
+    public event Action OnChangeNearEnemyStatus;
     public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе  
     public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
     public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей для защиты
@@ -256,6 +258,7 @@ public class Player : Unit, IMainTarget
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
 
         nearAreaDetector.isEnemyNear += EnemyNear;
+        attackAreaScript.isEnemyInAttackArea += EnemyHasChangedStatusInAttackArea;
 
         // для простановки начального аддитивного текста в текстовых полях UI
         CurrentExperience = CurrentExperience;
@@ -277,6 +280,7 @@ public class Player : Unit, IMainTarget
         _fsm.AddState(new FsmStateDied(_fsm, gameObject));
         _fsm.AddState(new FsmStateCastUnit(_fsm, gameObject));
         _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
+        _fsm.AddState(new FsmStateWalkAndAttack(_fsm, gameObject));
 
 
     }
@@ -299,6 +303,7 @@ public class Player : Unit, IMainTarget
     {
         //Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
+        //Debug.Log(enemiesInAttackArea.Count);
     }
 
     public void OnMove()
@@ -315,6 +320,24 @@ public class Player : Unit, IMainTarget
                 YandexMobileAdsInterstitialDemoScript.Instance.ShowInterstitial();
                 break;
         }
+    }
+    public override void SomeAnimationUnitWasPeaked(string nameFinishedAnimation) 
+    {
+        switch (nameFinishedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        {
+            case C.Animations.AttackPeaked:    // 22.09.2025 - эта штука вроде как не вызывается, изменили апогей для всех анимаций атак на AttckPeaked - при этом сами анимации всё ещё имеют
+                                               // уникальные названия. 22.09.2025 - уже вызывается. Для игрока, если есть враги в зоне атаки, воспроизводится особый звук удара. 22.09 - не...
+                if (enemiesInAttackArea.Count > 0)
+                {
+                    //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject); // Передаумали по причине: у нас апогей анимации атаки
+                                                                // может не совпадать со временем вхождения врага в зону атаки ибо, например, анимация могла начаться чуть-чуть раньше
+                                                                // (напомню, что у нас анимация атаки начинается если в довольно большой зоне около нас есть враги). Теперь врубаем звук просто
+                                                                // при заходе врага в зону атаки, если у нас скорость > 0. Либо можно уменьшить зону для активации атаки от близости врагов
+                    return;
+                }
+                break;
+        }
+        base.SomeAnimationUnitWasPeaked(nameFinishedAnimation); // есть варианты, когда мы вызываем звук отсюда и не идём к базовым звукам в родительском классе
     }
 
     private void FixedUpdate()
@@ -334,8 +357,34 @@ public class Player : Unit, IMainTarget
 
     protected override void SomeUnitWasDestroyed(Unit unit)
     {
+        //Debug.Log(unit.gameObject.GetInstanceID());
+        //Debug.Log(" xnj pf ебанина?");
+        //Debug.Log(enemiesInAttackArea.Count);
+        foreach (Enemy item in enemiesInAttackArea)
+        {
+            //Debug.Log(item.gameObject.GetInstanceID());
+        }
         Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
 
+        if (enemiesInAttackArea.Contains(enemyUnit))
+        {
+            //Debug.Log("И, нахуй?");
+            enemiesInAttackArea.Remove(enemyUnit);
+        }
+        if (nearEnemies.Contains(enemyUnit))
+        {
+            //Debug.Log("И, нахуй?");
+            nearEnemies.Remove(enemyUnit);
+        }
+
+        if (nearEnemies.Count == 0)
+        {
+            isEnemyNear = false;
+            if (_fsm.StateCurrent.GetType() == typeof(FsmStateWalk))
+            {
+                animator.Play("PlayerWalkAggressive");
+            }
+        }
         EventBus.Instance.EnemyWasKilledByPlayer(enemyUnit);
 
         _amountEnemiesWasKilledInCombo++;
@@ -510,26 +559,41 @@ public class Player : Unit, IMainTarget
 
     private void EnemyNear(bool isNear, Enemy enemy)
     {
+        bool previousNearEnemyState = isEnemyNear;
+
         if (isNear)
         {
             nearEnemies.Add(enemy);
             isEnemyNear = true;
-            if (_fsm.StateCurrent.GetType() == typeof(FsmStateWalk))
-            {
-                animator.Play("PlayerAttack");
-            }
         }
         else
         {
-            nearEnemies.Remove(enemy);
+            if (nearEnemies.Contains(enemy))
+            {
+                nearEnemies.Remove(enemy);
+            }
+
             if (nearEnemies.Count == 0)
             {
                 isEnemyNear = false;
-                if (_fsm.StateCurrent.GetType() == typeof(FsmStateWalk))
-                {
-                    animator.Play("PlayerWalkAggressive");
-                }
             }
+        }
+
+        if (isEnemyNear != previousNearEnemyState)
+        {
+            OnChangeNearEnemyStatus?.Invoke();
+        }
+    }
+
+    private void EnemyHasChangedStatusInAttackArea(bool isInAttackArea, Enemy enemy)
+    {
+        if (isInAttackArea)
+        {
+            enemiesInAttackArea.Add(enemy);
+        }
+        else
+        {             
+            enemiesInAttackArea.Remove(enemy); // ну ей богу, не надо тут проверки на Contains, ну пожалуйста, ну как врага не могло быть в зоне, если он только что вышел из неё
         }
     }
 
@@ -554,7 +618,10 @@ public class Player : Unit, IMainTarget
     {
         //Debug.Log("Ебля блядоносная");
         base.OnDestroy();
+
         nearAreaDetector.isEnemyNear -= EnemyNear;
+        attackAreaScript.isEnemyInAttackArea -= EnemyHasChangedStatusInAttackArea;
+
         CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _recoverStaminaPointCoroutine);
     }
 

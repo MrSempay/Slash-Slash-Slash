@@ -157,9 +157,12 @@ public class GameManager : MonoBehaviour
                 volumeEffects = value;
                 AudioManager.Instance.audioEffectsComponent.volume = value;
 
-                foreach (AudioSource audioSoundComponent in AudioManager.Instance.dictionaryObjectsAndTheirAudioSources.Values)
+                foreach (var objAudioSourcesCluster in AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes.Values)
                 {
-                    audioSoundComponent.volume = value;
+                    foreach (AudioSource audioSource in objAudioSourcesCluster.Values)
+                    {
+                        audioSource.volume = value;                        
+                    }
                 }
             }
         }
@@ -298,7 +301,7 @@ public class GameManager : MonoBehaviour
         SaveLoadManager.Instance.LoadSettingsFromFile();
         SaveLoadManager.Instance.LoadGeneralLocalDataFromFile();
         SaveLoadManager.Instance.ImplementStoredGeneralData(); 
-        MainMenu.instance.availableLevelSet.UpdateLevelSet();
+        MainMenu.instance?.availableLevelSet?.UpdateLevelSet();
         AudioManager.Instance.Initialize();
 
     }

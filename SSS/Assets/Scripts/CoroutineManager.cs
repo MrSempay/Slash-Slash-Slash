@@ -11,8 +11,8 @@ public class CoroutineManager : MonoBehaviour
     {
         get
         {
-            Debug.Log("CoroutineManager created! Stack: " + Environment.StackTrace);
-            Debug.Log(_instance);
+            //Debug.Log("CoroutineManager created! Stack: " + Environment.StackTrace);
+            //Debug.Log(_instance);
             
             if (_instance == null)
             {

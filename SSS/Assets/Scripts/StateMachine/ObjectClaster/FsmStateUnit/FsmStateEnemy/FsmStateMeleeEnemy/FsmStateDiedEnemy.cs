@@ -16,10 +16,17 @@ public class FsmStateDiedEnemy : FsmStateEnemy
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Died state [ENTER]");
+
         enemy.animator.Play("EnemyDied");
-        enemy.isAlive = false;
+        //enemy.isAlive = false; // устанавливаем в методе Die у Unit
         enemy.areUpdatingFunctionsEnabled = false;
         enemy.StopAllCoroutines();
+
+        enemy.gameObject.tag = C.Tags.EnemyDied;
+        enemy.fuck.gameObject.tag = C.Tags.EnemyDied;
+
+        Debug.Log("Проверяем ебучий тэг в смерти " + enemy.fuck.gameObject.tag);
+
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
 
         GameManager.DestroyObject(enemy.temporaryTargetForRazbrestis);
