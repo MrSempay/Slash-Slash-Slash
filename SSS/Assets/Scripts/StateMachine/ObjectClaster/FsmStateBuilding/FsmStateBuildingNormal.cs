@@ -9,13 +9,14 @@ public class FsmStateBuildingNormal : FsmStateBuilding
 
     public FsmStateBuildingNormal(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(building.rectTransformEquipmentPlaces));
     }
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("BuildingNormal state [ENTER]");
+
         building.selfCollider.enabled = true;
+        _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(building.rectTransformEquipmentPlaces));
     }
 
     public override void Exit()

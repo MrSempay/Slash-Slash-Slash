@@ -73,7 +73,8 @@ public class Door : Unit
         _fsm.AddState(new FsmStateDoorOpened(_fsm, gameObject));
         _fsm.AddState(new FsmStateDoorDestroyed(_fsm, gameObject));
 
-        _fsm.SetState<FsmStateDoorClosed>();
+        _fsm.SetState<FsmStateDoorClosed>(new Dictionary<string, object>()); // передаём пустой словарь просто для маркировки входа в первое состояние для двери, чтоб звук не проигрывался
+                                                                             // при входе в состояние таким путём
     }
 
     private void SetActiveEnterButton(bool wasPlayerEntered, float positionXOfPlayer)

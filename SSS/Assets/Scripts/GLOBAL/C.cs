@@ -149,12 +149,13 @@ public class C
         public const string orientationHorizontal = "Horizontal";
         public const string orientationVertical = "Vertical";
     }
-
     public static class NameScene
     {
         public const string SceneDialogue = "SceneDialogue";
         public const string Level1 = "Level1";
         public const string Level2 = "Level2";
+        public const string Level3 = "Level3";
+        public const string Level4 = "Level4";
         public const string Level5 = "Level5";
         public const string SampleScene = "SampleScene";
         public const string MainMenu = "MainMenu";
@@ -298,6 +299,15 @@ public class C
         public const string PlayerAttackPeak = "PlayerAttackPeak";
         public const string PlayerAttackPeakHitEnemies = "PlayerAttackPeakHitEnemies";
         public const string PlayerWalk = "PlayerWalk";
+        public const string EquipmentHasChangedPlace = "EquipmentHasChangedPlace";
+        public const string ProtectiveShieldActivation = "ProtectiveShieldActivation";
+        public const string BerserkerCast = "BerserkerCast";
+        public const string ShieldWasHit = "ShieldWasHit";
+        public const string Buy = "Buy";
+        public const string Teach = "Teach";
+        public const string DoorOpening = "DoorOpening";
+        public const string DoorClosing = "DoorClosing";
+        public const string BuildingCrush = "BuildingCrush";
 
     }
     public static class Tags

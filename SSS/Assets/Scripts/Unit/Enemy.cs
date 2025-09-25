@@ -42,6 +42,7 @@ public class Enemy : Unit
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
     public List<Unit> listOfUnitsInAttackArea = new List<Unit>();
     public bool isInRazbrestisState = false; // изменять ТОЛЬКО В FsmStateEnemy !!!
+    public string TEST_Current_State; // изменять ТОЛЬКО В FsmStateEnemy !!!
 
 
 

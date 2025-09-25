@@ -76,20 +76,25 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     //Debug.Log("Что за пиздец");
                     if (equipment.WasSold == false)
                     {
+                        Debug.Log(equipment.WasSold);
                         if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(player, equipment)) // спелы стоят 0 злата, так что по идее на них всегда будет хватать
                         {
                             if (equipment.isEquipmentASpell) // если то, что мы продаём - спел
                             {
                                 if (equipment.BuildingWhereEquipmentIs.HasAccessToUpLevelInSchool(player))
                                 {
-                                    equipment.BuildingWhereEquipmentIs.Sell(player, equipment);
-                                    equipment.BuildingWhereEquipmentIs.TeachByUpLevel(player, equipment);
+                                    School school = (School)equipment.BuildingWhereEquipmentIs;
+                                    school.TeachByUpLevel(player, equipment);
                                 }
                                 else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                             }
                             else equipment.BuildingWhereEquipmentIs.Sell(player, equipment); // если то, что мы продаём - не спел (аммуниция)
                         }
                         else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
+                    }
+                    else
+                    {
+                        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.EquipmentHasChangedPlace, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                     }
                     Debug.Log(equipment);
                     Debug.Log(rectTransformPlace);
@@ -105,19 +110,31 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     //Debug.Log(isAtPlaceEquipment.name);
                     //Debug.Log(isAtPlaceEquipment.equipmentName);
                     if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
-                    { 
+                    {
                         Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
                         isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                         isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
-                        isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
+                        //isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
                         isAtPlaceEquipment.startLocalPosition = equipment.startLocalPosition;
                         isAtPlaceEquipment.transform.localPosition = equipment.startLocalPosition;
-                        isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;  
-                                                                                                                                                       // другое снаряжения в его скрипте
+                        isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;
+                        // другое снаряжения в его скрипте
 
                     }
+
+                    PlaceForEquipment scriptPlaceForEquipmentCurrent = equipment.scriptPlaceForEquipment;
+                    RectTransform rcPlaceForEquipmentCurrent = equipment.rectTransformTargetEquipmentPanelPlayer;
+
                     equipment.SetEquipmentToPlaceIfNotNull(rectTransformPlace); // устанавливаем снаряжение на это место либо вернёт false если null и ничего не сделает
                     equipment.transformCurrentEquipmentPlace = rectTransformPlace; // устанавливаем текущую позицию для снаряжения в виде целевой, на которую снаряжение только что переместили
+                    if (isAtPlaceEquipment)
+                    {
+                        isAtPlaceEquipment.scriptPlaceForEquipment = scriptPlaceForEquipmentCurrent;
+                        isAtPlaceEquipment.rectTransformTargetEquipmentPanelPlayer = rcPlaceForEquipmentCurrent;
+                        isAtPlaceEquipment.scriptPlaceForEquipment.Equipment = isAtPlaceEquipment;
+                    }
+
+
                     //fsm.SetState<FsmStateEquipmentAtPlayer>();
                     CoroutineManager.Instance.StartManagedCoroutine(gameObject, DelayBeforeSetStateAtPlayer());
                     return;
@@ -148,17 +165,18 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
                         // НУЖНО ДЛЯ ДЕТЕКЦИИ, НА ПРОДАЖУ ЛИ ДАННЫЙ ЭКЗЕМПЛЯР СНАРЯЖЕНИЯ. Если нет (уже было продано), то ничего не делаем, если да, то проверяем, хватает ли денег, если нет, возвращае
                         // в состояние FsmStateEquipmentInsideShop
-
+                        //Debug.Log("Что за пиздец");
                         if (equipment.WasSold == false)
                         {
+                            Debug.Log(equipment.WasSold);
                             if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(player, equipment)) // спелы стоят 0 злата, так что по идее на них всегда будет хватать
                             {
                                 if (equipment.isEquipmentASpell) // если то, что мы продаём - спел
                                 {
                                     if (equipment.BuildingWhereEquipmentIs.HasAccessToUpLevelInSchool(player))
                                     {
-                                        equipment.BuildingWhereEquipmentIs.Sell(player, equipment);
-                                        equipment.BuildingWhereEquipmentIs.TeachByUpLevel(player, equipment);
+                                        School school = (School)equipment.BuildingWhereEquipmentIs;
+                                        school.TeachByUpLevel(player, equipment);
                                     }
                                     else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                                 }
@@ -166,23 +184,49 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                             }
                             else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                         }
-                        equipment.SetEquipmentToPlaceIfNotNull(rectTransformPlace); // устанавливаем снаряжение на это место либо вернёт false если null и ничего не сделает
+                        else
+                        {
+                            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.EquipmentHasChangedPlace, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+                        }
+                        Debug.Log(equipment);
+                        Debug.Log(rectTransformPlace);
 
                         // НУЖНО ДЛЯ ОБМЕНА МЕСТАМИ СНАРЯЖЕНИЯ В ЗДАНИИ И У ИГРОКА. Получаем ссылку на снаряжение, которое находится в интересующем нас месте у игрока либо null
                         equipment.selfCollider.enabled = false;
-                        Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                        //Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                        Equipment isAtPlaceEquipment = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment;
+
+                        //Debug.Log("Ставим!");
+                        //Debug.Log(rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>());
+                        //Debug.Log(isAtPlaceEquipment);
+                        //Debug.Log(isAtPlaceEquipment.name);
+                        //Debug.Log(isAtPlaceEquipment.equipmentName);
                         if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
                         {
+                            Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
                             isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                             isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
-                            isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
+                            //isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
                             isAtPlaceEquipment.startLocalPosition = equipment.startLocalPosition;
                             isAtPlaceEquipment.transform.localPosition = equipment.startLocalPosition;
                             isAtPlaceEquipment.BuildingWhereEquipmentIs = equipment.BuildingWhereEquipmentIs;
                             // другое снаряжения в его скрипте
 
                         }
+
+                        PlaceForEquipment scriptPlaceForEquipmentCurrent = equipment.scriptPlaceForEquipment;
+                        RectTransform rcPlaceForEquipmentCurrent = equipment.rectTransformTargetEquipmentPanelPlayer;
+
+                        equipment.SetEquipmentToPlaceIfNotNull(rectTransformPlace); // устанавливаем снаряжение на это место либо вернёт false если null и ничего не сделает
                         equipment.transformCurrentEquipmentPlace = rectTransformPlace; // устанавливаем текущую позицию для снаряжения в виде целевой, на которую снаряжение только что переместили
+                        if (isAtPlaceEquipment)
+                        {
+                            isAtPlaceEquipment.scriptPlaceForEquipment = scriptPlaceForEquipmentCurrent;
+                            isAtPlaceEquipment.rectTransformTargetEquipmentPanelPlayer = rcPlaceForEquipmentCurrent;
+                            isAtPlaceEquipment.scriptPlaceForEquipment.Equipment = isAtPlaceEquipment;
+                        }
+
+
                         //fsm.SetState<FsmStateEquipmentAtPlayer>();
                         CoroutineManager.Instance.StartManagedCoroutine(gameObject, DelayBeforeSetStateAtPlayer());
                         return;
@@ -196,6 +240,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     CoroutineManager.Instance.StartManagedCoroutine(gameObject, DelayBeforeSetStateAtPlayer());
                 }
                 else fsm.SetState<FsmStateEquipmentInsideShop>();
+                return;
             }
 
         }

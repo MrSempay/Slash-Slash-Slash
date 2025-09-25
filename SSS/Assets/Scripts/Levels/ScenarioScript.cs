@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using static DialogueParser;
 using System.Threading.Tasks;
+using System.Threading;
 
 public class ScenarioScript : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class ScenarioScript : MonoBehaviour
     private Coroutine _moveObjectCoroutine;
     private Coroutine _justTimeWaitCoroutine;
     private Vector3 _velocity = Vector3.zero; // Текущая скорость
+    private CancellationTokenSource _cts;
 
     protected LevelBuilder levelBuildScript;
 
@@ -66,6 +68,9 @@ public class ScenarioScript : MonoBehaviour
         scriptPlayer.OnEnemiesWaveWasDestroyed += EnemiesWaveWasDestroyed;
 
         timeWhenSceneStarted = Time.time;
+
+        _cts = new CancellationTokenSource();
+
 
     }
 
@@ -121,7 +126,6 @@ public class ScenarioScript : MonoBehaviour
         // ассортимента мы до того, как удалили предыдущую партию, эмулируем данный сигнал, передавая в него null, что является флагом того, что нам нужно отписаться от событий
         // снаряжения из предыдущей партии (снаряжение из предыдущей партии хранится в переменной _equipmentInBuildingFromLastIteration, которая при каждой эмуляции сигнала 
         // с параметром equipmentInBuilding не равным нулю перезаписывается на, собственно, значение параметра equipmentInBuilding)
-
         if (equipmentInBuilding == null)
         {
             if (_buildingAndEquipmentInBuildingFromLastIteration.ContainsKey(building))
@@ -137,11 +141,10 @@ public class ScenarioScript : MonoBehaviour
             return;
         }
         //Debug.Log(equipmentInBuilding.Count);
-
         foreach (Equipment equipment in equipmentInBuilding)
         {
             equipment.onEquipmentWasSold += EquipmentWasSold;
-            //Debug.Log(equipment);
+            Debug.Log(equipment);
         }
         _buildingAndEquipmentInBuildingFromLastIteration[building] = new List<Equipment>(equipmentInBuilding);
         
@@ -173,10 +176,22 @@ public class ScenarioScript : MonoBehaviour
         {
             GameManager.Instance.MaxReachedLevel = GameManager.Instance.currentLevelInOrder + 1;
         }
-        PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-        await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
-        await Task.Delay(2000); // К сожалению лидерборд не обновляется синхронно с обновлением статистик. Нужна задержка в несколько секунд. Константа 2000 была подобрана произвольно
-        ScoreManager.Instance.ShowActualLeaderboard();
+        try
+        {
+            var token = _cts.Token;
+
+            PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
+            await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
+            token.ThrowIfCancellationRequested();
+            await Task.Delay(2000); // К сожалению лидерборд не обновляется синхронно с обновлением статистик. Нужна задержка в несколько секунд. Константа 2000 была подобрана произвольно
+            token.ThrowIfCancellationRequested();
+            ScoreManager.Instance.ShowActualLeaderboard(); // хотя тут защиту мы, вроде, предусмотрели, сюда код лучше не пускать даже
+
+        }
+        catch (OperationCanceledException)
+        {
+            // Корректная отмена - игнорируем
+        }
     }
 
     protected virtual GameObject SpawnObjectAtTargetPosition(GameObject someObject, Vector3 targetPosition) // может стоить для каких-нибудь объектов добавить функцию, чтоб вызывать при таком спавне
@@ -264,6 +279,9 @@ public class ScenarioScript : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
+        _cts?.Cancel();
+        _cts?.Dispose();
+
         if (_moveCameraCoroutine != null)
         {
             CoroutineManager.Instance?.StopManagedCoroutine(this.gameObject, _moveCameraCoroutine);

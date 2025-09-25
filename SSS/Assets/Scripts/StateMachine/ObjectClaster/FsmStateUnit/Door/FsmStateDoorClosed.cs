@@ -11,8 +11,18 @@ public class FsmStateDoorClosed : FsmStateDoor
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Closed state [ENTER]");
+
         door.selfCollider.enabled = true;
         door.selfSprite.sprite = door.spriteDoorClosed;
+
+        if (initialConditionsEntering == null) // игнорируем звук при спавне двери
+        {
+            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.DoorClosing,
+                                                                    gameObject,
+                                                                    AudioManager.TYPE_SOUND.Default,
+                                                                    AudioManager.TYPE_AUDIO_SOURCE._3DStandard,
+                                                                    new List<AudioManager.TYPE_SOUND> { AudioManager.TYPE_SOUND.Default });
+        }
 
     }
 

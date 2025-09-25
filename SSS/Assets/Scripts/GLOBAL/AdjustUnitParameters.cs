@@ -37,7 +37,7 @@ public static class AdjustUnitParameters
                 },
                 { C.DK.damage, 10 },
                 { C.DK.CountAccessToUpInSchool, 12210 },
-                { C.DK.CurrentMoney, 150 }
+                { C.DK.CurrentMoney, 15000 }
             }
         },
         {

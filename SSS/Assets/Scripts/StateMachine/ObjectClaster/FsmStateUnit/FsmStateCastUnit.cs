@@ -48,6 +48,11 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
                 wasCastAnimationFinished = true;
                 unit._fsm.SetStateIdle(equipmentWhatWasPressed.ownerUnit);
             }
+
+            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast,
+                                                                    equipmentWhatWasPressed.gameObject,
+                                                                    AudioManager.TYPE_SOUND.Default,
+                                                                    AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
         }
         else
         {

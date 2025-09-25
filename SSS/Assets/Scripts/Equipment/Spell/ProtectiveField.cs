@@ -53,6 +53,8 @@ public class ProtectiveField : Spell
             _scriptProtectiveFieldSprite = GameManager.Instance.InvokeAppearingSprite(equipmentName + C.Prefixes.Appear, _transformParentProtectiveField, -1f, true);
             _scriptProtectiveFieldSprite.OnSomeAnimationWasFninished += SomeAnimationOfProtectiveFieldWasFinished;
             _scriptProtectiveFieldSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
+
+            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.ProtectiveShieldActivation, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
             //Debug.Log("Ебануться нахуй");
 
         }
@@ -106,6 +108,9 @@ public class ProtectiveField : Spell
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
             _ownerProtectiveField.isInvicible = false;
         }
+
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.ShieldWasHit, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        
     }
 
 
@@ -133,6 +138,7 @@ public class ProtectiveField : Spell
                 _scriptProtectiveFieldSprite.animator.Play(equipmentName + C.Prefixes.Idle);
 
                 StartTimerActiveState(_ownerProtectiveField);
+
                 break;
         }
     }

@@ -13,6 +13,7 @@ public class FsmStateIdleEnemy : FsmStateEnemy
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Idle Enemy state [ENTER]");
+        enemy.TEST_Current_State = "Idle";
         enemy.animator.Play("EnemyIdle");
         enemy.rb.linearVelocityX = 0;
     }

@@ -54,6 +54,8 @@ public class Level1Scenario : ScenarioScript
     protected override void Start()
     {
         base.Start();
+
+        GameManager.Instance.StartDialogue("Level1/Dialogue1");
     }
 
     /* ############################# акнй тсмйжхи-яхцмюкнб, хмтнплхпсчыху н рнл, врн ячфер дбхферяъ рюй хкх хмюве ############################# */

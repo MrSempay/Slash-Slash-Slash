@@ -11,8 +11,18 @@ public class FsmStateDoorOpened : FsmStateDoor
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Opened door state [ENTER]");
+
         door.selfCollider.enabled = false;
         door.selfSprite.sprite = door.spriteDoorOpened;
+
+        if (initialConditionsEntering == null)
+        {
+            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.DoorOpening,
+                                                                    gameObject,
+                                                                    AudioManager.TYPE_SOUND.Default,
+                                                                    AudioManager.TYPE_AUDIO_SOURCE._3DStandard,
+                                                                    new List<AudioManager.TYPE_SOUND> { AudioManager.TYPE_SOUND.Default });
+        }
 
 
     }
