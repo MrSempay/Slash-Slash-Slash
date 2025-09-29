@@ -255,11 +255,11 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 10f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 10f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f } }, false);
         }
 
     }
@@ -267,11 +267,11 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 100f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 100f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 100f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 100f } }, false);
         }
 
     }
@@ -279,16 +279,18 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 1000f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1000f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { "damage", 1000f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1000f } }, false);
         }
 
     }
 
 #endregion
+
+
 
     public Dictionary<STYLE_RANK, RankProperties> rankProperties = new Dictionary<STYLE_RANK, RankProperties> { };
 
