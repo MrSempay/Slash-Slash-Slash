@@ -251,15 +251,35 @@ public class ScoreManager : MonoBehaviour
 
 #region SomeRankWasReached
 
+    public void Rank—Reached(bool isApplying)
+    {
+        if (isApplying)
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f }, 
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f }, 
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, true);
+        }
+        else
+        {
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, false);
+        }
+
+    }
     public void RankBReached(bool isApplying)
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f }, 
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f }, 
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, false);
         }
 
     }
