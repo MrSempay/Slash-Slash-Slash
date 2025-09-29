@@ -187,7 +187,7 @@ public class C
         public const string ShowInfoButton = "Images/UI/Buttons/ShowInfo";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
+        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayer";
         public const string PrefubAppearingSprite = "Prefubs/UI/AppearingSprite";
         public const string PrefubTextButtonBigScaled = "Prefubs/UI/TextButtonBigScaled";
         public const string PrefubTextButton = "Prefubs/UI/TextButton";

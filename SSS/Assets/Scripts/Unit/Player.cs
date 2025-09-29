@@ -45,6 +45,7 @@ public class Player : Unit, IMainTarget
     [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
     [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
 
+    public RectTransform placementLeaderbaord;
     public RectTransform buttonShowLeaderboardPlacement;
     public RectTransform rectTransformPlaceCustomCombos;
     public InterstitialAds interstitialAds;
@@ -54,6 +55,7 @@ public class Player : Unit, IMainTarget
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform UI; //
     public RankStyle rankStyle; //
+    public bool UIUpscaledMod = false;
     //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
 
@@ -261,12 +263,6 @@ public class Player : Unit, IMainTarget
         attackAreaScript.isEnemyInAttackArea += EnemyHasChangedStatusInAttackArea;
 
         // для простановки начального аддитивного текста в текстовых полях UI
-        CurrentExperience = CurrentExperience;
-        CurrentKillCombo = CurrentKillCombo;
-        CurrentLevel = CurrentLevel;
-        CurrentMoney = CurrentMoney;
-        CountAccessToUpInSchool = CountAccessToUpInSchool;
-
 
 
         localPositionCamera = _mainCameraTransform.localPosition;
@@ -282,7 +278,11 @@ public class Player : Unit, IMainTarget
         _fsm.AddState(new FsmStateTranslatingEquipment(_fsm, gameObject));
         _fsm.AddState(new FsmStateWalkAndAttack(_fsm, gameObject));
 
-
+        CurrentExperience = CurrentExperience;
+        CurrentKillCombo = CurrentKillCombo;
+        CurrentLevel = CurrentLevel;
+        CurrentMoney = CurrentMoney;
+        CountAccessToUpInSchool = CountAccessToUpInSchool;
     }
     protected override void Start()
     {
@@ -296,6 +296,12 @@ public class Player : Unit, IMainTarget
         SetLikeAMainTarget(); 
 
         _fsm.SetState<FsmStateIdle>();
+
+        CurrentExperience = CurrentExperience;
+        CurrentKillCombo = CurrentKillCombo;
+        CurrentLevel = CurrentLevel;
+        CurrentMoney = CurrentMoney;
+        CountAccessToUpInSchool = CountAccessToUpInSchool;
     }
 
 

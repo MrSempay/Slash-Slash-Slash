@@ -298,6 +298,7 @@
     <Compile Include="Assets\Scripts\Test\BaseEvent.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\AdSizeUtils.cs" />
     <Compile Include="Assets\YandexMobileAds\InterstitialAdLoader.cs" />
+    <Compile Include="Assets\Scripts\Decor\TorchFlicker.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\AdsInitializer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorOpened.cs" />
     <Compile Include="Assets\Scripts\Equipment\Ammunition\Tragicomedy.cs" />

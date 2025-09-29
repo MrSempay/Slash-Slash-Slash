@@ -27,8 +27,8 @@ public class ScenarioScript : MonoBehaviour
     [NonSerialized] public static float timeWhenSceneStarted;
     [NonSerialized] public static ScenarioScript instance;
     [NonSerialized] public Dictionary<string, int> dictionaryNamesEnemiesWavesAndRewards; // инициализируем в производных классах
-
     public GameObject player;
+
     //public Transform transformDialogueAreas;
 
     public PlayerDialogue ScriptCurrentDialogue
@@ -57,6 +57,8 @@ public class ScenarioScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        //player = Player.instance.gameObject;
 
         transformPlayer = player.GetComponent<Transform>();
         scriptPlayer = player.GetComponent<Player>();

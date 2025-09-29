@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
 
     private string _nameCurrentScene;
     private string _nameTargetScene;
-    private string _pathToFolderWithPrefubs = C.Paths.PrefubDialogueWindowForPlayer;
     private GameObject _prefubPlayerDialogue;
     private LiftGammaGain _liftGammaGain;
 
@@ -273,7 +272,7 @@ public class GameManager : MonoBehaviour
         prefubTextButtonPanelChoose = Resources.Load<GameObject>(C.Paths.PrefubTextButtonPanelChoose);
         prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
-        _prefubPlayerDialogue = Resources.Load<GameObject>(_pathToFolderWithPrefubs);
+        _prefubPlayerDialogue = Resources.Load<GameObject>(C.Paths.PrefubDialogueWindowForPlayer);
 
         globalFont = Resources.Load<TMP_FontAsset>(C.Paths.FontMonocraft);
 
@@ -354,8 +353,18 @@ public class GameManager : MonoBehaviour
 
         RectTransform rectTransformPositionDialogue = GameObject.Find("PositionForDialogueWindow").GetComponent<RectTransform>();
         RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
-        //Debug.Log(_prefubPlayerDialogue);
-        PlayerDialogue sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
+        PlayerDialogue sciptPlayerDialogue;
+        if (Player.instance.UIUpscaledMod)
+        {
+            sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue,
+                                              rectTransformPositionDialogue.position,
+                                              rectTransformPositionDialogue.rotation,
+                                              rectTransformPositionDialogue).GetComponent<PlayerDialogue>();
+        }
+        else
+        {
+            sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
+        }
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
     }
 

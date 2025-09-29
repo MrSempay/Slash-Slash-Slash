@@ -505,7 +505,14 @@ public class ScoreManager : MonoBehaviour
     {
         await PlayFabManager.Instance.GetScoreLeaderboarderAsync(); // òàì èíôîğìàöèÿ î òåêóùåì ëèäåğáîğäå çàïèøåòñÿ â ïåğåìåííóş îáúåêòà PlayFabManager.Instance. Îáúåêò Leaderboard áóäåò
                                                                     // ïğÿìî íà íå¸ ññûëàòüñÿ
-        Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); 
+        if (Player.instance.UIUpscaledMod)
+        {
+            Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.placementLeaderbaord); 
+        }
+        else
+        {            
+            Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); 
+        }
 
         //                           ÂÂÂÂÂÂÂÂÂÂÍÍÍÍÍÍÍÍÍÈÈÈÈÈÈÈÈÈÈÈÌÌÌÌÌÌÌÌÌÌÀÀÀÀÀÀÀÀÀÀÍÍÍÍÍÍÍÍÍÍÍÈÈÈÈÈÈÈÈÈÈÈÈÈÈÅÅÅÅÅÅÅÅÅÅÅÅ!!!!!!!!!!!! !!!!!!!!!!!!!
         // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); ÇÀÄÀ¨Ò ÃËÎÁÀËÜÍÓŞ ÏÎÇÈÖÈŞ ÄËß ÎÁÚÅÊÒÀ. ÒÎ ÅÑÒÜ ×ÒÎÁ ÎÍ ÇÀÑÏÀÂÍÈËÑß Â ÍÓËÅÂÎÉ ÒÎ×ÊÅ

@@ -43,11 +43,11 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!AwakeWasCalledAlready)
         {
-            //Debug.Log(GetInstanceID());
+            Debug.Log(GetInstanceID());
             //Debug.Log(AwakeWasCalledAlready);
             if (_instance != null && _instance != this)
             {
-                //Debug.Log("Чё за нах?"); 
+                Debug.Log("Чё за нах?"); 
                 Destroy(gameObject);
                 return;
             }
@@ -216,6 +216,8 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     }
     private void OnDestroy()
     {
+
+        Debug.Log("Что за нахер ебунячий");
         SaveCurrentSettings();
 
         EventBus.Instance.ToggleSonicOfSettingsMenuWasToggled.RemoveListener(ButtonSonicOfSettingsMenuToggled);

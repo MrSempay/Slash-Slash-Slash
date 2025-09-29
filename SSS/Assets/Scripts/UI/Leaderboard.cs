@@ -23,7 +23,7 @@ public class Leaderboard : MonoBehaviour
     private void Awake()
     {
         _prefubField = ScoreManager.prefubFieldLeaderboard; // не очень, конечно, безопасно, но едва ли лидерборд будет спавниться до ScoreManager
-        Debug.Log(GetInstanceID());
+        //Debug.Log(GetInstanceID());
         UpdateLeaderboard();
 
         _buttonShowLeaderboard = GameManager.Instance.InstanceTextButton(false, Player.instance.buttonShowLeaderboardPlacement, C.Just.ShowLeaderboard, ShowLeaderboardButtonClick);
