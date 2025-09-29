@@ -29,7 +29,7 @@ public class ScoreManager : MonoBehaviour
     public enum STYLE_RANK { D, C, B, A, S}
     public enum TYPE_APPEARING_MESSAGE { ComboAdded, SkillUsed, ComboMultyKill, RankImproved, SkillCombo, MasterOfSkills }
 
-    public int styleMultiplier; // коэффициент усиления получения ресурсов от текущего ранга
+    public float styleMultiplier; // коэффициент усиления получения ресурсов от текущего ранга
     public float timeZeroizeKillComboTicks = 5; // время для сбрасывания текущего комбо за убийства. Начальное время при загрузке сцены
     public float minTimeZeroizeKillComboTicks = 1; // минимальное время для сбрасывания комбо за убийство (меньше нельзя)
     public float secondsAdditionalForZeroizeKillComboTicksByTimer = -1; // количество секунд прибавляемых ко времени сбрасывания комбо за убийства по срабатыванию таймера
@@ -243,7 +243,7 @@ public class ScoreManager : MonoBehaviour
     {
         public int min;
         public int max;
-        public int styleMultiplier;
+        public float styleMultiplier;
         public Action<bool> functionRank; // это ссылка на лямбда-функцию, в которой будем получать ссылку на фунцию объекта ScoreManager.Instance. Хотя можно было бы просто получать ссылки
                                         // на статические методы класса ScoreManager без лямбда функции. 
 

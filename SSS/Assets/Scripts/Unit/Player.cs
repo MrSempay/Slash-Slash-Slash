@@ -436,7 +436,7 @@ public class Player : Unit, IMainTarget
     {
         CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
         CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
-        ScoreManager.Instance.CurrentScore += score * ScoreManager.Instance.styleMultiplier;
+        ScoreManager.Instance.CurrentScore += score * (int)ScoreManager.Instance.styleMultiplier;
         ScoreManager.Instance.UpCombo(comboFromKill); // по сути набитие комбо на враге не учитывает убийство текущего врага: опыт, злато и очки не скалятся от повышения ранга
     }
 

@@ -88,12 +88,14 @@ public class UIPlayerManager : UIController
 
     private void ChangeMoneyTextUI(float money)
     {
-        currentMoneyUI.SetNotLocalizableText(money.ToString());
+        int moneyLocal = (int)money;
+        currentMoneyUI.SetNotLocalizableText(moneyLocal.ToString());
     }
 
     private void ChangeExperienceTextUI(float experience)
     {
-        currentExperienceUI.SetNotLocalizableText(experience.ToString() + "/" + player.experienceToNextLevel.ToString());
+        int experienceLocal = (int)experience;
+        currentExperienceUI.SetNotLocalizableText(experienceLocal.ToString() + "/" + player.experienceToNextLevel.ToString());
     }
     
     private void ChangeComboTextUI(int combo)

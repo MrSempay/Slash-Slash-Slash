@@ -23,10 +23,10 @@ public class AdjustScoreManagerParameters
         { "timeCallDownMasterOfSkills", 10f },  // время КД ачивки MasterOfSkills. Секунды
         { "rankProperties", new Dictionary<STYLE_RANK, RankProperties> // настраиваются границы для каждого ранга, множитель для опыта/денег/очков. Особые ФУНКЦИИ (functionRank) НЕ ДОБАВЛЯТЬ
             {
-                { STYLE_RANK.D, new RankProperties { min = 0, max = 10, styleMultiplier = 1 } },
-                { STYLE_RANK.C, new RankProperties { min = 11, max = 25, styleMultiplier = 2, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankСReached(isApplying); } } },
-                { STYLE_RANK.B, new RankProperties { min = 26, max = 50, styleMultiplier = 3, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankBReached(isApplying); } } },
-                { STYLE_RANK.A, new RankProperties { min = 51, max = 100, styleMultiplier = 4, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankAReached(isApplying); } } },
+                { STYLE_RANK.D, new RankProperties { min = 0, max = 10, styleMultiplier = 1f } },
+                { STYLE_RANK.C, new RankProperties { min = 11, max = 25, styleMultiplier = 2f, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankСReached(isApplying); } } },
+                { STYLE_RANK.B, new RankProperties { min = 26, max = 50, styleMultiplier = 3f, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankBReached(isApplying); } } },
+                { STYLE_RANK.A, new RankProperties { min = 51, max = 100, styleMultiplier = 4f, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankAReached(isApplying); } } },
                 { STYLE_RANK.S, new RankProperties { min = 101, max = int.MaxValue, styleMultiplier = 5, functionRank = (isApplying) => { if (ScoreManager.Instance != null) ScoreManager.Instance.RankSReached(isApplying); } } } // Для упрощения - до бесконечности
             }
         }, 

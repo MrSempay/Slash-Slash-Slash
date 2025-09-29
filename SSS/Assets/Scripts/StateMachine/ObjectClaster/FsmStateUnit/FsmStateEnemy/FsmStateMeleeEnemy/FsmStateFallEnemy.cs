@@ -12,7 +12,6 @@ public class FsmStateFallEnemy : FsmStateEnemy
     public FsmStateFallEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
         // Здесь у нас то, что определяется единожды при создании объекта состояния
-        enemy.fuck.onEnemyLandingAnimationFinished += SetStateIdleOrWalk;
 
 
     }
@@ -23,12 +22,15 @@ public class FsmStateFallEnemy : FsmStateEnemy
         Debug.Log("Fall state [ENTER]");
         Reset();
         enemy.animator.Play("EnemyFall");
+
+        enemy.fuck.onEnemyLandingAnimationFinished += SetStateIdleOrWalk;
     }
 
     public override void Exit()
     {
         Debug.Log("Fall state [EXIT]");
         // animator.Play("fall");
+        enemy.fuck.onEnemyLandingAnimationFinished -= SetStateIdleOrWalk;
     }
 
     public override void Update()
@@ -71,7 +73,6 @@ public class FsmStateFallEnemy : FsmStateEnemy
     public override void OnDestroy()
     {
         base.OnDestroy();
-        enemy.fuck.onEnemyLandingAnimationFinished -= SetStateIdleOrWalk;
     }
 
 
