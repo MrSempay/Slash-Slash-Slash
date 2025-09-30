@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
         SaveLoadManager.Instance.LoadSettingsFromFile();
         SaveLoadManager.Instance.LoadGeneralLocalDataFromFile();
         SaveLoadManager.Instance.ImplementStoredGeneralData(); 
-        MainMenu.instance?.availableLevelSet?.UpdateLevelSet();
+        //MainMenu.instance?.availableLevelSet?.UpdateLevelSet();
         AudioManager.Instance.Initialize();
 
     }

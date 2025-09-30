@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AvailableLevelSet : MonoBehaviour
 {
@@ -24,20 +26,19 @@ public class AvailableLevelSet : MonoBehaviour
                 GameManager.Instance.InstanceTextButton(true, _scrollContainer, levelName, () => OnChooseLevel(levelName));
             }
             _currentAmountLevels = GameManager.Instance.MaxReachedLevel + 1;
+            Debug.Log("Ну и дличь");
         }
     }
 
-    private void OnChooseLevel(string nameLevel)
-    {
-        OnStartLevel?.Invoke();
-
-        GameManager.Instance.currentLevelInOrder = GameManager.Instance.orderLevels.IndexOf(nameLevel);
-        GameManager.Instance.ChangeSceneTroughDialogue(nameLevel);
-    }
+        
 
     void Start()
     {
         
+    }
+    private void OnEnable()
+    {
+        CoroutineManager.Instance.StartManagedCoroutine(gameObject, RefreshLayout());
     }
 
     // Update is called once per frame
@@ -46,5 +47,29 @@ public class AvailableLevelSet : MonoBehaviour
         
     }
 
-    
+    private void OnDestroy()
+    {
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+    }
+    private void OnChooseLevel(string nameLevel)
+    {
+        OnStartLevel?.Invoke();
+
+        GameManager.Instance.currentLevelInOrder = GameManager.Instance.orderLevels.IndexOf(nameLevel);
+        GameManager.Instance.ChangeSceneTroughDialogue(nameLevel);
+    }
+
+    private IEnumerator RefreshLayout()
+    {
+        _scrollContainer.GetComponent<VerticalLayoutGroup>().spacing += 0.01f;
+        yield return null;
+        _scrollContainer.GetComponent<VerticalLayoutGroup>().spacing -= 0.01f;
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(_scrollContainer);
+        // Или
+        //Canvas.ForceUpdateCanvases();
+    }
+
+
+
+    // Вызвать после добавления/изменения элементов
 }

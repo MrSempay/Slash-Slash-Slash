@@ -145,6 +145,7 @@
     <Compile Include="Assets\Scripts\Interfaces\IInventoryStatic.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorClosed.cs" />
     <Compile Include="Assets\Scripts\UI\CustomCombo.cs" />
+    <Compile Include="Assets\Scripts\Other\CreateGradientTexture.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\RewardAdComponent.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AdSizeClient.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\Yandex\YandexMobileAdsRewardedAdDemoScript.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IAppStateObserverClient.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollFadeController.cs" />
     <Compile Include="Assets\YandexMobileAds\Interstitial.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AppOpenAdBridge.cs" />
     <Compile Include="Assets\Scripts\Test\EventWaveEnemies.cs" />
@@ -360,6 +362,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Resources\Dialogues\Russian\Level3\DialogueStart.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level5\DialogueStart.txt" />
+    <None Include="Assets\Shaders\AlphaGradientEffect.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\SampleScene\Dialogue1.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -367,6 +370,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\Shaders\GradientFade.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level3\DialogueFinish.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />

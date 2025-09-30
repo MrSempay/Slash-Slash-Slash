@@ -113,7 +113,6 @@ public class Leaderboard : MonoBehaviour
 
                 place_number++;
             }
-            Debug.Log(GetInstanceID());
             Canvas.ForceUpdateCanvases();
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
         }
@@ -131,7 +130,6 @@ public class Leaderboard : MonoBehaviour
 
         if (PlayFabManager.Instance != null)
         {
-            Debug.Log("дю врн гю охгдеж");
             PlayFabManager.Instance.OnLoginSuccess -= LoginSuccess;
         }
     }
