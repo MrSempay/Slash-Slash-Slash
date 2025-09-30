@@ -286,12 +286,13 @@ public class Player : Unit, IMainTarget
     }
     protected override void Start()
     {
+        /*
         Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
         Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
         Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
         School.SpawnParticularSpell(C.DK.ArcLightning, this);
         School.SpawnParticularSpell(C.DK.ProtectiveField, this);
-        
+        */
         base.Start();
         SetLikeAMainTarget(); 
 

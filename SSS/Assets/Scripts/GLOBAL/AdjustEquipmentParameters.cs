@@ -10,32 +10,32 @@ public static class AdjustEquipmentParameters : object
         // Инициализируем словарь при объявлении
         { C.DK.ProtectiveField, new Dictionary<string, object>() {
             { C.DK.equipmentName, C.DK.ProtectiveField },
-            { C.DK.cost, 0 },
-            { C.DK.timeCallDown, 5f },
+            { C.DK.cost, 70 },
+            { C.DK.timeCallDown, 15f },
             { C.DK.amountUpCombo, 10 },
-            { C.DK.amountBlockingAttackMax, 5 },
+            { C.DK.amountBlockingAttackMax, 4 },
             { C.DK.shouldBeCastedAtStartUnitAnimation, false }, // Вроде как разобрался: этот параметр отвечает за то, будет ли сразу при старте каста (анимации) активирована функция Cast и,
                                                                 // как следствие, Activate. Если true, то дальнейшее управление ходом сотворения заклинания (реакции на анимацию) передаётся
                                                                 // самому Spell, именно там в функции Activate устанавливается прослушка сигналов о пике и окочании анимации. Если же false,
                                                                 // то функция Cast (и Activate) будет вызвана только после окончания анимации, до этого момента сам Spell не может ни на 
                                                                 // что реагировать. Вообщем данный параметр определяет, кому и на каком этапе будет передано управление сотворения каста.
-            { C.DK.durationActiveState, -1f },
+            { C.DK.durationActiveState, 8f },
         } },
         { C.DK.ArcLightning, new Dictionary<string, object>() {
             { C.DK.equipmentName, C.DK.ArcLightning },
-            { C.DK.cost, 0 },
-            { C.DK.damage, 50 },
-            { C.DK.timeCallDown, 5f },
+            { C.DK.cost, 140 },
+            { C.DK.damage, 120 },
+            { C.DK.timeCallDown, 8f },
             { C.DK.amountUpCombo, 10 },
             { C.DK.shouldBeCastedAtStartUnitAnimation, true },
         } },
         { C.DK.Berserker, new Dictionary<string, object>() { 
             { C.DK.equipmentName, C.DK.Berserker },
-            { C.DK.cost, 0 },
-            { C.DK.timeCallDown, 5f },
+            { C.DK.cost, 70 },
+            { C.DK.timeCallDown, 20f },
             { C.DK.amountUpCombo, 10 },
             { C.DK.shouldBeCastedAtStartUnitAnimation, false },
-            { C.DK.durationActiveState, 10f },
+            { C.DK.durationActiveState, 7f },
             { C.DK.increasingUnitParametersByAmmunitionPercentageByCast, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
         } },
         { "SomeSpell2", new Dictionary<string, object>() {
@@ -47,8 +47,8 @@ public static class AdjustEquipmentParameters : object
         } },
         { C.DK.Healing, new Dictionary<string, object>() {
             { C.DK.equipmentName, C.DK.Healing },
-            { C.DK.cost, 0 },
-            { C.DK.timeCallDown, 5 },
+            { C.DK.cost, 50 },
+            { C.DK.timeCallDown, 20 },
             { C.DK.healthHealAmount, 20f },
             { C.DK.shouldBeCastedAtStartUnitAnimation, true },
             { C.DK.amountUpCombo, 10 },
@@ -84,13 +84,13 @@ public static class AdjustEquipmentParameters : object
     public static List<EquipmentChance> allEquipmentTypesAndCategoriesChance = new List<EquipmentChance>() { 
         new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Standart, chance = 25f } ,
         new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
-        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Legendary, chance = 11111.79f } ,
+        new() { equipmentCategory = C.DK.Weapon, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Standart, chance = 25f } ,
         new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Rare, chance = 8.93f } ,
-        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 11111.79f } ,
+        new() { equipmentCategory = C.DK.Armor, equipmentRarityType = C.DK.Legendary, chance = 1.79f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Standart, chance = 20f } ,
         new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Rare, chance = 7.14f } ,
-        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 11111.43f } ,   
+        new() { equipmentCategory = C.DK.Accessories, equipmentRarityType = C.DK.Legendary, chance = 1.43f } ,   
     };
 
     // increasingUnitParametersByAmmunitionAbsolute - увеличиваем на абсолютное значение параметры в словаре 
@@ -111,38 +111,38 @@ public static class AdjustEquipmentParameters : object
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 20f } } },
                                     { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, -15f }, { C.DK.jumpForce, 5 } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
-                                    { C.DK.cost, 20 } } },
+                                    { C.DK.cost, 40 } } },
                             {
                                 C.DK.Knife, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, -50f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, 50f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
-                                    { C.DK.cost, 20 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 10f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, 30f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
+                                    { C.DK.cost, 40 } } },
                             {
                                 C.DK.Axe, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 25f } } },
                                     { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 5f }, { C.DK.CurrentIncreasingStamina, -20f } } }, // CurrentIncreasingStamina - уменьшаем/увеличиваем макс. стамину на вот этот процент!!!!
-                                    { C.DK.cost, 20 } } },
+                                    { C.DK.cost, 40 } } },
                             {
                                 C.DK.Sword, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 10f } } },
-                                    { C.DK.cost, 20 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 15f } } },
+                                    { C.DK.cost, 40 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
                         {
                             {
                                 C.DK.ThunderAxe, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 35f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 15f }, { C.DK.CurrentIncreasingStamina, -20f } } },
-                                    { C.DK.cost, 70 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 28f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 17f }, { C.DK.CurrentIncreasingStamina, -20f } } },
+                                    { C.DK.cost, 140 } } },
                             {
                                 C.DK.FireSword, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 30f } } },
-                                    { C.DK.cost, 70 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 35f } } },
+                                    { C.DK.cost, 140 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
                         {
@@ -150,7 +150,7 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.ThirstySakura, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {   } },
-                                    { C.DK.cost, 170 } } } } }, } },
+                                    { C.DK.cost, 300 } } } } }, } },
             {
                 C.DK.Armor, new Dictionary<string, Dictionary<string, Dictionary<string, object>>>()
                 {
@@ -161,19 +161,19 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.LeatherArmor, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {  } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, -10f }, { C.DK.CurrentIncreasingStamina, 20f } } },
-                                    { C.DK.cost, 20 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 10f }, { C.DK.CurrentIncreasingStamina, 10f } } },
+                                    { C.DK.cost, 80 } } },
                             {
                                 C.DK.PlateArmor, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {  } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 30f }, { C.DK.CurrentIncreasingStamina, -26f } } },
-                                    { C.DK.cost, 20 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 30f }, { C.DK.CurrentIncreasingStamina, -20f } } },
+                                    { C.DK.cost, 80 } } },
                             {
                                 C.DK.ChainMail, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 10f } } },
-                                    { C.DK.cost, 20 } } } } },
+                                    { C.DK.cost, 80 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
                         {
@@ -181,14 +181,14 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.ThunderArmor, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {  } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 5f }, { C.DK.DamageReductionPercentage, 40f }, { C.DK.CurrentIncreasingStamina, -25f } } },
-                                    { C.DK.cost, 70 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.stuneChanceByStandardAttackPercentage, 5f }, { C.DK.DamageReductionPercentage, 35f }, { C.DK.CurrentIncreasingStamina, -15f } } },
+                                    { C.DK.cost, 140 } } },
                             {
                                 C.DK.DragonArmor, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() {  } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 50f }, { C.DK.CurrentIncreasingStamina, -25f } } },
-                                    { C.DK.cost, 70 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 45f }, { C.DK.CurrentIncreasingStamina, -20f } } },
+                                    { C.DK.cost, 140 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
                         { } 
@@ -204,32 +204,32 @@ public static class AdjustEquipmentParameters : object
                                 C.DK.DexterityBracelet, new Dictionary<string, object>()
                                 {
                                     { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.CurrentIncreasingStamina, 25f } } },
-                                    { C.DK.cost, 50 } } },
+                                    { C.DK.cost, 100 } } },
                             {
                                 C.DK.RingWarrior, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 5f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 7f } } },
                                     { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, 5f } } },
-                                    { C.DK.cost, 50 } } },
+                                    { C.DK.cost, 100 } } },
                             {
                                 C.DK.MedallionOfLife, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 25f } } },
-                                    { C.DK.cost, 50 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.healthMax, 20f } } },
+                                    { C.DK.cost, 100 } } } } },
                     {
                         C.DK.Rare, new Dictionary<string, Dictionary<string, object>>()
                         {
                             {
                                 C.DK.RingBerserker, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 50f } } },
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, -50f } } },
-                                    { C.DK.cost, 170 } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionPercentage, new Dictionary<string, float>() { { C.DK.damage, 30f } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.DamageReductionPercentage, -20f } } },
+                                    { C.DK.cost, 200 } } },
                             {
                                 C.DK.RingForesight, new Dictionary<string, object>()
                                 {
-                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.evasionPercentage, 5f } } },
-                                    { C.DK.cost, 170 } } } } },
+                                    { C.DK.increasingUnitParametersByAmmunitionAbsolute, new Dictionary<string, float>() { { C.DK.evasionPercentage, 10f } } },
+                                    { C.DK.cost, 240 } } } } },
                     {
                         C.DK.Legendary, new Dictionary<string, Dictionary<string, object>>()
                         {
@@ -240,7 +240,7 @@ public static class AdjustEquipmentParameters : object
                                     { C.DK.timeCallDown, 5 },
                                     { C.DK.durationActiveState, 5 }, // можно настраивать длительность эффекта. Влияет на то, когда активный эффект сбросится и активка снаряжения уйдёт на КД
                                     { C.DK.shouldBeCastedAtStartUnitAnimation, true },
-                                    { C.DK.cost, 170 } } }
+                                    { C.DK.cost, 300 } } }
                         } 
                     
                     } } }

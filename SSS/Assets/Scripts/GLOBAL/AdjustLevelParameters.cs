@@ -14,17 +14,32 @@ public static class AdjustLevelParameters
                             {
                                 { "healthMax", 5f },
                                 { "DamageReductionPercentage", 0f },
-                                { "speed", 0f },
+                                { "speed", 1f },
                                 { "jumpForce", 0f },
                                 //{ C.DK.speed, 20 },
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
                             {
-                                { "DamageReductionPercentage", 5f } } },
+                                { "DamageReductionPercentage", 0.001f } } },
                 }
             },
             {
                 C.NameScene.Level2, new Dictionary<string, object>()
+                {
+                    { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
+                            {
+                                { "healthMax", 3f },
+                                { "DamageReductionPercentage", 0f },
+                                { "speed", 0.1f },
+                                { "jumpForce", 0f },
+                                { "damage", 3f } } },
+                    { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
+                            {
+                                { "DamageReductionPercentage",  0.01f } } },
+                }
+            },
+            {
+                C.NameScene.Level3, new Dictionary<string, object>()
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
@@ -35,7 +50,22 @@ public static class AdjustLevelParameters
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
                             {
-                                { "DamageReductionPercentage", 5f } } },
+                                { "DamageReductionPercentage",  0.01f } } },
+                }
+            },
+             {
+                C.NameScene.Level4, new Dictionary<string, object>()
+                {
+                    { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
+                            {
+                                { "healthMax", 5f },
+                                { "DamageReductionPercentage", 0f },
+                                { "speed", 0f },
+                                { "jumpForce", 0f },
+                                { "damage", 5f } } },
+                    { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
+                            {
+                                { "DamageReductionPercentage",  0.01f } } },
                 }
             },
             {
@@ -50,7 +80,7 @@ public static class AdjustLevelParameters
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
                             {
-                                { "DamageReductionPercentage", 5f } } },
+                                { "DamageReductionPercentage",  0.01f } } },
                 }
             },
 
