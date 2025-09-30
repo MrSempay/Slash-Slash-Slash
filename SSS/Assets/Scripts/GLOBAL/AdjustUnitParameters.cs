@@ -9,19 +9,19 @@ public static class AdjustUnitParameters
         {
             C.DK.Player, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 50 },
+                { C.DK.healthMax, 60 },
                 { C.DK.staminaMax, 2 },
                 { C.DK.DamageReductionPercentage, 0 }, // Процент блокировки урона! Любого! 0 - дефолт, наносится полный урон
                 { C.DK.speed, 2 },
                 { C.DK.jumpForce, 12 },
                 { C.DK.moneyFromKill, 0 },
-                { C.DK.experienceToNextLevel, 200 },
+                { C.DK.experienceToNextLevel, 150 },
                 { C.DK.experienceFromKill, 0 },
                 { C.DK.stuneChanceByStandardAttackPercentage, 0 },
                 { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.evasionPercentage, 0 },
                 { C.DK.comboOneHitKillMultiplayer, 10f },
-                { C.DK.timeRecoverStaminaPoint, 0.5f },
+                { C.DK.timeRecoverStaminaPoint, 1.2f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.PlayerGotDamage }, // и какого хрена я это константой не делаю... шиза. 20.09 - Делаю!
                 { C.DK.nameSoundDeath, C.MusicSounds.PlayerDeath },
@@ -35,38 +35,38 @@ public static class AdjustUnitParameters
                         { C.DK.damage, 10f }
                     }
                 },
-                { C.DK.damage, 10 },
-                { C.DK.CountAccessToUpInSchool, 12210 },
-                { C.DK.CurrentMoney, 15000 }
+                { C.DK.damage, 12 },
+                { C.DK.CountAccessToUpInSchool, 1 },
+                { C.DK.CurrentMoney, 100 }
             }
         },
         {
             C.DK.MeleeEnemy, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 25 },
+                { C.DK.healthMax, 12 },
                 { C.DK.DamageReductionPercentage, 0 },
                 { C.DK.speed, 8 },
                 { C.DK.stuneChanceByStandardAttackPercentage, 10 }, 
                 { C.DK.evasionPercentage, 0 }, 
                 { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.jumpForce, 75 }, // 14 при массе 1
-                { C.DK.moneyFromKill, 50 },
-                { C.DK.experienceFromKill, 20 },
-                { C.DK.scoreFromKill, 50 },
+                { C.DK.moneyFromKill, 3 },
+                { C.DK.experienceFromKill, 10 },
+                { C.DK.scoreFromKill, 30 },
                 { C.DK.som, 14 },
-                { C.DK.damage, 5 },
+                { C.DK.damage, 7 },
                 //{ C.DK.nameSoundAttakPeaked, C.MusicSounds.DogMakeDamage },
                 { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
                 { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
-                { C.DK.callDownMeleeAttack, 0.5f }
+                { C.DK.callDownMeleeAttack, 1f }
 
             }
         },
         {
             C.DK.Door, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 500 }
+                { C.DK.healthMax, 1250 }
             }
         }
         };

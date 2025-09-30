@@ -97,30 +97,36 @@ public class Level1Scenario : ScenarioScript
 
             case "waitTimeAfterFirstAmmunitionBue":
                 Debug.Log("Study was finished");
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 15 }, 
-                                                                     { _transformSchool, 15 },
-                                                                     { _transformTreasury, 15 } },
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 }, 
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
                                  "WaveAfterLearning");
                 break;
 
             case "waitBefore2Wave":
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } },
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 7 },
+                                                                     { _transformSchool, 7 },
+                                                                     { _transformTreasury, 7 } },
                                  "SecondWave");
                 break;
 
             case "waitBefore3Wave":
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } },
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 9 },
+                                                                     { _transformSchool, 9 },
+                                                                     { _transformTreasury, 9 } },
                                  "ThirdWave");
                 break;
             case "waitBefore4Wave":
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } },
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 12 },
+                                                                     { _transformSchool, 12 },
+                                                                     { _transformTreasury, 12 } },
                                  "FourWave");
+                break;
+            case "waitBefore5Wave":
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 20 },
+                                                                     { _transformSchool, 20 },
+                                                                     { _transformTreasury, 20 } },
+                                 "FiveWave");
                 break;
         }
     }
@@ -146,9 +152,12 @@ public class Level1Scenario : ScenarioScript
                 JustTimeWait(8f, "waitBefore4Wave");
                 break;
             case "FourWave":
+                JustTimeWait(10f, "waitBefore5Wave");
+                break;
+            case "FiveWave":
                 FinishLevel();
                 break;
-                
+
         }
     }
 
