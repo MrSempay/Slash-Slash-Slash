@@ -134,7 +134,7 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
         {
             PlayFabManager.Instance.LoginOrRegisterEmailIfFailureLoginMobile(Email, Password);
         }
-        else
+        else if (!PlayFabClientAPI.IsClientLoggedIn())
         {
             PlayFabManager.Instance.LoginOrRegisterMobile();
         }

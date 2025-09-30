@@ -28,6 +28,8 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
         {
             mainTarget.WasDestroyed = true;
         }
+
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.BuildingCrush, gameObject, AudioManager.TYPE_SOUND.Destroy, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
     }
 
     public override void Exit()

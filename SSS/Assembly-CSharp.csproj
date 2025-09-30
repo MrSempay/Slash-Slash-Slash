@@ -117,6 +117,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\AdPosition.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IReadOnlyEventBus.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustBuildingParameters.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Spell\ProtectiveField.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\Utils.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateWalk\FsmStateWalkAndAttack.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateJump.cs" />
@@ -225,7 +226,6 @@
     <Compile Include="Assets\Scripts\Unit\Enemy.cs" />
     <Compile Include="Assets\Scripts\TestMovingKinematic.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AudioSessionManagerClient.cs" />
-    <Compile Include="Assets\Scripts\Equipment\Spell\ProtectionField.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
@@ -302,6 +302,7 @@
     <Compile Include="Assets\Scripts\Test\BaseEvent.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\AdSizeUtils.cs" />
     <Compile Include="Assets\YandexMobileAds\InterstitialAdLoader.cs" />
+    <Compile Include="Assets\Scripts\Decor\TorchFlicker.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\AdsInitializer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorOpened.cs" />
     <Compile Include="Assets\Scripts\Equipment\Ammunition\Tragicomedy.cs" />

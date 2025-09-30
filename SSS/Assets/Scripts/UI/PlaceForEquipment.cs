@@ -14,7 +14,6 @@ public class PlaceForEquipment : MonoBehaviour
     [SerializeField] private TextEdit costOfEquipment;
 
     public Inventory inventory; // предполагаетс€, что в дальнейшем инвентарь может быть не один (не только у игрока)
-    public Equipment previousEquipment;
     public bool isBuildingPlace = false; // флаг дл€ детекции, находитс€ ли это место в здании
     public Equipment Equipment
     {
@@ -22,7 +21,6 @@ public class PlaceForEquipment : MonoBehaviour
         set
         {
             //inventory.CheckWasEquipmentAlreadyInInventory(value, this);
-            previousEquipment = _equipment; // —охран€ем предыдущее значение
             //Debug.Log(this.ToString() + previousEquipment);
             //Debug.Log(this.ToString() + _equipment);
             if (isBuildingPlace)
@@ -33,8 +31,11 @@ public class PlaceForEquipment : MonoBehaviour
                     nameOfEquipment.gameObject.SetActive(false);
                     costOfEquipment.gameObject.SetActive(false);
                     //Debug.Log(_equipment);
-                    _equipment.ParametersOfEquipmentWasAssigned -= ChangeNameAndCostEquipment; // если место дл€ снар€жени€ не в здании и снар€жение из этого места исчезло, отписываемс€
-                                                                                               // от детекции сигнала о смене его параметров (прошлого экземпл€ра снар€жени€)
+                    if (_equipment != null)
+                    {  // вот на данный момент (23.09.2025) вообще не понимаю, что это и почему происходит это.
+                        _equipment.ParametersOfEquipmentWasAssigned -= ChangeNameAndCostEquipment;
+                    } // если место дл€ снар€жени€ не в здании и снар€жение из этого места исчезло, отписываемс€
+                      // от детекции сигнала о смене его параметров (прошлого экземпл€ра снар€жени€)
                 }
                 else
                 {
@@ -59,25 +60,8 @@ public class PlaceForEquipment : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("Shit Here?");
-                    //Debug.Log(previousEquipment);
-                    if (previousEquipment)
-                    {
-                        //Debug.Log("Shit Here?");
-                        if (!previousEquipment.isEquipmentASpell)
-                        {
-                            //Debug.Log("Shit Here?");
-                            //Ammunition ammunition = (Ammunition)previousEquipment;
-                            /*Dictionary<string, float> decreasingUnitParametersByAmmunition;
-                            foreach (var increasedParameter in increasedParametersValuesByEquipmentInThisPlace)
-                            {
-                                decreasingUnitParametersByAmmunition[increasedParameter.Key] = increasedParameter.Value/ ammunition.player.;
-                            }*/
-                            //ammunition.player.ChangeUnitParametersByPercentage(ammunition.increasingUnitParametersByAmmunitionPercentage, false);
-                            //ammunition.player.ChangeUnitParametersAndPropertiesByAbsolute(ammunition.increasingUnitParametersByAmmunitionAbsolute, false);
-                        }
-                    }
-                }
+
+                }   
             }
             _equipment = value;
         }

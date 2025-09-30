@@ -11,7 +11,6 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     public FsmStateMeleeAttackEnemy(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
-        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += MakeDamageToUnit;
         enemy.fuck.onAttackAnimationAtRightPointForGetDamage += PlayMakeDamageSound;
     }
 
@@ -21,6 +20,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
         Debug.Log("Melee attack state [ENTER]");
         enemy.rb.linearVelocityX = 0;
         enemy.animator.Play("MeleeEnemyAttack", -1, 0f);
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage += MakeDamageToUnit;
         //enemy.animator.Play("MeleeEnemyAttack"); Этот вариант какого-то чёрта не работает. Всегда нужно начинать анимацию атаки с времени 0f, иначе оно багается и переходит в Walk
 
         //attackUnitByTimeCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, AttackUnitByTime());
@@ -30,6 +30,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
     public override void Exit()
     {
         Debug.Log("Melee attack state [EXIT]");
+        enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= MakeDamageToUnit;
         //CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, attackUnitByTimeCoroutine);
         //attackUnitByTimeCoroutine = null;
     }

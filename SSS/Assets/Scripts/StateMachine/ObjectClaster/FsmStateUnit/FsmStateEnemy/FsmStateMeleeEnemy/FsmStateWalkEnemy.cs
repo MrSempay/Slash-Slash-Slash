@@ -22,6 +22,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Enemy Walk state [ENTER]");
+        enemy.TEST_Current_State = "Walk";
         enemy.currentCornerIndex = 1; // Начинаем со второй точки (индекс 1)
         enemy.isPathValid = false; // Сбрасываем флаг валидности пути при входе
         enemy.animator.Play("EnemyWalk");

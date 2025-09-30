@@ -1,4 +1,7 @@
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -15,16 +18,19 @@ public class Leaderboard : MonoBehaviour
     private FieldInfo _prefubField;
     private bool _lastLoginingWasFailed = false;
     private GameObject _buttonShowLeaderboard;
+    private CancellationTokenSource _cts;
 
     private void Awake()
     {
         _prefubField = ScoreManager.prefubFieldLeaderboard; // не очень, конечно, безопасно, но едва ли лидерборд будет спавниться до ScoreManager
-
+        //Debug.Log(GetInstanceID());
         UpdateLeaderboard();
 
         _buttonShowLeaderboard = GameManager.Instance.InstanceTextButton(false, Player.instance.buttonShowLeaderboardPlacement, C.Just.ShowLeaderboard, ShowLeaderboardButtonClick);
         _buttonShowLeaderboard.SetActive(false);
-            
+
+        _cts = new CancellationTokenSource();
+
         PlayFabManager.Instance.OnLoginSuccess += LoginSuccess;
     }
 
@@ -50,13 +56,24 @@ public class Leaderboard : MonoBehaviour
     {
         if (_lastLoginingWasFailed)
         {
-            await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
-            await Task.Delay(2000);
-            await PlayFabManager.Instance.GetScoreLeaderboarderAsync();
+            try
+            {
+                var token = _cts.Token;
 
-            UpdateLeaderboard();
+                await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
+                token.ThrowIfCancellationRequested();
+                await Task.Delay(2000);
+                token.ThrowIfCancellationRequested();
+                await PlayFabManager.Instance.GetScoreLeaderboarderAsync();
 
-            _lastLoginingWasFailed = false;
+                UpdateLeaderboard();
+
+                _lastLoginingWasFailed = false;
+            }
+            catch (OperationCanceledException)
+            {
+                // Корректная отмена - игнорируем
+            }
         }
     }
     private void UpdateLeaderboard()
@@ -92,13 +109,13 @@ public class Leaderboard : MonoBehaviour
                 }
 
                 _textNotification.Text = "";
-
-                Canvas.ForceUpdateCanvases();
-                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
                 //scriptFieldLeaderboard.imageIcon
 
                 place_number++;
             }
+            Debug.Log(GetInstanceID());
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
         }
         else
         {
@@ -109,8 +126,12 @@ public class Leaderboard : MonoBehaviour
 
     private void OnDestroy()
     {
+        _cts?.Cancel();
+        _cts?.Dispose();
+
         if (PlayFabManager.Instance != null)
         {
+            Debug.Log("ДА ЧТО ЗА ПИЗДЕЦ");
             PlayFabManager.Instance.OnLoginSuccess -= LoginSuccess;
         }
     }

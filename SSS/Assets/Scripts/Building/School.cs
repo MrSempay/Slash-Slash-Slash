@@ -211,4 +211,11 @@ public class School : Building, IMainTarget
             buildingWhereEquipmentIs.onUpdateAssortment?.Invoke(buildingWhereEquipmentIs.equipmentInBuilding, buildingWhereEquipmentIs); // подписываемся на событие в ScenarioScript, чтоб знать, когда был обновлён ассортимент в здании
         }
     }
+
+    public void TeachByUpLevel(Player targetForBuy, Equipment equipment)
+    {
+        targetForBuy.CountAccessToUpInSchool--;
+
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Teach, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+    }
 }

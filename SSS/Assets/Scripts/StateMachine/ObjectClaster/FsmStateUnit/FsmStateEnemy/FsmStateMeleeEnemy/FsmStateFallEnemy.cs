@@ -19,6 +19,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
+        enemy.TEST_Current_State = "Fall";
         Debug.Log("Fall state [ENTER]");
         Reset();
         enemy.animator.Play("EnemyFall");

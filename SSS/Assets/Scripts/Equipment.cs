@@ -8,7 +8,7 @@ using static C;
 public class Equipment : MonoBehaviour
 {
     private Building _buildingWhereEquipmentIs; // здание, в котором находится снаряжение
-    private bool _wasSold = false; // по умолчанию считаем, что все предметы находятся у продавца (в здании) 
+    [SerializeField] private bool _wasSold = false; // по умолчанию считаем, что все предметы находятся у продавца (в здании) 
     private Image _callDownIcon; // иконка для анимации таймера КД.
     private Coroutine _callDownCoroutine; // иконка для анимации таймера КД.
     private Coroutine _callDownAnimationCoroutine; // иконка для анимации таймера КД.
@@ -34,6 +34,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public string equipmentName;
     [NonSerialized] public Animator animator;
     [NonSerialized] public RectTransform transformCurrentEquipmentPlace; // компонент RectTransform текущего места нашего снаряжения. Нужно, чтоб задать это же место другому снаряжению при обмене местами
+    [NonSerialized] public PlaceForEquipment scriptPlaceForEquipment;
     [NonSerialized] public bool isReady = true;
     [NonSerialized] new public RectTransform transform;
     [NonSerialized] public BoxCollider2D selfCollider;
@@ -229,7 +230,7 @@ public class Equipment : MonoBehaviour
             }
 
             //callDownIcon.sprite = spriteCallDown;
-
+            scriptPlaceForEquipment = transformCurrentEquipmentPlace.GetComponent<PlaceForEquipment>();
 
             equipmentInfoPanel = Instantiate(GameManager.Instance.prefubEquipmentInfoPanel, transformPlaceInfoPanel, false);
             equipmentInfoPanel.FillInfoForm(this);
@@ -281,12 +282,14 @@ public class Equipment : MonoBehaviour
         if (rectTransformPlace)
         {
             transform.parent.gameObject.GetComponent<PlaceForEquipment>().Equipment = null; // у скрипта экземпляра старого места поле Equipment сбрасываем в null (ибо с него убираем)
-            PlaceForEquipment rectTransformTargetPlaceScript = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>(); // получаем скрипт целевого места
+            PlaceForEquipment targetPlaceScript = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>(); // получаем скрипт целевого места
             // /\ \/ - поменяны местами
-            rectTransformTargetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
+            targetPlaceScript.Equipment = null; // обнуляем в любом случае тамошнее снаряжение. Если его нет, то и ладно, а если есть, то оно переместится на место вот 
                                                              // этого текущего. Выше для целевого места назначим снаряжение наше новое (вот это). Сделано для того, чтоб модификаторы
                                                              // снаряжения в ИНВЕНТАРЕ сбросились и назначились корректно
-            rectTransformTargetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
+            targetPlaceScript.Equipment = this; // у скрипта экземпляра нового места поле Equipment назначаем на текущий экземпляр снаряжения
+
+            scriptPlaceForEquipment = targetPlaceScript;
             // 4. Устанавливаем родительский элемент
             transform.SetParent(rectTransformPlace, false); // false - чтобы не сохранять мировые координаты (позицию, масштаб, поворот)
 
@@ -405,7 +408,10 @@ public class Equipment : MonoBehaviour
         }
     }
 
-    public virtual void UnitCastAnimationPeackedForThisEquipment() { }
+    public virtual void UnitCastAnimationPeackedForThisEquipment()
+    {
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(equipmentName + C.Prefixes.Peak, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+    }
 
     #endregion
 

@@ -11,6 +11,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
+        enemy.TEST_Current_State = "Jump";
         Debug.Log("Jump state [ENTER]");
         enemy.rb.linearVelocity = new Vector2(enemy.rb.linearVelocity.x, 0);
         enemy.rb.AddForce(Vector2.up * enemy.jumpForce, ForceMode2D.Impulse);

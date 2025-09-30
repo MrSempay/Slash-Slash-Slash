@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     private string _nameBeginningMusic = "BeginningLevelMusic";
     private string _nameTransitionMusic = "TransitionMusic";
 
-    public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, Death};
+    public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, Death, Destroy};
     public enum TYPE_AUDIO_SOURCE { _2DStandard, _3DStandard };
     public Dictionary<GameObject, Dictionary<TYPE_SOUND, AudioSource>> dictionaryObjectsAndTheirAudioSourcesByTypes = new();
     public AudioSource audioMusicComponent; // —сылка на AudioSource дл€ музыки
@@ -296,7 +296,7 @@ public class AudioManager : MonoBehaviour
 
     public void StartSoundEffectAtSpecifiedObject(string nameEffect, GameObject obj, TYPE_SOUND typeSound, TYPE_AUDIO_SOURCE typeAudioSource, List<TYPE_SOUND> typeSoundsToStop = null)
     {
-        if (string.IsNullOrEmpty(nameEffect))
+        if (string.IsNullOrEmpty(nameEffect) || !_sourcesSounds.ContainsKey(nameEffect))
         {
             return;
         }

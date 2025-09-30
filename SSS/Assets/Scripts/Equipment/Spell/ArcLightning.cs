@@ -108,6 +108,8 @@ public class ArcLightning : Spell
 
         // ”станавливаем размер коллайдера (по умолчанию 1x1)
         collider.size = _sizeArcLightningArea; // Ўирина 2, высота 1
+
+        base.UnitCastAnimationPeackedForThisEquipment();
     }
 
     private void MakeDamage(bool isUnitInArea, Unit unit)

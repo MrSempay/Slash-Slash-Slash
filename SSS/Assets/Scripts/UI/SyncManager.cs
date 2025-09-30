@@ -20,7 +20,7 @@ public class SyncManager : ICleanUp
 
     private SyncManager()
     {
-        PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin += SyncroniseGeneralData;
+        PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin += SyncronizeGeneralData;
 
         CleanupManager.Register(this);
 
@@ -40,7 +40,7 @@ public class SyncManager : ICleanUp
 
     public void Dispose()
     {
-        PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin -= SyncroniseGeneralData;
+        PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin -= SyncronizeGeneralData;
         Debug.Log("Нещщадно уничтожаем наш SyncManager! Даже жалко как-то...");
     }
 
@@ -48,7 +48,7 @@ public class SyncManager : ICleanUp
     {
         var request = new GetPlayerStatisticsRequest
         {
-            StatisticNames = new List<string> { "MaxReachedLevel" }
+            StatisticNames = new List<string> { C.Other.MaxReachedLevel }
         };
 
         var taskCompletionSource = new TaskCompletionSource<GetPlayerStatisticsResult>();
@@ -73,7 +73,7 @@ public class SyncManager : ICleanUp
     }
 
 
-    private async void SyncroniseGeneralData(string IDTitleAccount)
+    private async void SyncronizeGeneralData(string IDTitleAccount)
     {
         if (PlayFabClientAPI.IsClientLoggedIn()) // если мы залогинены (вызывается после логина, так что, может, рудиментная проверка)
         {

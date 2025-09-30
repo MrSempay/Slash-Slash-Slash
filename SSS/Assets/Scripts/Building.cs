@@ -173,17 +173,14 @@ public class Building : MonoBehaviour
     {
         //equipment.WasSold = true; // присваиваем true в состоянии AtPlayer
         targetForBuy.CurrentMoney -= equipment.cost;
+
+        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Buy, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
     }
 
     
     public bool HasAccessToUpLevelInSchool(Player targetForBuy)
     {
         return targetForBuy.CountAccessToUpInSchool > 0;
-    }
-
-    public void TeachByUpLevel(Player targetForBuy, Equipment equipment)
-    {
-        targetForBuy.CountAccessToUpInSchool--;
     }
 
     public virtual void OnDestroy()

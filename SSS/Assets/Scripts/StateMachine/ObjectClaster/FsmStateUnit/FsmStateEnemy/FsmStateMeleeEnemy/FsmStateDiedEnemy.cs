@@ -16,7 +16,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Died state [ENTER]");
-
+        enemy.TEST_Current_State = "Died";
         enemy.animator.Play("EnemyDied");
         //enemy.isAlive = false; // устанавливаем в методе Die у Unit
         enemy.areUpdatingFunctionsEnabled = false;
@@ -31,6 +31,10 @@ public class FsmStateDiedEnemy : FsmStateEnemy
 
         GameManager.DestroyObject(enemy.temporaryTargetForRazbrestis);
 
+        if (enemy.rb.linearVelocityY > 0)
+        {
+            enemy.rb.linearVelocityY = 0;
+        }
     }
 
     public override void Exit()

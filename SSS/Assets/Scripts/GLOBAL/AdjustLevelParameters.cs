@@ -69,6 +69,36 @@ public static class AdjustLevelParameters
                 }
             },
             {
+                C.NameScene.Level3, new Dictionary<string, object>()
+                {
+                    { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
+                            {
+                                { "healthMax", 5f },
+                                { "DamageReductionPercentage", 0f },
+                                { "speed", 0f },
+                                { "jumpForce", 0f },
+                                { "damage", 5f } } },
+                    { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
+                            {
+                                { "DamageReductionPercentage", 5f } } },
+                }
+            },
+            {
+                C.NameScene.Level4, new Dictionary<string, object>()
+                {
+                    { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
+                            {
+                                { "healthMax", 5f },
+                                { "DamageReductionPercentage", 0f },
+                                { "speed", 0f },
+                                { "jumpForce", 0f },
+                                { "damage", 5f } } },
+                    { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
+                            {
+                                { "DamageReductionPercentage", 5f } } },
+                }
+            },
+            {
                 C.NameScene.Level5, new Dictionary<string, object>()
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %

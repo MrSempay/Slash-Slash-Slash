@@ -149,7 +149,6 @@ public class C
         public const string orientationHorizontal = "Horizontal";
         public const string orientationVertical = "Vertical";
     }
-
     public static class NameScene
     {
         public const string SceneDialogue = "SceneDialogue";
@@ -188,7 +187,7 @@ public class C
         public const string ShowInfoButton = "Images/UI/Buttons/ShowInfo";
         public const string ImageDoorOpened = "Images/Door/DoorOpened";
         public const string ImageDoorClosed = "Images/Door/DoorClosed";
-        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayerScaling";
+        public const string PrefubDialogueWindowForPlayer = "Prefubs/UI/DialogueWindowForPlayer";
         public const string PrefubAppearingSprite = "Prefubs/UI/AppearingSprite";
         public const string PrefubTextButtonBigScaled = "Prefubs/UI/TextButtonBigScaled";
         public const string PrefubTextButton = "Prefubs/UI/TextButton";
@@ -300,6 +299,15 @@ public class C
         public const string PlayerAttackPeak = "PlayerAttackPeak";
         public const string PlayerAttackPeakHitEnemies = "PlayerAttackPeakHitEnemies";
         public const string PlayerWalk = "PlayerWalk";
+        public const string EquipmentHasChangedPlace = "EquipmentHasChangedPlace";
+        public const string ProtectiveShieldActivation = "ProtectiveShieldActivation";
+        public const string BerserkerCast = "BerserkerCast";
+        public const string ShieldWasHit = "ShieldWasHit";
+        public const string Buy = "Buy";
+        public const string Teach = "Teach";
+        public const string DoorOpening = "DoorOpening";
+        public const string DoorClosing = "DoorClosing";
+        public const string BuildingCrush = "BuildingCrush";
 
     }
     public static class Tags
