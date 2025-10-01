@@ -54,6 +54,8 @@ public class Enemy : Unit
             _currentTargetTransform = value;
             if (!isInRazbrestisState)
             {
+                Debug.Log(value);
+                Debug.Log(value.GetComponent<IMainTarget>());
                 currentMainTarget = value.GetComponent<IMainTarget>();
                 
             }

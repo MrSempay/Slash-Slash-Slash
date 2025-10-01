@@ -157,7 +157,8 @@ public class Player : Unit, IMainTarget
         {
             _currentLevel = value;
 
-            if (_currentLevel % 5 == 0) CountAccessToUpInSchool++;
+            if (_currentLevel % 5 == 0 && _currentLevel != 0) CountAccessToUpInSchool++; // при старте игры у нас нулевой уровень и при обновлении данных в Awake и Start у нас добавл€ютс€
+                                                                                         // хал€вные очки получени€ магии
             // ¬ызываем событие, если есть подписчики
             OnLevelChanged?.Invoke(_currentLevel);
         }
