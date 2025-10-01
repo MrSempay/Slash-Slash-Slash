@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public delegate void DialogueStarted(PlayerDialogue sciptPlayerDialogue); // шаблон функции
     public event DialogueStarted onDialogueStarted;         // экземл€р(?) функции/сигнала(?)
+    public event Action OnMaxReachedLevelWasChanged;         // экземл€р(?) функции/сигнала(?)
 
     public string nameDialogueCurrent;
     public WrapperGlobal wrapperGlobal = new(); // оболочка дл€ всех данных, которые будут сохран€тс€ и загружатьс€ на локальном устройстве
@@ -243,7 +244,8 @@ public class GameManager : MonoBehaviour
                 _maxReachedLevel = value;
             }
 
-            MainMenu.instance?.availableLevelSet.UpdateLevelSet();
+            OnMaxReachedLevelWasChanged?.Invoke();
+            //MainMenu.instance?.availableLevelSet.UpdateLevelSet();
         }
     }
 

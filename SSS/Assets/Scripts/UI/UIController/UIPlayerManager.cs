@@ -13,19 +13,8 @@ public class UIPlayerManager : UIController
     [SerializeField] private TextEdit currentMoneyUI;
     [SerializeField] private TextEdit currentExperienceUI;
     [SerializeField] private Player player;
-    [SerializeField] private RectTransform rtTopCenterPanel;
-    [SerializeField] private RectTransform rtBottomCenterPanel;
-    [SerializeField] private RectTransform rtBottomLeftPanel;
-    [SerializeField] private RectTransform rtTopLeftPanel;
 
-    private Vector2 bottomLeft = Vector2.zero;
-    private Vector2 bottomRight;
-    private Vector2 topLeft;
-    private Vector2 topRight;
-    private Vector2 topCenter;
-    private Vector2 bottomCenter;
-
-    public void Awake()
+    protected override void Awake()
     {
         //Debug.Log("CERFFFFFFFFFFFFFFFFFFFFFFFF");
 
@@ -40,40 +29,7 @@ public class UIPlayerManager : UIController
         EventBus.Instance.OnRankWasChanged.AddListener(ChangeRankTextUI);
         EventBus.Instance.OnScoreWasChanged.AddListener(ChangeScoreTextUI);
 
-        Camera cam = Camera.main;
-
-        // половина высоты и ширины
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
-
-        // центр камеры
-        Vector3 c = cam.transform.position;
-
-        // углы (в мировых координатах)
-        bottomLeft = new Vector2(c.x - halfWidth, c.y - halfHeight);
-        bottomRight = new Vector2(c.x + halfWidth, c.y - halfHeight);
-        topLeft = new Vector2(c.x - halfWidth, c.y + halfHeight);
-        topRight = new Vector2(c.x + halfWidth, c.y + halfHeight);
-        topCenter = new Vector2(c.x, c.y + halfHeight);
-        bottomCenter = new Vector2(c.x, c.y - halfHeight);
-
-        // в рамках тестирования у нас есть несколько префабов Player, и у некоторых из них отсутствют эти элементы. Чтоб не ловить ошибки при тестировании, сделали так.
-        if (rtTopLeftPanel != null)
-        {
-            rtTopLeftPanel.position = topLeft;
-        }
-        if (rtBottomLeftPanel != null)
-        {
-            rtBottomLeftPanel.position = bottomLeft;
-        }
-        if (rtTopCenterPanel != null) 
-        {
-            rtTopCenterPanel.position = topCenter;
-        }
-        if (rtBottomCenterPanel != null)
-        {
-            rtBottomCenterPanel.position = bottomCenter;
-        }
+        base.Awake();
     }
 
     private void ChangeLevelTextUI(int level)

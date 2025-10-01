@@ -26,11 +26,13 @@ public class AvailableLevelSet : MonoBehaviour
                 GameManager.Instance.InstanceTextButton(true, _scrollContainer, levelName, () => OnChooseLevel(levelName));
             }
             _currentAmountLevels = GameManager.Instance.MaxReachedLevel + 1;
-            Debug.Log("Ну и дличь");
         }
     }
 
-        
+    private void Awake()
+    {
+        GameManager.Instance.OnMaxReachedLevelWasChanged += UpdateLevelSet;
+    }
 
     void Start()
     {
@@ -49,6 +51,8 @@ public class AvailableLevelSet : MonoBehaviour
 
     private void OnDestroy()
     {
+        GameManager.Instance.OnMaxReachedLevelWasChanged -= UpdateLevelSet;
+
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
     }
     private void OnChooseLevel(string nameLevel)

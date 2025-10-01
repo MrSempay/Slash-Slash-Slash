@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateCastUnit.cs" />
     <Compile Include="Assets\Scripts\Building.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser\SceneDialogueBuild.cs" />
+    <Compile Include="Assets\Scripts\UI\Titles\TitlesParser.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
     <Compile Include="Assets\Scripts\Levels\ScenarioScript.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustEquipmentParameters.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\AdRequestError.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\MobileAdsClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\MonoPInvokeCallbackAttribute.cs" />
+    <Compile Include="Assets\Scripts\UI\Titles\ScrollFadeController.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyInterstitialClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateStuneUnit.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\Location.cs" />
@@ -270,7 +272,6 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AdSizeClient.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\Yandex\YandexMobileAdsRewardedAdDemoScript.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IAppStateObserverClient.cs" />
-    <Compile Include="Assets\Scripts\UI\ScrollFadeController.cs" />
     <Compile Include="Assets\YandexMobileAds\Interstitial.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AppOpenAdBridge.cs" />
     <Compile Include="Assets\Scripts\Test\EventWaveEnemies.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\ScreenClient.cs" />
     <Compile Include="Assets\Scripts\EventBus.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyRewardedAdClient.cs" />
+    <Compile Include="Assets\Scripts\Levels\TitlesBuilder.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\BannerAdSizeClient.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\RewardedAds.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringStringWeaponInfoDictionaryPair.cs" />
@@ -358,6 +360,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Titles.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level2\DialogueStart.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Resources\Dialogues\Russian\Level3\DialogueStart.txt" />

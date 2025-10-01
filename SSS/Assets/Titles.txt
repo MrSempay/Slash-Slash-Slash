@@ -1,0 +1,22 @@
+=
+	README:
+		Text in "=" tabs will not be deserialize.
+		Here uses next text deserialize markers:
+		
+			1) H - text after "::" separator will be deserialize like a header text, example:
+				H::SOME_TEXT
+			SOME_TEXT will be deserialize like a header.
+			
+			2) D - text after "::" separator will be deserialize like a description text, example:
+				D::SOME_TEXT
+			SOME_TEXT will be deserialize like a description.
+			
+			A certain realisation of this text types see in Assets/Scripts/UI/ScrollFadeController
+=
+H:: Director
+D:: Andreo Shidgen
+D:: Andreo Shidgen
+D:: Andreo Shidgen
+H:: Main manager
+D:: Andreo Shidgen
+

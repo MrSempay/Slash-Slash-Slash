@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static StaticClassForAdditionalFunctions;
 
 public class MainMenu : MonoBehaviour
@@ -9,12 +10,16 @@ public class MainMenu : MonoBehaviour
     public static MainMenu instance;
 
     public AvailableLevelSet availableLevelSet;
+
     [NonSerialized] public string nameOfMainMusicTeam = "Project_1";
 
     private Vector3 _initialPositionMenu;
-    [SerializeField] private RectTransform _notificationPlacement;
-    [SerializeField] private RectTransform _transformPositionMenuVerticalOrientation;
+    private Button _buttonTitles;
 
+    [SerializeField] private RectTransform _notificationPlacement;
+    [SerializeField] private Button _prefubTitlesButton;
+    [SerializeField] private RectTransform _rtMenu;
+    [SerializeField] private RectTransform _transformPositionMenuVerticalOrientation;
     private void Awake()
     {
         if (instance != null && instance != this) // инициализируем instance в дочернем классе
@@ -24,13 +29,20 @@ public class MainMenu : MonoBehaviour
         }
         instance = this;
 
-        GameManager.Instance.Initialize(); 
+        GameManager.Instance.Initialize();
 
         GameManager.Instance.notificationPlacement = _notificationPlacement;
+        GameManager.Instance.OnMaxReachedLevelWasChanged += CheckWasReachedEndOfGame;
 
         availableLevelSet.OnStartLevel += StartingGameplay;
 
         _initialPositionMenu = transform.position;
+
+        if (GameManager.Instance.MaxReachedLevel == GameManager.Instance.orderLevels.Count - 1) // если достигли последнего уровня
+        {
+            //Debug.LogWarning("FFFSAFASFASFasf");
+            _buttonTitles = Instantiate(_prefubTitlesButton, _rtMenu); // место находит автоматически
+        }
     }
     private void Start()
     {
@@ -81,6 +93,7 @@ public class MainMenu : MonoBehaviour
                 break;
             case LANGUAGE.Horizontal:
                 transform.position = _initialPositionMenu;
+
                 break;
         }
     }
@@ -89,6 +102,13 @@ public class MainMenu : MonoBehaviour
     private void StartingGameplay()
     {
         GameManager.Instance.currentSettings.Orientation = LANGUAGE.Horizontal;
+    }
+    private void CheckWasReachedEndOfGame()
+    {
+        if (GameManager.Instance.MaxReachedLevel == GameManager.Instance.orderLevels.Count - 1 && _buttonTitles == null) // если достигли последнего уровня
+        {
+            _buttonTitles = Instantiate(_prefubTitlesButton, _rtMenu); // место находит автоматически
+        }
     }
 
     private void OnDestroy()
