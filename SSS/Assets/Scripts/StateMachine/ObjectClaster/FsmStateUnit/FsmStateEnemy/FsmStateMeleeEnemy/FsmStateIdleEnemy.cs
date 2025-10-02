@@ -16,12 +16,16 @@ public class FsmStateIdleEnemy : FsmStateEnemy
         enemy.TEST_Current_State = "Idle";
         enemy.animator.Play("EnemyIdle");
         enemy.rb.linearVelocityX = 0;
+
+        enemy.triggerAreaScript.OnPlayerEnteredTriggerArea += GoToWalkState;
     }
 
     public override void Exit()
     {
         Debug.Log("Idle Enemy state [EXIT]");
         enemy.isTriggered = true; // по идее любой факт выхода из состояния idle будет выставлять факт триггера в true
+
+        enemy.triggerAreaScript.OnPlayerEnteredTriggerArea -= GoToWalkState;
     }
 
     public override void Update()
@@ -42,6 +46,10 @@ public class FsmStateIdleEnemy : FsmStateEnemy
         }
     }
 
+    private void GoToWalkState()
+    {
+        enemy._fsm.SetState<FsmStateWalkEnemy>();
+    }
 
     public override void OnDestroy()
     {

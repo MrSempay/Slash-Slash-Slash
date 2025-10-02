@@ -20,7 +20,12 @@ public class FsmStateJump : FsmStateMovementPlayer
 
         player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);
         player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
-        player.animator.Play("PlayerJump");
+
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerJump + C.StatesAdditional.Berserker :
+            C.Animations.PlayerJump;
+
+        player.animator.Play(nameAnimation);
 
     }
 

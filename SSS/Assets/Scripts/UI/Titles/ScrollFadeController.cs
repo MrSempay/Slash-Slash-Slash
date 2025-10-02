@@ -66,6 +66,10 @@ public class ScrollFadeController : MonoBehaviour
             case DeserializeTextObject.TEXT_TYPE.Descripton:
                 CreateTextElement(text, Color.white, C.Other.Descripton);
                 break;
+
+            case DeserializeTextObject.TEXT_TYPE.Separator:
+                CreateSeparator();
+                break;
         }
     }
 
@@ -81,8 +85,8 @@ public class ScrollFadeController : MonoBehaviour
         textMesh.color = color;
         textMesh.gameObject.name = name;
 
-        Debug.Log(textMesh.gameObject.transform);
-        Debug.Log(textMesh);
+        //Debug.Log(textMesh.gameObject.transform);
+        //Debug.Log(textMesh);
         _dictionaryRTAndTextMeshComponents[textMesh.gameObject.transform] = textMesh;
 
         return textMesh;

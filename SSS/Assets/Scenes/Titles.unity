@@ -2210,6 +2210,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 436
       objectReference: {fileID: 0}
+    - target: {fileID: 6056830836976725410, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -963
+      objectReference: {fileID: 0}
     - target: {fileID: 6127583411750733997, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_LocalPosition.x
       value: -344
@@ -2339,12 +2343,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6814195972757619690, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814195972757619690, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 336.305
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6814195972757619690, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1466.56
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6959749298103662253, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2390,6 +2398,14 @@ PrefabInstance:
 
 
         end empty space'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7424900991213261252, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7424900991213261252, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: m_overrideHtmlColors
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7523219253966778482, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_Name
@@ -2785,7 +2801,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1562299796}
-  - component: {fileID: 1562299797}
   m_Layer: 0
   m_Name: Torches
   m_TagString: Untagged
@@ -2810,20 +2825,6 @@ Transform:
   - {fileID: 91985423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1562299797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1562299795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd4efb614d5e9b469bcc42444860d87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 256
-  height: 256
 --- !u!4 &1628967637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 705902273715305413, guid: 3287b5fe6475baa41bae213ec4fae4fc, type: 3}

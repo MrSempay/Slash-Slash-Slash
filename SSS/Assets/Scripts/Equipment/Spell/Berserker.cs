@@ -6,7 +6,7 @@ public class Berserker : Spell
     private readonly int _sortOrderProtectionFieldSprite = 13;
 
     private Transform _transformParentBerserkerEyes;
-    private AppearingSprite _scriptBerserkerEyesSprite;
+    //private AppearingSprite _scriptBerserkerEyesSprite;
 
     public override void Awake()
     {
@@ -55,9 +55,11 @@ public class Berserker : Spell
             whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, true);
             whoCastedSpell.OnDirectionViewWasChanged += BiasBerserkerEyes;
 
-            _scriptBerserkerEyesSprite = GameManager.Instance.InvokeAppearingSprite(C.AppSprite.BerserkerEyes, _transformParentBerserkerEyes, -1f, true);
-            _scriptBerserkerEyesSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
-            _scriptBerserkerEyesSprite.selfSprite.flipX = !whoCastedSpell.lookingRight;
+            //_scriptBerserkerEyesSprite = GameManager.Instance.InvokeAppearingSprite(C.AppSprite.BerserkerEyes, _transformParentBerserkerEyes, -1f, true);
+            //_scriptBerserkerEyesSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
+            //_scriptBerserkerEyesSprite.selfSprite.flipX = !whoCastedSpell.lookingRight;
+
+            whoCastedSpell.AddUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
         }
     }
     public override void Deactivate(Unit whoCastedSpell)
@@ -72,13 +74,15 @@ public class Berserker : Spell
             whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, false);
             whoCastedSpell.OnDirectionViewWasChanged -= BiasBerserkerEyes;
 
-            Destroy(_scriptBerserkerEyesSprite.gameObject);
-            _scriptBerserkerEyesSprite = null;
+            //Destroy(_scriptBerserkerEyesSprite.gameObject);
+            //_scriptBerserkerEyesSprite = null;
+
+            whoCastedSpell.RemoveUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
         }
     }
 
     public void BiasBerserkerEyes(bool lookingRight)
     {
-        _scriptBerserkerEyesSprite.selfSprite.flipX = !lookingRight;
+        //_scriptBerserkerEyesSprite.selfSprite.flipX = !lookingRight;
     }
 }

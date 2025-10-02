@@ -24,7 +24,10 @@ public class FsmStateWalk : FsmStateMovementPlayer
                                                                           // мы мониторим факт дальнеших свайпов
         player.OnChangeNearEnemyStatus += CheckNearEnemyStatus;
 
-        player.animator.Play("PlayerWalkAggressive");
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerWalkAggressive + C.StatesAdditional.Berserker :
+            C.Animations.PlayerWalkAggressive;
+        player.animator.Play(nameAnimation);
     }
 
     public override void Exit()

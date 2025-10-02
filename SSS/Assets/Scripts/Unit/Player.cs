@@ -313,6 +313,7 @@ public class Player : Unit, IMainTarget
         //Debug.Log(enemiesInAttackArea.Count);
     }
 
+
     public void OnMove()
     {
         OnPlayerMove.Invoke();
@@ -603,7 +604,6 @@ public class Player : Unit, IMainTarget
             enemiesInAttackArea.Remove(enemy); // ну ей богу, не надо тут проверки на Contains, ну пожалуйста, ну как врага не могло быть в зоне, если он только что вышел из неё
         }
     }
-
 
     public void SomeEquipmentShouldBeActivate(Equipment equipment) // подписываем эту функцию в InventoryPlayer на прослушку снаряжения, которое попадают к нам в инвентарь. Отписываем при покидании инвентаря снаряжением
     {

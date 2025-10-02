@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     private Button _buttonTitles;
 
     [SerializeField] private RectTransform _notificationPlacement;
-    [SerializeField] private Button _prefubTitlesButton;
+    [SerializeField] private Button _prefubTitlesButton; // к великому сожалению в MainMenu мы используем маленькие кнопки... у нас это меню не скалится и сделано в маленьком масштабе
     [SerializeField] private RectTransform _rtMenu;
     [SerializeField] private RectTransform _transformPositionMenuVerticalOrientation;
     private void Awake()
@@ -42,6 +42,8 @@ public class MainMenu : MonoBehaviour
         {
             //Debug.LogWarning("FFFSAFASFASFasf");
             _buttonTitles = Instantiate(_prefubTitlesButton, _rtMenu); // место находит автоматически
+            _buttonTitles.transform.SetSiblingIndex(2);
+            _buttonTitles.onClick.AddListener(StartTitlesScene);
         }
     }
     private void Start()
@@ -108,7 +110,14 @@ public class MainMenu : MonoBehaviour
         if (GameManager.Instance.MaxReachedLevel == GameManager.Instance.orderLevels.Count - 1 && _buttonTitles == null) // если достигли последнего уровня
         {
             _buttonTitles = Instantiate(_prefubTitlesButton, _rtMenu); // место находит автоматически
+            _buttonTitles.transform.SetSiblingIndex(2);
+            _buttonTitles.onClick.AddListener(StartTitlesScene);
         }
+    }
+
+    private void StartTitlesScene()
+    {
+        GameManager.Instance.ChangeScene(C.NameScene.Titles);
     }
 
     private void OnDestroy()

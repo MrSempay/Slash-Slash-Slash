@@ -7,5 +7,6 @@ public class TitlesBuilder : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.notificationPlacement = _placementNotifications;
+        AudioManager.Instance.StartCertainMusicInLoop("TitlesTheme");
     }
 }

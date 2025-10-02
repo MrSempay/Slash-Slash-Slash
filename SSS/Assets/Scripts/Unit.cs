@@ -59,6 +59,8 @@ public abstract class Unit : MonoBehaviour, IInventory
     public int comboFromKill = 1; // комбо за убийство юнита. По умолчанию 1. Подразумеваю, что с развитием (???) игры будут добавляться враги, за которых можно дать и по-больше
     public int scoreFromKill; // очки за убийство юнита
     public float experienceFromKill; // опыт за убийство юнита
+    public enum UNIT_STATE_ADDITIONAL { Berserker }
+    private List<UNIT_STATE_ADDITIONAL> _listCurrentUnitStatesAdditional = new();
 
     #region IInventory interface
 
@@ -192,6 +194,25 @@ public abstract class Unit : MonoBehaviour, IInventory
     protected virtual void Start()
     {
 
+    }
+
+    public void AddUnitStateAdditional(UNIT_STATE_ADDITIONAL playerState)
+    {
+        if (!_listCurrentUnitStatesAdditional.Contains(playerState))
+        {
+            _listCurrentUnitStatesAdditional.Add(playerState);
+        }
+    }
+    public void RemoveUnitStateAdditional(UNIT_STATE_ADDITIONAL playerState)
+    {
+        if (_listCurrentUnitStatesAdditional.Contains(playerState))
+        {
+            _listCurrentUnitStatesAdditional.Remove(playerState);
+        }
+    }
+    public bool HasUnitStateAdditional(UNIT_STATE_ADDITIONAL playerState)
+    {
+        return _listCurrentUnitStatesAdditional.Contains(playerState);
     }
 
     public virtual void MakeDamageToUnit(Unit unitWhichIsAttacked)
@@ -638,8 +659,7 @@ public abstract class Unit : MonoBehaviour, IInventory
         }
     }
 
-
-# region Stune mechanic
+    #region Stune mechanic
 
     private float _currentStuneTimeRemaining;
     private Coroutine _waitStuneTimeCoroutine; // Начальное здоровье

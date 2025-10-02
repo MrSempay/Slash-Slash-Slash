@@ -157,6 +157,7 @@ public class C
         public const string Level3 = "Level3";
         public const string Level4 = "Level4";
         public const string Level5 = "Level5";
+        public const string Titles = "Titles";
         public const string SampleScene = "SampleScene";
         public const string MainMenu = "MainMenu";
     }
@@ -192,6 +193,8 @@ public class C
         public const string PrefubTextButtonBigScaled = "Prefubs/UI/TextButtonBigScaled";
         public const string PrefubTextButton = "Prefubs/UI/TextButton";
         public const string PrefubAppearingText = "Prefubs/UI/AppearingText";
+        public const string PrefubBigMainMenuButton = "Prefubs/UI/ButtonsBig/MainMenuButton";
+        public const string PrefubBigButtonTitles = "Prefubs/UI/ButtonsBig/ButtonTitles";
         public const string PrefubAppearingNotification = "Prefubs/UI/AppearingNotification";
         public const string PrefubCustomCombo = "Prefubs/UI/CustomCombo";
         public const string PrefubTextScrollView = "Prefubs/UI/TextScrollView";
@@ -286,6 +289,11 @@ public class C
     {
         public const string PlayerDied = "PlayerDied";
         public const string PlayerAttackNew = "PlayerAttackNew";
+        public const string PlayerWalkAggressive = "PlayerWalkAggressive";
+        public const string PlayerAttack = "PlayerAttack";
+        public const string PlayerIdle = "PlayerIdle";
+        public const string PlayerJump = "PlayerJump";
+        public const string PlayerFall = "PlayerFall";
 
         public const string AttackPeaked = "AttackPeaked";
         public const string Walk = "Walk";
@@ -314,6 +322,11 @@ public class C
         public const string BuildingCrush = "BuildingCrush";
 
     }
+    public static class StatesAdditional
+    {
+        public const string Berserker = "Berserker";
+    }
+
     public static class Tags
     {
         public const string EnemyDied = "EnemyDied";

@@ -168,7 +168,6 @@ public class Enemy : Unit
     private void FollowPlayer()
     {
         // ≈сли мы в состо€нии поко€, переходим в режим погони. ¬ любом случае ставим целью игрока, предыдущие цели нас более не волнуют
-        if (_fsm.StateCurrent?.GetType() == typeof(FsmStateIdleEnemy)) _fsm.SetState<FsmStateWalkEnemy>();
         CurrentTargetTransform = playerTransform;
         currentMainTarget = CurrentTargetTransform.GetComponent<IMainTarget>();
         temporaryTargetForRazbrestis = null;

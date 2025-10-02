@@ -40,7 +40,7 @@ public class TitlesParser : MonoBehaviour
     {
         public string text;
         public TEXT_TYPE type;
-        public enum TEXT_TYPE { Header, Descripton };
+        public enum TEXT_TYPE { Header, Descripton, Separator };
 
         public DeserializeTextObject(string text, TEXT_TYPE type)
         {
@@ -178,6 +178,11 @@ public class TitlesParser : MonoBehaviour
                     string txt = trimmed.Substring(3).Trim();
                     if (!string.IsNullOrEmpty(txt))
                         listTextsTitle.Add(new DeserializeTextObject(txt, DeserializeTextObject.TEXT_TYPE.Descripton));
+                    continue;
+                }
+                if (trimmed.StartsWith("S::"))
+                {
+                    listTextsTitle.Add(new DeserializeTextObject(null, DeserializeTextObject.TEXT_TYPE.Separator));
                     continue;
                 }
 

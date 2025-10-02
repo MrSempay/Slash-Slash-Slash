@@ -18,7 +18,12 @@ public class FsmStateIdle : FsmStatePlayer
         player.OnTranslateEquipment += SomeTranslateEquipment;
 
         player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
-        player.animator.Play("PlayerIdle");
+
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerIdle + C.StatesAdditional.Berserker :
+            C.Animations.PlayerIdle;
+
+        player.animator.Play(nameAnimation);
     }
 
     public override void Exit()

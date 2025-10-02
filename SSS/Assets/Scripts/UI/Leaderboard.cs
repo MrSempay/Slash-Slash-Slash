@@ -14,6 +14,7 @@ public class Leaderboard : MonoBehaviour
     [SerializeField] private Sprite place_2;
     [SerializeField] private Sprite place_3;
     [SerializeField] private Sprite place_another;
+    [SerializeField] private RectTransform _rtContainerButtons;
 
     private FieldInfo _prefubField;
     private bool _lastLoginingWasFailed = false;
@@ -113,6 +114,21 @@ public class Leaderboard : MonoBehaviour
 
                 place_number++;
             }
+            if (GameManager.Instance.currentLevelInOrder != GameManager.Instance.orderLevels.Count - 1) // если не достигли последнего уровня
+            {
+                GameManager.Instance.InstanceTextButton(true, _rtContainerButtons, C.Just.NextLevel, NextLevel);
+            }
+            else
+            {
+                foreach (RectTransform rtButton in _rtContainerButtons)
+                {
+                    Destroy(rtButton.gameObject); // по-хорошему ещё бы как-то listener-ов убрать, ну да ладно
+
+                }
+                Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
+                Instantiate(GameManager.Instance.prefubButtonBigTitles, _rtContainerButtons).onClick.AddListener(GoToTitles);
+            }
+
             Canvas.ForceUpdateCanvases();
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
         }
@@ -121,6 +137,16 @@ public class Leaderboard : MonoBehaviour
             _textNotification.Text = C.Notifications.CantGetLeaderboard;
             _lastLoginingWasFailed = true;
         }
+    }
+
+    private void GoToMainMenu()
+    {
+        GameManager.Instance.ChangeScene(C.NameScene.MainMenu);
+    }
+
+    private void GoToTitles()
+    {
+        GameManager.Instance.ChangeScene(C.NameScene.Titles);
     }
 
     private void OnDestroy()

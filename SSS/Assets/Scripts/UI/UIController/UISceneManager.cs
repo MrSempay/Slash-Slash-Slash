@@ -4,8 +4,6 @@ public class UISceneManager : UIController
 {
     private void Start()
     {
-
-        Debug.Log("бѓър " + GetInstanceID());
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake();
         SettingsMenu.Instance.Start(); 

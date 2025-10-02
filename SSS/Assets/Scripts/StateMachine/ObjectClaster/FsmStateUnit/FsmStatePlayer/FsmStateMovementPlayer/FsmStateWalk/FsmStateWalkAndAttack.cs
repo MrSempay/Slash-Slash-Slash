@@ -27,7 +27,11 @@ public class FsmStateWalkAndAttack : FsmStateWalk
             }
         }
 
-        player.animator.Play("PlayerAttack");
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerAttack + C.StatesAdditional.Berserker :
+            C.Animations.PlayerAttack;
+
+        player.animator.Play(nameAnimation);
     }
 
     public override void Exit()

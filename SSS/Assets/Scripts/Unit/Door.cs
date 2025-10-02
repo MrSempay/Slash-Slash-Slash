@@ -11,9 +11,11 @@ public class Door : Unit
     private Vector3 _startPositionOfEnterButton;
 
     private bool _doorIsOpened;
+    private Transform _tAreaDoorClosePlayerHasEntered;
     private Transform _transformEnterButton;
     
     [SerializeField] private AreaButtonEnter _scriptAreaEnterButton;
+    [SerializeField] private List<AreaDoorClose> _listAreasDoorClose = new();
 
 
     [SerializeField] public Sprite spriteDoorOpened;
@@ -64,6 +66,11 @@ public class Door : Unit
 
         _scriptAreaEnterButton.onPlayerEnteredEnterButtonArea += SetActiveEnterButton;
 
+        foreach (AreaDoorClose areaDoorClose in _listAreasDoorClose)
+        {
+            areaDoorClose.OnPlayerInDoorCloseArea += CloseDoor;
+        }
+
         selfCollider = GetComponent<BoxCollider2D>();
         _transformEnterButton = enterButton.GetComponent<Transform>();
 
@@ -90,6 +97,22 @@ public class Door : Unit
     public void OpenOrCloseDoor()
     {
         DoorIsOpened = !DoorIsOpened;
+    }
+    public void CloseDoor(Transform transform)
+    {
+        if (_tAreaDoorClosePlayerHasEntered == null)
+        {
+            _tAreaDoorClosePlayerHasEntered = transform;
+            return;
+        }
+        else if (_tAreaDoorClosePlayerHasEntered != transform)
+        {
+            if (DoorIsOpened)
+            {
+                DoorIsOpened = false;
+                _tAreaDoorClosePlayerHasEntered = transform;
+            }
+        }
     }
 
     public override void Die(Unit unitFromWhoWasGottenDamage = null)

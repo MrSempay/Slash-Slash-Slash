@@ -304,6 +304,7 @@
     <Compile Include="Assets\Scripts\Decor\TorchFlicker.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\AdsInitializer.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorOpened.cs" />
+    <Compile Include="Assets\Scripts\Unit\AreaDetectors\AreaDoorClose.cs" />
     <Compile Include="Assets\Scripts\Equipment\Ammunition\Tragicomedy.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\ObjectBridge.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueArea.cs" />

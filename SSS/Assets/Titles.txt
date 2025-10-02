@@ -11,6 +11,10 @@
 				D::SOME_TEXT
 			SOME_TEXT will be deserialize like a description.
 			
+			3) S - will be deserialize as a separator, for example:
+				S::
+			No need text after "::".
+			
 			A certain realisation of this text types see in Assets/Scripts/UI/ScrollFadeController
 =
 H:: Director
@@ -19,4 +23,10 @@ D:: Andreo Shidgen
 D:: Andreo Shidgen
 H:: Main manager
 D:: Andreo Shidgen
+S::
+S::
+S::
+S::
+S::
+D:: Спасибо!
 

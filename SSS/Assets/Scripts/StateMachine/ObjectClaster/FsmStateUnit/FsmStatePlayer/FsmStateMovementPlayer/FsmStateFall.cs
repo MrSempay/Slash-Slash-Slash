@@ -23,7 +23,11 @@ public class FsmStateFall : FsmStateMovementPlayer
 
         SubscribeForSignalActivationSomeEquipment();
 
-        player.animator.Play("PlayerFall");
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerFall + C.StatesAdditional.Berserker :
+            C.Animations.PlayerFall;
+
+        player.animator.Play(nameAnimation);
 
         // animator.Play("fall");
     }

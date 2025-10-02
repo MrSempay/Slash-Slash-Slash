@@ -1,0 +1,516 @@
+fileFormatVersion: 2
+guid: 233f74585acd76c4aa3b4eef9abdb974
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1846767017511644750
+    second: Knight_eyes_atack-2preShield-Sheet_0
+  - first:
+      213: 4740731569466419758
+    second: Knight_eyes_atack-2preShield-Sheet_1
+  - first:
+      213: 704074943316897723
+    second: Knight_eyes_atack-2preShield-Sheet_2
+  - first:
+      213: -1791990059779114343
+    second: Knight_eyes_atack-2preShield-Sheet_3
+  - first:
+      213: -627360406632900511
+    second: Knight_eyes_atack-2preShield-Sheet_4
+  - first:
+      213: -5109514437353977243
+    second: Knight_eyes_atack-2preShield-Sheet_5
+  - first:
+      213: -7421703105132131480
+    second: Knight_eyes_atack-2preShield-Sheet_6
+  - first:
+      213: 3790809797490011675
+    second: Knight_eyes_atack-2preShield-Sheet_7
+  - first:
+      213: -7125491948460347611
+    second: Knight_eyes_atack-2preShield-Sheet_8
+  - first:
+      213: 1982457849523078030
+    second: Knight_eyes_atack-2preShield-Sheet_9
+  - first:
+      213: -4961069581528192076
+    second: Knight_eyes_atack-2preShield-Sheet_10
+  - first:
+      213: -4803350935612396681
+    second: Knight_eyes_atack-2preShield-Sheet_11
+  - first:
+      213: -4480031252276763099
+    second: Knight_eyes_atack-2preShield-Sheet_12
+  - first:
+      213: -3412724929448825689
+    second: Knight_eyes_atack-2preShield-Sheet_13
+  - first:
+      213: 6953315053917989026
+    second: Knight_eyes_atack-2preShield-Sheet_14
+  - first:
+      213: 7009443992859665661
+    second: Knight_eyes_atack-2preShield-Sheet_15
+  - first:
+      213: 3293304244932424637
+    second: Knight_eyes_atack-2preShield-Sheet_16
+  - first:
+      213: 8185302407718604992
+    second: Knight_eyes_atack-2preShield-Sheet_17
+  - first:
+      213: 2084011151073223634
+    second: Knight_eyes_atack-2preShield-Sheet_18
+  - first:
+      213: -1211005083013410633
+    second: Knight_eyes_atack-2preShield-Sheet_19
+  - first:
+      213: 1073554603187876139
+    second: Knight_eyes_atack-2preShield-Sheet_20
+  - first:
+      213: -3242898480712770983
+    second: Knight_eyes_atack-2preShield-Sheet_21
+  - first:
+      213: -7247136782304437826
+    second: Knight_eyes_atack-2preShield-Sheet_22
+  - first:
+      213: -6079977401535077428
+    second: Knight_eyes_atack-2preShield-Sheet_23
+  - first:
+      213: 4106002034486378433
+    second: Knight_eyes_atack-2preShield-Sheet_24
+  - first:
+      213: 7073710737874988147
+    second: Knight_eyes_atack-2preShield-Sheet_25
+  - first:
+      213: -1266224428916587942
+    second: Knight_eyes_atack-2preShield-Sheet_26
+  - first:
+      213: -363744624534241849
+    second: Knight_eyes_atack-2preShield-Sheet_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e60bd51d801a910800000000000000
+      internalID: 1846767017511644750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2aa685be367ac140800000000000000
+      internalID: 4740731569466419758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf28ab3e6065c900800000000000000
+      internalID: 704074943316897723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99ab5d5f8829127e0800000000000000
+      internalID: -1791990059779114343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1685088b80b2b47f0800000000000000
+      internalID: -627360406632900511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a49cac0bb5719b0800000000000000
+      internalID: -5109514437353977243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86b8f260950d00990800000000000000
+      internalID: -7421703105132131480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1e667e1d69ab9430800000000000000
+      internalID: 3790809797490011675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52f6d1a43da2d1d90800000000000000
+      internalID: -7125491948460347611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e83020f19ea138b10800000000000000
+      internalID: 1982457849523078030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bb240f108db62bb0800000000000000
+      internalID: -4961069581528192076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_eyes_atack-2preShield-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 128
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b6847f5c1175db0800000000000000
+      internalID: -4803350935612396681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 11a94048eb3e1a54a983536824889e5e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Knight_eyes_atack-2preShield-Sheet_0: 1846767017511644750
+      Knight_eyes_atack-2preShield-Sheet_1: 4740731569466419758
+      Knight_eyes_atack-2preShield-Sheet_10: -4961069581528192076
+      Knight_eyes_atack-2preShield-Sheet_11: -4803350935612396681
+      Knight_eyes_atack-2preShield-Sheet_2: 704074943316897723
+      Knight_eyes_atack-2preShield-Sheet_3: -1791990059779114343
+      Knight_eyes_atack-2preShield-Sheet_4: -627360406632900511
+      Knight_eyes_atack-2preShield-Sheet_5: -5109514437353977243
+      Knight_eyes_atack-2preShield-Sheet_6: -7421703105132131480
+      Knight_eyes_atack-2preShield-Sheet_7: 3790809797490011675
+      Knight_eyes_atack-2preShield-Sheet_8: -7125491948460347611
+      Knight_eyes_atack-2preShield-Sheet_9: 1982457849523078030
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

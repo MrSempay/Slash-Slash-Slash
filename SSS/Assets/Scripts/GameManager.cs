@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject prefubAppearingText;
     public GameObject prefubAppearingNotification;
     public GameObject prefubTextButton;
+    public Button prefubButtonBigTitles;
+    public Button prefubButtonBigMainMenu;
     public GameObject prefubTextButtonPanelChoose;
     public GameObject prefubTextButtonScaled;
     public CustomCombo prefubCustomCombo;
@@ -270,6 +272,8 @@ public class GameManager : MonoBehaviour
         prefubPlaceForEquipment = Resources.Load<PlaceForEquipment>(C.Paths.PrefubPlaceForEquipment);
         prefubAmmunition = Resources.Load<GameObject>(C.Paths.PrefubAmmunition);
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
+        prefubButtonBigTitles = Resources.Load<Button>(C.Paths.PrefubBigButtonTitles);
+        prefubButtonBigMainMenu = Resources.Load<Button>(C.Paths.PrefubBigMainMenuButton);
         prefubTextButton = Resources.Load<GameObject>(C.Paths.PrefubTextButton);
         prefubTextButtonPanelChoose = Resources.Load<GameObject>(C.Paths.PrefubTextButtonPanelChoose);
         prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
@@ -340,6 +344,16 @@ public class GameManager : MonoBehaviour
         {
 
             SceneManager.LoadScene(C.NameScene.SceneDialogue);
+        }
+    }
+    public void ChangeScene(string nameTargetScene)
+    {
+        _nameTargetScene = nameTargetScene;
+
+        if (SceneManager.GetActiveScene().name != nameTargetScene)
+        {
+
+            SceneManager.LoadScene(nameTargetScene);
         }
     }
 
@@ -441,7 +455,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     public void ShakeSomething(GameObject obj, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation) // timeDuration = -1 для бесконечного шатания,
                                                                                                                                   // tickTime = -1 для шатания в каждом фрейме,
                                                                                                                                   // shouldBeAttenuation = true для затухания со вреиенем
@@ -460,7 +473,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 
     private IEnumerator ShakeCoroutine(Transform objTransform, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation)
     {

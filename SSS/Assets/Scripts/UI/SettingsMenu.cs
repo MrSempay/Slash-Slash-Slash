@@ -43,7 +43,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!AwakeWasCalledAlready)
         {
-            Debug.Log(GetInstanceID());
+            //Debug.Log(GetInstanceID());
             //Debug.Log(AwakeWasCalledAlready);
             if (_instance != null && _instance != this)
             {
