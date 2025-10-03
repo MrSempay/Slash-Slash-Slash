@@ -221,6 +221,7 @@ public class C
         public const string Stune = "Stune";
         public const string SeparateLine = "SeparateLine";
         public const string Header = "Header";
+        public const string SkipStudy = "SkipStudy";
         public const string Descripton = "Descripton";
         public const string CurrentScore = "CurrentScore";
         public const string maxKillCombo = "maxKillCombo";

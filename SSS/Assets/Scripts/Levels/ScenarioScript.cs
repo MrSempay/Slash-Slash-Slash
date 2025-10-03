@@ -108,10 +108,12 @@ public class ScenarioScript : MonoBehaviour
     {
         ScriptCurrentDialogue = playerDialogue;
     }
-    protected virtual void MovingCameraPlayerWasFinished()
+
+    protected virtual void MovingCameraPlayerWasFinished(string keyFinishing)
     {
         SetStateIdleToPlayerAndBlockAnyUpdateFunctions(false);
     }
+
     protected virtual void MovingObjectWasFinished(GameObject obj) { }
 
     // по идее кучу кода снизу можно было бы заменить на просто эмуляцию сигнала обновления ассортимента в свойстве, которое бы обозначало тот самый список с текущим снаряжением в здании
@@ -168,6 +170,10 @@ public class ScenarioScript : MonoBehaviour
     {
         GameManager.Instance.StartDialogue(nameDialogue);
     }
+    protected virtual void StartDialogueNEW(string nameDialogue) // взять образец из зоны диалога 
+    {
+        GameManager.Instance.StartDialogueNEW(nameDialogue);
+    }
     protected virtual async void FinishLevel()
     {
 
@@ -210,14 +216,14 @@ public class ScenarioScript : MonoBehaviour
         Transform transformObject = someObject.transform;
         _moveObjectCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, MoveObjectWithSpeedToPoint(transformObject, targetPoint, speed));
     }
-    protected virtual void MovingCameraPlayerToPoint(Camera cameraPlayer, Transform targetTransform, float speed) 
+    protected virtual void MovingCameraPlayerToPoint(Camera cameraPlayer, Transform targetTransform, float speed, string keyFinishing) 
     {
 
         SetStateIdleToPlayerAndBlockAnyUpdateFunctions(true);
         Transform transformCameraPlayer = cameraPlayer.transform;
 
         transformCameraPlayer.SetParent(null);
-        _moveCameraCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, MoveCameraPlayerWithSpeedToPoint(transformCameraPlayer, targetTransform, speed));
+        _moveCameraCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, MoveCameraPlayerWithSpeedToPoint(transformCameraPlayer, targetTransform, speed, keyFinishing));
 
     }
     protected virtual void JustTimeWait(float timeWait, string markerTimeWait) 
@@ -252,7 +258,7 @@ public class ScenarioScript : MonoBehaviour
     }
 
     // движение без замедления/ускорения в конце
-    IEnumerator MoveCameraPlayerWithSpeedToPoint(Transform transformCameraPlayer, Transform targetTransform, float speed)
+    IEnumerator MoveCameraPlayerWithSpeedToPoint(Transform transformCameraPlayer, Transform targetTransform, float speed, string keyFinishing)
     {
         yield return null; // очень важно! Ждём следующего кадра, чтоб, если нам нужно следовать за телепортировавшимся героем, у того успела обновиться position
 
@@ -270,7 +276,7 @@ public class ScenarioScript : MonoBehaviour
         transformCameraPlayer.position = targetTransform.position + scriptPlayer.localPositionCamera; // Устанавливаем точную позицию
         transformCameraPlayer.SetParent(transformPlayer);
         transformCameraPlayer.localPosition = scriptPlayer.localPositionCamera;
-        MovingCameraPlayerWasFinished();
+        MovingCameraPlayerWasFinished(keyFinishing);
     }
     IEnumerator TimeWait(float waitTime, string markerTimeWait)
     {

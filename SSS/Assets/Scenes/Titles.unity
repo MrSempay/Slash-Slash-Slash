@@ -796,6 +796,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 164600959}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &583268854 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6959749298103662253, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+  m_PrefabInstance: {fileID: 1387839884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &707785375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,7 +2064,7 @@ PrefabInstance:
       objectReference: {fileID: 122277759}
     - target: {fileID: 705118000699131731, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: _scrollSpeed
-      value: 0.05
+      value: 83
       objectReference: {fileID: 0}
     - target: {fileID: 1074113051752060002, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2370,6 +2375,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7022713146425332627, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: m_Viewport
+      value: 
+      objectReference: {fileID: 583268854}
     - target: {fileID: 7424900991213261252, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_text
       value: '

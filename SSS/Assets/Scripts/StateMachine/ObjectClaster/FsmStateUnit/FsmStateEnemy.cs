@@ -56,11 +56,12 @@ public class FsmStateEnemy : FsmStateUnit
         // Обновляем путь, если необходимо (например, если игрок переместился). По идее надо детектить ещё и y-состовляющую, но да ладно...
         if (enemy.CurrentTargetTransform)
         {
-            if (Mathf.Abs(enemy.transform.position.x - enemy.CurrentTargetTransform.position.x) > 0.5f)
+            if (Mathf.Abs(enemy.transform.position.x - enemy.CurrentTargetTransform.position.x) > enemy.arrivalThreshold)
             {
                 //Debug.Log("Emmm???1");
                 //Debug.Log(enemy.currentTargetTransform);
                 enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.CurrentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
+                enemy.isPathValid = true;
                 //Debug.Log(path.corners.Length);
                 //enemy.agent.destination = enemy.playerTransform.position;
                 //path = enemy.agent.path;
@@ -78,6 +79,12 @@ public class FsmStateEnemy : FsmStateUnit
         {
             //Останавливаем движение, например
             enemy.rb.linearVelocityX = 0;
+            if (enemy.TEST_MOD)
+            {
+                Debug.Log(enemy.isPathValid);
+                Debug.Log(path.corners.Length);
+                Debug.Log("Emmm???2");
+            }
             return; // Ничего не делаем, если путь не валиден или слишком короткий
         }
         //Debug.Log("Emmm???3");
@@ -94,15 +101,22 @@ public class FsmStateEnemy : FsmStateUnit
         }
         else
         {
-            //Debug.Log("Emmm???5");
+            if (enemy.TEST_MOD)
+            {
+                Debug.Log("Emmm???2.5");
+            }
             //Если все углы пройдены, то останавливаемся
-            enemy.rb.linearVelocityX = 0;
-            return;
+            //enemy.rb.linearVelocityX = 0; // 03.10.2025 - ваще хз что тут происходит. Из-за этого собаки застряют порою
+            //return; // 03.10.2025 - ваще хз что тут происходит. Из-за этого собаки застряют порою
         }
         //Debug.Log("Emmm???6");
 
         // Перемещение к целевой позиции. Cначала вычислям перемещение (чтоб понять, куда поворачиваться) и только после отзеркаливаем спрайт
         //Debug.Log("Emmm???3");
+        if (enemy.TEST_MOD)
+        {
+            Debug.Log("Emmm???3");
+        }
         MoveTowardsTarget();
         //Ориентация спрайта и прочего
         if (enemy.lookingRight == enemy.nextPointInPath.x < enemy.transform.position.x)
@@ -118,26 +132,38 @@ public class FsmStateEnemy : FsmStateUnit
     // двигаем персонажа по пути
     void MoveTowardsTarget()
     {
-        //Debug.Log("Emmm???4");
+        if (enemy.TEST_MOD)
+        {
+            Debug.Log("Emmm???4");
+        }
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
         //Debug.Log(direction);
         //Debug.Log(enemy.speed);
         enemy.rb.linearVelocityX = direction * enemy.speed;
+
         //Debug.Log(enemy.rb.linearVelocityX);
         // Проверка достижения цели
         if (Mathf.Abs(enemy.transform.position.x - enemy.nextPointInPath.x) <= enemy.arrivalThreshold)
         {
+            if (enemy.TEST_MOD)
+            {
+                Debug.Log("Emmm???5");
+            }
             //Debug.Log("Emmm???5");
             // Переходим к следующей точке
             enemy.currentCornerIndex++;
             if (enemy.currentCornerIndex >= path.corners.Length)
             {
                 // transformTargets
-                Debug.Log("Emmm???6");
+                if (enemy.TEST_MOD)
+                {
+                    Debug.Log("Emmm???6");
+                }
 
                 // Достигли конечной точки
                 enemy.rb.linearVelocityX = 0; //Останавливаемся
-                enemy.isPathValid = false; //Сбрасываем флаг
+                //enemy.isPathValid = false; //Сбрасываем флаг // 03.10.2025 - хз что это, хз как это, но убрал, чтоб не застрявали около целевых точек враги. Исхожу из того, что эта штука
+                                             // нужна лишь для сбрасывания скорости в ноль, что мы сами делаем в других состояниях
                 if (enemy.currentMainTarget != null)
                 {
                     Debug.Log("Ебануться0");

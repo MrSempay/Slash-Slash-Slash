@@ -43,7 +43,20 @@ public class ScrollFadeController : MonoBehaviour
     {
         if (_scrollRect.verticalNormalizedPosition > 0f)
         {
-            _scrollRect.verticalNormalizedPosition -= _scrollSpeed * Time.deltaTime;
+            float contentHeight = _scrollRect.content.rect.height;
+            float viewportHeight = _scrollRect.viewport.rect.height;
+
+            float scrollableHeight = contentHeight - viewportHeight;
+            if (scrollableHeight <= 0f)
+                return;
+
+            // Прокрутка в пикселях в секунду
+            float deltaPixels = _scrollSpeed * Time.deltaTime;
+
+            // Переводим в нормализованные единицы
+            float deltaNormalized = deltaPixels / scrollableHeight;
+
+            _scrollRect.verticalNormalizedPosition -= deltaNormalized;
             _scrollRect.verticalNormalizedPosition = Mathf.Clamp01(_scrollRect.verticalNormalizedPosition);
         }
     }
@@ -64,11 +77,15 @@ public class ScrollFadeController : MonoBehaviour
                 break;
 
             case DeserializeTextObject.TEXT_TYPE.Descripton:
-                CreateTextElement(text, Color.white, C.Other.Descripton);
+                CreateTextElement(text, Color.white, C.Other.Descripton, 44f);
                 break;
 
             case DeserializeTextObject.TEXT_TYPE.Separator:
                 CreateSeparator();
+                break;
+
+            case DeserializeTextObject.TEXT_TYPE.DescriptonSmall:
+                CreateTextElement(text, Color.white, C.Other.Descripton, 26f);
                 break;
         }
     }
@@ -76,13 +93,14 @@ public class ScrollFadeController : MonoBehaviour
     /// <summary>
     /// Создаёт элемент текста в ScrollView
     /// </summary>
-    private TextMeshProUGUI CreateTextElement(string text, Color color, string name)
+    private TextMeshProUGUI CreateTextElement(string text, Color color, string name, float fontSize = 54f)
     {
         var textMesh = Instantiate(_prefubTextScrollView, _tConteinerContent)
                        .GetComponent<TextMeshProUGUI>();
 
         textMesh.text = text;
         textMesh.color = color;
+        textMesh.fontSize = fontSize;
         textMesh.gameObject.name = name;
 
         //Debug.Log(textMesh.gameObject.transform);

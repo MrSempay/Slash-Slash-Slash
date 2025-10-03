@@ -24,7 +24,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
         Debug.Log("Enemy Walk state [ENTER]");
         enemy.TEST_Current_State = "Walk";
         enemy.currentCornerIndex = 1; // Ќачинаем со второй точки (индекс 1)
-        enemy.isPathValid = false; // —брасываем флаг валидности пути при входе
+        //enemy.isPathValid = false; // —брасываем флаг валидности пути при входе // 03.10.2025 - ваще хз что тут происходит. »з-за этого собаки застр€ют порою
         enemy.animator.Play("EnemyWalk");
     }
 

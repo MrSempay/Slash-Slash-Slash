@@ -18,7 +18,7 @@ public class Enemy : Unit
     [NonSerialized] public NavMeshAgent agent; // навигационный агент врага (собственный)
     [NonSerialized] public LineRenderer lineRenderer; // ломанная для визуализации пути
     [NonSerialized] public Vector2 nextPointInPath; // Текущая целевая позиция (вторая точка в пути)
-    [NonSerialized] public float arrivalThreshold = 0.1f; // Расстояние, при котором считаем, что достигли цели
+    [NonSerialized] public float arrivalThreshold = 0.3f; // Расстояние, при котором считаем, что достигли цели
     [NonSerialized] public float callDownMeleeAttack;
     [NonSerialized] public int currentCornerIndex; // Индекс текущего угла в пути
     [NonSerialized] public bool isPathValid; // Флаг, указывающий, что путь валиден
@@ -42,7 +42,8 @@ public class Enemy : Unit
     public AttackArea attackAreaScript; // Скрипт зоны для атаки
     public List<Unit> listOfUnitsInAttackArea = new List<Unit>();
     public bool isInRazbrestisState = false; // изменять ТОЛЬКО В FsmStateEnemy !!!
-    public string TEST_Current_State; // изменять ТОЛЬКО В FsmStateEnemy !!!
+    public string TEST_Current_State; 
+    public bool TEST_MOD;
 
 
 

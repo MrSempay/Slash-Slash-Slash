@@ -537,6 +537,11 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Следующий уровень" },
             { LANGUAGE.Spanish, "Uhu-hu" }
         });
+        localization.Add(C.Other.SkipStudy, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Skip study" },
+            { LANGUAGE.Russian, "Пропустить обучение" },
+            { LANGUAGE.Spanish, "Uhu-hu" }
+        });
         localization.Add(C.Just.ShowLeaderboard, new Dictionary<LANGUAGE, string>() {
             { LANGUAGE.English, "Show leaderboard" },
             { LANGUAGE.Russian, "Показать таблицу лидеров" },

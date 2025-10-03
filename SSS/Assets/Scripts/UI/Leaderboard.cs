@@ -16,6 +16,8 @@ public class Leaderboard : MonoBehaviour
     [SerializeField] private Sprite place_another;
     [SerializeField] private RectTransform _rtContainerButtons;
 
+    private HorizontalOrVerticalLayoutGroup _HOVLayoutGroupPlaceForFields;  
+    private HorizontalOrVerticalLayoutGroup _HOVLayoutGroupContainerButtons;
     private FieldInfo _prefubField;
     private bool _lastLoginingWasFailed = false;
     private GameObject _buttonShowLeaderboard;
@@ -23,6 +25,9 @@ public class Leaderboard : MonoBehaviour
 
     private void Awake()
     {
+        _HOVLayoutGroupPlaceForFields = _rectTransformPlaceForFields.GetComponent<HorizontalOrVerticalLayoutGroup>();
+        _HOVLayoutGroupContainerButtons = _rtContainerButtons.GetComponent<HorizontalOrVerticalLayoutGroup>();
+
         _prefubField = ScoreManager.prefubFieldLeaderboard; // не очень, конечно, безопасно, но едва ли лидерборд будет спавниться до ScoreManager
         //Debug.Log(GetInstanceID());
         UpdateLeaderboard();
@@ -33,6 +38,12 @@ public class Leaderboard : MonoBehaviour
         _cts = new CancellationTokenSource();
 
         PlayFabManager.Instance.OnLoginSuccess += LoginSuccess;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.RefreshLayout(gameObject, _HOVLayoutGroupPlaceForFields);
+        GameManager.Instance.RefreshLayout(gameObject, _HOVLayoutGroupContainerButtons);
     }
 
 
@@ -158,6 +169,8 @@ public class Leaderboard : MonoBehaviour
         {
             PlayFabManager.Instance.OnLoginSuccess -= LoginSuccess;
         }
+
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
     }
 
 

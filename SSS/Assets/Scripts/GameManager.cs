@@ -383,6 +383,26 @@ public class GameManager : MonoBehaviour
         }
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
     }
+    public void StartDialogueNEW(string nameDialogue) // этот метод для старта диалога, который получает папку не через параметр, а через LevelBuilder.Instance
+    {
+        nameDialogueCurrent = LevelBuilder.instance.selfName + $"/{nameDialogue}"; // Level1/Dialogue1 - пример
+        Debug.Log(nameDialogueCurrent);
+        RectTransform rectTransformPositionDialogue = GameObject.Find("PositionForDialogueWindow").GetComponent<RectTransform>();
+        RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
+        PlayerDialogue sciptPlayerDialogue;
+        if (Player.instance.UIUpscaledMod)
+        {
+            sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue,
+                                              rectTransformPositionDialogue.position,
+                                              rectTransformPositionDialogue.rotation,
+                                              rectTransformPositionDialogue).GetComponent<PlayerDialogue>();
+        }
+        else
+        {
+            sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
+        }
+        onDialogueStarted?.Invoke(sciptPlayerDialogue);
+    }
 
     public AppearingSprite InvokeAppearingSprite(string nameAnimation,
                                                  Transform transformParent,
@@ -439,6 +459,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(obj);
         }
+    }
+
+    public void RefreshLayout(GameObject obj, HorizontalOrVerticalLayoutGroup horizontalOrVerticalLayoutGroup)
+    {
+        CoroutineManager.Instance.StartManagedCoroutine(obj, RefreshLayout(horizontalOrVerticalLayoutGroup));
     }
 
     public void GoToRequiredLevel()
@@ -548,6 +573,16 @@ public class GameManager : MonoBehaviour
         {
             objTransform.localPosition = initialLocalPositionObject; // Возвращаем объект в исходную позицию
         }
+    }
+
+    private IEnumerator RefreshLayout(HorizontalOrVerticalLayoutGroup horizontalOrVerticalLayoutGroup)
+    {
+        horizontalOrVerticalLayoutGroup.spacing += 0.01f;
+        yield return null;
+        horizontalOrVerticalLayoutGroup.spacing -= 0.01f;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)horizontalOrVerticalLayoutGroup.transform);
+        Canvas.ForceUpdateCanvases();
     }
 
     private void OnApplicationQuit()

@@ -107,7 +107,7 @@ public class DialogueParser : MonoBehaviour
 
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
         string fullPathToDialogueFile = _nameDialogueFolder + GameManager.Instance.currentSettings.Language + "/" + _nameDialogueFileWithParentFolder;
-        Debug.Log(fullPathToDialogueFile);
+        //Debug.Log(fullPathToDialogueFile);
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)
@@ -214,7 +214,8 @@ public class DialogueParser : MonoBehaviour
 
     protected virtual void FinishDialogue() 
     {
-        Debug.Log("Закончили");
+        Debug.Log("Закончили диалог: " + _nameDialogueFileWithParentFolder);
+        //Debug.Log(_nameDialogueFileWithParentFolder);
         onDialogueWasFinished?.Invoke(_nameDialogueFileWithParentFolder);
     }
 

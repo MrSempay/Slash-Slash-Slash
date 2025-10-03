@@ -32,6 +32,13 @@ public class TitlesParser : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool _debugPrintLoaded = false;
 
+    private Dictionary<string, DeserializeTextObject.TEXT_TYPE> _dictionaryKeysTEXT_TYPES = new Dictionary<string, DeserializeTextObject.TEXT_TYPE>()
+    {
+        { "H::", DeserializeTextObject.TEXT_TYPE.Header },
+        { "D::", DeserializeTextObject.TEXT_TYPE.Descripton },
+        { "D-sm::", DeserializeTextObject.TEXT_TYPE.DescriptonSmall },
+        { "S::", DeserializeTextObject.TEXT_TYPE.Separator },
+    };
     // Список десериализованных объектов
 
     // Вложенный класс — хранит тип и текст
@@ -40,7 +47,7 @@ public class TitlesParser : MonoBehaviour
     {
         public string text;
         public TEXT_TYPE type;
-        public enum TEXT_TYPE { Header, Descripton, Separator };
+        public enum TEXT_TYPE { Header, Descripton, Separator, DescriptonSmall };
 
         public DeserializeTextObject(string text, TEXT_TYPE type)
         {
@@ -68,7 +75,8 @@ public class TitlesParser : MonoBehaviour
         }
 
         // Парсим и заполняем список
-        ParseContent(content);
+        //ParseContent(content);
+        ParseContent_ByDictionaryKeys(content);
 
         if (_debugPrintLoaded)
         {
@@ -211,6 +219,95 @@ public class TitlesParser : MonoBehaviour
 
         return listTextsTitle;
     }
+
+
+    private List<DeserializeTextObject> ParseContent_ByDictionaryKeys(string content)
+    {
+        using (StringReader reader = new StringReader(content))
+        {
+            string line;
+            bool inExcludedBlock = false;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                string trimmed = line.Trim();
+
+                if (string.IsNullOrEmpty(trimmed))
+                    continue;
+
+                if (IsEqualsOnly(trimmed))
+                {
+                    inExcludedBlock = !inExcludedBlock;
+                    continue;
+                }
+
+                if (inExcludedBlock)
+                    continue;
+
+                // Автоматическая обработка всех ключей из словаря
+                bool keyFound = false;
+                foreach (var keyPair in _dictionaryKeysTEXT_TYPES)
+                {
+                    if (trimmed.StartsWith(keyPair.Key))
+                    {
+                        string txt = trimmed.Substring(keyPair.Key.Length).Trim();
+
+                        // Для разделителя текст не нужен
+                        if (keyPair.Value == DeserializeTextObject.TEXT_TYPE.Separator)
+                        {
+                            listTextsTitle.Add(new DeserializeTextObject(null, keyPair.Value));
+                        }
+                        // Для остальных типов проверяем, что текст не пустой
+                        else if (!string.IsNullOrEmpty(txt))
+                        {
+                            listTextsTitle.Add(new DeserializeTextObject(txt, keyPair.Value));
+                        }
+
+                        keyFound = true;
+                        break;
+                    }
+                }
+
+                if (keyFound)
+                    continue;
+
+                // Резервная обработка для формата X::value
+                int idx = trimmed.IndexOf("::");
+                if (idx > 0)
+                {
+                    string key = trimmed.Substring(0, idx).Trim();
+                    string txt = trimmed.Substring(idx + 2).Trim();
+
+                    // Ищем ключ в словаре (без ::)
+                    string fullKey = key + "::";
+                    if (_dictionaryKeysTEXT_TYPES.ContainsKey(fullKey))
+                    {
+                        var textType = _dictionaryKeysTEXT_TYPES[fullKey];
+
+                        if (textType == DeserializeTextObject.TEXT_TYPE.Separator)
+                        {
+                            listTextsTitle.Add(new DeserializeTextObject(null, textType));
+                        }
+                        else if (!string.IsNullOrEmpty(txt))
+                        {
+                            listTextsTitle.Add(new DeserializeTextObject(txt, textType));
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"ScrollFadeController: Неизвестный ключ '{key}' в строке: {line}");
+                        continue;
+                    }
+                }
+
+                Debug.LogWarning($"ScrollFadeController: Игнорирую некорректную строку: {line}");
+            }
+        }
+
+        return listTextsTitle;
+    }
+
 
     /// <summary>
     /// Проверяет, состоит ли строка только из символов '=' (и пробелов)

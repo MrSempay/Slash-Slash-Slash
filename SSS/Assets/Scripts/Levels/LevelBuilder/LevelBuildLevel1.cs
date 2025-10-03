@@ -4,11 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class LevelBuildLevel1 : LevelBuilder
 {
     public int som;
+
+    [SerializeField] private RectTransform _rtPlaceButtonSkipStudy;
+
+    private Level1Scenario scriptLevelScenario;
+    private GameObject _buttonSkipStudy;
 
     protected override void Awake()
     {
@@ -49,8 +55,24 @@ public class LevelBuildLevel1 : LevelBuilder
             }
         }
 
+        scriptLevelScenario = (Level1Scenario)ScenarioScript.instance;
+        if (GameManager.Instance.MaxReachedLevel > 0)
+        {
+            scriptLevelScenario.OnStudyStart += InstanceSkipStudyButton;
+            scriptLevelScenario.OnStudyFinish += DestroySkipStudyButton;
+        }
+
     }
 
+    private void InstanceSkipStudyButton()
+    {
+        _buttonSkipStudy = GameManager.Instance.InstanceTextButton(false, _rtPlaceButtonSkipStudy, C.Other.SkipStudy, () => { scriptLevelScenario.OnStudyFinish?.Invoke(); });
+    }
+
+    private void DestroySkipStudyButton()
+    {
+        Destroy(_buttonSkipStudy);
+    }
 
 
     protected override void Start()

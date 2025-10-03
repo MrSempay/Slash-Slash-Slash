@@ -11,6 +11,7 @@ public class PlayerDialogue : DialogueParser
 
     protected override void Awake()
     {
+        //FinishDialogue(); // по идее нужно сначала завершить предыдущий диалог, если таковой имеется
         base.Awake();
         LoadAndParseDialogueAndShowPhrase();
         /*

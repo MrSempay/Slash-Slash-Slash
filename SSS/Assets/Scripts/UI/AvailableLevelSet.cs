@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,7 +41,8 @@ public class AvailableLevelSet : MonoBehaviour
     }
     private void OnEnable()
     {
-        CoroutineManager.Instance.StartManagedCoroutine(gameObject, RefreshLayout());
+        //CoroutineManager.Instance.StartManagedCoroutine(gameObject, RefreshLayout());
+        GameManager.Instance.RefreshLayout(gameObject, _scrollContainer.GetComponent<HorizontalOrVerticalLayoutGroup>());
     }
 
     // Update is called once per frame

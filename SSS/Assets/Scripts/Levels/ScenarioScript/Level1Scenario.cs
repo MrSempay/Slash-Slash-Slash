@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,6 +16,7 @@ public class Level1Scenario : ScenarioScript
     private bool _firstBueSpell = true;
     private bool _firstBueAmmunition = true;
     private Camera _cameraPlayer;
+    private bool _studyWasFinished = false;
 
     [SerializeField] private Transform _transformPointSpawnFirstEnemy;
     [SerializeField] private Transform _transformPointTeleportSchool;
@@ -24,6 +26,8 @@ public class Level1Scenario : ScenarioScript
 
     public GameObject school;
     public GameObject treasury;
+    public Action OnStudyStart;
+    public Action OnStudyFinish;
 
 
     protected override void Awake()
@@ -40,13 +44,14 @@ public class Level1Scenario : ScenarioScript
 
         _scriptSchool.onUpdateAssortment += AssortmentInBuildingWasUpdated;
         _scriptTreasury.onUpdateAssortment += AssortmentInBuildingWasUpdated;
+        OnStudyFinish += FinishStudy;
 
 
         _cameraPlayer = GameObject.Find("CameraPlayer").GetComponent<Camera>();
 
         dictionaryNamesEnemiesWavesAndRewards = new() // по идее это надо будет вынести в Adjust-скрипт // редакция от 10.07.2025 - надо вынести это в редактор для возможности настройки там
         {
-            { "WaveAfterAmmunitionBue", 40000 },
+            { "WaveAfterLearning", 40000 },
             { "JustSecondWave", 10000 },
         };
     }
@@ -55,7 +60,8 @@ public class Level1Scenario : ScenarioScript
     {
         base.Start();
 
-        GameManager.Instance.StartDialogue("Level1/Dialogue1");
+        StartDialogueNEW("Dialogue1.1");
+        OnStudyStart?.Invoke();
     }
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
@@ -65,11 +71,54 @@ public class Level1Scenario : ScenarioScript
         base.DialogueFinished(nameDialogueWithFolder);
         switch (nameDialogueWithFolder)
         {
-            case "Level1/Dialogue1":
-                SpawnFirstEnemyAndIncreaseReward(_enemyPrefub, _transformPointSpawnFirstEnemy.position);
+            case "Level1/Dialogue1.1":
+
+                if (!_studyWasFinished)
+                {
+                    SpawnFirstEnemyAndIncreaseReward(_enemyPrefub, _transformPointSpawnFirstEnemy.position);
+                }
                 break;
-            case "Level1/Dialogue2":
-                JustTimeWait(3f, "waitTimeAfterFirstAmmunitionBue");
+
+            case "Level1/Dialogue1.2":
+
+                if (!_studyWasFinished)
+                {
+                    MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f, "MoveAfterEnemyKilling"); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
+                                                                                                             // MovingCameraPlayerToPoint и ждём 1 кадр)
+                    TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
+                }
+                break;
+
+            case "Level1/Dialogue2.1":
+
+                break;
+
+            case "Level1/Dialogue2.2":
+
+                if (!_studyWasFinished)
+                {
+                    MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f, "MoveCameraAfterFisrtSpellBue");
+                    TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
+                }
+                break;
+
+            case "Level1/Dialogue3.1":
+
+                break;
+            case "Level1/Dialogue3.2":
+
+                Debug.Log("И какого хрена эта штука не началась?");
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
+                                                                     { _transformSchool, 5 },
+                                                                     { _transformTreasury, 5 } },
+                                 "WaveAfterLearning");
+                break;
+            case "Level1/Dialogue4":
+
+                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 7 },
+                                                                     { _transformSchool, 7 },
+                                                                     { _transformTreasury, 7 } },
+                                 "SecondWave");
                 break;
         }
         
@@ -81,9 +130,9 @@ public class Level1Scenario : ScenarioScript
         switch (markerTimeWait)
         {
             case "waitTimeAfterFirstEnemyKill":
-                MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
+                //MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f); // перемещаем камеру к игроку (предварительно камеру игрока отцепляем от игрока в скрипте функции
                                                                                // MovingCameraPlayerToPoint и ждём 1 кадр)
-                TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
+                //TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                 break;
 
             case "justWait":
@@ -93,21 +142,21 @@ public class Level1Scenario : ScenarioScript
                                  "JustSecondWave");
                 break;
 
+            case "FirstEnemyWasKilled":
+                StartDialogueNEW("Dialogue1.2");
+
+                break;
+
             //        АНДРЕЙ!!! ТРОГАЙ ТОЛЬКО ТО, ЧТО ВНИЗУ!       //
 
-            case "waitTimeAfterFirstAmmunitionBue":
+            case "WaitAfterFirstAmminitionBueBeforeFirstWave":
+
                 Debug.Log("Study was finished");
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 }, 
-                                                                     { _transformSchool, 5 },
-                                                                     { _transformTreasury, 5 } },
-                                 "WaveAfterLearning");
+                OnStudyFinish?.Invoke();
+
                 break;
 
             case "waitBefore2Wave":
-                StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 7 },
-                                                                     { _transformSchool, 7 },
-                                                                     { _transformTreasury, 7 } },
-                                 "SecondWave");
                 break;
 
             case "waitBefore3Wave":
@@ -143,6 +192,7 @@ public class Level1Scenario : ScenarioScript
         switch (nameWave)
         {
             case "WaveAfterLearning":
+                StartDialogueNEW("Dialogue4");
                 JustTimeWait(10f, "waitBefore2Wave");
                 break;
             case "SecondWave":
@@ -164,26 +214,56 @@ public class Level1Scenario : ScenarioScript
     protected override void UnitWasKilled(Unit unit)
     {
         base.UnitWasKilled(unit);
+        if (_studyWasFinished)
+        {
+            return;
+        }
         // увы, нельзя использовать switch-case с указанием в case не константы (например case _scriptFirstEnemyForKill:)
         if (unit == _scriptFirstEnemyForKill)
         {
             unit.onUnitWasKilled -= UnitWasKilled;
-            JustTimeWait(2f, "waitTimeAfterFirstEnemyKill");
+            JustTimeWait(2f, "FirstEnemyWasKilled");
+            //JustTimeWait(2f, "waitTimeAfterFirstEnemyKill");
 
 
         }
 
     }
 
+    protected override void MovingCameraPlayerWasFinished(string keyFinishing)
+    {
+        base.MovingCameraPlayerWasFinished(keyFinishing);
+
+        if (_studyWasFinished)
+        {
+            return;
+        }
+
+        switch (keyFinishing)
+        {
+            case "MoveAfterEnemyKilling":
+                StartDialogueNEW("Dialogue2.1");
+                break;
+            case "MoveCameraAfterFisrtSpellBue":
+                StartDialogueNEW("Dialogue3.1");
+                break;
+
+
+        }
+    }
+
     protected override void EquipmentWasSold(Equipment equipment)
     {
         base.EquipmentWasSold(equipment);
+        if (_studyWasFinished)
+        {
+            return;
+        }
         if (equipment.isEquipmentASpell)
         {
             if (_firstBueSpell)
             {
-                MovingCameraPlayerToPoint(_cameraPlayer, transformPlayer, 16f);
-                TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
+                StartDialogueNEW("Dialogue2.2");
                 _firstBueSpell = false;
             }
         }
@@ -191,7 +271,7 @@ public class Level1Scenario : ScenarioScript
         {
             if (_firstBueAmmunition)
             {
-                StartDialogue("Level1/Dialogue2");
+                JustTimeWait(1f, "WaitAfterFirstAmminitionBueBeforeFirstWave");
                 _firstBueAmmunition = false;
             }
         }
@@ -218,6 +298,12 @@ public class Level1Scenario : ScenarioScript
 
 
     /* ############################# БЛОК СЛУЖЕБНЫХ (ВНУТРЕННИХ) ФУНКЦИЙ, ЯВЛЯЮТСЯ ТЕХНИЧЕСКИМИ ДЛЯ ОСНОВНЫХ ФУНКЦИЙ-РЕАКЦИЙ/СИГНАЛОВ ############################# */
+
+    private void FinishStudy()
+    {
+        _studyWasFinished = true;
+        StartDialogueNEW("Dialogue3.2");
+    }
 
     protected override void OnDestroy()
     {
