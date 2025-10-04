@@ -76,7 +76,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     //Debug.Log("„то за пиздец");
                     if (equipment.WasSold == false)
                     {
-                        Debug.Log(equipment.WasSold);
+                        //Debug.Log(equipment.WasSold);
                         if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(player, equipment)) // спелы сто€т 0 злата, так что по идее на них всегда будет хватать
                         {
                             if (equipment.isEquipmentASpell) // если то, что мы продаЄм - спел

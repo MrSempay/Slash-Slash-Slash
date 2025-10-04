@@ -127,7 +127,9 @@
     <Compile Include="Assets\Scripts\Legacy-code\DamageDealer.cs" />
     <Compile Include="Assets\Scripts\UI\EquipmentInfoPanel.cs" />
     <Compile Include="Assets\YandexMobileAds\RewardedAdLoader.cs" />
+    <Compile Include="Assets\Scripts\Levels\ScenarioScript\Livel1Scenario_AsyncUsing.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingDestroyed.cs" />
+    <Compile Include="Assets\Scripts\HelperClasses\ReplayableEvent.cs" />
     <Compile Include="Assets\Scripts\Levels\ScenarioScript\DefaultLevelScenario.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\InterstitialAds.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy.cs" />

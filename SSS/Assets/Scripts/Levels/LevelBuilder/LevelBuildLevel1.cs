@@ -13,7 +13,8 @@ public class LevelBuildLevel1 : LevelBuilder
 
     [SerializeField] private RectTransform _rtPlaceButtonSkipStudy;
 
-    private Level1Scenario scriptLevelScenario;
+    //private Level1Scenario scriptLevelScenario;
+    private Livel1Scenario_AsyncUsing scriptLevelScenario;
     private GameObject _buttonSkipStudy;
 
     protected override void Awake()
@@ -55,7 +56,8 @@ public class LevelBuildLevel1 : LevelBuilder
             }
         }
 
-        scriptLevelScenario = (Level1Scenario)ScenarioScript.instance;
+        //scriptLevelScenario = (Level1Scenario)ScenarioScript.instance;
+        scriptLevelScenario = (Livel1Scenario_AsyncUsing)ScenarioScript.instance;
         if (GameManager.Instance.MaxReachedLevel > 0)
         {
             scriptLevelScenario.OnStudyStart += InstanceSkipStudyButton;

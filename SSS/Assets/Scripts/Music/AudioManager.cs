@@ -530,7 +530,7 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator WaitForTransitionBetweenFightOrAmbientMusicEnd(AudioClip targetMusic, bool? isFightMusic = null)
     {
-        Debug.Log($"Вызов из: {System.Environment.StackTrace}");
+        //Debug.Log($"Вызов из: {System.Environment.StackTrace}");
         if (_transitionMusic != null) // хотя если это у нас боевая или музыка покоя, музыка перехода у нас всегда будет, но да ладно, оставлю проверку
         {
             yield return new WaitForSecondsRealtime(_transitionMusic.length);

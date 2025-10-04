@@ -328,6 +328,36 @@ public class C
         public const string Berserker = "Berserker";
     }
 
+    public static class SS // ScenarioStuff
+    {
+        public static class Level1
+        {
+            public static class Dialogues
+            {
+                public const string Dialogue1_1 = "Level1/Dialogue1.1";
+                public const string Dialogue1_2 = "Level1/Dialogue1.2";
+                public const string Dialogue2_1 = "Level1/Dialogue2.1";
+                public const string Dialogue2_2 = "Level1/Dialogue2.2";
+                public const string Dialogue3_1 = "Level1/Dialogue3.1";
+                public const string Dialogue3_2 = "Level1/Dialogue3.2";
+                public const string Dialogue4 = "Level1/Dialogue4";
+            }
+            public static class CM // CameraMoving 
+            {
+                public const string MoveAfterEnemyKilling = "MoveAfterEnemyKilling";
+                public const string MoveAfterFirstSpellBue = "MoveAfterFirstSpellBue";
+            }
+            public static class WN // WavesNames
+            {
+                public const string WaveAfterLearning = "WaveAfterLearning";
+                public const string Second = "Second";
+                public const string Third = "Third";
+                public const string Fourth = "Fourth";
+                public const string Fifth = "Fifth";
+            }
+        }
+    }
+
     public static class Tags
     {
         public const string EnemyDied = "EnemyDied";

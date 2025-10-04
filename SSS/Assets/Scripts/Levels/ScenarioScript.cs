@@ -57,6 +57,7 @@ public class ScenarioScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Debug.Log("А мы вообще, тут?");
 
         //player = Player.instance.gameObject;
 
@@ -106,6 +107,7 @@ public class ScenarioScript : MonoBehaviour
     }
     protected virtual void DialogueWasStarted(PlayerDialogue playerDialogue)
     {
+        //Debug.Log("А он, блять, начался");
         ScriptCurrentDialogue = playerDialogue;
     }
 
@@ -153,7 +155,7 @@ public class ScenarioScript : MonoBehaviour
         _buildingAndEquipmentInBuildingFromLastIteration[building] = new List<Equipment>(equipmentInBuilding);
         
     }
-    protected virtual void EquipmentWasSold(Equipment equipment) { Debug.Log("Study was finished"); }
+    protected virtual void EquipmentWasSold(Equipment equipment) { Debug.Log("Equipment was sold"); }
 
 
 
@@ -276,6 +278,7 @@ public class ScenarioScript : MonoBehaviour
         transformCameraPlayer.position = targetTransform.position + scriptPlayer.localPositionCamera; // Устанавливаем точную позицию
         transformCameraPlayer.SetParent(transformPlayer);
         transformCameraPlayer.localPosition = scriptPlayer.localPositionCamera;
+        //Debug.Log("А мы реально переместили?");
         MovingCameraPlayerWasFinished(keyFinishing);
     }
     IEnumerator TimeWait(float waitTime, string markerTimeWait)

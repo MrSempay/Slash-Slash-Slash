@@ -1,6 +1,7 @@
 =
 	README:
 		Text in "=" tabs will not be deserialize.
+		Empty lines will be ignored.
 		Here uses next text deserialize markers:
 		
 			1) H - text after "::" separator will be deserialize like a header text, example:
@@ -28,18 +29,18 @@ D:: Andreo Sheudgen
 
 H:: Graphic designer
 D:: Andreo Sheudgen
-D:: Kristalic (GRAF)
+D:: Kristalik
 
 H:: Graphic artist
 D:: Andreo Sheudgen
-D:: Kristalic (GRAF)
+D:: Kristalik
 
 H:: Software developer
 D:: Fossa2016
 
 H:: Level designer
 D:: Andreo Sheudgen
-D:: Kristalic (GRAF)
+D:: Kristalik
 
 H:: Scenario
 D:: Andreo Sheudgen
@@ -63,7 +64,7 @@ D:: Fossa2016
 H:: Testing
 D:: Andreo Sheudgen
 D:: Fossa2016
-D:: Kristalic (GRAF)
+D:: Kristalik
 
 H:: Some sounds was taken from:
 D-sm:: Sci-fic; after explosion.wav by Tikocam -- https://freesound.org/s/150887/ -- License: Attribution 3.0
