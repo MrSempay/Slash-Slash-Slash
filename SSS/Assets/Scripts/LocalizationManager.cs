@@ -377,11 +377,6 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Бесконечное" },
             { LANGUAGE.Spanish, "Mda..." }
         });
-        localization.Add(C.DK.PlateArmor + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() { 
-            { LANGUAGE.English, "MUdaaaaa-aaaaaaa" },
-            { LANGUAGE.Russian, "Ибо мда уж" },
-            { LANGUAGE.Spanish, "Mda..." }
-        });
         localization.Add(TYPE_APPEARING_MESSAGE.ComboAdded.ToString(), new Dictionary<LANGUAGE, string>() {
             { LANGUAGE.English, "Combo added" },
             { LANGUAGE.Russian, "Добавлено комбо" },
@@ -587,6 +582,114 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Показывать уведомления" },
             { LANGUAGE.Spanish, "Ура!" }
         });
+
+        localization.Add(C.DK.Spear + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Ancient spine of Hartgard, wielded by caravan guards. Strikes like lightning, but drains the grip" },
+    { LANGUAGE.Russian, "Древний шип Хартгарда, использовался стражниками караванов. Разит молниеносно, но истощает хватку" },
+    { LANGUAGE.Spanish, "Espina antigua de Hartgard, usada por guardias de caravanas. Golpea como un rayo, pero agota el agarre" }
+});
+
+        localization.Add(C.DK.Sword + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Simple blade of a castle guard, tempered in Hartgard's forges before the shadow invasion. Reliable in any skirmish" },
+    { LANGUAGE.Russian, "Простой клинок стража замка, закаленный в пламени кузниц Хартгарда перед нашествием теней. Надежен в любой стычке" },
+    { LANGUAGE.Spanish, "Hoja simple de un guardia del castillo, templada en las forjas de Hartgard antes de la invasión de sombras. Confiable en cualquier escaramuza" }
+});
+
+        localization.Add(C.DK.Knife + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Thin blade from clan warehouses, crafted for shadowy dealings with smugglers" },
+    { LANGUAGE.Russian, "Тонкий клинок из складов клана, выточенный для теневых сделок с контрабандистами" },
+    { LANGUAGE.Spanish, "Hoja delgada de los almacenes del clan, forjada para tratos sombríos con contrabandistas" }
+});
+
+        localization.Add(C.DK.Axe + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Heavy cleaver of Hartgard's lumberjacks. Crushes with a chance to stun, but devours stamina" },
+    { LANGUAGE.Russian, "Тяжелый тесак лесорубов Хартгарда. Крушит с шансом оглушить, но жрет выносливость" },
+    { LANGUAGE.Spanish, "Hacha pesada de los leñadores de Hartgard. Aplasta con posibilidad de aturdir, pero devora resistencia" }
+});
+
+        localization.Add(C.DK.DexterityBracelet + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Bracelet woven from silver threads, found in the treasury of ruins. Hastens steps through castle corridors, where every moment is life, without shadows of doubt, like pure barter instinct" },
+    { LANGUAGE.Russian, "Плетеный из серебряных нитей браслет, найденный в сокровищнице руин. Ускоряет шаги по коридорам замка, где каждый миг — жизнь, без теней сомнений, как чистый инстинкт бартера." },
+    { LANGUAGE.Spanish, "Brazalete tejido con hilos de plata, encontrado en el tesoro de las ruinas. Acelera los pasos por los corredores del castillo, donde cada momento es vida, sin sombras de duda, como puro instinto de trueque" }
+});
+
+        localization.Add(C.DK.MedallionOfLife + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Amulet of Hartgard's lords, imbued with elixirs of ancient healers" },
+    { LANGUAGE.Russian, "Амулет лордов Хартгарда, пропитанный эликсирами древних целителей." },
+    { LANGUAGE.Spanish, "Amuleto de los señores de Hartgard, impregnado con elixires de sanadores antiguos" }
+});
+
+        localization.Add(C.DK.RingWarrior + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Ring of warrior's honor, engraved with battle runes" },
+    { LANGUAGE.Russian, "Кольцо воинской чести, гравированное рунами битв." },
+    { LANGUAGE.Spanish, "Anillo del honor guerrero, grabado con runas de batalla" }
+});
+
+        localization.Add(C.DK.LeatherArmor + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Simple hide jerkin, sewn by Hartgard's craftsmen. Perfect for quick maneuvers in ruins, but vulnerable to fangs" },
+    { LANGUAGE.Russian, "Простая куртка из шкур, сшитая мастерами Хартгарда. Идеальна для быстрых маневров в руинах, но уязвима к клыкам" },
+    { LANGUAGE.Spanish, "Chaqueta simple de pieles, cosida por artesanos de Hartgard. Perfecta para maniobras rápidas en ruinas, pero vulnerable a colmillos" }
+});
+
+        localization.Add(C.DK.ChainMail + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Armor of links, forged from metal of battles with neighbors. Modest in defense, but reliable" },
+    { LANGUAGE.Russian, "Доспех из звеньев, собранных из металла битв с соседями. Скромна в обороне, но надежна" },
+    { LANGUAGE.Spanish, "Armadura de eslabones, forjada con metal de batallas contra vecinos. Modesta en defensa, pero confiable" }
+});
+
+        localization.Add(C.DK.PlateArmor + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Plate cuirass, forged from metal. Impenetrable against light attacks, but weighs on shoulders, limiting mobility" },
+    { LANGUAGE.Russian, "Пластинчатый панцирь, выкованный из металла. Непробиваем пред легкими атаками, но давит на плечи, чем ограничивает подвижность." },
+    { LANGUAGE.Spanish, "Coraza de placas, forjada de metal. Impenetrable ante ataques ligeros, pero pesa en los hombros, limitando la movilidad" }
+});
+
+        localization.Add(C.DK.ThunderAxe + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Thunderer's axe, forged in Hartgard's smithies from metal of distant lands" },
+    { LANGUAGE.Russian, "Топор громовержца, выкованный в кузницах Хартгарда из металла далеких земель" },
+    { LANGUAGE.Spanish, "Hacha del atronador, forjada en las herrerías de Hartgard con metal de tierras lejanas" }
+});
+
+        localization.Add(C.DK.ThunderArmor + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Thunderer's armor, forged in Hartgard's smithies from metal of distant lands" },
+    { LANGUAGE.Russian, "Броня громовержца, выкованная в кузницах Хартгарда из металла далеких земель" },
+    { LANGUAGE.Spanish, "Armadura del atronador, forjada en las herrerías de Hartgard con metal de tierras lejanas" }
+});
+
+        localization.Add(C.DK.FireSword + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "In the hour when the heavens above Hartgard split, the Dragon Defender tore its claw from the flesh of eternity, and the clan lord reforged it into a blade" },
+    { LANGUAGE.Russian, "В час, когда небеса над Хартгардом раскололись, Защитник Дракона вырвал свой коготь из плоти вечности, и лорд клана перековал его в клинок" },
+    { LANGUAGE.Spanish, "En la hora cuando los cielos sobre Hartgard se partieron, el Defensor Dragón arrancó su garra de la carne de la eternidad, y el señor del clan la reforjó en una hoja" }
+});
+
+        localization.Add(C.DK.DragonArmor + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "In the depths of Eldvir's scorching forges, in the flame of the Dragon - guardian of heavens, the scales of this ancient titan were reforged into magnificent armor" },
+    { LANGUAGE.Russian, "В недрах раскаленных кузниц Элдвира, в пламени Дракона — стража небес, чешуя сего древнего титана, была перекована в великолепные доспехи." },
+    { LANGUAGE.Spanish, "En las profundidades de las forjas ardientes de Eldvir, en la llama del Dragón - guardián de los cielos, las escamas de este antiguo titán fueron reforjadas en armadura magnífica" }
+});
+
+        localization.Add(C.DK.RingBerserker + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Ring of madmen, cast from metal. Allows entering a trance, making attacks reckless" },
+    { LANGUAGE.Russian, "Кольцо безумцев, отлитое из металла. Позволяет входить в транс, делая атаки безрасудными." },
+    { LANGUAGE.Spanish, "Anillo de locos, fundido en metal. Permite entrar en trance, haciendo los ataques temerarios" }
+});
+
+        localization.Add(C.DK.RingForesight + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Crystal from treasuries, whispering of what's to come" },
+    { LANGUAGE.Russian, "Кристалл из сокровищниц, шепчущий о грядущем." },
+    { LANGUAGE.Spanish, "Cristal de los tesoros, susurrando sobre el futuro" }
+});
+
+        localization.Add(C.DK.Tragicomedy + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "Mask of nameless origin, emerging from shadows of Hartgard's forgotten stages, where whispers in its cracks echoed sagas of a figure in dualistic guise - a shadow that bent the lord to whispers of betrayal, promising triumph over darkness through severing bonds with brother clans, sowing seeds of downfall in ruins of isolation" },
+    { LANGUAGE.Russian, "Маска безымянного происхождения, вынырнувшая из теней забытых подмостков Хартгарда, где шепот в ее трещинах эхом повторял саги о фигуре в дуалистском облике — тени, что склонила лорда к шепоту предательства, обещая триумф над тьмой через разрыв уз с братьями-кланами, сея семя падения в руинах изоляции." },
+    { LANGUAGE.Spanish, "Máscara de origen anónimo, emergiendo de las sombras de los escenarios olvidados de Hartgard, donde susurros en sus grietas hacían eco de sagas sobre una figura de aspecto dualista - una sombra que inclinó al señor hacia susurros de traición, prometiendo triunfo sobre la oscuridad mediante la ruptura de lazos con clanes hermanos, sembrando semillas de caída en ruinas de aislamiento" }
+});
+
+        localization.Add(C.DK.ThirstySakura + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "If you listen closely, the blade whispers sagas of Lord Eldvir - a titan who stood as a wall against waves of darkness until his last breath, drinking in the thirst for enemy blood and pouring it into steel, sowing seeds of untamed fury" },
+    { LANGUAGE.Russian, "Если прислушаться, то лезвие шепчет саги о лорде Элдвире — титане, что стоял стеной против волн тьмы до последнего вздоха, впивая в себя жажду крови врагов и вливая её в сталь, сея семя неукротимой ярости." },
+    { LANGUAGE.Spanish, "Si escuchas atentamente, la hoja susurra sagas del señor Eldvir - un titán que se mantuvo como un muro contra olas de oscuridad hasta su último aliento, absorbiendo la sed de sangre enemiga y vertiéndola en acero, sembrando semillas de furia indomable" }
+});
 
     }
 
