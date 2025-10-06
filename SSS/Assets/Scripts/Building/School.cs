@@ -212,9 +212,10 @@ public class School : Building, IMainTarget
         }
     }
 
-    public void TeachByUpLevel(Player targetForBuy, Equipment equipment)
+    public override void Sell(Player targetForBuy, Equipment equipment)
     {
         targetForBuy.CountAccessToUpInSchool--;
+        targetForBuy.CurrentMoney -= equipment.cost;
 
         AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Teach, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
     }

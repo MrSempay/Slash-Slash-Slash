@@ -178,37 +178,42 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
                 var spellTask = _spellBought.WaitAsync(ct);
                 var ammoTask = _ammoBought.WaitAsync(ct);
-                while (!_studyWasFinished)
+
+                if (_spellBought.HasValue) // интересная штука. Позволяет детектить, было ли выполнено событие до _spellBought.WaitAsync(ct) или ему ещё предстоит быть
                 {
-                    var completed = await Task.WhenAny(spellTask, ammoTask);
-                    if (completed == spellTask)
-                    {
-                        //Debug.Log("И снова мы тут...2");
+                    // событие уже произошло раньше
+                    await StartDialogueAsync("О, так ты уже купил заклинание?", ct);
 
-                        try { await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue2_2, ct); }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
+                    DelinkCameraPlayer(_cameraPlayer);
+                    TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
 
-                        spellTask = _spellBought.WaitAsync(ct);
-
-                        DelinkCameraPlayer(_cameraPlayer);
-                        TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
-
-                        await MoveCameraToPlayerAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterFirstSpellBue, ct);
-
-                        await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue3_1, ct);
-                    }
-                    else
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1), ct);
-
-                        _studyWasFinished = true;
-                        OnStudyFinish?.Invoke();
-
-                        await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue3_2, ct);
-                        break;
-                    }
+                    await MoveCameraToPlayerAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterFirstSpellBue, ct);
                 }
+                else // ну, по идее, должно всегда это выполняться. Ибо у нас двери-то закрыты в школу... Но сама механика интересная
+                {
+                    // событие ещё впереди, ждём
+                    await spellTask;
+
+                    try { await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue2_2, ct); }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
+
+                    DelinkCameraPlayer(_cameraPlayer);
+                    TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
+
+                    await MoveCameraToPlayerAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterFirstSpellBue, ct);
+                }
+
+                await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue3_1, ct);
+
+                await ammoTask;
+
+                await Task.Delay(TimeSpan.FromSeconds(1), ct);
+
+                _studyWasFinished = true;
+                OnStudyFinish?.Invoke();
+
+                await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue3_2, ct);
 
                 // После завершения учёбы — стартуем первую учебную волну (WaveAfterLearning)
                 StartWaveEnemies(new Dictionary<Transform, int>() {
@@ -507,7 +512,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
     protected override void EquipmentWasSold(Equipment equipment)
     {
         base.EquipmentWasSold(equipment);
-        if (equipment.isEquipmentASpell) if (_firstBueSpell)_spellBought.Publish(true);
+        if (equipment.isEquipmentASpell)_spellBought.Publish(true);
         else _ammoBought.Publish(true);
     }
 

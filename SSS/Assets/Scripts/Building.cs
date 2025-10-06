@@ -169,7 +169,7 @@ public class Building : MonoBehaviour
 
     }
 
-    public void Sell(Player targetForBuy, Equipment equipment)
+    public virtual void Sell(Player targetForBuy, Equipment equipment)
     {
         //equipment.WasSold = true; // присваиваем true в состоянии AtPlayer
         targetForBuy.CurrentMoney -= equipment.cost;

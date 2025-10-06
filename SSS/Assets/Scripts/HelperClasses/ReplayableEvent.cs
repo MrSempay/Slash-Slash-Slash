@@ -58,7 +58,13 @@ public class ReplayableEvent<T>
 
             if (ct != CancellationToken.None)
             {
-                ct.Register(() =>
+                ct.Register(() => // по сути, подписываемся на событие отмены
+                                  //Пример в лоб
+                                  //var cts = new CancellationTokenSource();
+                                  //cts.Token.Register(() => Console.WriteLine("Меня отменили!"));
+                                  //cts.Cancel(); // сразу выведет: "Меня отменили!"
+                                  //То есть Register — это способ подписаться на событие отмены.
+                                  //(аналогично someEvent += () => ..., только у CancellationToken нет события, а есть вот такой метод).
                 {
                     bool removed = false;
                     lock (_lock)
@@ -83,4 +89,19 @@ public class ReplayableEvent<T>
             _lastValue = default;
         }
     }
+
+    /***
+        * _spellBought — это один объект ReplayableEvent<bool> внутри твоего сценария.
+        * Когда ты делаешь:
+
+        var spellTask = _spellBought.WaitAsync(ct);
+
+
+        ты не создаёшь новый ReplayableEvent.
+        Ты просто просишь у него:
+
+        «Дай мне таск, который завершится, когда ты получишь новое значение».
+
+        И внутри этот метод создаёт один новый TaskCompletionSource и кладёт его в общий список _waiters.
+    ***/
 }

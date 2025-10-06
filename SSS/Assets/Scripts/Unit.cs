@@ -45,6 +45,7 @@ public abstract class Unit : MonoBehaviour, IInventory
     public event Action<string> OnCastAnimationFinished;  // когда закончился каст какой-то абилки. Передаём название анимации полностью
     public event Action<string> OnCastAnimationPeacked;  // когда достигли кульминации анимации (может быть только одна в рамках одной анимации). Передаём название анимации полностью
     public event Action<bool> OnDirectionViewWasChanged;  //  true - когда смотрим направо
+    public event Action OnBerserkerStateDeactivated;
     public delegate void UnitWasKilled(Unit unit); // шаблон функции
     public event UnitWasKilled onUnitWasKilled;         // экземляр(?) функции/сигнала(?)
 
@@ -69,12 +70,21 @@ public abstract class Unit : MonoBehaviour, IInventory
     [NonSerialized] private int _countAvailableSpellPlaces = 3; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
     [NonSerialized] private int _countAvailableAmmunitionPlaces = 3; // количество ячеек в инвентаре для аммуниции, пока что... просто константа и не влияет на их количество
 
+
     public Inventory Inventory // назначаем _inventory в инспекторе
     {
         get { return _inventory; }
         set
         {
             _inventory = value;
+        }
+    }
+    public float Damage // назначаем _inventory в инспекторе
+    {
+        get { return damage; }
+        set
+        {
+            damage = value;
         }
     }
     public Unit UnitSelf
@@ -618,6 +628,11 @@ public abstract class Unit : MonoBehaviour, IInventory
                 CastAnimationFinished(nameFinishedAnimation); // просто обёртка над сигналом, определён в Unit
                 break;
         }
+    }
+
+    public void BerserkerStateDeactivated() // ещё одна обёртка над методом. Вызываем из Berserker при Deactivate
+    {
+        OnBerserkerStateDeactivated?.Invoke();
     }
     public virtual void SomeAnimationWasStarted(string nameStartedAnimation) // Когда анимация достигла целевой точки, но не конца. Для Peak такая точка может быть только одна в анимации
     {        

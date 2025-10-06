@@ -126,6 +126,7 @@ public class Equipment : MonoBehaviour
             if (value)
             {
                 onEquipmentWasSold?.Invoke(this); // подписываемся в скрипте ScenarioScript чтоб знать, когда игрок купил предмет/заклинание
+                // 06.10.2025 - может это стоит в метод Sell() вынести...
             }
         }
     }
@@ -315,7 +316,7 @@ public class Equipment : MonoBehaviour
         }
     }
 
-    IEnumerator DurationActive(Unit whoCastedSpell)
+    public IEnumerator DurationActive(Unit whoCastedSpell)
     {
         Debug.Log(durationActiveState);
         yield return new WaitForSeconds(durationActiveState);

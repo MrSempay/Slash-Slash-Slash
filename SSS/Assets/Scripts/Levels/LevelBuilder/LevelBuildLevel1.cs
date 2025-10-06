@@ -14,7 +14,8 @@ public class LevelBuildLevel1 : LevelBuilder
     [SerializeField] private RectTransform _rtPlaceButtonSkipStudy;
 
     //private Level1Scenario scriptLevelScenario;
-    private Livel1Scenario_AsyncUsing scriptLevelScenario;
+    //private Livel1Scenario_AsyncUsing scriptLevelScenario;
+    private Livel1Scenario_AsyncUsing_FSMUsing scriptLevelScenario;
     private GameObject _buttonSkipStudy;
 
     protected override void Awake()
@@ -57,7 +58,8 @@ public class LevelBuildLevel1 : LevelBuilder
         }
 
         //scriptLevelScenario = (Level1Scenario)ScenarioScript.instance;
-        scriptLevelScenario = (Livel1Scenario_AsyncUsing)ScenarioScript.instance;
+        //scriptLevelScenario = (Livel1Scenario_AsyncUsing)ScenarioScript.instance;
+        scriptLevelScenario = (Livel1Scenario_AsyncUsing_FSMUsing)ScenarioScript.instance;
         if (GameManager.Instance.MaxReachedLevel > 0)
         {
             scriptLevelScenario.OnStudyStart += InstanceSkipStudyButton;
@@ -68,10 +70,10 @@ public class LevelBuildLevel1 : LevelBuilder
 
     private void InstanceSkipStudyButton()
     {
-        _buttonSkipStudy = GameManager.Instance.InstanceTextButton(false, _rtPlaceButtonSkipStudy, C.Other.SkipStudy, () => { scriptLevelScenario.OnStudyFinish?.Invoke(); });
+        _buttonSkipStudy = GameManager.Instance.InstanceTextButton(false, _rtPlaceButtonSkipStudy, C.Other.SkipStudy, () => { scriptLevelScenario.OnStudyFinish?.Invoke(false); });
     }
 
-    private void DestroySkipStudyButton()
+    private void DestroySkipStudyButton(bool wasFinishedByNativeWay)
     {
         Destroy(_buttonSkipStudy);
     }

@@ -114,6 +114,9 @@ public class DialogueParser : MonoBehaviour
         {
             // по идее можно просто менять сцену далее, если диалог тут не предусмотрен
             Debug.Log(" Нет ФвйликАААААААААААА  Text file not found in " + fullPathToDialogueFile + ".txt");
+            //StartCoroutine(FinishDialogueAfterOneFrame()); // сделано для того, чтоб GameManager успел подписаться на прослушивание завершения данного диалога и подал об этом сигнал прочим.
+            // Бо иначе у нас, ввиду того что всё это происходит в Awake диалога, он даже не успевает подписаться на это завершение, диалог спавнится и уничтожается сразу в его Awake
+
             FinishDialogue();
             return;
         }
@@ -167,8 +170,9 @@ public class DialogueParser : MonoBehaviour
             }
 
             string fullPathToIcon = _nameIconsUnitFolder + dialogueLines[index].characterName;
+            Debug.Log("Way: " + fullPathToIcon);
             Sprite iconUnit = Resources.Load<Sprite>(fullPathToIcon);
-            spriteRendererIconUnit.sprite = iconUnit;
+            spriteRendererIconUnit.sprite = iconUnit; 
 
             //_textMeshProUnitPhrase.text = dialogueLines[index].dialogueText; 
             //Debug.Log(_currentCharacterPosition);
@@ -217,6 +221,12 @@ public class DialogueParser : MonoBehaviour
         Debug.Log("Закончили диалог: " + _nameDialogueFileWithParentFolder);
         //Debug.Log(_nameDialogueFileWithParentFolder);
         onDialogueWasFinished?.Invoke(_nameDialogueFileWithParentFolder);
+    }
+
+    private IEnumerator FinishDialogueAfterOneFrame()
+    {
+        yield return null;
+        FinishDialogue();
     }
 
     protected virtual void OnDestroy()

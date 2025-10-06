@@ -401,8 +401,16 @@ public class GameManager : MonoBehaviour
         {
             sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
         }
+        //onDialogueStarted?.Invoke(sciptPlayerDialogue);  // !!! Перенесено DialogueWasStarted, который вызывается из Awake() PlayerDialogue, чтоб точно успели подписаться на старта
+        // диалога, даже если тот будет преждевременно завершен в тот же Awake(), в противном случае эта строка просто не выполнится, бо диалог будет уничтожен
+    }
+
+    // вызываем из Awake() PlayerDialogue
+    public void DialogueWasStarted(PlayerDialogue sciptPlayerDialogue) 
+    {
         onDialogueStarted?.Invoke(sciptPlayerDialogue);
     }
+
 
     public AppearingSprite InvokeAppearingSprite(string nameAnimation,
                                                  Transform transformParent,

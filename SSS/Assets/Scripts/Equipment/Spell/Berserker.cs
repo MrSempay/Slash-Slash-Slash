@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Berserker : Spell
 {
+    private static Dictionary<Unit, Berserker> _dictionaryUnitAndLastCastedBerserker = new();
+
     private readonly Vector3 _biasPositionBerserkerEyesFromOwner = new Vector3(0f, 0f, 0f);
     private readonly int _sortOrderProtectionFieldSprite = 13;
 
+    private bool _deactivationFromAnotherBerserkerCast = false;
     private Transform _transformParentBerserkerEyes;
     //private AppearingSprite _scriptBerserkerEyesSprite;
 
@@ -48,18 +52,24 @@ public class Berserker : Spell
     {
         if (!isActivated)
         {
-            isActivated = true;
+            Debug.Log(whoCastedSpell.damage);
+            if (_dictionaryUnitAndLastCastedBerserker.ContainsKey(whoCastedSpell))
+            {
+                Berserker scriptLastBerserker = _dictionaryUnitAndLastCastedBerserker[whoCastedSpell];
+                _deactivationFromAnotherBerserkerCast = true;
+                scriptLastBerserker.Deactivate(whoCastedSpell);
+                scriptLastBerserker.StopCoroutine(scriptLastBerserker.DurationActive(whoCastedSpell));
+            }
+            _dictionaryUnitAndLastCastedBerserker[whoCastedSpell] = this;
 
             StartTimerActiveState(whoCastedSpell);
 
-            whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, true);
-            whoCastedSpell.OnDirectionViewWasChanged += BiasBerserkerEyes;
+            isActivated = true;
 
-            //_scriptBerserkerEyesSprite = GameManager.Instance.InvokeAppearingSprite(C.AppSprite.BerserkerEyes, _transformParentBerserkerEyes, -1f, true);
-            //_scriptBerserkerEyesSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
-            //_scriptBerserkerEyesSprite.selfSprite.flipX = !whoCastedSpell.lookingRight;
+            whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, true);
 
             whoCastedSpell.AddUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
+            Debug.Log(whoCastedSpell.damage);
         }
     }
     public override void Deactivate(Unit whoCastedSpell)
@@ -72,17 +82,15 @@ public class Berserker : Spell
             isActivated = false;
 
             whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, false);
-            whoCastedSpell.OnDirectionViewWasChanged -= BiasBerserkerEyes;
-
-            //Destroy(_scriptBerserkerEyesSprite.gameObject);
-            //_scriptBerserkerEyesSprite = null;
 
             whoCastedSpell.RemoveUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
-        }
-    }
+            //if (!_deactivationFromAnotherBerserkerCast) // если мы прерываем работу предыдущего берсеркера чтоб обновить его текущим, то вызов whoCastedSpell.BerserkerStateDeactivated()
+            // приведёт к отмене текущей анимации берсеркерства
+            {
+                whoCastedSpell.BerserkerStateDeactivated();
+            }
 
-    public void BiasBerserkerEyes(bool lookingRight)
-    {
-        //_scriptBerserkerEyesSprite.selfSprite.flipX = !lookingRight;
+            _dictionaryUnitAndLastCastedBerserker.Remove(whoCastedSpell);
+        }
     }
 }

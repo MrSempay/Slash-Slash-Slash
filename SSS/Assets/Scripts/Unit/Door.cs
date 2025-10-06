@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using static AreaButtonEnter;
 using static UnityEngine.EventSystems.EventTrigger;
+using System.Linq;
 
 public class Door : Unit
 {
@@ -11,6 +12,7 @@ public class Door : Unit
     private Vector3 _startPositionOfEnterButton;
 
     private bool _doorIsOpened;
+    private bool _lockDoor;
     private Transform _tAreaDoorClosePlayerHasEntered;
     private Transform _transformEnterButton;
     
@@ -49,6 +51,17 @@ public class Door : Unit
                 if (_doorIsOpened) _fsm.SetState<FsmStateDoorOpened>();
                 else _fsm.SetState<FsmStateDoorClosed>();
             }
+        }
+    }
+
+    public static void LockOrDelockAllDoors(bool lockDoor)
+    {
+        List<Door> allDoors = FindObjectsByType<Door>(FindObjectsSortMode.None).ToList();
+
+        foreach (Door scriptDoor in allDoors)
+        {
+            scriptDoor._scriptAreaEnterButton.gameObject.SetActive(!lockDoor); // чтоб кнопка даже не появлялась
+            scriptDoor._lockDoor = lockDoor; // и чтоб впринципе не могли дверь трогать. Например, через нашу зону для прохода через дверь
         }
     }
 
@@ -96,7 +109,9 @@ public class Door : Unit
     }
     public void OpenOrCloseDoor()
     {
-        DoorIsOpened = !DoorIsOpened;
+        if (_lockDoor) return;
+        
+        DoorIsOpened = !DoorIsOpened;    
     }
     public void CloseDoor(Transform transform)
     {

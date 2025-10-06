@@ -16,6 +16,7 @@ public class FsmStateIdle : FsmStatePlayer
 
         SubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment += SomeTranslateEquipment;
+        player.OnBerserkerStateDeactivated += UpdateIdleAnimation;
 
         player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
 
@@ -32,6 +33,7 @@ public class FsmStateIdle : FsmStatePlayer
 
         UnsubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment -= SomeTranslateEquipment;
+        player.OnBerserkerStateDeactivated -= UpdateIdleAnimation;
     }
 
     public override void Update()
@@ -52,6 +54,11 @@ public class FsmStateIdle : FsmStatePlayer
         {
             fsmPlayer.SetState<FsmStateWalk>();
         }
+    }
+    private void UpdateIdleAnimation()
+    {
+        Debug.Log(" И что за параша?");
+        player.animator.Play(C.Animations.PlayerIdle);
     }
 
     public override void OnDestroy()

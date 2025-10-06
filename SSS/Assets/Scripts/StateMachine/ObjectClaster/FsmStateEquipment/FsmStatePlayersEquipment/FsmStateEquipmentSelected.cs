@@ -83,8 +83,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                             {
                                 if (equipment.BuildingWhereEquipmentIs.HasAccessToUpLevelInSchool(player))
                                 {
-                                    School school = (School)equipment.BuildingWhereEquipmentIs;
-                                    school.TeachByUpLevel(player, equipment);
+                                    equipment.BuildingWhereEquipmentIs.Sell(player, equipment);
                                 }
                                 else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                             }
@@ -175,8 +174,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                                 {
                                     if (equipment.BuildingWhereEquipmentIs.HasAccessToUpLevelInSchool(player))
                                     {
-                                        School school = (School)equipment.BuildingWhereEquipmentIs;
-                                        school.TeachByUpLevel(player, equipment);
+                                        equipment.BuildingWhereEquipmentIs.Sell(player, equipment);
                                     }
                                     else { fsm.SetState<FsmStateEquipmentInsideShop>(); return; }
                                 }
