@@ -15,7 +15,6 @@ using static StaticClassForAdditionalFunctions;
 public abstract class Unit : MonoBehaviour, IInventory
 {
 
-
     [SerializeField] private float _damageReductionPercentage; //Поглощение урона
     [SerializeField] private float _healthCurrent; // Начальное здоровье
     [SerializeField] private Image _healthBarFilling;
@@ -24,6 +23,7 @@ public abstract class Unit : MonoBehaviour, IInventory
     [NonSerialized] public GameObject parametersBars;
     [NonSerialized] public Rigidbody2D rb;       // Rigidbody2D кубика
 
+    public AudioEmitter audioEmitter; 
     public Animator animator; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
     public void UnitStandart() { }
     public bool lookingRight = true; // Флаг, нужно ли отзеркаливать положение врага (будет выполняться отзеркаливание только если направление изменилось, то есть флаг будет true)
@@ -192,6 +192,10 @@ public abstract class Unit : MonoBehaviour, IInventory
 
         selfSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+
+        audioEmitter = GetComponent<AudioEmitter>() ?? gameObject.AddComponent<AudioEmitter>();
+        AudioManager.Instance.RegisterEmitter(audioEmitter);
+
         // на данный момент не уверен, что мы будем пользоваться словарём для доступа к параметрам юнита. Пока что просто по нему будем определять начальные параметры юнитов
         // при их создании. Вообще может было бы напрямую обращаться в таком случае к AdjustUnitParameters.GetParameter, но пока что оставим этот дубль словаря (хз зачем)
         /*healthMax = (float) unitParameters["Health"];
@@ -259,7 +263,11 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
 
                 CurrentHealth -= damageSize - (damageSize * DamageReductionPercentage / 100); // Уменьшаем здоровье
-                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundGettingDamage, gameObject, AudioManager.TYPE_SOUND.GetDamage, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundGettingDamage, gameObject, AudioManager.TYPE_SOUND.GetDamage, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundGettingDamage,
+                                                                             audioEmitter,
+                                                                             AudioManager.TYPE_SOUND.AttackPeak,
+                                                                             AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
 
                 if (CurrentHealth <= 0)
                 {
@@ -286,7 +294,9 @@ public abstract class Unit : MonoBehaviour, IInventory
 
             isAlive = false;
 
-            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundDeath, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+            //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundDeath, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+            AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundDeath, audioEmitter, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+
 
             if (unitFromWhoWasGottenDamage)
             {
@@ -640,7 +650,8 @@ public abstract class Unit : MonoBehaviour, IInventory
         {
             case C.Animations.Walk:
                 //Debug.Log("Пик!");
-                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundWalk, gameObject, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundWalk, gameObject, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundWalk, audioEmitter, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 break;
             case C.Animations.Attack: // по идее это та же атака, что и AttackPeaked. Просто звук именно атаки у нас начинается при достижении ею пикового значения, а отменяем прочие
                                       // звуковые эффекты мы по её старту. Делаем это потому, что тяжело найти звуковой эффект, который бы сочетался полностью с началом анимации и действовал
@@ -669,7 +680,8 @@ public abstract class Unit : MonoBehaviour, IInventory
         {
             case C.Animations.AttackPeaked:
                 //Debug.Log("Пик!");
-                AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundAttakPeaked, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundAttakPeaked, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundAttakPeaked, audioEmitter, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 break;
         }
     }

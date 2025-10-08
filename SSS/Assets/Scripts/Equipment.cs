@@ -40,6 +40,7 @@ public class Equipment : MonoBehaviour
     [NonSerialized] public BoxCollider2D selfCollider;
     [NonSerialized] public Equipment newScriptOfEquipment;
 
+    public AudioEmitter audioEmitter;
     public EquipmentInfoPanel equipmentInfoPanel;
     public int amountUpCombo;
     public PanelChoose panelChoose;
@@ -174,6 +175,9 @@ public class Equipment : MonoBehaviour
 
             PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", ButtonTextPanelChoose.spriteChangeSlotButton, null, MoveEquipment);
             PanelChoose.InstanceTextButtonPanelChoose(panelChoose, "", ButtonTextPanelChoose.spriteShowInfoButton, ShowInfoPanelFromPlayerInventory, null);
+
+            audioEmitter = GetComponent<AudioEmitter>() ?? gameObject.AddComponent<AudioEmitter>();
+            AudioManager.Instance.RegisterEmitter(audioEmitter);
 
             _awakeWasCalledAlready = true;
         }
@@ -329,7 +333,8 @@ public class Equipment : MonoBehaviour
         //_callDownCoroutine = StartCoroutine(CallDown());
         //_callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
         _callDownCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDown());
-        _callDownAnimationCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDownIconAnimation()); 
+        //_callDownAnimationCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDownIconAnimation()); 
+        _callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
     }
 
 
@@ -411,7 +416,7 @@ public class Equipment : MonoBehaviour
 
     public virtual void UnitCastAnimationPeackedForThisEquipment()
     {
-        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(equipmentName + C.Prefixes.Peak, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(equipmentName + C.Prefixes.Peak, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
     }
 
     #endregion
@@ -462,10 +467,13 @@ public class Equipment : MonoBehaviour
         //Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
 
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
+        CoroutineManager.Instance.StopManagedCoroutine(gameObject, _callDownAnimationCoroutine);
         _areaDetectEnteringExiting.somethingEnterExitArea -= PlayerEnteredInfoArea;
+
         _fsm.StateCurrent.Exit(); // Если снаряжении находится в состоянии Selected, то дабы корректно завершить состояние Translate у Player необходимо выйти из состояния Selected.
 
         StopAllCoroutines();
+
         if (_fsm != null)
             _fsm.StateCurrent?.OnDestroy();
     }

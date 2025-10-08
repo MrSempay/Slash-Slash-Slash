@@ -750,7 +750,7 @@ public class PlayFabManager : MonoBehaviour
         //Debug.Log(result);
         //Debug.Log(result.Leaderboard);
         //Debug.Log(result.Leaderboard.Count);
-
+        lastLeaderboardStatsInfo = new();
         foreach (PlayerLeaderboardEntry fieldLeaderboard in result.Leaderboard)
         {
             if (!string.IsNullOrEmpty(fieldLeaderboard.DisplayName))

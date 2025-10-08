@@ -241,7 +241,8 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                         case Step.FinishStudyDelayThenDialogue3_2:
                             await Task.Delay(TimeSpan.FromSeconds(1), stepToken);
                             _studyWasFinished = true;
-                            FinishStudy(true);
+                            OnStudyFinish?.Invoke(true); // нужно именно эмулировать сигнал, бо у нас некоторые товарищи на него подписаны (LevelBuilder, например). Просто вызвать
+                            // StudyFinish нельзя
                             await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue3_2, stepToken);
                             _currentStep = Step.StartWaveAfterLearning;
                             break;
@@ -521,7 +522,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
     protected override void DialogueFinished(string nameDialogueWithFolder)
     {
-        Debug.Log("Ну и что за хрень?");
         base.DialogueFinished(nameDialogueWithFolder);
         if (_dialogueTcs.TryGetValue(nameDialogueWithFolder, out var tcs))
         {

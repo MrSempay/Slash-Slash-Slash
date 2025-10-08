@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,11 @@ public class EquipmentInfoPanel : MonoBehaviour
     private List<string> _listEquipmentParametersForVisualization = new List<string> { C.DK.cost, C.DK.timeCallDown, C.DK.amountBlockingAttackMax, C.DK.damage, C.DK.durationActiveState,
                                                                                         C.DK.healthHealAmount, C.DK.CurrentIncreasingStamina, C.DK.damage, C.DK.healthMax, C.DK.CurrentIncreasingStamina,
                                                                                     C.DK.jumpForce, C.DK.stuneChanceByStandardAttackPercentage, C.DK.DamageReductionPercentage, C.DK.evasionPercentage};
+    // Короче, у нас в параметре C.DK.increasingUnitParametersByAmmunitionAbsolute могут быть параметры, которые увеличиваются хоть и на абсолютное значение, но это ПРОЦЕНТЫ. Поэтому чтобы
+    // детектить их создаём этот список. Для параметрво в этом списке мы добавляем "%" в конце визуализационного поля
+    // Вообще, чём это всё бурдовый подход. Нужно сделать класс-раширение для всех этих параметров и в них назначать доп. параметры для вывода
+    private List<string> _listPercentageParameters = new List<string> { C.DK.CurrentIncreasingStamina, C.DK.stuneChanceByStandardAttackPercentage, C.DK.DamageReductionPercentage, 
+                                                                        C.DK.evasionPercentage }; 
 
 
 
@@ -61,6 +67,16 @@ public class EquipmentInfoPanel : MonoBehaviour
                     }
                     fieldInfo.textValueInfo.SetNotLocalizableText(parameter.Value.ToString());
                 }
+                if (parameter.Key == C.DK.increasingUnitParametersByAmmunitionPercentageByCast)
+                {
+                    Dictionary<string, float> parametersPercentage = (Dictionary<string, float>)AdjustEquipmentParameters.spellParameters[spellScript.equipmentName][C.DK.increasingUnitParametersByAmmunitionPercentageByCast];
+                    foreach (var increasunParameter in parametersPercentage)
+                    {
+                        FieldInfo fieldInfo = Instantiate(_fieldInfoPrefub, _rectTransformParameterFieldsPlace, false);
+                        fieldInfo.textNameInfo.Text = increasunParameter.Key;
+                        fieldInfo.textValueInfo.SetNotLocalizableText("+" + increasunParameter.Value.ToString() + "%");
+                    }
+                }
             }
         }
         else
@@ -89,7 +105,7 @@ public class EquipmentInfoPanel : MonoBehaviour
                             }
                             else
                             {
-                                fieldInfo.textValueInfo.SetNotLocalizableText(parameterPercentage.Value.ToString() + "%");
+                                fieldInfo.textValueInfo.SetNotLocalizableText(parameterPercentage.Value.ToString() + "%"); // тут уже будет минус бо parameterPercentage.Value отрицательно
                             }
                         }
                         else
@@ -110,10 +126,20 @@ public class EquipmentInfoPanel : MonoBehaviour
                             fieldInfo.textNameInfo.Text = parameterAbsolute.Key;
                             if (parameterAbsolute.Value >= 0)
                             {
+                                if (_listPercentageParameters.Contains(parameterAbsolute.Key))
+                                {
+                                    fieldInfo.textValueInfo.SetNotLocalizableText("+" + parameterAbsolute.Value.ToString() + "%");
+                                    continue;
+                                }
                                 fieldInfo.textValueInfo.SetNotLocalizableText("+" + parameterAbsolute.Value.ToString());
                             }
                             else
                             {
+                                if (_listPercentageParameters.Contains(parameterAbsolute.Key))
+                                {
+                                    fieldInfo.textValueInfo.SetNotLocalizableText(parameterAbsolute.Value.ToString() + "%");
+                                    continue;
+                                }
                                 fieldInfo.textValueInfo.SetNotLocalizableText(parameterAbsolute.Value.ToString());
                             }
                         }
@@ -135,11 +161,11 @@ public class EquipmentInfoPanel : MonoBehaviour
                             fieldInfo.textNameInfo.Text = parameterIncrease.Key;
                             if (parameterIncrease.Value >= 0)
                             {
-                                fieldInfo.textValueInfo.SetNotLocalizableText("+" + parameterIncrease.Value.ToString());
+                                fieldInfo.textValueInfo.SetNotLocalizableText("+" + parameterIncrease.Value.ToString() + "%");
                             }
                             else
                             {
-                                fieldInfo.textValueInfo.SetNotLocalizableText(parameterIncrease.Value.ToString());
+                                fieldInfo.textValueInfo.SetNotLocalizableText(parameterIncrease.Value.ToString() + "%");
                             }
                         }
                         else

@@ -31,7 +31,7 @@ public class FsmStateWalkEnemy : FsmStateEnemy
     public override void Exit()
     {
         Debug.Log("Enemy Walk state [EXIT]");
-        AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
+        AudioManager.Instance.StopSomeTypeSoundOnEmitter(AudioManager.TYPE_SOUND.Walk, enemy.audioEmitter);
     }
 
     public override void Update()

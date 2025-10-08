@@ -70,6 +70,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\AdRequestConfiguration.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IInventoryUnit.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustLevelParameters.cs" />
+    <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy\Dog.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\InterstitialAdLoaderClient.cs" />
     <Compile Include="Assets\YandexMobileAds\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixedOneWay.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Assets\Scripts\Unit\Enemy.cs" />
     <Compile Include="Assets\Scripts\TestMovingKinematic.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AudioSessionManagerClient.cs" />
+    <Compile Include="Assets\Scripts\Music\AudioEmitter.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />

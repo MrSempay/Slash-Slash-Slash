@@ -16,7 +16,9 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
         Debug.Log("Translating Equipment state [ENTER]");
 
         player.OnTranslateEquipment += SomeTranslateEquipment;
-        player.animator.Play("PlayerIdle");
+        string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
+            C.Animations.PlayerIdle + C.StatesAdditional.Berserker :
+            C.Animations.PlayerIdle;
         player.rb.linearVelocityX = 0;
     }
 

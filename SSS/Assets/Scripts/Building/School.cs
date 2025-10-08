@@ -217,6 +217,8 @@ public class School : Building, IMainTarget
         targetForBuy.CountAccessToUpInSchool--;
         targetForBuy.CurrentMoney -= equipment.cost;
 
-        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Teach, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Teach, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        // по идее для UI-звуков не можно и не использовать такое разделение, а идти через StartSoundEffect
+        AudioManager.Instance.StartSoundEffect(C.MusicSounds.Teach);
     }
 }

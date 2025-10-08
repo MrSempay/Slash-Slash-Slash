@@ -321,6 +321,7 @@ public class C
         public const string DoorOpening = "DoorOpening";
         public const string DoorClosing = "DoorClosing";
         public const string BuildingCrush = "BuildingCrush";
+        public const string TorchFire = "TorchFire";
 
     }
     public static class StatesAdditional

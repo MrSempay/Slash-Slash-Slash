@@ -103,7 +103,8 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     private void PlayMakeDamageSound()
     {
-        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(enemy.nameSoundAttakPeaked, enemy.gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(enemy.nameSoundAttakPeaked, enemy.gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+        AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(enemy.nameSoundAttakPeaked, enemy.audioEmitter, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
     }
 
     public override void OnDestroy()

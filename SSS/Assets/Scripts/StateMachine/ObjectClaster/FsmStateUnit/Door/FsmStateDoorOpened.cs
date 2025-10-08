@@ -17,8 +17,8 @@ public class FsmStateDoorOpened : FsmStateDoor
 
         if (initialConditionsEntering == null)
         {
-            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.DoorOpening,
-                                                                    gameObject,
+            AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.DoorOpening,
+                                                                    door.audioEmitter,
                                                                     AudioManager.TYPE_SOUND.Default,
                                                                     AudioManager.TYPE_AUDIO_SOURCE._3DStandard,
                                                                     new List<AudioManager.TYPE_SOUND> { AudioManager.TYPE_SOUND.Default });

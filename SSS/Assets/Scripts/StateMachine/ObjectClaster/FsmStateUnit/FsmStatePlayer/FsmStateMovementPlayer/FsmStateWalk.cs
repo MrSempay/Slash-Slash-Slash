@@ -38,7 +38,8 @@ public class FsmStateWalk : FsmStateMovementPlayer
         player.OnTranslateEquipment -= SomeTranslateEquipment;
         player.OnChangeNearEnemyStatus -= CheckNearEnemyStatus;
 
-        AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
+        //AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
+        AudioManager.Instance.StopSomeTypeSoundOnEmitter(AudioManager.TYPE_SOUND.Walk, player.audioEmitter);  
     }
 
     public override void Update()

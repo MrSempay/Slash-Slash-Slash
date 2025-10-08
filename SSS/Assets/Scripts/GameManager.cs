@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static AudioManager;
 using static DialogueArea;
 using static GameManager;
 using static ScoreManager;
@@ -151,23 +153,102 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.audioMusicComponent.volume = value;
             }
         }
+
         public float VolumeEffects
         {
             get { return volumeEffects; }
             set
             {
+                Debug.Log("А как так вышло");
                 volumeEffects = value;
-                AudioManager.Instance.audioEffectsComponent.volume = value;
+                AudioManager.Instance.audioEffectsComponent.volume = Mathf.Clamp01(value);
 
-                foreach (var objAudioSourcesCluster in AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes.Values)
+                foreach (var objAudioSourcesCluster in AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes.Values) // поддержка Legacy
                 {
-                    foreach (AudioSource audioSource in objAudioSourcesCluster.Values)
+                    foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
                     {
-                        audioSource.volume = value;                        
+                        Debug.Log(value);
+                        if (audioSourceExtended.audioSource != null)
+                        {
+                            audioSourceExtended.audioSource.volume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
+                            Debug.Log(Mathf.Clamp01(audioSourceExtended.maxVolume * value));
+                        }
                     }
+                }
+
+                foreach (AudioEmitter audioEmitter in AudioManager.Instance.emitters)
+                {
+                    audioEmitter.SetVolume(value); // функция обрабатывает сразу весь словарь source в audioEmitter и выставляет нужную громкость для каждого AudioSourceExtended
                 }
             }
         }
+
+        //public float VolumeEffects
+        //{
+        //    get { return volumeEffects; }
+        //    set
+        //    {
+        //        Debug.Log($"VolumeEffects SETTER: Начало, value = {value}");
+        //        volumeEffects = value;
+
+        //        if (AudioManager.Instance == null)
+        //        {
+        //            Debug.LogError("AudioManager.Instance is NULL!");
+        //            return;
+        //        }
+
+        //        AudioManager.Instance.audioEffectsComponent.volume = value;
+
+        //        var dict = AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes;
+        //        Debug.Log($"Dictionary count: {dict.Count}");
+
+        //        int clusterIndex = 0;
+        //        foreach (var objAudioSourcesCluster in dict.Values)
+        //        {
+        //            Debug.Log($"Cluster {clusterIndex}: {objAudioSourcesCluster.Count} audio sources");
+
+        //            int audioSourceIndex = 0;
+        //            foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
+        //            {
+        //                Debug.Log($"AudioSource {audioSourceIndex}: Starting processing");
+
+        //                if (audioSourceExtended == null)
+        //                {
+        //                    Debug.LogError($"AudioSourceExtended {audioSourceIndex} is NULL!");
+        //                    audioSourceIndex++;
+        //                    continue;
+        //                }
+
+        //                if (audioSourceExtended.audioSource == null)
+        //                {
+        //                    Debug.LogError($"AudioSource {audioSourceIndex} is NULL!");
+        //                    audioSourceIndex++;
+        //                    continue;
+        //                }
+
+        //                Debug.Log($"Before calculation: maxVolume = {audioSourceExtended.maxVolume}, value = {value}");
+
+        //                float calculatedVolume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
+        //                Debug.Log($"Calculated volume: {calculatedVolume}");
+
+        //                try
+        //                {
+        //                    audioSourceExtended.audioSource.volume = calculatedVolume;
+        //                    Debug.Log($"Successfully set volume to: {calculatedVolume}");
+        //                }
+        //                catch (System.Exception ex)
+        //                {
+        //                    Debug.LogError($"Exception setting volume: {ex.Message}");
+        //                }
+
+        //                audioSourceIndex++;
+        //            }
+        //            clusterIndex++;
+        //        }
+
+        //        Debug.Log("VolumeEffects SETTER: Завершено успешно");
+        //    }
+        //}
         public string DisplayName
         {
             get { return displayName; }

@@ -9,7 +9,8 @@ public static class ButtonClickSoundInitializer
         {
             button.onClick.AddListener(() =>
             {
-                AudioManager.Instance.StartSoundEffect(nameSound);
+                //AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSound, button.gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+                //AudioManager.Instance.StartSoundEffect(nameSound);
             });
         }
     }

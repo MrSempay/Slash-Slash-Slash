@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -75,7 +74,4 @@ public class AvailableLevelSet : MonoBehaviour
         //Canvas.ForceUpdateCanvases();
     }
 
-
-
-    // Вызвать после добавления/изменения элементов
 }

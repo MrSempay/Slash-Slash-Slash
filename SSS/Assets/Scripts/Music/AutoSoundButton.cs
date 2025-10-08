@@ -26,6 +26,11 @@ public class AutoSoundButton : MonoBehaviour // пока что решил не добавлять звук
 
     private void PlaySound()
     {
-        AudioManager.Instance.StartSoundEffect(C.MusicSounds.OnButtonClick);
+        // StartSoundEffect вызывает проигрывание эффекта на общем SoundSource для эффектов, который находится на... AudioManager.Instance. Звук будет воспроизводиться даже если целевой
+        // объект был disabled, ибо проигрывание звука к самому объекту по сути отношения не имеет. А вот при вызове метода StartSoundEffectAtSpecifiedObject звук проигрываться не будет,
+        // ибо его AudioSource становится disabled вместе с самим объектом (с кнопками показательная ситуация). По идее можно disable только необходимые компоненты, чтоб её нельзя было
+        // нажать, а оставлять только её AudioSource, но что-то это на мороку странную похоже
+        AudioManager.Instance.StartSoundEffect(C.MusicSounds.OnButtonClick);        
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.OnButtonClick, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
     }
 }

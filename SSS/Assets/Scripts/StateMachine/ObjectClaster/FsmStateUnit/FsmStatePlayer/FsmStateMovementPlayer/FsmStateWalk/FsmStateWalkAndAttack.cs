@@ -75,7 +75,11 @@ public class FsmStateWalkAndAttack : FsmStateWalk
                 if (player.rb.linearVelocityX != 0)
                 {
                     enemy.GetDamage(player.damage, player);
-                    AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                    //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                    AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.PlayerAttackPeakHitEnemies,
+                                                                             enemy.audioEmitter,
+                                                                             AudioManager.TYPE_SOUND.AttackPeak,
+                                                                             AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 }
                 //Debug.Log("Что за поебень ебанашкина?");
                 Debug.Log("Что за ебатяня ебаная?");
@@ -131,7 +135,11 @@ public class FsmStateWalkAndAttack : FsmStateWalk
                 if (enemy.gameObject.CompareTag("Enemy"))
                 {
                     enemy.GetDamage(player.damage, player);
-                    AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                    //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+                    AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.PlayerAttackPeakHitEnemies,
+                                                                             enemy.audioEmitter,
+                                                                             AudioManager.TYPE_SOUND.AttackPeak,
+                                                                             AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 }
                 //Debug.Log("Что за поебень ебанашкина?");
                 //Debug.Log("Что за ебатяня ебаная?");

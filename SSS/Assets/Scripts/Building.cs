@@ -8,10 +8,11 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     private Fsm _fsm;
-    private bool _isAroundBuilding = false;
+    private bool _isAroundBuilding = false; 
 
     [SerializeField] private Door _selfDoor;
 
+    [NonSerialized] public AudioEmitter audioEmitter;
     [NonSerialized] public string nameTargetEquipmentPanelPlayer;
     [NonSerialized] public float timeForUpdateAssortiment;
     [NonSerialized] public string folderImagesOfEquipment;  // ќтносительный путь к папке с изображени€ми из папки Assets/Resources
@@ -68,6 +69,8 @@ public class Building : MonoBehaviour
         buttonEnter.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity;
         //entirePanel.gameObject.GetComponent<UnityEngine.Transform>().rotation = Quaternion.identity; 
 
+        audioEmitter = GetComponent<AudioEmitter>() ?? gameObject.AddComponent<AudioEmitter>();
+        AudioManager.Instance.RegisterEmitter(audioEmitter);
 
 
         _fsm = new Fsm();
@@ -174,7 +177,10 @@ public class Building : MonoBehaviour
         //equipment.WasSold = true; // присваиваем true в состо€нии AtPlayer
         targetForBuy.CurrentMoney -= equipment.cost;
 
-        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Buy, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.Buy, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.Buy, equipment.emitter???, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        // по идее дл€ UI-звуков не можно и не использовать такое разделение, а идти через StartSoundEffect
+        AudioManager.Instance.StartSoundEffect(C.MusicSounds.Buy);
     }
 
     

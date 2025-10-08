@@ -9,20 +9,21 @@ public class ProtectiveField : Spell
     private readonly Vector3 _biasPositionProtectionFieldFromOwner = new Vector3(0f, 0f, 0f);
     private readonly int _sortOrderProtectionFieldSprite = 14;
 
+    private static Dictionary<Unit, ProtectiveField> _dictionaryUnitAndLastCastedPF = new();
     private AppearingSprite _scriptProtectiveFieldSprite;
-    private int _curremtAmountBlockingAttack;
+    private int _currentAmountAttacksInField;
     private Unit _ownerProtectiveField;
     private Transform _transformParentProtectiveField;
     private Transform _transformParentProtectiveFieldHits;
 
     [NonSerialized] public int amountBlockingAttackMax;
 
-    public int CurremtAmountBlockingAttack
+    public int CurrentAmountAttacksInField
     {
-        get { return _curremtAmountBlockingAttack; }
+        get { return _currentAmountAttacksInField; }
         set
         {
-            _curremtAmountBlockingAttack = value;
+            _currentAmountAttacksInField = value;
         }
     }
 
@@ -45,6 +46,22 @@ public class ProtectiveField : Spell
     {
         if (!isActivated)
         {
+            if (_dictionaryUnitAndLastCastedPF.ContainsKey(whoCastedSpell))
+            {
+                ProtectiveField scriptLastPF = _dictionaryUnitAndLastCastedPF[whoCastedSpell];
+                scriptLastPF.CurrentAmountAttacksInField = 0;
+                scriptLastPF.StopCoroutine(scriptLastPF.DurationActive(whoCastedSpell));
+                scriptLastPF.StartTimerActiveState(_ownerProtectiveField);
+                //Debug.Log(scriptLastPF.CurrentAmountAttacksInField);
+
+                AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ProtectiveShieldActivation, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
+
+                StartCallDown();
+
+                return;
+            }
+            _dictionaryUnitAndLastCastedPF[whoCastedSpell] = this; // обращаемся всегда к первому заклинанию, которое было активированно, чтоб не было проблемы со щитом
+
             _ownerProtectiveField = whoCastedSpell;
 
             isActivated = true;
@@ -54,7 +71,7 @@ public class ProtectiveField : Spell
             _scriptProtectiveFieldSprite.OnSomeAnimationWasFninished += SomeAnimationOfProtectiveFieldWasFinished;
             _scriptProtectiveFieldSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
 
-            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.ProtectiveShieldActivation, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+            AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ProtectiveShieldActivation, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
             //Debug.Log("Ебануться нахуй");
 
         }
@@ -66,12 +83,12 @@ public class ProtectiveField : Spell
     {
         if (isActivated)
         {
-            if (gameObject.activeSelf)  
+            //Debug.Log("Что за парашница?");
+
+            if (gameObject.activeSelf && gameObject.active) // шок... gameObject.activeSelf работает не корректно в отличии от gameObject.active
             {
                 StartCallDown();
             }
-
-
 
             _scriptProtectiveFieldSprite.OnSomeAnimationWasFninished -= SomeAnimationOfProtectiveFieldWasFinished;
 
@@ -81,8 +98,14 @@ public class ProtectiveField : Spell
             Destroy(_scriptProtectiveFieldSprite.gameObject);
             _scriptProtectiveFieldSprite = null;
 
-            CurremtAmountBlockingAttack = 0;
+            CurrentAmountAttacksInField = 0;
             isActivated = false;
+
+            if (_dictionaryUnitAndLastCastedPF.ContainsKey(whoCastedSpell)) // у нас при достижении максимального количества блокируемых атак удаляется заклинание из массива 
+            // _dictionaryUnitAndLastCastedPF, но если мы завершим сцену не дождавшись этой ситуации, то массив не очистится (и, как следствие, на следующем уровне будем иметь битую ссылку)
+            {
+                _dictionaryUnitAndLastCastedPF.Remove(whoCastedSpell);
+            }
         }
     }
 
@@ -94,22 +117,25 @@ public class ProtectiveField : Spell
         //Debug.Log(_ownerProtectiveField.isInvicible);
         AnimateHittingField();
 
-        CurremtAmountBlockingAttack++;
+        CurrentAmountAttacksInField++;
 
-        if (CurremtAmountBlockingAttack == amountBlockingAttackMax)
+        if (CurrentAmountAttacksInField == amountBlockingAttackMax)
         {
             _scriptProtectiveFieldSprite.animator.Play(equipmentName + C.Prefixes.Disappear);
+
+            _dictionaryUnitAndLastCastedPF.Remove(ownerProtectiveField); // перенесли сюда из метода Deactivate, чтоб уже при пропадании щита можно было полноценно колдовать другой
         }
-        else if (CurremtAmountBlockingAttack == amountBlockingAttackMax + 1) // когда значение ударов достигает максимального, мы врубаем анимацию исчезания щита, после которой деактивируем
+        else if (CurrentAmountAttacksInField == amountBlockingAttackMax + 1) // когда значение ударов достигает максимального, мы врубаем анимацию исчезания щита, после которой деактивируем
                                                                              // его. При этом если кто-то ещё раз ударит по щиту, то это уже будет max + 1 и мы тут уже сразу вырубаем щит.
                                                                              // Этот удар блокироваться не будет. Стоит отметить, что это не полная деактивация, а снятие эффекта неуязви
                                                                              // мости и отписка от детекции OnThisUnitWasAttacked
         {
+            //Debug.Log("Ибо");
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
             _ownerProtectiveField.isInvicible = false;
         }
 
-        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.ShieldWasHit, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ShieldWasHit, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
         
     }
 

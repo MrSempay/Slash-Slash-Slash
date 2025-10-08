@@ -1,13 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using static ScoreManager;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Player : Unit, IMainTarget
 {
@@ -22,7 +18,7 @@ public class Player : Unit, IMainTarget
     private int _amountEnemiesWasKilledInCombo = 0; // количество врагов, убитых "одним ударом"
     private float _timeDuringOneHit = 0.2f; // длительность нашего "одного удара"
     private int _currentMinimumAmountCombo; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
-
+    
 
     [SerializeField] private float _currentIncreasingStamina; 
     [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь 
@@ -290,9 +286,9 @@ public class Player : Unit, IMainTarget
         //Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
         //Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
         //Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
+        School.SpawnParticularSpell(C.DK.ProtectiveField, this);
         School.SpawnParticularSpell(C.DK.Berserker, this);
-        School.SpawnParticularSpell(C.DK.Berserker, this);
-        School.SpawnParticularSpell(C.DK.Berserker, this);
+        School.SpawnParticularSpell(C.DK.ArcLightning, this);
         
         base.Start();
         SetLikeAMainTarget(); 

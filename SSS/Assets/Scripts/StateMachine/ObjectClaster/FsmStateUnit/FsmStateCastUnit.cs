@@ -42,10 +42,14 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
 
             StartAnimationOrSetIdle(nameAnimationCast);
 
-            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast,
-                                                                    equipmentWhatWasPressed.gameObject,
+            //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast,
+            //                                                        equipmentWhatWasPressed.gameObject,
+            //                                                        AudioManager.TYPE_SOUND.Default,
+            //                                                        AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+            AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast,
+                                                                    unit.audioEmitter,
                                                                     AudioManager.TYPE_SOUND.Default,
-                                                                    AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+                                                                    AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
         }
         else
         {

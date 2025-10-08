@@ -8,7 +8,6 @@ public class Berserker : Spell
     private readonly Vector3 _biasPositionBerserkerEyesFromOwner = new Vector3(0f, 0f, 0f);
     private readonly int _sortOrderProtectionFieldSprite = 13;
 
-    private bool _deactivationFromAnotherBerserkerCast = false;
     private Transform _transformParentBerserkerEyes;
     //private AppearingSprite _scriptBerserkerEyesSprite;
 
@@ -52,11 +51,9 @@ public class Berserker : Spell
     {
         if (!isActivated)
         {
-            Debug.Log(whoCastedSpell.damage);
             if (_dictionaryUnitAndLastCastedBerserker.ContainsKey(whoCastedSpell))
             {
                 Berserker scriptLastBerserker = _dictionaryUnitAndLastCastedBerserker[whoCastedSpell];
-                _deactivationFromAnotherBerserkerCast = true;
                 scriptLastBerserker.Deactivate(whoCastedSpell);
                 scriptLastBerserker.StopCoroutine(scriptLastBerserker.DurationActive(whoCastedSpell));
             }
@@ -69,7 +66,6 @@ public class Berserker : Spell
             whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, true);
 
             whoCastedSpell.AddUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
-            Debug.Log(whoCastedSpell.damage);
         }
     }
     public override void Deactivate(Unit whoCastedSpell)
@@ -84,12 +80,9 @@ public class Berserker : Spell
             whoCastedSpell.ChangeUnitParametersByPercentage(increasingUnitParametersByAmmunitionPercentageByCast, false);
 
             whoCastedSpell.RemoveUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker);
-            //if (!_deactivationFromAnotherBerserkerCast) // если мы прерываем работу предыдущего берсеркера чтоб обновить его текущим, то вызов whoCastedSpell.BerserkerStateDeactivated()
-            // приведёт к отмене текущей анимации берсеркерства
-            {
-                whoCastedSpell.BerserkerStateDeactivated();
-            }
-
+            
+            whoCastedSpell.BerserkerStateDeactivated();
+            
             _dictionaryUnitAndLastCastedBerserker.Remove(whoCastedSpell);
         }
     }

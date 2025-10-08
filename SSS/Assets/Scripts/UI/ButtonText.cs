@@ -52,6 +52,7 @@ public class ButtonText : MonoBehaviour
     protected void PlaySound()
     {
         //Debug.Log("Ну что за параша такая-то");
-        AudioManager.Instance.StartSoundEffect(C.MusicSounds.OnButtonClick);
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.OnButtonClick, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+        AudioManager.Instance.StartSoundEffect(C.MusicSounds.OnButtonClick); // ибо при удалении/деактивации кнопки верхний подход может отработать не корректно
     }
 }

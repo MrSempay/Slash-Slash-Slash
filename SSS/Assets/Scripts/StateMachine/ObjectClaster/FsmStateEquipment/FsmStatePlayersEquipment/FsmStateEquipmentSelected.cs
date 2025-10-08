@@ -93,7 +93,10 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     }
                     else
                     {
-                        AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.EquipmentHasChangedPlace, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+                        AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.EquipmentHasChangedPlace,
+                                                                                 equipment.audioEmitter,
+                                                                                 AudioManager.TYPE_SOUND.Default,
+                                                                                 AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                     }
                     Debug.Log(equipment);
                     Debug.Log(rectTransformPlace);
@@ -184,7 +187,10 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                         }
                         else
                         {
-                            AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.EquipmentHasChangedPlace, gameObject, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
+                            AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.EquipmentHasChangedPlace,
+                                                                                     equipment.audioEmitter,
+                                                                                     AudioManager.TYPE_SOUND.Default,
+                                                                                     AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                         }
                         Debug.Log(equipment);
                         Debug.Log(rectTransformPlace);

@@ -16,15 +16,34 @@ public class TorchFlicker : MonoBehaviour
     public float flickerSpeed = 0.05f;
 
     private Light2D _light2D;
+    private AudioEmitter _audioEmitter;
 
     private void Awake()
     {
         _light2D = GetComponent<Light2D>();
+        _audioEmitter = GetComponent<AudioEmitter>() ?? gameObject.AddComponent<AudioEmitter>();
+        AudioManager.Instance.RegisterEmitter(_audioEmitter);
     }
 
     private void OnEnable()
     {
         StartCoroutine(FlickerRoutine());
+        //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.TorchFire,
+        //                                                                     gameObject,
+        //                                                                     AudioManager.TYPE_SOUND.DefaultAS,
+        //                                                                     AudioManager.TYPE_AUDIO_SOURCE._3DStandard,
+        //                                                                     null,
+        //                                                                     0.1f,
+        //                                                                     true,
+        //                                                                     true);
+        AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.TorchFire,
+                                                                             _audioEmitter,
+                                                                             AudioManager.TYPE_SOUND.DefaultAS,
+                                                                             AudioManager.TYPE_AUDIO_SOURCE._3DStandard,
+                                                                             null,
+                                                                             0.1f,
+                                                                             true,
+                                                                             true);
     }
 
     private IEnumerator FlickerRoutine()
