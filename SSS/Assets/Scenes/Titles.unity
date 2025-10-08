@@ -2211,6 +2211,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5797864754852188333, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
+      propertyPath: _titlesTextAsset
+      value: 
+      objectReference: {fileID: 4900000, guid: a5086bb530d9c1c419a79ed4e75e8395, type: 3}
     - target: {fileID: 6025560685112133455, guid: 0ee24a2778d444d4082c54a6ac9ac351, type: 3}
       propertyPath: m_LocalPosition.y
       value: 436

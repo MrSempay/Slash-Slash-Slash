@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static FsmStatePlayer;
 using static UnityEngine.Rendering.DebugUI;
 
 public class FsmStatePlayer : FsmStateUnit
 {
+    private int activeFingerId = -1; // Запоминаем ID активного тача
+
     protected Fsm fsmPlayer;
     protected Player player;
     public delegate void SwipeEnded();
@@ -28,59 +31,128 @@ public class FsmStatePlayer : FsmStateUnit
     {
 
         IsAtSpecifiedPosition(); // узнаём, добрался ли игрок до конечной точки пути (по сути его позиция + длина свайпа. Если да, то сбрасываем мгновенную скорость по х в ноль.
-        // Для мобильных устройств
+                                 // Для мобильных устройств
+                                 //if (Input.touchCount > 0)
+                                 //{
+                                 //    Touch touch = Input.GetTouch(0);
+
+        //    if (touch.phase == TouchPhase.Began)
+        //    {
+        //        player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
+        //        player.startTouchPosition.z = 0;
+        //        player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
+        //    }
+        //    else if (touch.phase == TouchPhase.Ended)
+        //    {
+        //        if (player.CurrentStamina > 0)
+        //        {
+        //            player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
+        //            player.endTouchPosition.z = 0;
+        //            player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
+        //            // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
+        //            // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
+        //            if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+        //            {
+        //                HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+
+        //                player.CurrentStamina--;
+        //            }
+        //        }
+        //    }
+        //}
+        //// Для ПК (с использованием мыши)
+        //if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
+        //{
+        //    player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition); // тут используем Vector3, поэтому координату z сбрасываем в ноль (для 2D)
+        //    player.startTouchPosition.z = 0;
+        //    player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
+        //}
+        //else if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши
+        //{
+        //    if (player.CurrentStamina > 0)
+        //    {
+        //        player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        //        player.endTouchPosition.z = 0;
+        //        player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
+        //        // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
+        //        // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
+        //        if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+        //        {
+        //            HandleSwipe(player.endTouchPosition - player.startTouchPosition);
+
+        //            player.CurrentStamina--; 
+        //        }
+        //    }
+        //}
+
+        // === ДЛЯ ТАЧ ===
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
+            // Проверяем, что касание не на UI
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                return;
+
+            // Начало касания
             if (touch.phase == TouchPhase.Began)
             {
+                // Запоминаем fingerId активного касания
+                activeFingerId = touch.fingerId;
+
                 player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
                 player.startTouchPosition.z = 0;
-                player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
+                player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока
             }
-            else if (touch.phase == TouchPhase.Ended)
+            // Завершение или отмена касания
+            else if (touch.fingerId == activeFingerId &&
+                    (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
             {
                 if (player.CurrentStamina > 0)
                 {
                     player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
                     player.endTouchPosition.z = 0;
                     player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-                    // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
-                    // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-                    if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+
+                    if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0)
                     {
                         HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-
                         player.CurrentStamina--;
                     }
                 }
+
+                // Сбрасываем activeFingerId, чтобы можно было начать новое касание
+                activeFingerId = -1;
             }
         }
-        // Для ПК (с использованием мыши)
-        if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
+
+        // === ДЛЯ ПК (мышь) ===
+        if (Input.GetMouseButtonDown(0))
         {
-            player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition); // тут используем Vector3, поэтому координату z сбрасываем в ноль (для 2D)
+            // Проверяем, что курсор не над UI
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
             player.startTouchPosition.z = 0;
-            player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
+            player.startPositionPlayerBeforeMoving = player.transform.position;
         }
-        else if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши
+        else if (Input.GetMouseButtonUp(0))
         {
             if (player.CurrentStamina > 0)
             {
                 player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 player.endTouchPosition.z = 0;
                 player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-                // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
-                // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
+
+                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0)
                 {
                     HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-
-                    player.CurrentStamina--; 
+                    player.CurrentStamina--;
                 }
             }
         }
+
         if ((player.lookingRight == player.rb.linearVelocityX < 0) && Mathf.Abs(player.rb.linearVelocityX) > 0.01) // добавили некоторый treshhold для нивелирования небольшого заноса от CompositeCollider
         {
             ChangeDirectionView(null);
