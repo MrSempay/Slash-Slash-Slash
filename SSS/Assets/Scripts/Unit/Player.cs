@@ -286,9 +286,9 @@ public class Player : Unit, IMainTarget
         //Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
         //Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
         //Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
-        School.SpawnParticularSpell(C.DK.ProtectiveField, this);
-        School.SpawnParticularSpell(C.DK.Berserker, this);
-        School.SpawnParticularSpell(C.DK.ArcLightning, this);
+        //School.SpawnParticularSpell(C.DK.ProtectiveField, this);
+        //School.SpawnParticularSpell(C.DK.Berserker, this);
+        //School.SpawnParticularSpell(C.DK.ArcLightning, this);
         
         base.Start();
         SetLikeAMainTarget(); 
