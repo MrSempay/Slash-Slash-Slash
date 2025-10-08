@@ -690,6 +690,30 @@ public class LocalizationManager
     { LANGUAGE.Russian, "Если прислушаться, то лезвие шепчет саги о лорде Элдвире — титане, что стоял стеной против волн тьмы до последнего вздоха, впивая в себя жажду крови врагов и вливая её в сталь, сея семя неукротимой ярости." },
     { LANGUAGE.Spanish, "Si escuchas atentamente, la hoja susurra sagas del señor Eldvir - un titán que se mantuvo como un muro contra olas de oscuridad hasta su último aliento, absorbiendo la sed de sangre enemiga y vertiéndola en acero, sembrando semillas de furia indomable" }
 });
+        
+        localization.Add(C.DK.ArcLightning + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "A rune developed by the mages of Clan Hartgard in a desperate attempt to hold back the onslaught of the hyenas. Instead of an instant flash, it creates a crackling wall of lightning before the caster, dealing colossal damage." },
+    { LANGUAGE.Russian, "Руна, разработанная магами клана Хартгард в отчаянной попытке сдержать натиск гиен. Вместо мгновенной вспышки, она создает перед заклинателем потрескивающую стену из молний наносящую колосальный урон." },
+    { LANGUAGE.Spanish, "Una runa desarrollada por los magos del Clan Hartgard en un intento desesperado por contener la embestida de las hienas. En lugar de un destello instantáneo, crea un crepitante muro de relámpagos ante el lanzador que inflige un daño colosal." }
+});
+
+        localization.Add(C.DK.Berserker + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "An instinctive, bestial rune that plunges the warrior into a state of pure madness, reflecting the essence of survival in the wild lands." },
+    { LANGUAGE.Russian, "Инстинктивная, звериная руна, погружает воина в состояние чистого безумия, отражающая суть выживания в диких землях." },
+    { LANGUAGE.Spanish, "Una runa instintiva y bestial que sumerge al guerrero en un estado de pura locura, reflejando la esencia de la supervivencia en las tierras salvajes." }
+});
+
+        localization.Add(C.DK.Healing + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "In every great clan, be it Hartgard or Eldvir, the foundation of any infirmary was the Rune of Minor Healing. This is not the legendary magic that saves heroes on the battlefield, but a low-level, yet indispensable rune for daily work. Young healers and acolytes received it first." },
+    { LANGUAGE.Russian, "В каждом великом клане, будь то Хартгард или Элдвир, основой любого лазарета была Руна Малого Исцеления. Молодые целители и аколиты получали её в первую очередь." },
+    { LANGUAGE.Spanish, "En cada gran clan, ya fuera Hartgard o Eldvir, la base de cualquier enfermería era la Runa de Sanación Menor. No es la magia legendaria que salva a los héroes en el campo de batalla, sino una runa de bajo nivel, pero indispensable para el trabajo diario. Los jóvenes sanadores y acólitos la recibían en primer lugar." }
+});
+
+        localization.Add(C.DK.ProtectiveField + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
+    { LANGUAGE.English, "The Rune of the Protective Field was standard equipment for the guard, especially for those who stood on the walls or guarded the gates. It was carved on the bracers or the inner side of every guard's shield. This was not a rune for duels, but a tool for holding the formation." },
+    { LANGUAGE.Russian, "Руна Защитного Поля была стандартной экипировкой для стражи, особенно для тех, кто стоял на стенах или охранял ворота. Это была не руна для поединков, а инструмент для удержания строя." },
+    { LANGUAGE.Spanish, "La Runa del Campo Protector era el equipamiento estándar para la guardia, especialmente para aquellos que vigilaban en las murallas o protegían las puertas. Se grababa en los brazales o en el lado interior del escudo de cada guardia. No era una runa para duelos, sino una herramienta para mantener la formación." }
+});
 
     }
 
