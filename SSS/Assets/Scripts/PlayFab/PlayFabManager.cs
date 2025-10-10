@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -691,6 +692,7 @@ public class PlayFabManager : MonoBehaviour
 
     #region Leaderboard
 
+    public Dictionary<string, int> lastLeaderboardStatsInfo = new(); // string_ИМЯ_ИГРОКА: int_ЗНАЧЕНИЕ_СТАТИСТИКИ
 
     // в асинхронной среде не будет ждать получения результатов с сервера. Асинхронная среда продолжит выполнение кода не дожидаясь результатов.
     public void GetScoreLeaderboarder()
@@ -702,14 +704,15 @@ public class PlayFabManager : MonoBehaviour
     }
 
     // асинхронная среда будет приостановлена до тех пор, пока придут результаты с сервера и метод полностью не закончит свою работу. До тех пор асинхронный контекст будет ждать
-    public async Task GetScoreLeaderboarderAsync()
+    public async Task GetScoreLeaderboarderAsync(CancellationToken token)
     {
-
         if (!PlayFabClientAPI.IsClientLoggedIn())
         {
             Debug.LogWarning("Not logged in to PlayFab!");
             return;
         }
+
+        token.ThrowIfCancellationRequested(); // сразу проверяем
 
         //Debug.Log("УРЯЯЯЯ");
         string nameLevel = LevelBuilder.instance.selfName;
@@ -727,22 +730,31 @@ public class PlayFabManager : MonoBehaviour
 
         try
         {
-            GetLeaderboardResult result = await taskCompletionSource.Task;
-            //Debug.Log(result);
-            //Debug.Log(taskCompletionSource);
-            //Debug.Log(taskCompletionSource.Task);
-            OnGetLeaderboard(result);
+            using (token.Register(() => taskCompletionSource.TrySetCanceled()))
+            {
+                GetLeaderboardResult result = await taskCompletionSource.Task;
+                //Debug.Log(result);
+                //Debug.Log(taskCompletionSource);
+                //Debug.Log(taskCompletionSource.Task);
+                OnGetLeaderboard(result);
+            }
+        }
+        catch (OperationCanceledException e)
+        {
+            Debug.LogError("Error in GetScoreLeaderboarderAsync: " + e.Message);
+            throw;
+            // Handle the error here
         }
         catch (Exception e)
         {
             Debug.LogError("Error in GetScoreLeaderboarderAsync: " + e.Message);
+            //throw; // не делаем это, ибо мы там более нигде оное не обрабатывает в более высоком контексте. Ну, пока что...
             // Handle the error here
         }
 
 
-    }
 
-    public Dictionary<string, int> lastLeaderboardStatsInfo = new(); // string_ИМЯ_ИГРОКА: int_ЗНАЧЕНИЕ_СТАТИСТИКИ
+    }
 
     private void OnGetLeaderboard(GetLeaderboardResult result)
     {
@@ -769,6 +781,36 @@ public class PlayFabManager : MonoBehaviour
     private void OnErrorLeaderbpard(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
+    }
+
+    /// <summary>
+    /// Запускает обновление лидерборда, отменяя все предыдущие попытки.
+    /// </summary>
+    public async Task UpdateLeaderboardServerAsync(CancellationToken token)
+    {
+        try
+        {
+            // Первый шаг — обновляем статистику
+            await StartCloudUpdatePlayerStatsNEWAsync();
+            token.ThrowIfCancellationRequested();
+
+            // Подожди пару секунд (нужно, чтобы лидерборд успел применить обновления)
+            await Task.Delay(2000, token);
+            Debug.Log("Или мы только тут?");
+            token.ThrowIfCancellationRequested();
+
+            Debug.Log("[Leaderboard] Successfully updated leaderboard stats.");
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("[Leaderboard] Previous update canceled.");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[Leaderboard] Unexpected error: {ex}");
+            //throw; // не делаем это, ибо мы там более нигде оное не обрабатывает в более высоком контексте. Ну, пока что...
+        }
     }
 
     #endregion

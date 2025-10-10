@@ -391,6 +391,16 @@ MonoBehaviour:
   - {fileID: 1811576096391517144}
   - {fileID: 2178819433543322994}
   - {fileID: 2468945880643732299}
+  - {fileID: 3520191159647198100}
+  - {fileID: 8743907636404415975}
+  - {fileID: 1811576096391517144}
+  - {fileID: 2178819433543322994}
+  - {fileID: 2468945880643732299}
+  - {fileID: 3520191159647198100}
+  - {fileID: 8743907636404415975}
+  - {fileID: 1811576096391517144}
+  - {fileID: 2178819433543322994}
+  - {fileID: 2468945880643732299}
 --- !u!223 &6785577251862975942
 Canvas:
   m_ObjectHideFlags: 0
@@ -640,7 +650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7499218213384597500, guid: e070f42283f60e64780be970bc89cbbc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7727792695410546887, guid: e070f42283f60e64780be970bc89cbbc, type: 3}
       propertyPath: m_Name
@@ -1561,15 +1571,15 @@ PrefabInstance:
       objectReference: {fileID: 6819362590658633552, guid: 806d64e6bb20c274c8b285def0838afd, type: 3}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.b
-      value: 0.39215687
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.g
-      value: 0.39215687
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.r
-      value: 0.39215687
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 2799302268741904094, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: selfName
@@ -2726,7 +2736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7499218213384597500, guid: e070f42283f60e64780be970bc89cbbc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -2760,15 +2770,15 @@ PrefabInstance:
       objectReference: {fileID: 5547088142172444737, guid: b99cc262dfa8026499dae46e2a195af4, type: 3}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.b
-      value: 255
+      value: 0.39215687
       objectReference: {fileID: 0}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.g
-      value: 255
+      value: 0.39215687
       objectReference: {fileID: 0}
     - target: {fileID: 1621946643712612901, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: m_Color.r
-      value: 255
+      value: 0.39215687
       objectReference: {fileID: 0}
     - target: {fileID: 2799302268741904094, guid: c5e541ac371f9ca4296c13c24d3d8c73, type: 3}
       propertyPath: selfName

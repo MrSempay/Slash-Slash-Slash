@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -67,5 +68,8 @@ public class UIController : MonoBehaviour
                 rtBottomCenterPanel.position = bottomCenter;
             }
         }
+    }
+    protected virtual void Start()
+    {
     }
 }

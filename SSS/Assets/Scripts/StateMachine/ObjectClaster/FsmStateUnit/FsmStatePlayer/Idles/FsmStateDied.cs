@@ -15,13 +15,17 @@ public class FsmStateDied : FsmStatePlayer
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
         Debug.Log("Died state [ENTER]");
+
         player.animator.Play("PlayerDied");
         player.isAlive = false;
         player.attackAreaTransform.gameObject.SetActive(false);
         player.areUpdatingFunctionsEnabled = false;
         player.StopAllCoroutines();
-        waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
         player.WasDestroyed = true;
+
+        waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
+
+        ScoreManager.Instance.GetAndShowActualLeaderboardAsync(Leaderboard.INSTANTIATION_CONTEXT.PlayerDeath);
 
     }
 

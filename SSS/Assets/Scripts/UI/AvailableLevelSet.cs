@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static StaticClassForAdditionalFunctions;
 
 public class AvailableLevelSet : MonoBehaviour
 {
@@ -58,7 +59,16 @@ public class AvailableLevelSet : MonoBehaviour
     }
     private void OnChooseLevel(string nameLevel)
     {
-        OnStartLevel?.Invoke();
+        float timeDelay = GameManager.Instance.currentSettings.Orientation == LANGUAGE.Vertical ? 2f : 0.1f;
+        StartCoroutine(DelayForUpdatingOrientation(nameLevel, timeDelay));
+        
+        OnStartLevel?.Invoke(); // 10.10.2025 - используется для установки нужной ориентации при переходе из главного менюн на уровни, и всё.
+    }
+
+    private IEnumerator DelayForUpdatingOrientation(string nameLevel, float timeDelay) // задержка нужна сугубо для обновления ориентации на Horizontal через OnStartLevel?.Invoke(),
+    // ибо при смене сцены оно нормально отрисоваться не успевает, мда...
+    {
+        yield return new WaitForSecondsRealtime(timeDelay);
 
         GameManager.Instance.currentLevelInOrder = GameManager.Instance.orderLevels.IndexOf(nameLevel);
         GameManager.Instance.ChangeSceneTroughDialogue(nameLevel);

@@ -72,7 +72,7 @@ public class ScenarioScript : MonoBehaviour
 
         timeWhenSceneStarted = Time.time;
 
-        _cts = new CancellationTokenSource();
+        _cts = new CancellationTokenSource(); // пока не используем, но путь будет
 
 
     }
@@ -176,7 +176,7 @@ public class ScenarioScript : MonoBehaviour
     {
         GameManager.Instance.StartDialogueNEW(nameDialogue);
     }
-    protected virtual async void FinishLevel()
+    protected virtual void FinishLevel()
     {
 
         if (GameManager.Instance.currentLevelInOrder < GameManager.Instance.orderLevels.Count - 1) // при прохождении последнего уровня счётчик не увеличиваем
@@ -186,22 +186,20 @@ public class ScenarioScript : MonoBehaviour
         {
             GameManager.Instance.MaxReachedLevel = GameManager.Instance.currentLevelInOrder + 1;
         }
-        try
-        {
-            var token = _cts.Token;
+        // try/catch НЕ НУЖНЫ! Ибо методы у меня ничего не ловят, бо оба void (StartCloudUpdateMaxReachedLevel вообще даже не асинхронный). Для более подробного описания см. GetAndShowActualLeaderboardAsync
+        //try
+        //{
 
-            PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-            await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
-            token.ThrowIfCancellationRequested();
-            await Task.Delay(2000); // К сожалению лидерборд не обновляется синхронно с обновлением статистик. Нужна задержка в несколько секунд. Константа 2000 была подобрана произвольно
-            token.ThrowIfCancellationRequested();
-            ScoreManager.Instance.ShowActualLeaderboard(); // хотя тут защиту мы, вроде, предусмотрели, сюда код лучше не пускать даже
+        PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
 
-        }
-        catch (OperationCanceledException)
-        {
-            // Корректная отмена - игнорируем
-        }
+        ScoreManager.Instance.GetAndShowActualLeaderboardAsync(Leaderboard.INSTANTIATION_CONTEXT.FinishLevel);
+
+        //}
+
+        //catch (OperationCanceledException)
+        //{
+        //    // Корректная отмена - игнорируем
+        //}
     }
 
     protected virtual GameObject SpawnObjectAtTargetPosition(GameObject someObject, Vector3 targetPosition) // может стоить для каких-нибудь объектов добавить функцию, чтоб вызывать при таком спавне

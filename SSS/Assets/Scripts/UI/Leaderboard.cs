@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
+    public enum INSTANTIATION_CONTEXT { FinishLevel, PlayerDeath };
+
     [SerializeField] private RectTransform _rectTransformPlaceForFields;  
     [SerializeField] private TextEdit _textNotification;
     [SerializeField] private Sprite place_1;
@@ -22,15 +24,23 @@ public class Leaderboard : MonoBehaviour
     private bool _lastLoginingWasFailed = false;
     private GameObject _buttonShowLeaderboard;
     private CancellationTokenSource _cts;
+    private INSTANTIATION_CONTEXT _instContext; // по идее просто хранит то значение, с которым мы заспавнились. Нужно только для вызова через функцию LoginSuccess
+
+    private static Leaderboard _instance;
 
     private void Awake()
     {
+        if (_instance != null)
+        {
+            Destroy(_instance.gameObject);
+        }
+        _instance = this;
+
         _HOVLayoutGroupPlaceForFields = _rectTransformPlaceForFields.GetComponent<HorizontalOrVerticalLayoutGroup>();
         _HOVLayoutGroupContainerButtons = _rtContainerButtons.GetComponent<HorizontalOrVerticalLayoutGroup>();
 
         _prefubField = ScoreManager.prefubFieldLeaderboard; // не очень, конечно, безопасно, но едва ли лидерборд будет спавниться до ScoreManager
         //Debug.Log(GetInstanceID());
-        UpdateLeaderboard();
 
         _buttonShowLeaderboard = GameManager.Instance.InstanceTextButton(false, Player.instance.buttonShowLeaderboardPlacement, C.Just.ShowLeaderboard, ShowLeaderboardButtonClick);
         _buttonShowLeaderboard.SetActive(false);
@@ -58,6 +68,12 @@ public class Leaderboard : MonoBehaviour
         GameManager.Instance.GoToRequiredLevel();
     }
 
+    public void AdjustLeaderboardAtInstantiate(INSTANTIATION_CONTEXT instContext) // по идее вызывается 1 раз при создании...
+    {
+        AdjustButtons(instContext);
+        UpdateLeaderboard(instContext);
+    }
+
     private void ShowLeaderboardButtonClick()
     {
         gameObject.SetActive(true);
@@ -72,13 +88,9 @@ public class Leaderboard : MonoBehaviour
             {
                 var token = _cts.Token;
 
-                await PlayFabManager.Instance.StartCloudUpdatePlayerStatsNEWAsync();
-                token.ThrowIfCancellationRequested();
-                await Task.Delay(2000);
-                token.ThrowIfCancellationRequested();
-                await PlayFabManager.Instance.GetScoreLeaderboarderAsync();
+                await ScoreManager.Instance.GetActualLeaderboardAsync(token);
 
-                UpdateLeaderboard();
+                UpdateLeaderboard(_instContext);
 
                 _lastLoginingWasFailed = false;
             }
@@ -88,7 +100,48 @@ public class Leaderboard : MonoBehaviour
             }
         }
     }
-    private void UpdateLeaderboard()
+
+    private void AdjustButtons(INSTANTIATION_CONTEXT instContext) // по идее вызывается 1 раз при создании...
+    {
+        if (PlayFabManager.Instance.lastLeaderboardStatsInfo.Count > 0)
+        {
+            switch (instContext)
+            {
+                case INSTANTIATION_CONTEXT.FinishLevel:
+                    if (GameManager.Instance.currentLevelInOrder != GameManager.Instance.orderLevels.Count - 1) // если не достигли последнего уровня
+                    {
+                        GameManager.Instance.InstanceTextButton(true, _rtContainerButtons, C.Just.NextLevel, NextLevel);
+                    }
+                    else
+                    {
+                        Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
+                        Instantiate(GameManager.Instance.prefubButtonBigTitles, _rtContainerButtons).onClick.AddListener(GoToTitles);
+                    }
+                    break;
+
+                case INSTANTIATION_CONTEXT.PlayerDeath:
+                    Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
+                    Instantiate(GameManager.Instance.prefubBigButtonRetry, _rtContainerButtons).onClick.AddListener(RetryLevel);
+                    break;
+            }
+        }
+        else
+        {
+            switch (instContext)
+            {
+                case INSTANTIATION_CONTEXT.FinishLevel:
+                    GameManager.Instance.InstanceTextButton(true, _rtContainerButtons, C.Just.NextLevel, NextLevel);
+                    break;
+                case INSTANTIATION_CONTEXT.PlayerDeath:
+                    Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
+                    Instantiate(GameManager.Instance.prefubBigButtonRetry, _rtContainerButtons).onClick.AddListener(RetryLevel);
+                    break;
+            }
+        }
+    }
+
+    private void UpdateLeaderboard(INSTANTIATION_CONTEXT instContext) // короче, по идее это пока что (10.10.2025) instContext нужен только для настройки кнопок, их настраиваем в отдельном
+    // методе, тут оставим параметр для возможных дальнейших манипуляций.
     {
         if (PlayFabManager.Instance.lastLeaderboardStatsInfo.Count > 0)
         {
@@ -125,20 +178,6 @@ public class Leaderboard : MonoBehaviour
 
                 place_number++;
             }
-            if (GameManager.Instance.currentLevelInOrder != GameManager.Instance.orderLevels.Count - 1) // если не достигли последнего уровня
-            {
-                GameManager.Instance.InstanceTextButton(true, _rtContainerButtons, C.Just.NextLevel, NextLevel);
-            }
-            else
-            {
-                foreach (RectTransform rtButton in _rtContainerButtons)
-                {
-                    Destroy(rtButton.gameObject); // по-хорошему ещё бы как-то listener-ов убрать, ну да ладно
-
-                }
-                Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
-                Instantiate(GameManager.Instance.prefubButtonBigTitles, _rtContainerButtons).onClick.AddListener(GoToTitles);
-            }
 
             Canvas.ForceUpdateCanvases();
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
@@ -154,6 +193,10 @@ public class Leaderboard : MonoBehaviour
     {
         GameManager.Instance.ChangeScene(C.NameScene.MainMenu);
     }
+    private void RetryLevel()
+    {
+        GameManager.Instance.GoToSameLevel();
+    }
 
     private void GoToTitles()
     {
@@ -164,6 +207,8 @@ public class Leaderboard : MonoBehaviour
     {
         _cts?.Cancel();
         _cts?.Dispose();
+
+        Destroy(_buttonShowLeaderboard);
 
         if (PlayFabManager.Instance != null)
         {

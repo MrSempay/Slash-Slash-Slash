@@ -103,6 +103,7 @@ public class MainMenu : MonoBehaviour
 
     private void StartingGameplay()
     {
+
         GameManager.Instance.currentSettings.Orientation = LANGUAGE.Horizontal;
     }
     private void CheckWasReachedEndOfGame()

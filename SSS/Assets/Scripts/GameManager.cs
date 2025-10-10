@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public GameObject prefubAppearingText;
     public GameObject prefubAppearingNotification;
     public GameObject prefubTextButton;
+    public Button prefubBigButtonRetry;
     public Button prefubButtonBigTitles;
     public Button prefubButtonBigMainMenu;
     public GameObject prefubTextButtonPanelChoose;
@@ -355,6 +356,7 @@ public class GameManager : MonoBehaviour
         prefubSpell = Resources.Load<GameObject>(C.Paths.PrefubSpell);
         prefubButtonBigTitles = Resources.Load<Button>(C.Paths.PrefubBigButtonTitles);
         prefubButtonBigMainMenu = Resources.Load<Button>(C.Paths.PrefubBigMainMenuButton);
+        prefubBigButtonRetry = Resources.Load<Button>(C.Paths.PrefubBigButtonRetry);
         prefubTextButton = Resources.Load<GameObject>(C.Paths.PrefubTextButton);
         prefubTextButtonPanelChoose = Resources.Load<GameObject>(C.Paths.PrefubTextButtonPanelChoose);
         prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
@@ -566,7 +568,10 @@ public class GameManager : MonoBehaviour
             currentLevelInOrder++;
             ChangeSceneTroughDialogue(orderLevels[currentLevelInOrder]);
         }
-
+    }
+    public void GoToSameLevel()
+    {
+        ChangeSceneTroughDialogue(orderLevels[currentLevelInOrder]);
     }
 
     public void ShakeSomething(GameObject obj, float radiusShaking, float timeDuration, float tickTime, bool shouldBeAttenuation) // timeDuration = -1 для бесконечного шатания,
