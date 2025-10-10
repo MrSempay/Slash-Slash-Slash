@@ -229,6 +229,7 @@
     <Compile Include="Assets\Scripts\Unit\Enemy.cs" />
     <Compile Include="Assets\Scripts\TestMovingKinematic.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AudioSessionManagerClient.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayerL.cs" />
     <Compile Include="Assets\Scripts\Music\AudioEmitter.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />

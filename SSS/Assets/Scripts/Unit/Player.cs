@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,17 +11,17 @@ public class Player : Unit, IMainTarget
     private Coroutine _zeroizeKillComboTicksCoroutine;
     private Coroutine _recoverStaminaPointCoroutine;
     private Coroutine _zeroizeComboKillCoroutine = null;
-    private bool _isTranslatingEquipment = false; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь
-    private bool _hasVibratedByFallHealth = false; // флаг, маркерующий, была ли сделана вибрация при пересечении порога ХП в 15%
-    private float _fractionCurrentHealthToVibrate = 0.15f; // порог здоровья, при пересечении которого начинаем вибрировать
-    private Transform _mainCameraTransform; // компонент Transform камеры игрока
-    private int _amountEnemiesWasKilledInCombo = 0; // количество врагов, убитых "одним ударом"
-    private float _timeDuringOneHit = 0.2f; // длительность нашего "одного удара"
-    private int _currentMinimumAmountCombo; // количество ячеек в инвентаре для заклинаний, пока что... просто константа и не влияет на их количество
+    private bool _isTranslatingEquipment = false; // С„Р»Р°Рі, РјР°СЂРєРµСЂСѓСЋС‰РёР№, РїРµСЂРµРЅРѕСЃРёРј Р»Рё РјС‹ РєР°РєРѕРµ-Р»РёР±Рѕ СЃРЅР°СЂСЏР¶РµРЅРёРµ РІ РёРЅРІРµРЅС‚Р°СЂСЊ
+    private bool _hasVibratedByFallHealth = false; // С„Р»Р°Рі, РјР°СЂРєРµСЂСѓСЋС‰РёР№, Р±С‹Р»Р° Р»Рё СЃРґРµР»Р°РЅР° РІРёР±СЂР°С†РёСЏ РїСЂРё РїРµСЂРµСЃРµС‡РµРЅРёРё РїРѕСЂРѕРіР° РҐРџ РІ 15%
+    private float _fractionCurrentHealthToVibrate = 0.15f; // РїРѕСЂРѕРі Р·РґРѕСЂРѕРІСЊСЏ, РїСЂРё РїРµСЂРµСЃРµС‡РµРЅРёРё РєРѕС‚РѕСЂРѕРіРѕ РЅР°С‡РёРЅР°РµРј РІРёР±СЂРёСЂРѕРІР°С‚СЊ
+    private Transform _mainCameraTransform; // РєРѕРјРїРѕРЅРµРЅС‚ Transform РєР°РјРµСЂС‹ РёРіСЂРѕРєР°
+    private int _amountEnemiesWasKilledInCombo = 0; // РєРѕР»РёС‡РµСЃС‚РІРѕ РІСЂР°РіРѕРІ, СѓР±РёС‚С‹С… "РѕРґРЅРёРј СѓРґР°СЂРѕРј"
+    private float _timeDuringOneHit = 0.2f; // РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РЅР°С€РµРіРѕ "РѕРґРЅРѕРіРѕ СѓРґР°СЂР°"
+    private int _currentMinimumAmountCombo; // РєРѕР»РёС‡РµСЃС‚РІРѕ СЏС‡РµРµРє РІ РёРЅРІРµРЅС‚Р°СЂРµ РґР»СЏ Р·Р°РєР»РёРЅР°РЅРёР№, РїРѕРєР° С‡С‚Рѕ... РїСЂРѕСЃС‚Рѕ РєРѕРЅСЃС‚Р°РЅС‚Р° Рё РЅРµ РІР»РёСЏРµС‚ РЅР° РёС… РєРѕР»РёС‡РµСЃС‚РІРѕ
     
 
     [SerializeField] private float _currentIncreasingStamina; 
-    [SerializeField] private int _countAccessToUpInSchool = 0; // флаг, маркерующий, переносим ли мы какое-либо снаряжение в инвентарь 
+    [SerializeField] private int _countAccessToUpInSchool = 0; // С„Р»Р°Рі, РјР°СЂРєРµСЂСѓСЋС‰РёР№, РїРµСЂРµРЅРѕСЃРёРј Р»Рё РјС‹ РєР°РєРѕРµ-Р»РёР±Рѕ СЃРЅР°СЂСЏР¶РµРЅРёРµ РІ РёРЅРІРµРЅС‚Р°СЂСЊ 
     [SerializeField] private float _currentExperience = 0;
     [SerializeField] private float _currentMoney = 0;
     [SerializeField] private int _currentScore = 0;
@@ -35,51 +35,71 @@ public class Player : Unit, IMainTarget
 
     public static Player instance;
 
-    [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Для отслеживания свайпов
-    [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // стартовая позиция игрока до того, как он начал движение
-    [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // разница по координате х между началом свайпа и его окончанием
-    [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. Требуется лишь для отладки
-    [NonSerialized] public float comboOneHitKillMultiplayer; // множитель для убийства врагов за "один удар"
+    [NonSerialized] public Vector3 startTouchPosition, endTouchPosition = Vector3.zero; // Р”Р»СЏ РѕС‚СЃР»РµР¶РёРІР°РЅРёСЏ СЃРІР°Р№РїРѕРІ
+    [NonSerialized] public Vector3 startPositionPlayerBeforeMoving = Vector3.zero; // СЃС‚Р°СЂС‚РѕРІР°СЏ РїРѕР·РёС†РёСЏ РёРіСЂРѕРєР° РґРѕ С‚РѕРіРѕ, РєР°Рє РѕРЅ РЅР°С‡Р°Р» РґРІРёР¶РµРЅРёРµ
+    [NonSerialized] public float differenceXBetweenStartAndEndPositions = 0; // СЂР°Р·РЅРёС†Р° РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Рµ С… РјРµР¶РґСѓ РЅР°С‡Р°Р»РѕРј СЃРІР°Р№РїР° Рё РµРіРѕ РѕРєРѕРЅС‡Р°РЅРёРµРј
+    [NonSerialized] public AnimatorClipInfo animatorInfo; // РїРѕ РёРґРµРµ РЅР°С„РёРі РЅРµ РЅСѓР¶РЅРѕ. РўСЂРµР±СѓРµС‚СЃСЏ Р»РёС€СЊ РґР»СЏ РѕС‚Р»Р°РґРєРё
+    [NonSerialized] public float comboOneHitKillMultiplayer; // РјРЅРѕР¶РёС‚РµР»СЊ РґР»СЏ СѓР±РёР№СЃС‚РІР° РІСЂР°РіРѕРІ Р·Р° "РѕРґРёРЅ СѓРґР°СЂ"
 
     public RectTransform placementLeaderbaord;
     public RectTransform buttonShowLeaderboardPlacement;
     public RectTransform rectTransformPlaceCustomCombos;
     public InterstitialAds interstitialAds;
-    public AttackArea attackAreaScript; // Скрипт зоны для атаки
-    public ProgressBar progerssBarStyleRank; // Скрипт зоны для атаки
-    public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
-    public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
+    public AttackArea attackAreaScript; // РЎРєСЂРёРїС‚ Р·РѕРЅС‹ РґР»СЏ Р°С‚Р°РєРё
+    public ProgressBar progerssBarStyleRank; // РЎРєСЂРёРїС‚ Р·РѕРЅС‹ РґР»СЏ Р°С‚Р°РєРё
+    public EnemyNearDetector nearAreaDetector; // РЎРєСЂРёРїС‚ Р·РѕРЅС‹ РґР»СЏ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ РІСЂР°РіР° Рё РјРѕРґРёС„РёРєР°С†РёРё Р°РЅРёРјР°С†РёРё РїРµСЂРµРґРІРёР¶РµРЅРёСЏ
+    public Transform attackAreaTransform; // РљРѕРјРїРѕРЅРµРЅС‚ С‚СЂР°РЅСЃС„РѕСЂРј Р·РѕРЅС‹ РґР»СЏ Р°С‚Р°РєРё (РґР°Р»РµРµ РїСЂРё СЃРјРµРЅРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ Р±СѓРґРµРј РїРѕР·РёС†РёСЋ РјРµРЅСЏС‚СЊ (РѕС‚Р·РµСЂРєР°Р»РёРІР°С‚СЊ))
     public RectTransform UI; //
     public RankStyle rankStyle; //
     public bool UIUpscaledMod = false;
-    //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
+    //public List<Spell> listSpellsInInventory = new(); // СЃРїРёСЃРѕРє Р·Р°РєР»РёРЅР°РЅРёР№, РґРѕСЃС‚СѓРїРЅС‹С… РёРіСЂРѕРєСѓ РІ РёРЅРІРµРЅС‚Р°СЂРµ 
     //[SerializeField] public TextEdit texxt; //   
 
     public List<Enemy> nearEnemies = new();
     public List<Enemy> enemiesInAttackArea = new();
-    public Vector3 localPositionCamera; // чтоб помнить, где должна быть камере относительно игрока, когда будет возвращать её ему после перемещения
-    public bool isEnemyNear; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
-    public static bool isTransitingEquipment = false; // флаг, идентифицирующий, переносим ли мы сейчас какое-либо снаряжение
-    public bool wasEnemyDamagedByLastSwipe; // флаг, идентифицирующий, есть ли какой-либо враг рядом с героем
-    public float timeRecoverStaminaPoint; // КД восстановление одного заряда выносливости
-    public Camera mainCamera; // Ссылка на камеру
-    public FloorDetector scriptFloorDetector; // Ссылка на скрипт детектора пола
+    public Vector3 localPositionCamera; // С‡С‚РѕР± РїРѕРјРЅРёС‚СЊ, РіРґРµ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РєР°РјРµСЂРµ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РёРіСЂРѕРєР°, РєРѕРіРґР° Р±СѓРґРµС‚ РІРѕР·РІСЂР°С‰Р°С‚СЊ РµС‘ РµРјСѓ РїРѕСЃР»Рµ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+    public bool isEnemyNear; // С„Р»Р°Рі, РёРґРµРЅС‚РёС„РёС†РёСЂСѓСЋС‰РёР№, РµСЃС‚СЊ Р»Рё РєР°РєРѕР№-Р»РёР±Рѕ РІСЂР°Рі СЂСЏРґРѕРј СЃ РіРµСЂРѕРµРј
+    public static bool isTransitingEquipment = false; // С„Р»Р°Рі, РёРґРµРЅС‚РёС„РёС†РёСЂСѓСЋС‰РёР№, РїРµСЂРµРЅРѕСЃРёРј Р»Рё РјС‹ СЃРµР№С‡Р°СЃ РєР°РєРѕРµ-Р»РёР±Рѕ СЃРЅР°СЂСЏР¶РµРЅРёРµ
+    public bool wasEnemyDamagedByLastSwipe; // С„Р»Р°Рі, РёРґРµРЅС‚РёС„РёС†РёСЂСѓСЋС‰РёР№, РµСЃС‚СЊ Р»Рё РєР°РєРѕР№-Р»РёР±Рѕ РІСЂР°Рі СЂСЏРґРѕРј СЃ РіРµСЂРѕРµРј
+    public float timeRecoverStaminaPoint; // РљР” РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РѕРґРЅРѕРіРѕ Р·Р°СЂСЏРґР° РІС‹РЅРѕСЃР»РёРІРѕСЃС‚Рё
+    public Camera mainCamera; // РЎСЃС‹Р»РєР° РЅР° РєР°РјРµСЂСѓ
+    public FloorDetector scriptFloorDetector; // РЎСЃС‹Р»РєР° РЅР° СЃРєСЂРёРїС‚ РґРµС‚РµРєС‚РѕСЂР° РїРѕР»Р°
     public float experienceToNextLevel;
     public float increasingGettingExperienceByKillComboTickPercentage;
     public float increasingGettingMoneyByKillComboTickPercentage;
     public int staminaMax;
+    public bool isSwipingNow; // С‡С‚РѕР± С„Р°РєС‚ СЃРІР°Р№РїР° РЅРµ С‚РµСЂСЏР»СЃСЏ РјРµР¶РґСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏРјРё. Р•СЃР»Рё РјС‹ РµРіРѕ РЅР°С‡Р°Р»Рё РІ РѕРґРЅРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё, Р° РѕС‚РїСѓСЃС‚РёР»Рё СЃРІР°Р№Рї РІ РґСЂСѓРіРѕРј - РЅСѓР¶РЅРѕ СЌС‚Рѕ РґРµС‚РµРєС‚РёС‚СЊ
+    // СЌС‚Рѕ РЅРµ С„Р°РєС‚ С‚РѕРіРѕ, С‡С‚Рѕ РёРіСЂРѕРє РЅР°С‡Р°Р» РґРІРёРіР°С‚СЊСЃСЏ! Р­С‚Рѕ С„Р°РєС‚ С‚РѕРіРѕ, С‡С‚Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РґРµР»Р°РµС‚ СЃРІР°Р№Рї РїРѕ СЌРєСЂР°РЅСѓ СЃРµР№С‡Р°СЃ. Рђ РЅРµ, РїСЂРѕСЃС‚Рѕ СЃР»РѕРІР°СЂРёРє activeTouches РІ Player РІС‹РЅРµСЃР»Рё... РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р±С‹Р»Рѕ.
     public Dictionary<string, float> increasingParametersByLevelUpPercentage;
-    public event Action<float> OnExperienceChanged; // Событие для изменения опыта
-    public event Action OnPlayerMove; // Событие для изменения опыта
-    public event Action<float> OnMoneyChanged;     // Событие для изменения денег
-    public event Action<int> OnLevelChanged;       // Событие для изменения уровня
-    public event Action<int> OnKillComboChanged;       // Событие для изменения комбо за убийства 
-    public event Action<bool> OnTranslateEquipment;       // когда начали или окончили двигать снаряжение из мест для снаряжения
+    public event Action<float> OnExperienceChanged; // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РѕРїС‹С‚Р°
+    public event Action OnPlayerMove; // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РѕРїС‹С‚Р°
+    public event Action<float> OnMoneyChanged;     // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РґРµРЅРµРі
+    public event Action<int> OnLevelChanged;       // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ СѓСЂРѕРІРЅСЏ
+    public event Action<int> OnKillComboChanged;       // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РєРѕРјР±Рѕ Р·Р° СѓР±РёР№СЃС‚РІР° 
+    public event Action<bool> OnTranslateEquipment;       // РєРѕРіРґР° РЅР°С‡Р°Р»Рё РёР»Рё РѕРєРѕРЅС‡РёР»Рё РґРІРёРіР°С‚СЊ СЃРЅР°СЂСЏР¶РµРЅРёРµ РёР· РјРµСЃС‚ РґР»СЏ СЃРЅР°СЂСЏР¶РµРЅРёСЏ
     public event Action OnChangeNearEnemyStatus;
-    public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе  
-    public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
-    public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей для защиты
-    public event Action<Equipment> OnSomeEquipmentShouldBeActivate;  // событие зачистки всей волны врагов без потери основных целей для защиты
+    public event Action OnAttackFinished;
+    public event Action<int> OnLevelUpChanged;       // РЎРѕР±С‹С‚РёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РєРѕР»РёС‡РµСЃС‚РІР° РїСЂРѕРєР°С‡РєРё РІ С€РєРѕР»Рµ  
+    public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // СЃРѕР±С‹С‚РёРµ Р·Р°С‡РёСЃС‚РєРё РІСЃРµР№ РІРѕР»РЅС‹ РІСЂР°РіРѕРІ Р±РµР· РїРѕС‚РµСЂРё РѕСЃРЅРѕРІРЅС‹С… С†РµР»РµР№ РґР»СЏ Р·Р°С‰РёС‚С‹
+    public event Action<string> OnEnemiesWaveWasDestroyed;  // СЃРѕР±С‹С‚РёРµ Р·Р°С‡РёСЃС‚РєРё РІСЃРµР№ РІРѕР»РЅС‹ РІСЂР°РіРѕРІ Р±РµР· РїРѕС‚РµСЂРё РѕСЃРЅРѕРІРЅС‹С… С†РµР»РµР№ РґР»СЏ Р·Р°С‰РёС‚С‹
+    public event Action<Equipment> OnSomeEquipmentShouldBeActivate;  // СЃРѕР±С‹С‚РёРµ Р·Р°С‡РёСЃС‚РєРё РІСЃРµР№ РІРѕР»РЅС‹ РІСЂР°РіРѕРІ Р±РµР· РїРѕС‚РµСЂРё РѕСЃРЅРѕРІРЅС‹С… С†РµР»РµР№ РґР»СЏ Р·Р°С‰РёС‚С‹
+
+    public float desiredVelocityX = 0f;
+    public bool movingToTarget = false;
+    public float targetX;             // РјРёСЂРѕРІР°СЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X, Рє РєРѕС‚РѕСЂРѕР№ РґРІРёР¶РµРјСЃСЏ
+    // РўСЂРµРєРёРЅРі РїРѕ РїР°Р»СЊС†Р°Рј / РјС‹С€Рё
+    public Dictionary<int, TouchInfo> activeTouches = new Dictionary<int, TouchInfo>();
+    public readonly HashSet<int> processedTouches = new HashSet<int>();
+
+    public struct TouchInfo
+    {
+        public Vector2 startScreen;
+        public Vector3 startWorld; // РєРѕСЂСЂРµРєС‚РЅРѕ СЃРєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅРЅР°СЏ РјРёСЂРѕРІР°СЏ РїРѕР·РёС†РёСЏ (z = 0)
+        public bool startedOverUI;
+
+        // РќРѕРІРѕРµ РїРѕР»Рµ вЂ” СЃРєРѕР»СЊРєРѕ РјРёСЂРѕРІС‹С… РµРґРёРЅРёС† СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РѕРґРЅРѕРјСѓ СЌРєСЂР°РЅРЅРѕРјСѓ РїРёРєСЃРµР»СЋ
+        public float worldUnitsPerPixelAtStart;
+    }
 
 
     # region IMainTarget
@@ -109,17 +129,17 @@ public class Player : Unit, IMainTarget
         {
             _currentExperience = value;
 
-            // Проверяем, достаточно ли опыта для повышения уровня
+            // РџСЂРѕРІРµСЂСЏРµРј, РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р»Рё РѕРїС‹С‚Р° РґР»СЏ РїРѕРІС‹С€РµРЅРёСЏ СѓСЂРѕРІРЅСЏ
             while (_currentExperience >= experienceToNextLevel)
             {
-                _currentExperience -= experienceToNextLevel; // Вычитаем опыт, необходимый для повышения
-                CurrentLevel++; // Повышаем уровень
+                _currentExperience -= experienceToNextLevel; // Р’С‹С‡РёС‚Р°РµРј РѕРїС‹С‚, РЅРµРѕР±С…РѕРґРёРјС‹Р№ РґР»СЏ РїРѕРІС‹С€РµРЅРёСЏ
+                CurrentLevel++; // РџРѕРІС‹С€Р°РµРј СѓСЂРѕРІРµРЅСЊ
                 ChangeUnitParametersByPercentage(increasingParametersByLevelUpPercentage, true);
             }
 
             _imageFillExperience.fillAmount = _currentExperience/experienceToNextLevel;
 
-            // Вызываем событие, если есть подписчики
+            // Р’С‹Р·С‹РІР°РµРј СЃРѕР±С‹С‚РёРµ, РµСЃР»Рё РµСЃС‚СЊ РїРѕРґРїРёСЃС‡РёРєРё
             OnExperienceChanged?.Invoke(_currentExperience);
         }
     }
@@ -131,7 +151,7 @@ public class Player : Unit, IMainTarget
         {
             _currentMoney = value;
 
-            // Вызываем событие, если есть подписчики
+            // Р’С‹Р·С‹РІР°РµРј СЃРѕР±С‹С‚РёРµ, РµСЃР»Рё РµСЃС‚СЊ РїРѕРґРїРёСЃС‡РёРєРё
             OnMoneyChanged?.Invoke(_currentMoney);
         }
     }
@@ -153,9 +173,9 @@ public class Player : Unit, IMainTarget
         {
             _currentLevel = value;
 
-            if (_currentLevel % 5 == 0 && _currentLevel != 0) CountAccessToUpInSchool++; // при старте игры у нас нулевой уровень и при обновлении данных в Awake и Start у нас добавляются
-                                                                                         // халявные очки получения магии
-            // Вызываем событие, если есть подписчики
+            if (_currentLevel % 5 == 0 && _currentLevel != 0) CountAccessToUpInSchool++; // РїСЂРё СЃС‚Р°СЂС‚Рµ РёРіСЂС‹ Сѓ РЅР°СЃ РЅСѓР»РµРІРѕР№ СѓСЂРѕРІРµРЅСЊ Рё РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РґР°РЅРЅС‹С… РІ Awake Рё Start Сѓ РЅР°СЃ РґРѕР±Р°РІР»СЏСЋС‚СЃСЏ
+                                                                                         // С…Р°Р»СЏРІРЅС‹Рµ РѕС‡РєРё РїРѕР»СѓС‡РµРЅРёСЏ РјР°РіРёРё
+            // Р’С‹Р·С‹РІР°РµРј СЃРѕР±С‹С‚РёРµ, РµСЃР»Рё РµСЃС‚СЊ РїРѕРґРїРёСЃС‡РёРєРё
             OnLevelChanged?.Invoke(_currentLevel);
         }
     }
@@ -167,7 +187,7 @@ public class Player : Unit, IMainTarget
         {
             _currentKillCombo = value;
 
-            // Вызываем событие, если есть подписчики
+            // Р’С‹Р·С‹РІР°РµРј СЃРѕР±С‹С‚РёРµ, РµСЃР»Рё РµСЃС‚СЊ РїРѕРґРїРёСЃС‡РёРєРё
             OnKillComboChanged?.Invoke(_currentKillCombo);
         }
     }
@@ -192,14 +212,14 @@ public class Player : Unit, IMainTarget
 
             if (value < staminaMax) 
             {
-                if (_recoverStaminaPointCoroutine == null) // если текущая выносливость меньше максимальной и при этом корутина для её восстановления не запущена
+                if (_recoverStaminaPointCoroutine == null) // РµСЃР»Рё С‚РµРєСѓС‰Р°СЏ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ РјРµРЅСЊС€Рµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ Рё РїСЂРё СЌС‚РѕРј РєРѕСЂСѓС‚РёРЅР° РґР»СЏ РµС‘ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РЅРµ Р·Р°РїСѓС‰РµРЅР°
                 {
                     _recoverStaminaPointCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, RecoverStaminaPoint());
                 }
             }
             else
             {
-                if (_recoverStaminaPointCoroutine != null) // если текущая выносливость равна максимальной и при этом корутина для её восстановления всё ещё работает
+                if (_recoverStaminaPointCoroutine != null) // РµСЃР»Рё С‚РµРєСѓС‰Р°СЏ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ СЂР°РІРЅР° РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ Рё РїСЂРё СЌС‚РѕРј РєРѕСЂСѓС‚РёРЅР° РґР»СЏ РµС‘ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РІСЃС‘ РµС‰С‘ СЂР°Р±РѕС‚Р°РµС‚
                 {
                     CoroutineManager.Instance.StopManagedCoroutine(gameObject, _recoverStaminaPointCoroutine);
                     _recoverStaminaPointCoroutine = null;
@@ -208,7 +228,7 @@ public class Player : Unit, IMainTarget
         }
     }
 
-    public float CurrentIncreasingStamina // ввели отдельный контур для увеличения стамины, ибо просто повышать staminaMax не получилось бы из-за слишком маленького шага единицы измерения
+    public float CurrentIncreasingStamina // РІРІРµР»Рё РѕС‚РґРµР»СЊРЅС‹Р№ РєРѕРЅС‚СѓСЂ РґР»СЏ СѓРІРµР»РёС‡РµРЅРёСЏ СЃС‚Р°РјРёРЅС‹, РёР±Рѕ РїСЂРѕСЃС‚Рѕ РїРѕРІС‹С€Р°С‚СЊ staminaMax РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ Р±С‹ РёР·-Р·Р° СЃР»РёС€РєРѕРј РјР°Р»РµРЅСЊРєРѕРіРѕ С€Р°РіР° РµРґРёРЅРёС†С‹ РёР·РјРµСЂРµРЅРёСЏ
     {
         get { return _currentIncreasingStamina; }
         set
@@ -225,19 +245,19 @@ public class Player : Unit, IMainTarget
         set
         {
             base.CurrentHealth = value;
-            if (value / healthMax <= _fractionCurrentHealthToVibrate && !_hasVibratedByFallHealth)  // начинаем вибрировать в случае, если ХП меньше 15%
+            if (value / healthMax <= _fractionCurrentHealthToVibrate && !_hasVibratedByFallHealth)  // РЅР°С‡РёРЅР°РµРј РІРёР±СЂРёСЂРѕРІР°С‚СЊ РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РҐРџ РјРµРЅСЊС€Рµ 15%
             {
                 StaticClassForAdditionalFunctions.Vibrate();
-                _hasVibratedByFallHealth = true; // Устанавливаем флаг, чтобы не вибрировать снова
+                _hasVibratedByFallHealth = true; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„Р»Р°Рі, С‡С‚РѕР±С‹ РЅРµ РІРёР±СЂРёСЂРѕРІР°С‚СЊ СЃРЅРѕРІР°
             }
             else if (value / healthMax > _fractionCurrentHealthToVibrate)
             {
-                _hasVibratedByFallHealth = false; // Сбрасываем флаг, когда здоровье восстанавливается
+                _hasVibratedByFallHealth = false; // РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі, РєРѕРіРґР° Р·РґРѕСЂРѕРІСЊРµ РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ
             }
         }
     }
 
-    // здесь будем инициализировать те штуки, которые зависят и ссылаются на объект Player, и которые без него работать не смогут
+    // Р·РґРµСЃСЊ Р±СѓРґРµРј РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ С‚Рµ С€С‚СѓРєРё, РєРѕС‚РѕСЂС‹Рµ Р·Р°РІРёСЃСЏС‚ Рё СЃСЃС‹Р»Р°СЋС‚СЃСЏ РЅР° РѕР±СЉРµРєС‚ Player, Рё РєРѕС‚РѕСЂС‹Рµ Р±РµР· РЅРµРіРѕ СЂР°Р±РѕС‚Р°С‚СЊ РЅРµ СЃРјРѕРіСѓС‚
     public override void InitializeDependencies()
     {
         base.InitializeDependencies();
@@ -246,7 +266,7 @@ public class Player : Unit, IMainTarget
 
     protected override void Awake()
     {
-        // Сюда мы перенесли этот код для того, чтобы метод OnEnable вызывался корректно, иначе мы не успеваем инициализировать нашу FSM 
+        // РЎСЋРґР° РјС‹ РїРµСЂРµРЅРµСЃР»Рё СЌС‚РѕС‚ РєРѕРґ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РјРµС‚РѕРґ OnEnable РІС‹Р·С‹РІР°Р»СЃСЏ РєРѕСЂСЂРµРєС‚РЅРѕ, РёРЅР°С‡Рµ РјС‹ РЅРµ СѓСЃРїРµРІР°РµРј РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РЅР°С€Сѓ FSM 
         instance = this;
         nameOfUnit = "Player";
         base.Awake();
@@ -259,7 +279,7 @@ public class Player : Unit, IMainTarget
         nearAreaDetector.isEnemyNear += EnemyNear;
         attackAreaScript.isEnemyInAttackArea += EnemyHasChangedStatusInAttackArea;
 
-        // для простановки начального аддитивного текста в текстовых полях UI
+        // РґР»СЏ РїСЂРѕСЃС‚Р°РЅРѕРІРєРё РЅР°С‡Р°Р»СЊРЅРѕРіРѕ Р°РґРґРёС‚РёРІРЅРѕРіРѕ С‚РµРєСЃС‚Р° РІ С‚РµРєСЃС‚РѕРІС‹С… РїРѕР»СЏС… UI
 
 
         localPositionCamera = _mainCameraTransform.localPosition;
@@ -286,9 +306,9 @@ public class Player : Unit, IMainTarget
         //Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
         //Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
         //Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
-        //School.SpawnParticularSpell(C.DK.ProtectiveField, this);
-        //School.SpawnParticularSpell(C.DK.Berserker, this);
-        //School.SpawnParticularSpell(C.DK.ArcLightning, this);
+        School.SpawnParticularSpell(C.DK.ProtectiveField, this);
+        School.SpawnParticularSpell(C.DK.Berserker, this);
+        School.SpawnParticularSpell(C.DK.ArcLightning, this);
         
         base.Start();
         SetLikeAMainTarget(); 
@@ -319,30 +339,33 @@ public class Player : Unit, IMainTarget
     public override void SomeAnimationUnitWasFinished(string nameFinishedAnimation) 
     {
         base.SomeAnimationUnitWasFinished(nameFinishedAnimation);
-        switch (nameFinishedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        switch (nameFinishedAnimation) // РїСЂРѕРІРµСЂСЏРµРј Р°РЅРёРјР°С†РёРѕРЅРЅС‹Рµ РїСЂРµС„РёРєСЃС‹ (РїРѕСЃС‚С„РёРєСЃС‹...)
         {
             case C.Animations.PlayerDied:
                 YandexMobileAdsInterstitialDemoScript.Instance.ShowInterstitial();
+                break;
+            case C.Animations.Attack:
+                OnAttackFinished?.Invoke();
                 break;
         }
     }
     public override void SomeAnimationUnitWasPeaked(string nameFinishedAnimation) 
     {
-        switch (nameFinishedAnimation) // проверяем анимационные префиксы (постфиксы...)
+        switch (nameFinishedAnimation) // РїСЂРѕРІРµСЂСЏРµРј Р°РЅРёРјР°С†РёРѕРЅРЅС‹Рµ РїСЂРµС„РёРєСЃС‹ (РїРѕСЃС‚С„РёРєСЃС‹...)
         {
-            case C.Animations.AttackPeaked:    // 22.09.2025 - эта штука вроде как не вызывается, изменили апогей для всех анимаций атак на AttckPeaked - при этом сами анимации всё ещё имеют
-                                               // уникальные названия. 22.09.2025 - уже вызывается. Для игрока, если есть враги в зоне атаки, воспроизводится особый звук удара. 22.09 - не...
+            case C.Animations.AttackPeaked:    // 22.09.2025 - СЌС‚Р° С€С‚СѓРєР° РІСЂРѕРґРµ РєР°Рє РЅРµ РІС‹Р·С‹РІР°РµС‚СЃСЏ, РёР·РјРµРЅРёР»Рё Р°РїРѕРіРµР№ РґР»СЏ РІСЃРµС… Р°РЅРёРјР°С†РёР№ Р°С‚Р°Рє РЅР° AttckPeaked - РїСЂРё СЌС‚РѕРј СЃР°РјРё Р°РЅРёРјР°С†РёРё РІСЃС‘ РµС‰С‘ РёРјРµСЋС‚
+                                               // СѓРЅРёРєР°Р»СЊРЅС‹Рµ РЅР°Р·РІР°РЅРёСЏ. 22.09.2025 - СѓР¶Рµ РІС‹Р·С‹РІР°РµС‚СЃСЏ. Р”Р»СЏ РёРіСЂРѕРєР°, РµСЃР»Рё РµСЃС‚СЊ РІСЂР°РіРё РІ Р·РѕРЅРµ Р°С‚Р°РєРё, РІРѕСЃРїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ РѕСЃРѕР±С‹Р№ Р·РІСѓРє СѓРґР°СЂР°. 22.09 - РЅРµ...
                 if (enemiesInAttackArea.Count > 0)
                 {
-                    //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject); // Передаумали по причине: у нас апогей анимации атаки
-                                                                // может не совпадать со временем вхождения врага в зону атаки ибо, например, анимация могла начаться чуть-чуть раньше
-                                                                // (напомню, что у нас анимация атаки начинается если в довольно большой зоне около нас есть враги). Теперь врубаем звук просто
-                                                                // при заходе врага в зону атаки, если у нас скорость > 0. Либо можно уменьшить зону для активации атаки от близости врагов
+                    //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(C.MusicSounds.PlayerAttackPeakHitEnemies, gameObject); // РџРµСЂРµРґР°СѓРјР°Р»Рё РїРѕ РїСЂРёС‡РёРЅРµ: Сѓ РЅР°СЃ Р°РїРѕРіРµР№ Р°РЅРёРјР°С†РёРё Р°С‚Р°РєРё
+                                                                // РјРѕР¶РµС‚ РЅРµ СЃРѕРІРїР°РґР°С‚СЊ СЃРѕ РІСЂРµРјРµРЅРµРј РІС…РѕР¶РґРµРЅРёСЏ РІСЂР°РіР° РІ Р·РѕРЅСѓ Р°С‚Р°РєРё РёР±Рѕ, РЅР°РїСЂРёРјРµСЂ, Р°РЅРёРјР°С†РёСЏ РјРѕРіР»Р° РЅР°С‡Р°С‚СЊСЃСЏ С‡СѓС‚СЊ-С‡СѓС‚СЊ СЂР°РЅСЊС€Рµ
+                                                                // (РЅР°РїРѕРјРЅСЋ, С‡С‚Рѕ Сѓ РЅР°СЃ Р°РЅРёРјР°С†РёСЏ Р°С‚Р°РєРё РЅР°С‡РёРЅР°РµС‚СЃСЏ РµСЃР»Рё РІ РґРѕРІРѕР»СЊРЅРѕ Р±РѕР»СЊС€РѕР№ Р·РѕРЅРµ РѕРєРѕР»Рѕ РЅР°СЃ РµСЃС‚СЊ РІСЂР°РіРё). РўРµРїРµСЂСЊ РІСЂСѓР±Р°РµРј Р·РІСѓРє РїСЂРѕСЃС‚Рѕ
+                                                                // РїСЂРё Р·Р°С…РѕРґРµ РІСЂР°РіР° РІ Р·РѕРЅСѓ Р°С‚Р°РєРё, РµСЃР»Рё Сѓ РЅР°СЃ СЃРєРѕСЂРѕСЃС‚СЊ > 0. Р›РёР±Рѕ РјРѕР¶РЅРѕ СѓРјРµРЅСЊС€РёС‚СЊ Р·РѕРЅСѓ РґР»СЏ Р°РєС‚РёРІР°С†РёРё Р°С‚Р°РєРё РѕС‚ Р±Р»РёР·РѕСЃС‚Рё РІСЂР°РіРѕРІ
                     return;
                 }
                 break;
         }
-        base.SomeAnimationUnitWasPeaked(nameFinishedAnimation); // есть варианты, когда мы вызываем звук отсюда и не идём к базовым звукам в родительском классе
+        base.SomeAnimationUnitWasPeaked(nameFinishedAnimation); // РµСЃС‚СЊ РІР°СЂРёР°РЅС‚С‹, РєРѕРіРґР° РјС‹ РІС‹Р·С‹РІР°РµРј Р·РІСѓРє РѕС‚СЃСЋРґР° Рё РЅРµ РёРґС‘Рј Рє Р±Р°Р·РѕРІС‹Рј Р·РІСѓРєР°Рј РІ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРј РєР»Р°СЃСЃРµ
     }
 
     private void FixedUpdate()
@@ -353,32 +376,32 @@ public class Player : Unit, IMainTarget
    
     void OnEnable()
     {
-        // _fsm.OnEnable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
+        // _fsm.OnEnable(); РџРѕ РёРґРµРµ СЌС‚Рѕ РЅРµ РЅР°РґРѕ, С‚Р°Рє РєР°Рє РѕРЅРѕРµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РІ РєР»Р°СЃСЃР°С… СЃРѕСЃС‚РѕСЏРЅРёР№ Рё С‚Р°Рє, РёР±Рѕ РѕРЅРё РЅР°СЃР»РµРґСѓСЋС‚СЃСЏ РѕС‚ Monobehavior
     }
     void OnDisable()
     {
-        //_fsm.OnDisable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
+        //_fsm.OnDisable(); РџРѕ РёРґРµРµ СЌС‚Рѕ РЅРµ РЅР°РґРѕ, С‚Р°Рє РєР°Рє РѕРЅРѕРµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РІ РєР»Р°СЃСЃР°С… СЃРѕСЃС‚РѕСЏРЅРёР№ Рё С‚Р°Рє, РёР±Рѕ РѕРЅРё РЅР°СЃР»РµРґСѓСЋС‚СЃСЏ РѕС‚ Monobehavior
     }
 
     protected override void SomeUnitWasDestroyed(Unit unit)
     {
         //Debug.Log(unit.gameObject.GetInstanceID());
-        //Debug.Log(" xnj pf ебанина?");
+        //Debug.Log(" xnj pf РµР±Р°РЅРёРЅР°?");
         //Debug.Log(enemiesInAttackArea.Count);
         foreach (Enemy item in enemiesInAttackArea)
         {
             //Debug.Log(item.gameObject.GetInstanceID());
         }
-        Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
+        Enemy enemyUnit = unit as Enemy; // Р±РµР·РѕРїР°СЃРЅРѕРµ РїСЂРёРІРµРґРµРЅРёРµ, РёР±Рѕ РјР°Р»Рѕ Р»Рё, РІРґСЂСѓРі РЅРµ РІСЂР°РіР° СѓР±СЊС‘Рј, С…РѕС‚СЏ С‚Р°РєРѕРіРѕ РїРѕРєР° С‡С‚Рѕ Р±С‹С‚СЊ РЅРµ РјРѕР¶РµС‚, РІРµРґСЊ Р°С‚Р°РєРѕРІР°С‚СЊ РјС‹ РјРѕР¶РµРј С‚РѕР»СЊРєРѕ С‚РµРі Enemy
 
         if (enemiesInAttackArea.Contains(enemyUnit))
         {
-            //Debug.Log("И, нахуй?");
+            //Debug.Log("Р, РЅР°С…СѓР№?");
             enemiesInAttackArea.Remove(enemyUnit);
         }
         if (nearEnemies.Contains(enemyUnit))
         {
-            //Debug.Log("И, нахуй?");
+            //Debug.Log("Р, РЅР°С…СѓР№?");
             nearEnemies.Remove(enemyUnit);
         }
 
@@ -406,13 +429,13 @@ public class Player : Unit, IMainTarget
             if (enemyUnit.isInstancedByLevel)
             {
                         Debug.Log("mda2");
-                if (LevelBuilder.instance.WasEnemiesWaveDestroyed(enemyUnit)) // подразумевается, что зачищать волну может только герой пока что, если враг сам помрёт, то не засчитается
+                if (LevelBuilder.instance.WasEnemiesWaveDestroyed(enemyUnit)) // РїРѕРґСЂР°Р·СѓРјРµРІР°РµС‚СЃСЏ, С‡С‚Рѕ Р·Р°С‡РёС‰Р°С‚СЊ РІРѕР»РЅСѓ РјРѕР¶РµС‚ С‚РѕР»СЊРєРѕ РіРµСЂРѕР№ РїРѕРєР° С‡С‚Рѕ, РµСЃР»Рё РІСЂР°Рі СЃР°Рј РїРѕРјСЂС‘С‚, С‚Рѕ РЅРµ Р·Р°СЃС‡РёС‚Р°РµС‚СЃСЏ
                 {
                         Debug.Log("mda3");
                     if (LevelBuilder.instance.IsAllMainTargetsAlive())
                     {
                         Debug.Log("mda4");
-                        OnEnemiesWaveWasDestroyedWithoutLosingMainTargets?.Invoke(LevelBuilder.instance.currentWave); // подписываемся в ScenarioScipt, пока что
+                        OnEnemiesWaveWasDestroyedWithoutLosingMainTargets?.Invoke(LevelBuilder.instance.currentWave); // РїРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РІ ScenarioScipt, РїРѕРєР° С‡С‚Рѕ
                     }
                     OnEnemiesWaveWasDestroyed?.Invoke(LevelBuilder.instance.currentWave);
                 }
@@ -420,13 +443,13 @@ public class Player : Unit, IMainTarget
         }
 
     }
-    protected override void SomeUnitWasHit(Unit unit) // подразумевается, конечно, что толкмо враг игроком может быть ударен (детектим для удара вражеский тэг)
+    protected override void SomeUnitWasHit(Unit unit) // РїРѕРґСЂР°Р·СѓРјРµРІР°РµС‚СЃСЏ, РєРѕРЅРµС‡РЅРѕ, С‡С‚Рѕ С‚РѕР»РєРјРѕ РІСЂР°Рі РёРіСЂРѕРєРѕРј РјРѕР¶РµС‚ Р±С‹С‚СЊ СѓРґР°СЂРµРЅ (РґРµС‚РµРєС‚РёРј РґР»СЏ СѓРґР°СЂР° РІСЂР°Р¶РµСЃРєРёР№ С‚СЌРі)
     {
         base.SomeUnitWasHit(unit);
-        if (wasEnemyDamagedByLastSwipe == false) // продлеваем комбо за первый удар в свайпе
+        if (wasEnemyDamagedByLastSwipe == false) // РїСЂРѕРґР»РµРІР°РµРј РєРѕРјР±Рѕ Р·Р° РїРµСЂРІС‹Р№ СѓРґР°СЂ РІ СЃРІР°Р№РїРµ
         {
             wasEnemyDamagedByLastSwipe = true;
-            ScoreManager.Instance.UpCombo(1); // пока что магическая константа, но по идее тут должен быть всегда один, и настраивать-то нечего
+            ScoreManager.Instance.UpCombo(1); // РїРѕРєР° С‡С‚Рѕ РјР°РіРёС‡РµСЃРєР°СЏ РєРѕРЅСЃС‚Р°РЅС‚Р°, РЅРѕ РїРѕ РёРґРµРµ С‚СѓС‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІСЃРµРіРґР° РѕРґРёРЅ, Рё РЅР°СЃС‚СЂР°РёРІР°С‚СЊ-С‚Рѕ РЅРµС‡РµРіРѕ
         }
     }
 
@@ -436,7 +459,7 @@ public class Player : Unit, IMainTarget
         CurrentExperience += experience * ScoreManager.Instance.styleMultiplier;
         CurrentMoney += money * ScoreManager.Instance.styleMultiplier;
         ScoreManager.Instance.CurrentScore += score * (int)ScoreManager.Instance.styleMultiplier;
-        ScoreManager.Instance.UpCombo(comboFromKill); // по сути набитие комбо на враге не учитывает убийство текущего врага: опыт, злато и очки не скалятся от повышения ранга
+        ScoreManager.Instance.UpCombo(comboFromKill); // РїРѕ СЃСѓС‚Рё РЅР°Р±РёС‚РёРµ РєРѕРјР±Рѕ РЅР° РІСЂР°РіРµ РЅРµ СѓС‡РёС‚С‹РІР°РµС‚ СѓР±РёР№СЃС‚РІРѕ С‚РµРєСѓС‰РµРіРѕ РІСЂР°РіР°: РѕРїС‹С‚, Р·Р»Р°С‚Рѕ Рё РѕС‡РєРё РЅРµ СЃРєР°Р»СЏС‚СЃСЏ РѕС‚ РїРѕРІС‹С€РµРЅРёСЏ СЂР°РЅРіР°
     }
 
     public void GiveRewardScore(int score)
@@ -471,16 +494,16 @@ public class Player : Unit, IMainTarget
 
     }
 
-    // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.
-    // Нужно детектить нижнюю часть игрока, то есть отдельный коллайдер и скрипт на него. 
+    // РЅР° РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ РєРѕРґ РЅРёР¶Рµ - РґРёС‡СЊ. РР±Рѕ РµСЃР»Рё РёРіСЂРѕРє РІСЂРµР¶РµС‚СЃСЏ РіРѕР»РѕРІРѕР№ РІ РїР»Р°С‚С„РѕСЂРјСѓ РёР»Рё РїСЂРѕСЃС‚Рѕ РїРѕРґРѕР№РґС‘С‚ Рє РІРµСЂС‚РёРєР°Р»СЊРЅРѕР№ СЃС‚РµРЅРєРµ - isGrounded Р±СѓРґРµС‚ true. РўРѕ РµСЃС‚СЊ РїСЂС‹РіР°С‚СЊ РјРѕР¶РµС‚ Р±РµСЃРєРѕРЅРµС‡РЅРѕ.
+    // РќСѓР¶РЅРѕ РґРµС‚РµРєС‚РёС‚СЊ РЅРёР¶РЅСЋСЋ С‡Р°СЃС‚СЊ РёРіСЂРѕРєР°, С‚Рѕ РµСЃС‚СЊ РѕС‚РґРµР»СЊРЅС‹Р№ РєРѕР»Р»Р°Р№РґРµСЂ Рё СЃРєСЂРёРїС‚ РЅР° РЅРµРіРѕ. 
     /*void OnCollisionEnter2D(Collision2D collision)
     {
-        // Проверяем, столкнулся ли кубик с объектом с тегом "Ground"
+        // РџСЂРѕРІРµСЂСЏРµРј, СЃС‚РѕР»РєРЅСѓР»СЃСЏ Р»Рё РєСѓР±РёРє СЃ РѕР±СЉРµРєС‚РѕРј СЃ С‚РµРіРѕРј "Ground"
         if (collision.gameObject.CompareTag("Ground"))
         {
             if (!isGrounded)
             {
-                isGrounded = true; // Устанавливаем, что кубик снова на земле
+                isGrounded = true; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј, С‡С‚Рѕ РєСѓР±РёРє СЃРЅРѕРІР° РЅР° Р·РµРјР»Рµ
                 if (rb.linearVelocity.x == 0) _fsm.SetState<FsmStateIdle>();
             }
         }
@@ -509,15 +532,15 @@ public class Player : Unit, IMainTarget
     {
         if (_rectTransformStaminaBar.childCount != 0)
         {
-            // Получаем количество дочерних объектов
+            // РџРѕР»СѓС‡Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕС‡РµСЂРЅРёС… РѕР±СЉРµРєС‚РѕРІ
             int childCount = _rectTransformStaminaBar.childCount;
 
-            // Итерируемся по дочерним объектам в обратном порядке
+            // РС‚РµСЂРёСЂСѓРµРјСЃСЏ РїРѕ РґРѕС‡РµСЂРЅРёРј РѕР±СЉРµРєС‚Р°Рј РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ
             for (int i = childCount - 1; i >= 0; i--)
             {
-                // Получаем дочерний объект
+                // РџРѕР»СѓС‡Р°РµРј РґРѕС‡РµСЂРЅРёР№ РѕР±СЉРµРєС‚
                 Transform child = _rectTransformStaminaBar.GetChild(i);
-                Destroy(child.gameObject); // Используем Destroy во время выполнения игры 
+                Destroy(child.gameObject); // РСЃРїРѕР»СЊР·СѓРµРј Destroy РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РёРіСЂС‹ 
             }
         }
         for (int i = 0; i < currentStamina; i++)
@@ -540,13 +563,13 @@ public class Player : Unit, IMainTarget
         float elapsed = 0.0f;
 
 
-        float shakeDuration = 0.7f; // Длительность тряски
-        float shakeMagnitude = 0.1f; // Интенсивность тряски
-        float dampingSpeed = 1.0f; // Скорость затухания
+        float shakeDuration = 0.7f; // Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ С‚СЂСЏСЃРєРё
+        float shakeMagnitude = 0.1f; // РРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ С‚СЂСЏСЃРєРё
+        float dampingSpeed = 1.0f; // РЎРєРѕСЂРѕСЃС‚СЊ Р·Р°С‚СѓС…Р°РЅРёСЏ
 
         while (elapsed < shakeDuration)
         {
-            // Генерируем случайное смещение в пределах сферы
+            // Р“РµРЅРµСЂРёСЂСѓРµРј СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРјРµС‰РµРЅРёРµ РІ РїСЂРµРґРµР»Р°С… СЃС„РµСЂС‹
             float x = UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
             float y = UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
 
@@ -554,12 +577,12 @@ public class Player : Unit, IMainTarget
 
             elapsed += Time.deltaTime;
 
-            //Затухание: Уменьшаем величину тряски со временем
+            //Р—Р°С‚СѓС…Р°РЅРёРµ: РЈРјРµРЅСЊС€Р°РµРј РІРµР»РёС‡РёРЅСѓ С‚СЂСЏСЃРєРё СЃРѕ РІСЂРµРјРµРЅРµРј
             shakeMagnitude = Mathf.Lerp(shakeMagnitude, 0, elapsed / shakeDuration);
             yield return null;
         }
 
-        mainCameraTransform.localPosition = initialLocalPositionCamera; // Возвращаем камеру в исходную позицию
+        mainCameraTransform.localPosition = initialLocalPositionCamera; // Р’РѕР·РІСЂР°С‰Р°РµРј РєР°РјРµСЂСѓ РІ РёСЃС…РѕРґРЅСѓСЋ РїРѕР·РёС†РёСЋ
     }
 
     private void EnemyNear(bool isNear, Enemy enemy)
@@ -598,11 +621,11 @@ public class Player : Unit, IMainTarget
         }
         else
         {             
-            enemiesInAttackArea.Remove(enemy); // ну ей богу, не надо тут проверки на Contains, ну пожалуйста, ну как врага не могло быть в зоне, если он только что вышел из неё
+            enemiesInAttackArea.Remove(enemy); // РЅСѓ РµР№ Р±РѕРіСѓ, РЅРµ РЅР°РґРѕ С‚СѓС‚ РїСЂРѕРІРµСЂРєРё РЅР° Contains, РЅСѓ РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РЅСѓ РєР°Рє РІСЂР°РіР° РЅРµ РјРѕРіР»Рѕ Р±С‹С‚СЊ РІ Р·РѕРЅРµ, РµСЃР»Рё РѕРЅ С‚РѕР»СЊРєРѕ С‡С‚Рѕ РІС‹С€РµР» РёР· РЅРµС‘
         }
     }
 
-    public void SomeEquipmentShouldBeActivate(Equipment equipment) // подписываем эту функцию в InventoryPlayer на прослушку снаряжения, которое попадают к нам в инвентарь. Отписываем при покидании инвентаря снаряжением
+    public void SomeEquipmentShouldBeActivate(Equipment equipment) // РїРѕРґРїРёСЃС‹РІР°РµРј СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РІ InventoryPlayer РЅР° РїСЂРѕСЃР»СѓС€РєСѓ СЃРЅР°СЂСЏР¶РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РїРѕРїР°РґР°СЋС‚ Рє РЅР°Рј РІ РёРЅРІРµРЅС‚Р°СЂСЊ. РћС‚РїРёСЃС‹РІР°РµРј РїСЂРё РїРѕРєРёРґР°РЅРёРё РёРЅРІРµРЅС‚Р°СЂСЏ СЃРЅР°СЂСЏР¶РµРЅРёРµРј
     {
         OnSomeEquipmentShouldBeActivate?.Invoke(equipment);
     }
@@ -618,9 +641,93 @@ public class Player : Unit, IMainTarget
         _fsm.SetState<FsmStateDied>();
     }
 
+    #region Reset X-speed if wall contact
+
+    public Action OnTouchWall;
+
+    public bool isTouchingWall = false;
+    public bool wallOnLeft = false;
+    private const float SIDE_NORMAL_THRESHOLD = 0.5f;
+    private readonly Dictionary<Collider2D, bool> sideContacts = new Dictionary<Collider2D, bool>(); // collider -> isWallOnLeft
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        UpdateSideContactFromCollision(collision, true);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // РІР°Р¶РЅРѕ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ Stay, С‚.Рє. РєРѕРЅС‚Р°РєС‚С‹ РјРѕРіСѓС‚ РјРµРЅСЏС‚СЊСЃСЏ РІ СЂР°РјРєР°С… РѕРґРЅРѕРіРѕ РєРѕР»Р»Р°Р№РґРµСЂР°
+        UpdateSideContactFromCollision(collision, false);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // РїСЂРё РІС‹С…РѕРґРµ РїР°СЂС‹ РєРѕР»Р»Р°Р№РґРµСЂРѕРІ вЂ” СѓРґР°Р»СЏРµРј Р·Р°РїРёСЃСЊ (СЌС‚Р° РїР°СЂР° Р±РѕР»СЊС€Рµ РЅРµ РєРѕРЅС‚Р°РєС‚РёСЂСѓРµС‚)
+        if (sideContacts.Remove(collision.collider))
+        {
+            RefreshWallFlags();
+        }
+    }
+
+    private void UpdateSideContactFromCollision(Collision2D collision, bool calledFromEnter)
+    {
+        bool hasSide = false;
+        bool sideLeft = false;
+
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (Mathf.Abs(contact.normal.x) > SIDE_NORMAL_THRESHOLD)
+            {
+                hasSide = true;
+                // normal.x > 0 => РЅРѕСЂРјР°Р»СЊ СЃРјРѕС‚СЂРёС‚ РІРїСЂР°РІРѕ => СЃС‚РµРЅР° СЃР»РµРІР° РѕС‚ РёРіСЂРѕРєР°
+                sideLeft = contact.normal.x > 0f;
+                break; // РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕРґРЅРѕРіРѕ Р±РѕРєРѕРІРѕРіРѕ РєРѕРЅС‚Р°РєС‚Р° РґР»СЏ СЌС‚РѕР№ РїР°СЂС‹
+            }
+        }
+
+        if (hasSide)
+        {
+            sideContacts[collision.collider] = sideLeft;
+            if (calledFromEnter)
+                OnTouchWall?.Invoke();
+        }
+        else
+        {
+            // РµСЃР»Рё РІ СЌС‚РѕР№ РїР°СЂРµ Р±РѕРєРѕРІС‹С… РєРѕРЅС‚Р°РєС‚РѕРІ РЅРµС‚ вЂ” СѓРґР°Р»РёС‚СЊ Р·Р°РїРёСЃСЊ, РµСЃР»Рё Р±С‹Р»Р°
+            if (sideContacts.Remove(collision.collider))
+            {
+                // removed, РЅСѓР¶РЅРѕ РѕР±РЅРѕРІРёС‚СЊ С„Р»Р°РіРё РЅРёР¶Рµ
+            }
+        }
+
+        RefreshWallFlags();
+    }
+
+    private void RefreshWallFlags()
+    {
+        isTouchingWall = sideContacts.Count > 0;
+        if (!isTouchingWall)
+        {
+            wallOnLeft = false;
+            return;
+        }
+
+        // РїСЂР°РІРёР»Рѕ СЂР°Р·СЂРµС€РµРЅРёСЏ СЃС‚РѕСЂРѕРЅС‹: РµСЃР»Рё РµСЃС‚СЊ С…РѕС‚СЊ РѕРґРёРЅ РєРѕРЅС‚Р°РєС‚, СѓРєР°Р·С‹РІР°СЋС‰РёР№, С‡С‚Рѕ СЃС‚РµРЅР° СЃР»РµРІР° вЂ” СЃС‡РёС‚Р°РµРј wallOnLeft = true.
+        // РјРѕР¶РЅРѕ Р·Р°РјРµРЅРёС‚СЊ Р»РѕРіРёРєРѕР№ "РїРѕСЃР»РµРґРЅРёР№ РєРѕРЅС‚Р°РєС‚" РёР»Рё "Р±РѕР»СЊС€РёРЅСЃС‚РІРѕ", РµСЃР»Рё РЅСѓР¶РЅРѕ РёРЅР°С‡Рµ.
+        //Debug.Log("Р–РµСЃС‚СЊ РєР°РєР°СЏ-С‚Рѕ");
+        wallOnLeft = false;
+        foreach (var kv in sideContacts.Values)
+        {
+            if (kv) { wallOnLeft = true; break; }
+        }
+    }
+
+    #endregion
+
     public override void OnDestroy()
     {
-        //Debug.Log("Ебля блядоносная");
+        //Debug.Log("Р•Р±Р»СЏ Р±Р»СЏРґРѕРЅРѕСЃРЅР°СЏ");
         base.OnDestroy();
 
         nearAreaDetector.isEnemyNear -= EnemyNear;

@@ -74,7 +74,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
             if (touch.phase == TouchPhase.Began)
             {
                 _equipmentAtWhatPressed = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y);
-                Debug.Log(_equipmentAtWhatPressed);
+                //Debug.Log(_equipmentAtWhatPressed);
                 if (_equipmentAtWhatPressed == equipment)
                     _coroutineDeleyBeforeShowChoosePanel = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeShowChoosePanel());
                 else
@@ -101,8 +101,8 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
                 CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, _coroutineDeleyBeforeShowChoosePanel);
                 _coroutineDeleyBeforeShowChoosePanel = null;
                 Equipment equipmentEndedTouch = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y);
-                Debug.Log(_equipmentAtWhatPressed);
-                Debug.Log(equipmentEndedTouch);
+                //Debug.Log(_equipmentAtWhatPressed);
+                //Debug.Log(equipmentEndedTouch);
                 if (equipmentEndedTouch && equipmentEndedTouch == _equipmentAtWhatPressed)
                 {
                     _equipmentAtWhatPressed = null;
@@ -120,7 +120,7 @@ public class FsmStateEquipmentAtPlayer : FsmStatePlayersEquipment // эта должна 
         if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
         {
             _equipmentAtWhatPressed = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-            Debug.Log(_equipmentAtWhatPressed);
+            //Debug.Log(_equipmentAtWhatPressed);
             if (IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y))
                 _coroutineDeleyBeforeShowChoosePanel = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, DeleyBeforeShowChoosePanel());
             else

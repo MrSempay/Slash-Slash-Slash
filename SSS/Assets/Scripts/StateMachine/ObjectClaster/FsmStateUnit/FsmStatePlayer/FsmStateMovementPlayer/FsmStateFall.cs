@@ -6,7 +6,7 @@ public class FsmStateFall : FsmStateMovementPlayer
 {
 
     private LayerMask groundLayer;
-    private float distanceToGround;
+    private float distanceToGround; 
     private bool onFloor;
     public FsmStateFall(Fsm fsm, GameObject GameObject) : base(fsm, GameObject)
     {
@@ -41,7 +41,17 @@ public class FsmStateFall : FsmStateMovementPlayer
 
     public override void Update()
     {
-        MakingSwipe();
+        base.Update();
+
+        //MakingSwipe();
+
+//        HandleTouches();
+
+//        // Обрабатываем мышь только если тач не активен (иначе возможны дубли)
+//#if UNITY_STANDALONE || UNITY_EDITOR
+//        HandleMouse();
+//#endif
+
         if (GetFloor(onFloor))
         {
             fsm.SetState<FsmStateIdle>();
@@ -50,6 +60,7 @@ public class FsmStateFall : FsmStateMovementPlayer
 
     public override void FixedUpdate()
     {
+        base.FixedUpdate();
     }
 
 

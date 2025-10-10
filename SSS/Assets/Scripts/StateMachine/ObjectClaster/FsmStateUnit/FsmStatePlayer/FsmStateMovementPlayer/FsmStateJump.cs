@@ -39,11 +39,24 @@ public class FsmStateJump : FsmStateMovementPlayer
 
     public override void Update()
     {
-        MakingSwipe(); // тут эмулирется сигнал для перехода в FsmStateWalk
+        base.Update();
+
+        //MakingSwipe(); // тут эмулирется сигнал для перехода в FsmStateWalk
+
+//        HandleTouches();
+
+//        // Обрабатываем мышь только если тач не активен (иначе возможны дубли)
+//#if UNITY_STANDALONE || UNITY_EDITOR
+//        HandleMouse();
+//#endif
+
         if (player.rb.linearVelocity.y < 0) fsm.SetState<FsmStateFall>();
     }
 
-
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
 
 
 

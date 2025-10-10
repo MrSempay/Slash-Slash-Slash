@@ -7,7 +7,6 @@ public class FsmStateIdle : FsmStatePlayer
 {
     public FsmStateIdle(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        OnSwipeEnded += SetStateWalk; // эмулирется в MakingSwipe
     }
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
@@ -17,8 +16,11 @@ public class FsmStateIdle : FsmStatePlayer
         SubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment += SomeTranslateEquipment;
         player.OnBerserkerStateDeactivated += UpdateIdleAnimation;
+        //OnSwipeEnded += SetStateWalk; // эмулирется в MakingSwipe
+        //OnSwipeStarted += SetStateWalk; // эмулирется в StopHorizontalMovement
 
-        player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
+        //player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocity.y, 0);
+
 
         string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
             C.Animations.PlayerIdle + C.StatesAdditional.Berserker :
@@ -34,12 +36,27 @@ public class FsmStateIdle : FsmStatePlayer
         UnsubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment -= SomeTranslateEquipment;
         player.OnBerserkerStateDeactivated -= UpdateIdleAnimation;
+        //OnSwipeEnded -= SetStateWalk;
+        //OnSwipeStarted -= SetStateWalk; // эмулирется в StopHorizontalMovement
     }
 
     public override void Update()
     {
-        MakingSwipe(); // здесь эмулируется событие OnSwipeEnded
+        base.Update();
+        //MakingSwipe(); // здесь эмулируется событие OnSwipeEnded
+
+//        HandleTouches();
+
+//        // Обрабатываем мышь только если тач не активен (иначе возможны дубли)
+//#if UNITY_STANDALONE || UNITY_EDITOR
+//        HandleMouse();
+//#endif        
         if (!player.isGrounded) fsmPlayer.SetState<FsmStateFall>();
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     private void SetStateWalk()
@@ -64,7 +81,6 @@ public class FsmStateIdle : FsmStatePlayer
     public override void OnDestroy()
     {
         base.OnDestroy();
-        OnSwipeEnded -= SetStateWalk;
     }
 }
 

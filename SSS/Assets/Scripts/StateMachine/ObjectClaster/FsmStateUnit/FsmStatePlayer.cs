@@ -1,247 +1,352 @@
-using System;
+п»їusing System;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static FsmStatePlayer;
-using static UnityEngine.Rendering.DebugUI;
 
 public class FsmStatePlayer : FsmStateUnit
 {
-    private int activeFingerId = -1; // Запоминаем ID активного тача
 
-    protected Fsm fsmPlayer;
-    protected Player player;
     public delegate void SwipeEnded();
     public event SwipeEnded OnSwipeEnded;
+    public delegate void SwipeStarted();
+    public event SwipeStarted OnSwipeStarted;
+        
+    protected Fsm fsmPlayer;
+    protected Player player;
+
+
+    private const int MOUSE_FAKE_FINGER_ID = -999;
+
+    // --- РќР°СЃС‚СЂР°РёРІР°РµРјС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ ---
+    private const float MIN_SWIPE_PIXELS = 10f;        // РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЃРІР°Р№РїР° РІ РїРёРєСЃРµР»СЏС…
+    private const float MIN_SWIPE_WORLD = 0.033f;        // РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЃРІР°Р№РїР° РІ РјРёСЂРѕРІС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С… (СЃС‚СЂР°С…РѕРІРєР°)
+    private const float MOVE_VELOCITY_MULTIPLIER = 10f;// РєР°Рє Сѓ РІР°СЃ Р±С‹Р»Рѕ speed * 10
+    private const float STOP_EPSILON = 0.05f;          // РґРѕРїСѓСЃРє РїСЂРё РѕСЃС‚Р°РЅРѕРІРєРµ (РІ РјРёСЂРѕРІС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С…)
+    Coroutine _coroutineRemoveTouchAfterFrame;
+
 
     public FsmStatePlayer(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
         fsmPlayer = fsm;
-        player = (Player) unit;
-        
+        player = (Player)unit;
     }
 
+    // ----------------- Unity-С†РёРєР»С‹ -----------------
     public override void Update()
     {
+        // РћР±СЂР°Р±РѕС‚РєР° С‚Р°С‡РµР№ Рё РјС‹С€Рё РІ Update (РёРЅС‚РµСЂС„РµР№СЃ/РІРІРѕРґ вЂ” РІ Update)
+        ProcessTouches();
+        ProcessMouse();
 
-    }
-
-    public void MakingSwipe()
-    {
-
-        IsAtSpecifiedPosition(); // узнаём, добрался ли игрок до конечной точки пути (по сути его позиция + длина свайпа. Если да, то сбрасываем мгновенную скорость по х в ноль.
-                                 // Для мобильных устройств
-                                 //if (Input.touchCount > 0)
-                                 //{
-                                 //    Touch touch = Input.GetTouch(0);
-
-        //    if (touch.phase == TouchPhase.Began)
-        //    {
-        //        player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
-        //        player.startTouchPosition.z = 0;
-        //        player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
-        //    }
-        //    else if (touch.phase == TouchPhase.Ended)
-        //    {
-        //        if (player.CurrentStamina > 0)
-        //        {
-        //            player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
-        //            player.endTouchPosition.z = 0;
-        //            player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-        //            // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
-        //            // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-        //            if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
-        //            {
-        //                HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-
-        //                player.CurrentStamina--;
-        //            }
-        //        }
-        //    }
-        //}
-        //// Для ПК (с использованием мыши)
-        //if (Input.GetMouseButtonDown(0)) // Когда нажата левая кнопка мыши
-        //{
-        //    player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition); // тут используем Vector3, поэтому координату z сбрасываем в ноль (для 2D)
-        //    player.startTouchPosition.z = 0;
-        //    player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока, ибо уже от неё будет рассчитывать расстояние, которое нужно пройти
-        //}
-        //else if (Input.GetMouseButtonUp(0)) // Когда отпущена левая кнопка мыши
-        //{
-        //    if (player.CurrentStamina > 0)
-        //    {
-        //        player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        //        player.endTouchPosition.z = 0;
-        //        player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-        //        // Проверяем, является ли текущее состояние уже состоянием перемещения, если да то просто двигаем наш объект через функцию HandleSwipe, если нет, то переходим в
-        //        // состояние FsmStateWalk, в котором у нас функция HandleSwipe вызывается сразу по умолчанию
-        //        if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0) // чтоб просто при кликаньи на месте выносливость не тратилась
-        //        {
-        //            HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-
-        //            player.CurrentStamina--; 
-        //        }
-        //    }
-        //}
-
-        // === ДЛЯ ТАЧ ===
-        if (Input.touchCount > 0)
+        // РћР±РЅРѕРІР»РµРЅРёРµ РІРёРґР° (РµСЃР»Рё СЃРєРѕСЂРѕСЃС‚СЊ РїРѕРјРµРЅСЏР»Р°СЃСЊ РІРЅРµ РґРІРёР¶РµРЅРёСЏ)
+        if (Mathf.Abs(player.rb.linearVelocityX) > 0.01f)
         {
-            Touch touch = Input.GetTouch(0);
-
-            // Проверяем, что касание не на UI
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                return;
-
-            // Начало касания
-            if (touch.phase == TouchPhase.Began)
+            // РњРµРЅСЏРµРј РІРёРґ С‚РѕР»СЊРєРѕ РµСЃР»Рё РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ РґРІРёР¶РµРјСЃСЏ Рё РЅР°РїСЂР°РІР»РµРЅРёРµ РѕС‚Р»РёС‡Р°РµС‚СЃСЏ
+            bool shouldLookRight = player.rb.linearVelocityX > 0f;
+            if (player.lookingRight != shouldLookRight)
             {
-                // Запоминаем fingerId активного касания
-                activeFingerId = touch.fingerId;
-
-                player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
-                player.startTouchPosition.z = 0;
-                player.startPositionPlayerBeforeMoving = player.transform.position; // запоминаем начальную позицию игрока
-            }
-            // Завершение или отмена касания
-            else if (touch.fingerId == activeFingerId &&
-                    (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
-            {
-                if (player.CurrentStamina > 0)
-                {
-                    player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(touch.position);
-                    player.endTouchPosition.z = 0;
-                    player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
-
-                    if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0)
-                    {
-                        HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-                        player.CurrentStamina--;
-                    }
-                }
-
-                // Сбрасываем activeFingerId, чтобы можно было начать новое касание
-                activeFingerId = -1;
+                ChangeDirectionView(shouldLookRight);
             }
         }
 
-        // === ДЛЯ ПК (мышь) ===
+    }
+
+    public override void FixedUpdate()
+    {
+        MoveTarget();        
+    }
+
+
+
+    // ----------------- РћР±СЂР°Р±РѕС‚РєР° РІРІРѕРґР° -----------------
+    private void ProcessTouches()
+    {
+        if (Input.touchCount == 0) return;
+
+
+
+        foreach (Touch touch in Input.touches)
+        {
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    RegisterPointerBegan(touch.fingerId, touch.position);
+                    break;
+
+                case TouchPhase.Moved:
+                    //if (player.isSwipingNow)
+                    //{
+                    //    RegisterPointerBegan(touch.fingerId, touch.position);
+                    //}
+                    //break;
+                case TouchPhase.Stationary:
+                    // РќРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµРј Р·РґРµСЃСЊ; СѓРґРµСЂР¶Р°РЅРёРµ РЅРµ РІР°Р¶РЅРѕ РґР»СЏ Р»РѕРіРёРєРё СЃРІР°Р№РїР°
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    RegisterPointerEnded(touch.fingerId, touch.position);
+                    break;
+            }
+        }
+    }
+
+    private void ProcessMouse()
+    {
+        if (Application.isMobilePlatform) return;
+
+        // РњС‹С€СЊ РёРјРёС‚РёСЂСѓРµС‚СЃСЏ РєР°Рє РѕС‚РґРµР»СЊРЅС‹Р№ "РїР°Р»РµС†"
         if (Input.GetMouseButtonDown(0))
         {
-            // Проверяем, что курсор не над UI
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                return;
-
-            player.startTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            player.startTouchPosition.z = 0;
-            player.startPositionPlayerBeforeMoving = player.transform.position;
+            RegisterPointerBegan(MOUSE_FAKE_FINGER_ID, Input.mousePosition);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (player.CurrentStamina > 0)
-            {
-                player.endTouchPosition = player.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                player.endTouchPosition.z = 0;
-                player.differenceXBetweenStartAndEndPositions = player.endTouchPosition.x - player.startTouchPosition.x;
+            RegisterPointerEnded(MOUSE_FAKE_FINGER_ID, Input.mousePosition);
+        }
+    }
 
-                if (Mathf.Abs(player.differenceXBetweenStartAndEndPositions) > 0)
+    private void RegisterPointerBegan(int fingerId, Vector2 screenPos)
+    {
+        bool overUi = IsPointerOverUIAtPosition(screenPos);
+
+        var info = new Player.TouchInfo
+        {
+            startScreen = screenPos,
+            startWorld = ScreenToWorldAtZ0(player.mainCamera, screenPos),
+            startedOverUI = overUi
+        };
+
+        // РЎРѕС…СЂР°РЅСЏРµРј, СЃРєРѕР»СЊРєРѕ РјРёСЂРѕРІС‹С… РµРґРёРЅРёС† = 1 РїРёРєСЃРµР»СЋ РЅР° РјРѕРјРµРЅС‚ РЅР°С‡Р°Р»Р° СЃРІР°Р№РїР°
+        float camDepth = Mathf.Abs(player.mainCamera.transform.position.z); // СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ Z=0
+        info.worldUnitsPerPixelAtStart = ComputeWorldUnitsPerPixel(player.mainCamera, camDepth);
+
+        player.activeTouches[fingerId] = info;
+        player.isSwipingNow = true;
+    }
+
+    private void RegisterPointerEnded(int fingerId, Vector2 endScreenPos)
+    {
+        if (player.processedTouches.Contains(fingerId))
+            return;
+
+        player.processedTouches.Add(fingerId);
+        _coroutineRemoveTouchAfterFrame = CoroutineManager.Instance.StartManagedCoroutine(gameObject, RemoveTouchAfterFrame(fingerId));
+        player.isSwipingNow = false;
+
+        if (!player.activeTouches.ContainsKey(fingerId)) return;
+
+        Player.TouchInfo info = player.activeTouches[fingerId];
+        player.activeTouches.Remove(fingerId);
+
+        if (info.startedOverUI) return;
+        if (player.CurrentStamina <= 0) return;
+
+        Vector2 deltaScreen = endScreenPos - info.startScreen;
+        if (deltaScreen.magnitude < MIN_SWIPE_PIXELS) return;
+
+        // РљРѕРЅРІРµСЂС‚РёСЂСѓРµРј СЌРєСЂР°РЅРЅСѓСЋ РґРµР»СЊС‚Сѓ РІ РјРёСЂРѕРІСѓСЋ РґРµР»СЊС‚Сѓ, РёСЃРїРѕР»СЊР·СѓСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚, СЃРѕС…СЂР°РЅС‘РЅРЅС‹Р№ РІ РЅР°С‡Р°Р»Рµ СЃРІР°Р№РїР°
+        float dxWorld = deltaScreen.x * info.worldUnitsPerPixelAtStart;
+        float dyWorld = deltaScreen.y * info.worldUnitsPerPixelAtStart;
+        Vector3 swipeWorld = new Vector3(dxWorld, dyWorld, 0f);
+
+        bool horizontalSwipe = Mathf.Abs(deltaScreen.x) >= Mathf.Abs(deltaScreen.y);
+
+        // РџСЂРѕРІРµСЂРєР° "СЃРІР°Р№Рї РІ СЃС‚РµРЅСѓ" вЂ” РґРµР»Р°РµРј РЅР° РѕСЃРЅРѕРІРµ screen-space (РЅР°РґРµР¶РЅРµРµ РїСЂРё РґРІРёР¶. РєР°РјРµСЂС‹)
+        if (player.isTouchingWall && horizontalSwipe)
+        {
+            // swipe left -> deltaScreen.x < 0
+            if (player.wallOnLeft && deltaScreen.x < 0f)
+            {
+                Debug.Log("РЎРІР°Р№Рї РІ СЃС‚РµРЅСѓ (СЃР»РµРІР°) РѕС‚РјРµРЅС‘РЅ");
+                return;
+            }
+            // swipe right -> deltaScreen.x > 0
+            else if (!player.wallOnLeft && deltaScreen.x > 0f)
+            {
+                Debug.Log("РЎРІР°Р№Рї РІ СЃС‚РµРЅСѓ (СЃРїСЂР°РІР°) РѕС‚РјРµРЅС‘РЅ");
+                return;
+            }
+        }
+
+        // Р•СЃР»Рё РјРёСЂРѕРІРѕР№ РґРµР»СЊС‚Р° СЃР»РёС€РєРѕРј РјР°Р»Р° вЂ” РёРіРЅРѕСЂРёСЂСѓРµРј
+        if (Mathf.Abs(swipeWorld.x) < MIN_SWIPE_WORLD && Mathf.Abs(swipeWorld.y) < MIN_SWIPE_WORLD) return;
+
+        // Р¤РѕСЂРјРёСЂСѓРµРј endWorld РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЃРѕС…СЂР°РЅС‘РЅРЅРѕРіРѕ startWorld (С‡С‚РѕР±С‹ РёРЅС‚РµСЂС„РµР№СЃ РЅРµ Р·Р°РІРёСЃРµР» РѕС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ РєР°РјРµСЂС‹)
+        Vector3 endWorld = info.startWorld + swipeWorld;
+
+        HandleSwipeDecision(deltaScreen, swipeWorld, info.startWorld, endWorld, horizontalSwipe);
+    }
+
+
+    private float ComputeWorldUnitsPerPixel(Camera cam, float depth)
+    {
+        if (cam == null) return 0f;
+
+        if (cam.orthographic)
+        {
+            // РІС‹СЃРѕС‚Р° РјРёСЂР° РІ СЋРЅРёС‚Р°С…, РІРёРґРёРјР°СЏ РєР°РјРµСЂРѕР№ РЅР° РґР°РЅРЅРѕРј СЂР°СЃСЃС‚РѕСЏРЅРёРё (РѕСЂС‚РѕРіСЂР°С„РёС‡.)
+            return (cam.orthographicSize * 2f) / cam.pixelHeight;
+        }
+        else
+        {
+            // РїСЂРёР±Р»РёР¶С‘РЅРЅР°СЏ РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РґР»СЏ РїРµСЂСЃРїРµРєС‚РёРІРЅРѕР№ РєР°РјРµСЂС‹:
+            // РІС‹СЃРѕС‚Р° С„СЂСѓСЃС‚СѓРјР° РЅР° Р·Р°РґР°РЅРЅРѕР№ РіР»СѓР±РёРЅРµ
+            float frustumHeight = 2f * depth * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            return frustumHeight / cam.pixelHeight;
+        }
+    }
+
+    private IEnumerator RemoveTouchAfterFrame(int fingerId)
+    {
+        yield return null; // Р¶РґС‘Рј РѕРґРёРЅ РєР°РґСЂ
+        player.processedTouches.Remove(fingerId);
+    }
+
+    // ----------------- РћР±СЂР°Р±РѕС‚РєР° Р¶РµСЃС‚Р° -----------------
+    private void HandleSwipeDecision(Vector2 swipeScreenDelta, Vector3 swipeWorldDelta, Vector3 startWorld, Vector3 endWorld, bool horizontalSwipe)
+    {
+        player.wasEnemyDamagedByLastSwipe = false;
+        player.OnMove();
+        ScoreManager.Instance.UpActionCombo();
+
+        // РЎСЂР°РІРЅРёРІР°РµРј РїРѕ Р°Р±СЃРѕР»СЋС‚РЅРѕР№ РІРµР»РёС‡РёРЅРµ СЌРєСЂР°РЅРЅС‹С… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ, С‡С‚РѕР±С‹ UX Р±С‹Р» СЃС‚Р°Р±РёР»СЊРЅРµРµ РЅР° СЂР°Р·РЅС‹С… РєР°РјРµСЂР°С…/РјР°СЃС€С‚Р°Р±Р°С…
+        if (horizontalSwipe)
+        {
+            // Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Р№ СЃРІР°Р№Рї вЂ” РґРІРёР¶РµРЅРёРµ РІ targetX
+            float dxWorld = swipeWorldDelta.x;
+            Debug.Log(swipeWorldDelta.x);
+            if (Mathf.Abs(dxWorld) >= MIN_SWIPE_WORLD)
+            {
+                StartHorizontalMove(dxWorld);
+                player.CurrentStamina--;
+            }
+        }
+        else
+        {
+            // Р’РµСЂС‚РёРєР°Р»СЊРЅС‹Р№ СЃРІР°Р№Рї вЂ” РїСЂС‹Р¶РѕРє
+            if (swipeScreenDelta.y > 0f && player.isGrounded)
+            {
+                Jump();
+                player.CurrentStamina--;
+            }
+        }
+    }
+
+    private void StartHorizontalMove(float dxWorld)
+    {
+        // Р’С‹С‡РёСЃР»СЏРµРј С†РµР»РµРІСѓСЋ РїРѕР·РёС†РёСЋ РІ РјРёСЂРѕРІС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С…
+        player.targetX = player.transform.position.x + dxWorld;
+
+        // Р–РµР»Р°РµРјР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ СЃРІР°Р№РїР°
+        player.desiredVelocityX = Mathf.Sign(dxWorld) * player.speed * MOVE_VELOCITY_MULTIPLIER;
+
+        // Р’РєР»СЋС‡Р°РµРј РґРІРёР¶РµРЅРёРµ вЂ” Р±СѓРґРµС‚ РїСЂРёРјРµРЅРµРЅРѕ РІ FixedUpdate
+        //Debug.Log(player.movingToTarget);
+        player.movingToTarget = true;
+        //Debug.Log(player.movingToTarget);
+
+        // РќРµРјРµРґР»РµРЅРЅРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РІРёРґР° (С‡С‚РѕР±С‹ СЃРїСЂР°Р№С‚ СЃСЂР°Р·Сѓ РїРѕРІРµСЂРЅСѓР»СЃСЏ)
+        ChangeDirectionView(player.desiredVelocityX > 0f);
+
+        // Р’С‹Р·РѕРІ СЃРёРіРЅР°Р»Р° РЅР°С‡Р°Р»Р° СЃРІР°Р№РїР°/РµРіРѕ РѕРєРѕРЅС‡Р°РЅРёСЏ РґР»СЏ РІРЅРµС€РЅРёС… listeners
+        //Debug.Log("Р¬РІС„,,");
+        //Debug.Log(player.desiredVelocityX);
+        OnSwipeStarted?.Invoke();
+
+        // РЎРјРµРЅР° СЃРѕСЃС‚РѕСЏРЅРёСЏ FSM: РµСЃР»Рё СЂСЏРґРѕРј РІСЂР°Рі вЂ” WalkAndAttack, РёРЅР°С‡Рµ Walk
+        if (player.isEnemyNear)
+            fsmPlayer.SetState<FsmStateWalkAndAttack>();
+        else
+            fsmPlayer.SetState<FsmStateWalk>();
+    }
+
+    protected internal void StopHorizontalMovement() // РІ Idle РІС‹Р·С‹РІР°РµРј
+    {
+        //Debug.Log("Р”Р° С‡С‚Рѕ Р·Р° С…СѓРµС‚Р°");
+        player.movingToTarget = false;
+        player.desiredVelocityX = 0f;
+
+        // РћР±РЅСѓР»СЏРµРј РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ вЂ” РёСЃРїРѕР»СЊР·СѓРµРј СЃРїРѕСЃРѕР±, СЃРѕРІРјРµСЃС‚РёРјС‹Р№ СЃ РІР°С€РµР№ РѕР±РѕР»РѕС‡РєРѕР№ rb 
+        player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocityY, 0f);
+
+        OnSwipeEnded?.Invoke();
+    }
+
+    public void HandleSwipe(Vector3 swipe) // РѕСЃС‚Р°РІР»РµРЅ РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё, РІС‹Р·С‹РІР°РµС‚ С‚РѕС‚ Р¶Рµ РїСѓС‚СЊ
+    {
+        HandleSwipeDecision(new Vector2(swipe.x, swipe.y), swipe, player.startTouchPosition, player.startTouchPosition + swipe, swipe.x > swipe.y);
+    }
+
+    // ----------------- Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ РјРµС‚РѕРґС‹ -----------------
+    private Vector3 ScreenToWorldAtZ0(Camera cam, Vector2 screenPosition)
+    {
+        if (cam == null)
+        {
+            Debug.LogWarning("FsmStatePlayer_Reworked: main camera is null in ScreenToWorldAtZ0.");
+            return Vector3.zero;
+        }
+
+        // СЂР°СЃСЃС‚РѕСЏРЅРёРµ РєР°РјРµСЂС‹ РґРѕ РјРёСЂРѕРІРѕРіРѕ Z = 0
+        float dist = Mathf.Abs(cam.transform.position.z);
+        Vector3 screenPoint = new Vector3(screenPosition.x, screenPosition.y, dist);
+        Vector3 world = cam.ScreenToWorldPoint(screenPoint);
+        world.z = 0f;
+        return world;
+    }
+
+    private bool IsPointerOverUIAtPosition(Vector2 screenPosition)
+    {
+        if (EventSystem.current == null) return false;
+
+        PointerEventData ped = new PointerEventData(EventSystem.current)
+        {
+            position = screenPosition
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(ped, results);
+        return results.Count > 0;
+    }
+
+    private void MoveTarget()
+    {
+        // РџСЂРёРјРµРЅСЏРµРј С„РёР·РёРєСѓ РІ FixedUpdate вЂ” РёР·РјРµРЅРµРЅРёРµ velocity/linearVelocity
+        //Debug.Log(player.movingToTarget);
+        if (player.movingToTarget)
+        {
+            // РџСЂРёРјРµРЅСЏРµРј Р¶РµР»Р°РµРјСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ
+            player.rb.linearVelocityX = player.desiredVelocityX;
+
+            // РџСЂРѕРІРµСЂСЏРµРј, РЅРµ РїСЂРѕС€Р»Рё Р»Рё С†РµР»СЊ (overshoot)
+            float posX = player.transform.position.x;
+            //Debug.Log(player.desiredVelocityX);
+            //Debug.Log(player.targetX);
+            //Debug.Log(STOP_EPSILON);
+            if (player.desiredVelocityX > 0f)
+            {
+                if (posX >= player.targetX - STOP_EPSILON)
                 {
-                    HandleSwipe(player.endTouchPosition - player.startTouchPosition);
-                    player.CurrentStamina--;
+                    StopHorizontalMovement();
+                }
+            }
+            else if (player.desiredVelocityX < 0f)
+            {
+                if (posX <= player.targetX + STOP_EPSILON)
+                {
+                    StopHorizontalMovement();
                 }
             }
         }
-
-        if ((player.lookingRight == player.rb.linearVelocityX < 0) && Mathf.Abs(player.rb.linearVelocityX) > 0.01) // добавили некоторый treshhold для нивелирования небольшого заноса от CompositeCollider
-        {
-            ChangeDirectionView(null);
-        }
     }
 
-    // Обрабатываем свайп
-    public void HandleSwipe(Vector3 swipe)
-    {
-        player.wasEnemyDamagedByLastSwipe = false;
-
-        player.OnMove();
-
-        ScoreManager.Instance.UpActionCombo();
-
-        if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-        {
-            // Свайп влево или вправо
-            if (swipe.x > 0)
-            {
-                MoveRight();
-            }
-            else
-            {
-
-                MoveLeft();
-            }
-        }
-        else
-        {
-            // Свайп вверх (прыжок)
-            if (swipe.y > 0 && player.isGrounded)
-            {
-                Jump();
-            }
-        }
-    }
-
-    private void MoveLeft()
-    {
-        //rb.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
-        //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
-        player.rb.linearVelocityX = -player.speed * 10;
-        OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-        if (player.isEnemyNear)
-        {
-            fsmPlayer.SetState<FsmStateWalkAndAttack>();
-
-        }
-        else
-        {
-            fsmPlayer.SetState<FsmStateWalk>();
-        }
-    }
-
-    private void MoveRight()
-    {
-        //rb.AddForce(Vector2.right * speed, ForceMode2D.Impulse); // в теории можно сделать и импульсом перемещение, но тогда он будет накапливаться при многочисленных свайпах.
-        //player.rb.linearVelocity = new Vector3(player.differenceXBetweenStartAndEndPositions * player.speed, 0, 0);
-        player.rb.linearVelocityX = player.speed * 10;
-        OnSwipeEnded?.Invoke(); // на это пока что подпишемся только в состоянии FsmStateIdle 
-        if (player.isEnemyNear)
-        {
-            fsmPlayer.SetState<FsmStateWalkAndAttack>();
-
-        }
-        else
-        {
-            fsmPlayer.SetState<FsmStateWalk>();
-        }
-    }
-
-    public void IsAtSpecifiedPosition()
-    {
-        if (player.transform.position.x >= player.startPositionPlayerBeforeMoving.x + player.differenceXBetweenStartAndEndPositions && player.rb.linearVelocity.x > 0) // для правого движения
-        {
-            player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocityY, 0);
-        }
-        if (player.transform.position.x <= player.startPositionPlayerBeforeMoving.x + player.differenceXBetweenStartAndEndPositions && player.rb.linearVelocity.x < 0) // для левого движения
-        {
-            player.rb.linearVelocity = new Vector3(0, player.rb.linearVelocityY, 0);
-        }
-    }
-
+    // ----------------- Р¤РёР·РёС‡РµСЃРєРёРµ / Р»РѕРіРёС‡РµСЃРєРёРµ РґРµР№СЃС‚РІРёСЏ -----------------
     void Jump()
     {
         fsmPlayer.SetState<FsmStateJump>();
-    } 
+    }
 
+    // РџРѕРґРїРёСЃРєРё/РѕС‚РїРёСЃРєРё (РѕСЃС‚Р°РІР»РµРЅС‹ РєР°Рє СЂР°РЅСЊС€Рµ, РЅРѕ СЂРµРєРѕРјРµРЅРґСѓСЋ РІС‹Р·С‹РІР°С‚СЊ Unsubscribe РЅР° РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ)
     public void SubscribeForSignalActivationSomeEquipment()
     {
         player.OnSomeEquipmentShouldBeActivate += SomeEquipmentShouldBeActivate;
@@ -257,29 +362,45 @@ public class FsmStatePlayer : FsmStateUnit
         player._fsm.SetState<FsmStateCastUnit>(new Dictionary<string, object> { { "equipmentWhatWasPressed", equipment } });
     }
 
-    public void SomeTranslateEquipment(bool isTranslating) // если честно, совершенно не ясно, на кой чёрт нам нужно вот это состояние: FsmStateTranslatingEquipment. Если мы хотим
-                                                           // хотим привязать его к перетаскиванию снаряжение, то, например, во время анимации каста, нам нельзя перетаскивать снаряжение,
-                                                           // иначе состояние каста прервётся. Есть смысл оставлять просто текущее состояние при перемещении снаряжения. Или пусть тогда
-                                                           // при клацании на снаряжение оно не переходит сразу в состояние Selected, а, если текущее состояние позволяет, игрок переходит
-                                                           // в FsmStateTranslatingEquipment и только тогда уже состояние снаряжения переводится в Selected
+    public void SomeTranslateEquipment(bool isTranslating)
     {
         if (isTranslating) player._fsm.SetState<FsmStateTranslatingEquipment>();
         else player._fsm.SetState<FsmStateIdle>();
     }
 
+    // ----------------- РћС‚РѕР±СЂР°Р¶РµРЅРёРµ / РЅР°РїСЂР°РІР»РµРЅРёРµ -----------------
+    // lookingRight РјРѕР¶РµС‚ Р±С‹С‚СЊ null РІ Р±Р°Р·РѕРІРѕР№ РІРµСЂСЃРёРё, РЅРѕ РјС‹ СЃРґР°С‘Рј bool СЏРІРЅРѕ
     public override void ChangeDirectionView(bool? lookingRight)
     {
+        // Р•СЃР»Рё РїРµСЂРµРґР°РЅРѕ null вЂ” РёСЃРїРѕР»СЊР·СѓРµРј С‚РµРєСѓС‰СѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ
+        bool newLookingRight;
+        if (lookingRight.HasValue)
+            newLookingRight = lookingRight.Value;
+        else
+            newLookingRight = player.rb.linearVelocityX > 0f;
 
-        if (player.rb.linearVelocityX != 0) // чтоб во время остановки у нас спрайт не разворачивался влево всегда. Как остановились, так остановились
-        {
-            
-            player.lookingRight = player.rb.linearVelocityX > 0;
+        // Р•СЃР»Рё СѓР¶Рµ СЃРјРѕС‚СЂРёРј РІ РЅСѓР¶РЅСѓСЋ СЃС‚РѕСЂРѕРЅСѓ вЂ” РЅРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµРј
+        if (player.lookingRight == newLookingRight) return;
 
-            base.ChangeDirectionView(player.lookingRight);
+        player.lookingRight = newLookingRight;
+        base.ChangeDirectionView(player.lookingRight);
 
-            player.selfSprite.flipX = !player.selfSprite.flipX;
-            player.attackAreaTransform.localPosition = new Vector3(-1 * player.attackAreaTransform.localPosition.x, player.attackAreaTransform.localPosition.y, player.attackAreaTransform.localPosition.z);
-        }
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј flipX РѕРґРЅРѕР·РЅР°С‡РЅРѕ (РЅРµ РёРЅРІРµСЂС‚РёСЂСѓРµРј)
+        // РџСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ, С‡С‚Рѕ РїСЂРё lookingRight == true СЃРїСЂР°Р№С‚ РЅРµ РїРµСЂРµРІС‘СЂРЅСѓС‚ (Р°РґР°РїС‚РёСЂСѓР№С‚Рµ РµСЃР»Рё Сѓ РІР°СЃ РёРЅР°С‡Рµ)
+        player.selfSprite.flipX = !player.lookingRight;
+
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРѕР·РёС†РёСЋ attackAreaTransform РїРѕ Р·РЅР°РєСѓ X (РёРґРµРјРїРѕС‚РµРЅС‚РЅРѕ)
+        var lp = player.attackAreaTransform.localPosition;
+        lp.x = Mathf.Abs(lp.x) * (player.lookingRight ? 1f : -1f);
+        player.attackAreaTransform.localPosition = lp;
     }
 
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineRemoveTouchAfterFrame);
+    }
+
+    // ----------------- Р”РѕРї. СЂРµРєРѕРјРµРЅРґР°С†РёРё / Р·Р°С‰РёС‚Р° -----------------
+    // Р РµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ: РїСЂРё РІС…РѕРґРµ/РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ СЏРІРЅРѕ РІС‹Р·С‹РІР°С‚СЊ Subscribe/Unsubscribe, С‡С‚РѕР±С‹ РЅРµ Р±С‹Р»Рѕ СѓС‚РµС‡РµРє.
 }

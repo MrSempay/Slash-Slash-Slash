@@ -18,6 +18,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
         base.Enter(initialConditionsEntering);
 
         player.attackAreaScript.isEnemyInAttackArea += MakeDamageToEnemy;
+        player.OnAttackFinished += StopHorizontalMovement;
 
         if (player.enemiesInAttackArea.Count > 0)
         {
@@ -39,6 +40,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
         Debug.Log("Walk and Attack state [EXIT]");
 
         player.attackAreaScript.isEnemyInAttackArea -= MakeDamageToEnemy;
+        player.OnAttackFinished -= StopHorizontalMovement;
 
         base.Exit();
 

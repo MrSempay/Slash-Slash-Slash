@@ -1215,6 +1215,7 @@ MonoBehaviour:
   _damageReductionPercentage: 0
   _healthCurrent: 0
   _healthBarFilling: {fileID: 2972628522100373302}
+  audioEmitter: {fileID: 0}
   animator: {fileID: 6619749608203477782}
   lookingRight: 1
   isAlive: 1
@@ -1274,7 +1275,13 @@ MonoBehaviour:
   increasingGettingExperienceByKillComboTickPercentage: 0
   increasingGettingMoneyByKillComboTickPercentage: 0
   staminaMax: 0
+  isSwipingNow: 0
+  desiredVelocityX: 0
+  movingToTarget: 0
+  targetX: 0
   _isMainTarget: 1
+  isTouchingWall: 0
+  wallOnLeft: 0
 --- !u!95 &6619749608203477782
 Animator:
   serializedVersion: 7
@@ -4842,7 +4849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4094776380283205729, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Value
-      value: 0.3633692
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4112872227225530943, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: additionalLocalizationKey
@@ -4982,7 +4989,7 @@ PrefabInstance:
       objectReference: {fileID: 8218555752090507255}
     - target: {fileID: 5678443975710182560, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: togglesInGroup.Array.size
-      value: 65
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5678443975710182560, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: 'togglesInGroup.Array.data[0]'
@@ -5130,7 +5137,7 @@ PrefabInstance:
       objectReference: {fileID: 178037945062652401}
     - target: {fileID: 5726977673589105809, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 0.75423175
       objectReference: {fileID: 0}
     - target: {fileID: 5984561062716465723, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Text
@@ -5246,7 +5253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8061293548307456140, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0.49599624
       objectReference: {fileID: 0}
     - target: {fileID: 8061906706431440864, guid: 0e242253ebc30454e968eb78474ff273, type: 3}
       propertyPath: selfName
