@@ -332,9 +332,10 @@ public class Equipment : MonoBehaviour
     {
         //_callDownCoroutine = StartCoroutine(CallDown());
         //_callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
-        _callDownCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDown());
-        //_callDownAnimationCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDownIconAnimation()); 
-        _callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
+        _callDownCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDown()); // блин, нам эти корутины нужны в активном состоянии даже если объект disable...
+        // поэтому делаем через CoroutineManager.Instance.StartManagedCoroutine
+        _callDownAnimationCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, CallDownIconAnimation()); 
+        //_callDownAnimationCoroutine = StartCoroutine(CallDownIconAnimation());
     }
 
 
@@ -349,7 +350,8 @@ public class Equipment : MonoBehaviour
         while (!isReady)
         {
             yield return null;
-            _callDownIcon.fillAmount -= 1 / (timeCallDown / Time.deltaTime);
+            if (_callDownIcon != null)
+                _callDownIcon.fillAmount -= 1 / (timeCallDown / Time.deltaTime);
         }
         _callDownIcon.gameObject.SetActive(false);
         _callDownIcon.fillAmount = 0;

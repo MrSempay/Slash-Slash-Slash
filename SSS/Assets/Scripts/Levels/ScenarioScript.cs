@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using static DialogueParser;
 using System.Threading.Tasks;
 using System.Threading;
+using UnityEngine.UI;
 
 public class ScenarioScript : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ScenarioScript : MonoBehaviour
     private Vector3 _velocity = Vector3.zero; // Текущая скорость
     private CancellationTokenSource _cts;
 
+    protected GameObject buttonSkipTime;
     protected LevelBuilder levelBuildScript;
 
     protected Transform transformPlayer;
@@ -28,8 +30,6 @@ public class ScenarioScript : MonoBehaviour
     [NonSerialized] public static ScenarioScript instance;
     [NonSerialized] public Dictionary<string, int> dictionaryNamesEnemiesWavesAndRewards; // инициализируем в производных классах
     public GameObject player;
-
-    //public Transform transformDialogueAreas;
 
     public PlayerDialogue ScriptCurrentDialogue
     {
@@ -223,12 +223,12 @@ public class ScenarioScript : MonoBehaviour
         Transform transformCameraPlayer = cameraPlayer.transform;
 
         transformCameraPlayer.SetParent(null);
-        _moveCameraCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, MoveCameraPlayerWithSpeedToPoint(transformCameraPlayer, targetTransform, speed, keyFinishing));
+        _moveCameraCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, MoveCameraPlayerWithSpeedToPoint(transformCameraPlayer, targetTransform, speed, keyFinishing));
 
     }
-    protected virtual void JustTimeWait(float timeWait, string markerTimeWait) 
+    protected virtual Coroutine JustTimeWait(float timeWait, string markerTimeWait) 
     {
-        _justTimeWaitCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimeWait(timeWait, markerTimeWait));
+        return _justTimeWaitCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, TimeWait(timeWait, markerTimeWait));
     }
 
     protected virtual void StartWaveEnemies(Dictionary<Transform, int> targetPointsForEnemy, string nameWave)

@@ -230,6 +230,7 @@ public class C
         public const string currentYear = "currentYear";
         public const string MaxReachedLevel = "MaxReachedLevel";
         public const string currentMonth = "currentMonth";
+        public const string SkipWaveWait = "SkipWaveWait";
     }
     public static class NamesObjects
     {
@@ -356,6 +357,14 @@ public class C
                 public const string Third = "Third";
                 public const string Fourth = "Fourth";
                 public const string Fifth = "Fifth";
+            }
+            public static class TN // TimerNames
+            {
+                public const string BeforeFirstWave = "BeforeFirstWave";
+                public const string BeforeSecondWave = "BeforeSecondWave";
+                public const string BeforeThirdWave = "BeforeThirdWave";
+                public const string BeforeFourthWave = "BeforeFourthWave";
+                public const string BeforeFifthWave = "BeforeFifthWave";
             }
         }
     }

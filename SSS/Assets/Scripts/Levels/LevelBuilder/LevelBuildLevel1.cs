@@ -65,7 +65,6 @@ public class LevelBuildLevel1 : LevelBuilder
             scriptLevelScenario.OnStudyStart += InstanceSkipStudyButton;
             scriptLevelScenario.OnStudyFinish += DestroySkipStudyButton;
         }
-
     }
 
     private void InstanceSkipStudyButton()

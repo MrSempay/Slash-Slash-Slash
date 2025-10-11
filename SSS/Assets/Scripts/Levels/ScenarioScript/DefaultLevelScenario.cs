@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class DefaultLevelScenario : ScenarioScript
@@ -12,6 +13,7 @@ public class DefaultLevelScenario : ScenarioScript
     [SerializeField] private float _timeAfterLastWaveBeforeFinishDialogue = 3f;
     [SerializeField] private float _timeAfterFinishDialogueBeforePassLevel = 15f;
     [SerializeField] private List<InfoAboutEnemyWave> _listInfoAboutEnemiesWaves; 
+    private Coroutine _coroutineWaitNextWave; 
 
     [System.Serializable]
     class InfoAboutEnemyWave // планируетс€ использовать дл€ шаблона уровней типа: диалог => N-ое кол-во волн => диалог 
@@ -56,7 +58,20 @@ public class DefaultLevelScenario : ScenarioScript
         base.DialogueFinished(nameDialogueWithFolder);
         if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueStart)
         {
-            JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeFirstWave");
+            _coroutineWaitNextWave = JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeFirstWave");
+
+            buttonSkipTime = GameManager.Instance.InstanceTextButton(
+            false,
+            Player.instance.scriptUI.rtContainerButtonsUI,
+            C.Other.SkipWaveWait,
+            () =>
+            {
+                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
+                Destroy(buttonSkipTime);
+                buttonSkipTime = null;
+                TimerFinished("waitTimeBeforeFirstWave");
+            }
+            );
         }
         else if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueFinish) // в теории, может, у нас будут и другие диалоги на уровне кроме этих двух. Ќу, в будущем... недалЄком...
         {
@@ -72,12 +87,18 @@ public class DefaultLevelScenario : ScenarioScript
         {
             case "waitTimeBeforeFirstWave":
 
+                if (buttonSkipTime) // если не через кнопку сюда вошли, до удал€ем еЄ принудительно
+                    Destroy(buttonSkipTime);
+
                 StartDefaultEnemiesWave();
 
                 break;
             case "waitTimeBeforeNextWave":
 
                 _currentNumberWave++;
+
+                if (buttonSkipTime) // если не через кнопку сюда вошли, до удал€ем еЄ принудительно
+                    Destroy(buttonSkipTime);
 
                 StartDefaultEnemiesWave();
 
@@ -110,7 +131,20 @@ public class DefaultLevelScenario : ScenarioScript
         base.EnemiesWaveWasDestroyed(nameWave);
         if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1)
         {
-            JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
+            _coroutineWaitNextWave = JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
+
+            buttonSkipTime = GameManager.Instance.InstanceTextButton(
+            false,
+            Player.instance.scriptUI.rtContainerButtonsUI,
+            C.Other.SkipWaveWait,
+            () =>
+            {                
+                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
+                Destroy(buttonSkipTime);
+                buttonSkipTime = null;
+                TimerFinished("waitTimeBeforeNextWave");
+            }
+            );
         }
         else
         {

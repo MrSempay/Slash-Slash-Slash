@@ -229,7 +229,7 @@ public class FsmStatePlayer : FsmStateUnit
             if (swipeScreenDelta.y > 0f && player.isGrounded)
             {
                 Jump();
-                player.CurrentStamina--;
+                //player.CurrentStamina--;
             }
         }
     }
@@ -398,7 +398,8 @@ public class FsmStatePlayer : FsmStateUnit
     public override void OnDestroy()
     {
         base.OnDestroy();
-        CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineRemoveTouchAfterFrame);
+
+        CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
     }
 
     // ----------------- Доп. рекомендации / защита -----------------

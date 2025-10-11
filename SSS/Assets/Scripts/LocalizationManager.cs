@@ -582,6 +582,11 @@ public class LocalizationManager
             { LANGUAGE.Russian, "Показывать уведомления" },
             { LANGUAGE.Spanish, "Ура!" }
         });
+        localization.Add(C.Other.SkipWaveWait, new Dictionary<LANGUAGE, string>() {
+            { LANGUAGE.English, "Волна не ждёт!" },
+            { LANGUAGE.Russian, "Wave doesn't wait!" },
+            { LANGUAGE.Spanish, "Ура!" }
+        });
 
         localization.Add(C.DK.Spear + C.Prefixes.Description, new Dictionary<LANGUAGE, string>() {
     { LANGUAGE.English, "Ancient spine of Hartgard, wielded by caravan guards. Strikes like lightning, but drains the grip" },

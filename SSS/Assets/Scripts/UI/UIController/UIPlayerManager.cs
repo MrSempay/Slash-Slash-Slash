@@ -5,6 +5,8 @@ using static ScoreManager;
 
 public class UIPlayerManager : UIController
 {
+    public RectTransform rtContainerButtonsUI; // для того чтобы инстанцировать кнопки сюда надо. Многие скрипты, по идее, будут обращаться. Пока что используем в Livel1Scenario_AsyncUsing_FSMUsing
+
     [SerializeField] private TextEdit currentLevelUI;
     [SerializeField] private TextEdit currentLevelUpUI;
     [SerializeField] private TextEdit currentComboUI;

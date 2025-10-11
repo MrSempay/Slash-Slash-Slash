@@ -27,6 +27,8 @@ public class FsmStateIdle : FsmStatePlayer
             C.Animations.PlayerIdle;
 
         player.animator.Play(nameAnimation);
+
+        StopHorizontalMovement();
     }
 
     public override void Exit()

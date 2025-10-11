@@ -50,6 +50,7 @@ public class Player : Unit, IMainTarget
     public EnemyNearDetector nearAreaDetector; // Скрипт зоны для обнаружения врага и модификации анимации передвижения
     public Transform attackAreaTransform; // Компонент трансформ зоны для атаки (далее при смене направления движения будем позицию менять (отзеркаливать))
     public RectTransform UI; //
+    public UIPlayerManager scriptUI; //
     public RankStyle rankStyle; //
     public bool UIUpscaledMod = false;
     //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
@@ -274,6 +275,7 @@ public class Player : Unit, IMainTarget
         CurrentStamina = staminaMax;
         selfSprite = GetComponent<SpriteRenderer>();
         _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();
+        scriptUI = UI.GetComponent<UIPlayerManager>();
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
 
         nearAreaDetector.isEnemyNear += EnemyNear;
@@ -306,9 +308,9 @@ public class Player : Unit, IMainTarget
         //Treasury.SpawnParticularAmmunition(C.DK.PlateArmor, this);
         //Treasury.SpawnParticularAmmunition(C.DK.ThirstySakura, this); 
         //Treasury.SpawnParticularAmmunition(C.DK.Tragicomedy, this); 
-        School.SpawnParticularSpell(C.DK.ProtectiveField, this);
-        School.SpawnParticularSpell(C.DK.Berserker, this);
-        School.SpawnParticularSpell(C.DK.ArcLightning, this);
+        //School.SpawnParticularSpell(C.DK.ProtectiveField, this);
+        //School.SpawnParticularSpell(C.DK.Berserker, this);
+        //School.SpawnParticularSpell(C.DK.ArcLightning, this);
         
         base.Start();
         SetLikeAMainTarget(); 
