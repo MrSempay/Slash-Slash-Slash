@@ -33,6 +33,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1379586865425689813}
+  - {fileID: 7226546977947179925}
   - {fileID: 7584228933127363843}
   - {fileID: 4468899212664573288}
   - {fileID: 2455688025334520005}
@@ -124,13 +125,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65b0f2c0d4fd2a4fa36ba48fda616e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playMenu: {fileID: 1513597530069859800}
-  settingsMenu: {fileID: 1654896300976127098}
-  cam: {fileID: 5807931541085618552}
   rtTopCenterPanel: {fileID: 1379586865425689813}
+  rtTopRightPanel: {fileID: 7226546977947179925}
   rtBottomCenterPanel: {fileID: 7584228933127363843}
   rtBottomLeftPanel: {fileID: 4468899212664573288}
   rtTopLeftPanel: {fileID: 2455688025334520005}
+  playMenu: {fileID: 1513597530069859800}
+  settingsMenu: {fileID: 1654896300976127098}
+  cam: {fileID: 5807931541085618552}
   rtContainerButtonsUI: {fileID: 7791037114242800115}
   currentLevelUI: {fileID: 5418873125393748355}
   currentLevelUpUI: {fileID: 8343899552791607959}
@@ -555,6 +557,41 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000000745058, y: 4.922707}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 1.2077076}
+--- !u!1 &2183397764683427400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7226546977947179925}
+  m_Layer: 0
+  m_Name: TopRightPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7226546977947179925
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183397764683427400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1170272415049676526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 9.207016, y: 4.931209}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 1.3123888, y: 1.3616049}
 --- !u!1 &2364599221487382665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1299,7 @@ MonoBehaviour:
   nearAreaDetector: {fileID: 3336975480044175274}
   attackAreaTransform: {fileID: 671813874167989058}
   UI: {fileID: 1170272415049676526}
+  scriptUI: {fileID: 0}
   rankStyle: {fileID: 949498140885088109}
   UIUpscaledMod: 0
   nearEnemies: []

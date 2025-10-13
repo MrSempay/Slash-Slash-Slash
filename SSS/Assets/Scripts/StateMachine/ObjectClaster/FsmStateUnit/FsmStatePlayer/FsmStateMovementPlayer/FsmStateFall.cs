@@ -13,6 +13,7 @@ public class FsmStateFall : FsmStateMovementPlayer
         // Здесь у нас то, что определяется единожды при создании объекта состояния
 
         player.scriptFloorDetector.OnObjGetFloor += OnFloor;
+        player.OnSetStateIdle += SetStateIdleCallback;
         //distanceToGround = scriptGameObject.distanceToGround;
         //groundLayer = scriptGameObject.groundLayer;
     }
@@ -22,6 +23,8 @@ public class FsmStateFall : FsmStateMovementPlayer
         Debug.Log("Fall state [ENTER]");
 
         SubscribeForSignalActivationSomeEquipment();
+        player.OnSetStateIdle += SetStateIdleCallback;
+        player.OnSetStateIdle -= SetStateIdleCallback;
 
         string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
             C.Animations.PlayerFall + C.StatesAdditional.Berserker :
@@ -37,6 +40,7 @@ public class FsmStateFall : FsmStateMovementPlayer
         Debug.Log("Fall state [EXIT]");
 
         UnsubscribeForSignalActivationSomeEquipment();
+        player.OnSetStateIdle += SetStateIdleCallback;
     }
 
     public override void Update()

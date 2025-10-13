@@ -57,7 +57,7 @@ public class FsmStatePlayer : FsmStateUnit
         MoveTarget();        
     }
 
-
+    protected internal void SetStateIdleCallback() => fsmPlayer.SetState<FsmStateIdle>();
 
     // ----------------- Обработка ввода -----------------
     private void ProcessTouches()
@@ -141,17 +141,19 @@ public class FsmStatePlayer : FsmStateUnit
         player.activeTouches.Remove(fingerId);
 
         if (info.startedOverUI) return;
-        if (player.CurrentStamina <= 0) return;
 
         Vector2 deltaScreen = endScreenPos - info.startScreen;
+        bool horizontalSwipe = Mathf.Abs(deltaScreen.x) >= Mathf.Abs(deltaScreen.y);
+
         if (deltaScreen.magnitude < MIN_SWIPE_PIXELS) return;
+        if (player.CurrentStamina <= 0 && horizontalSwipe) return;
+
 
         // Конвертируем экранную дельту в мировую дельту, используя коэффициент, сохранённый в начале свайпа
         float dxWorld = deltaScreen.x * info.worldUnitsPerPixelAtStart;
         float dyWorld = deltaScreen.y * info.worldUnitsPerPixelAtStart;
         Vector3 swipeWorld = new Vector3(dxWorld, dyWorld, 0f);
 
-        bool horizontalSwipe = Mathf.Abs(deltaScreen.x) >= Mathf.Abs(deltaScreen.y);
 
         // Проверка "свайп в стену" — делаем на основе screen-space (надежнее при движ. камеры)
         if (player.isTouchingWall && horizontalSwipe)

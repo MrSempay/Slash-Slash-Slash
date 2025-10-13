@@ -206,6 +206,7 @@ public class C
         public const string PrefubPlaceForEquipment = "Prefubs/UI/PlaceForEquipment"; 
         public const string PrefubAmmunition = "Prefubs/Ammunition"; 
         public const string PrefubSpell = "Prefubs/Spell"; 
+        public const string PrefubHourglass = "Prefubs/UI/Hourglass"; 
         public const string FieldLeaderboard = "Prefubs/UI/FieldInfo";
         public const string FieldLeaderboardScaled = "Prefubs/UI/FieldInfoScaled";
         public const string PathFolderImagesForToggles = "Images/UI/Toggles/";
@@ -349,6 +350,9 @@ public class C
             {
                 public const string MoveAfterEnemyKilling = "MoveAfterEnemyKilling";
                 public const string MoveAfterFirstSpellBue = "MoveAfterFirstSpellBue";
+                public const string Move1AfterDefeat = "Move1AfterDefeat";
+                public const string Move2AfterDefeat = "Move2AfterDefeat";
+                public const string Move3AfterDefeat = "Move3AfterDefeat";
             }
             public static class WN // WavesNames
             {

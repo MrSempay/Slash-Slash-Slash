@@ -15,7 +15,21 @@ public class School : Building, IMainTarget
 
     [SerializeField] private bool _isMainTarget = true;
 
-    public bool WasDestroyed { get { return _wasDestroyed; } set { _wasDestroyed = value; } }
+    public bool WasDestroyed
+    {
+        get { return _wasDestroyed; }
+        set
+        {
+            if (value != _wasDestroyed)
+            {
+                _wasDestroyed = value;
+
+                if (value) ScenarioScript.instance.RemoveMainTarget(this);
+                else ScenarioScript.instance.AddMainTarget(this);
+
+            }
+        }        
+    }
     public bool IsMainTarget { get { return _isMainTarget; } set { _isMainTarget = value; } }
     public Transform targetTransform { get { return transform; } }
 
@@ -24,6 +38,7 @@ public class School : Building, IMainTarget
         if (IsMainTarget)
         {
             LevelBuilder.instance.listMainTargets.Add(this);
+            ScenarioScript.instance.AddMainTarget(this);
         }
     }
 

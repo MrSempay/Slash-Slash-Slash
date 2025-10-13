@@ -583,8 +583,8 @@ public class LocalizationManager
             { LANGUAGE.Spanish, "Ура!" }
         });
         localization.Add(C.Other.SkipWaveWait, new Dictionary<LANGUAGE, string>() {
-            { LANGUAGE.English, "Волна не ждёт!" },
-            { LANGUAGE.Russian, "Wave doesn't wait!" },
+            { LANGUAGE.English, "Wave doesn't wait!" },
+            { LANGUAGE.Russian, "Волна не ждёт!" },
             { LANGUAGE.Spanish, "Ура!" }
         });
 

@@ -17,6 +17,7 @@ public class FsmStateJump : FsmStateMovementPlayer
         Debug.Log("Jump state [ENTER]");
 
         SubscribeForSignalActivationSomeEquipment();
+        player.OnSetStateIdle += SetStateIdleCallback;
 
         player.rb.linearVelocity = new Vector2(player.rb.linearVelocity.x, 0);
         player.rb.AddForce(Vector2.up * player.jumpForce, ForceMode2D.Impulse);
@@ -34,6 +35,7 @@ public class FsmStateJump : FsmStateMovementPlayer
         Debug.Log("Jump state [EXIT]");
 
         UnsubscribeForSignalActivationSomeEquipment();
+        player.OnSetStateIdle -= SetStateIdleCallback;
     }
 
 

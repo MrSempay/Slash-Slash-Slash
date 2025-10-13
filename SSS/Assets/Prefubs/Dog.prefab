@@ -405,7 +405,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7b606628e97cd3247b0a2234db5dd50e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -686,6 +686,7 @@ MonoBehaviour:
   _damageReductionPercentage: 0
   _healthCurrent: 0
   _healthBarFilling: {fileID: 5520585972428565759}
+  audioEmitter: {fileID: 0}
   animator: {fileID: 5234051109404531447}
   lookingRight: 1
   isAlive: 1

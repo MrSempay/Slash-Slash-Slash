@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private string _nameCurrentScene;
     private string _nameTargetScene;
     private GameObject _prefubPlayerDialogue;
+    private Hourglass _prefubHourglass;
     private LiftGammaGain _liftGammaGain;
 
     [SerializeField] private int _maxReachedLevel = 0; 
@@ -361,6 +362,7 @@ public class GameManager : MonoBehaviour
         prefubTextButtonPanelChoose = Resources.Load<GameObject>(C.Paths.PrefubTextButtonPanelChoose);
         prefubTextButtonScaled = Resources.Load<GameObject>(C.Paths.PrefubTextButtonBigScaled);
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
+        _prefubHourglass = Resources.Load<Hourglass>(C.Paths.PrefubHourglass);
         _prefubPlayerDialogue = Resources.Load<GameObject>(C.Paths.PrefubDialogueWindowForPlayer);
 
         globalFont = Resources.Load<TMP_FontAsset>(C.Paths.FontMonocraft);
@@ -422,6 +424,7 @@ public class GameManager : MonoBehaviour
         _nameCurrentScene = SceneManager.GetActiveScene().name;
         _nameTargetScene = nameTargetScene;
         nameDialogueCurrent = _nameCurrentScene + "-" + nameTargetScene;
+        CleanupManager.DisposeSceneDisposes();
 
         if (SceneManager.GetActiveScene().name != C.NameScene.SceneDialogue)
         {
@@ -432,6 +435,7 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string nameTargetScene)
     {
         _nameTargetScene = nameTargetScene;
+        CleanupManager.DisposeSceneDisposes();
 
         if (SceneManager.GetActiveScene().name != nameTargetScene)
         {
@@ -529,6 +533,14 @@ public class GameManager : MonoBehaviour
         sciptAppearingSprite.SetProperlyPositionAndType(text, typeNotification, liveTime, shouldBeOnlyOneTextInGroup, shouldBeSpecifyControlPositionTextsInGroup);
 
         return sciptAppearingSprite;
+    }
+
+    public Hourglass InvokeHourglass(int waitTime, bool showCountdown, RectTransform rtParent)
+    {
+        Hourglass sciptHourglass = Instantiate(_prefubHourglass, rtParent, false);
+        sciptHourglass.Initialize(waitTime, showCountdown);
+
+        return sciptHourglass;
     }
 
     public GameObject InstanceTextButton(bool isScaled, Transform parent, string baseLocalizationKey, UnityAction onClickFunction)

@@ -20,6 +20,7 @@ public class ScenarioScript : MonoBehaviour
     private Vector3 _velocity = Vector3.zero; // Текущая скорость
     private CancellationTokenSource _cts;
 
+    protected List<IMainTarget> _aliveMTExceptedPlayer = new();
     protected GameObject buttonSkipTime;
     protected LevelBuilder levelBuildScript;
 
@@ -29,6 +30,7 @@ public class ScenarioScript : MonoBehaviour
     [NonSerialized] public static float timeWhenSceneStarted;
     [NonSerialized] public static ScenarioScript instance;
     [NonSerialized] public Dictionary<string, int> dictionaryNamesEnemiesWavesAndRewards; // инициализируем в производных классах
+
     public GameObject player;
 
     public PlayerDialogue ScriptCurrentDialogue
@@ -84,6 +86,20 @@ public class ScenarioScript : MonoBehaviour
         FinishLevel();
     }
 
+    public void AddMainTarget(IMainTarget target)
+    {
+        _aliveMTExceptedPlayer.Add(target);
+    }
+    public void RemoveMainTarget(IMainTarget target)
+    {
+        _aliveMTExceptedPlayer.Remove(target);
+        if (_aliveMTExceptedPlayer.Count == 0)
+        {
+            Defeat();
+        }
+    }
+
+
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
     protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
@@ -113,7 +129,7 @@ public class ScenarioScript : MonoBehaviour
 
     protected virtual void MovingCameraPlayerWasFinished(string keyFinishing)
     {
-        SetStateIdleToPlayerAndBlockAnyUpdateFunctions(false);
+        Player.instance.SetStateIdleToPlayerAndBlockAnyUpdateFunctions(false);
     }
 
     protected virtual void MovingObjectWasFinished(GameObject obj) { }
@@ -206,11 +222,6 @@ public class ScenarioScript : MonoBehaviour
     {
         return Instantiate(someObject, targetPosition, Quaternion.identity);
     }
-    protected virtual void SetStateIdleToPlayerAndBlockAnyUpdateFunctions(bool isSet) 
-    {
-        scriptPlayer._fsm.SetState<FsmStateIdle>();
-        scriptPlayer.areUpdatingFunctionsEnabled = !isSet;
-    }
     protected virtual void MovingObjectToPoint(GameObject someObject, Vector3 targetPoint, float speed) 
     {
         Transform transformObject = someObject.transform;
@@ -219,7 +230,7 @@ public class ScenarioScript : MonoBehaviour
     protected virtual void MovingCameraPlayerToPoint(Camera cameraPlayer, Transform targetTransform, float speed, string keyFinishing) 
     {
 
-        SetStateIdleToPlayerAndBlockAnyUpdateFunctions(true);
+        Player.instance.SetStateIdleToPlayerAndBlockAnyUpdateFunctions(true);
         Transform transformCameraPlayer = cameraPlayer.transform;
 
         transformCameraPlayer.SetParent(null);
@@ -237,6 +248,10 @@ public class ScenarioScript : MonoBehaviour
 
         levelBuildScript.currentWave = nameWave;
         levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
+    }
+    protected virtual void Defeat()
+    {
+        
     }
 
 

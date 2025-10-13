@@ -3,14 +3,15 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    [SerializeField] public RectTransform rtTopCenterPanel;
+    [SerializeField] public RectTransform rtTopRightPanel;
+    [SerializeField] public RectTransform rtBottomCenterPanel;
+    [SerializeField] public RectTransform rtBottomLeftPanel;
+    [SerializeField] public RectTransform rtTopLeftPanel;
 
     [SerializeField] protected GameObject playMenu;
     [SerializeField] protected GameObject settingsMenu;
     [SerializeField] protected Camera cam;
-    [SerializeField] protected RectTransform rtTopCenterPanel;
-    [SerializeField] protected RectTransform rtBottomCenterPanel;
-    [SerializeField] protected RectTransform rtBottomLeftPanel;
-    [SerializeField] protected RectTransform rtTopLeftPanel;
 
     protected Vector2 bottomLeft = Vector2.zero;
     protected Vector2 bottomRight;
@@ -66,6 +67,10 @@ public class UIController : MonoBehaviour
             if (rtBottomCenterPanel != null)
             {
                 rtBottomCenterPanel.position = bottomCenter;
+            }
+            if (rtTopRightPanel != null)
+            {
+                rtTopRightPanel.position = topRight;
             }
         }
     }

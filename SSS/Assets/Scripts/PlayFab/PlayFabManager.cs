@@ -722,10 +722,10 @@ public class PlayFabManager : MonoBehaviour
         var taskCompletionSource = new TaskCompletionSource<GetLeaderboardResult>();
 
         PlayFabClientAPI.GetLeaderboard(requestLeaderboard,
-            result => { taskCompletionSource.SetResult(result); },
+            result => { taskCompletionSource.TrySetResult(result); },
             error => {
                 Debug.LogError(error.GenerateErrorReport());
-                taskCompletionSource.SetException(new Exception(error.GenerateErrorReport()));
+                taskCompletionSource.TrySetException(new Exception(error.GenerateErrorReport()));
             });
 
         try

@@ -17,7 +17,9 @@ public class FsmStateWalk : FsmStateMovementPlayer
         SubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment += SomeTranslateEquipment;
         player.OnTouchWall += WallWasTouched;
+        player.OnSetStateIdle += SetStateIdleCallback;
         OnSwipeEnded += SetStateIdle; // эмулирется в StopHorizontalMovement
+
 
 
         HandleSwipe(player.endTouchPosition - player.startTouchPosition); // по идее любой вход в данное состояние подразумевает, что свайп был сделан в состоянии покоя и мы
@@ -40,6 +42,8 @@ public class FsmStateWalk : FsmStateMovementPlayer
         player.OnTranslateEquipment -= SomeTranslateEquipment;
         player.OnChangeNearEnemyStatus -= CheckNearEnemyStatus;
         player.OnTouchWall -= WallWasTouched;
+        player.OnSetStateIdle -= SetStateIdleCallback;
+
         OnSwipeEnded -= SetStateIdle; // эмулирется в StopHorizontalMovement
 
 

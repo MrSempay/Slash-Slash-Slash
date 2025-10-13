@@ -98,6 +98,8 @@
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateCastUnit.cs" />
     <Compile Include="Assets\Scripts\Building.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\FSMAsync\FsmStateAsync\SFsmStateDefeat.cs" />
+    <Compile Include="Assets\Scripts\ScenarioServices\CameraService.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser\SceneDialogueBuild.cs" />
     <Compile Include="Assets\Scripts\UI\Titles\TitlesParser.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="Assets\Scripts\UI\CustomCombo.cs" />
     <Compile Include="Assets\Scripts\Other\CreateGradientTexture.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\FSMAsync\FsmStateAsync.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\RewardAdComponent.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\SaveLoadManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AppOpenAdClient.cs" />
@@ -185,6 +188,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\BannerBridge.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\WrapperGlobal.cs" />
     <Compile Include="Assets\Scripts\UI\UIController\UIPlayerManager.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\FSMAsync\FsmAsync.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMainTarget.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStatePlayersEquipment\FsmStateEquipmentSelected.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\ArcLightning.cs" />
@@ -194,6 +198,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\ScreenBridge.cs" />
     <Compile Include="Assets\Scripts\Test\ScenarioCreator.cs" />
     <Compile Include="Assets\Scripts\Music\AutoSoundButton.cs" />
+    <Compile Include="Assets\Scripts\UI\Hourglass.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdSize.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\RewardedAdLoaderBridge.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyMobileAdsClient.cs" />
@@ -233,6 +238,7 @@
     <Compile Include="Assets\Scripts\Music\AudioEmitter.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateBuilding\FsmStateBuildingNormal.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\StaticClassForAdditionalFunctions.cs" />
+    <Compile Include="Assets\Scripts\UI\SkipTimerStuff.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdTheme.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IMobileAdsClient.cs" />

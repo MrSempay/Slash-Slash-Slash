@@ -29,8 +29,10 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
 
             unit.OnCastAnimationFinished += CastAnimationFinished;
 
+            //player.OnSetStateIdle += SetStateIdleCallback; // А как?... У нас же нет у Unit OnSetStateIdle
+
             //AdjustEquipmentParameters.CallActionFunctionByName(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.player);
-            
+
             if (equipmentWhatWasPressed.shouldBeCastedAtStartUnitAnimation)
             {
                 AdjustEquipmentParameters.CallActionFunctionByLink(equipmentWhatWasPressed, equipmentWhatWasPressed.amountUpCombo, equipmentWhatWasPressed.ownerUnit, equipmentWhatWasPressed.Cast);

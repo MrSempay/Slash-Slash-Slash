@@ -19,6 +19,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
         player.attackAreaScript.isEnemyInAttackArea += MakeDamageToEnemy;
         player.OnAttackFinished += StopHorizontalMovement;
+        player.OnSetStateIdle += SetStateIdleCallback;
 
         if (player.enemiesInAttackArea.Count > 0)
         {
@@ -41,6 +42,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
         player.attackAreaScript.isEnemyInAttackArea -= MakeDamageToEnemy;
         player.OnAttackFinished -= StopHorizontalMovement;
+        player.OnSetStateIdle -= SetStateIdleCallback;
 
         base.Exit();
 

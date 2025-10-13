@@ -80,6 +80,7 @@ public class Player : Unit, IMainTarget
     public event Action<bool> OnTranslateEquipment;       // когда начали или окончили двигать снаряжение из мест для снаряжения
     public event Action OnChangeNearEnemyStatus;
     public event Action OnAttackFinished;
+    public event Action OnSetStateIdle;
     public event Action<int> OnLevelUpChanged;       // Событие для изменения количества прокачки в школе  
     public event Action<string> OnEnemiesWaveWasDestroyedWithoutLosingMainTargets;  // событие зачистки всей волны врагов без потери основных целей для защиты
     public event Action<string> OnEnemiesWaveWasDestroyed;  // событие зачистки всей волны врагов без потери основных целей для защиты
@@ -331,6 +332,16 @@ public class Player : Unit, IMainTarget
         if (areUpdatingFunctionsEnabled) _fsm.Update();
         //Debug.Log(enemiesInAttackArea.Count);
     }
+    private void FixedUpdate()
+    {
+        if (areUpdatingFunctionsEnabled) _fsm.FixedUpdate();
+    }
+
+
+    void OnEnable()
+    {
+        // _fsm.OnEnable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
+    }
 
 
     public void OnMove()
@@ -370,16 +381,12 @@ public class Player : Unit, IMainTarget
         base.SomeAnimationUnitWasPeaked(nameFinishedAnimation); // есть варианты, когда мы вызываем звук отсюда и не идём к базовым звукам в родительском классе
     }
 
-    private void FixedUpdate()
+    public void SetStateIdleToPlayerAndBlockAnyUpdateFunctions(bool isSet)
     {
-        if (areUpdatingFunctionsEnabled) _fsm.FixedUpdate();
+        OnSetStateIdle?.Invoke();
+        areUpdatingFunctionsEnabled = !isSet;
     }
 
-   
-    void OnEnable()
-    {
-        // _fsm.OnEnable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior
-    }
     void OnDisable()
     {
         //_fsm.OnDisable(); По идее это не надо, так как оное вызывается в классах состояний и так, ибо они наследуются от Monobehavior

@@ -16,6 +16,8 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
         Debug.Log("Translating Equipment state [ENTER]");
 
         player.OnTranslateEquipment += SomeTranslateEquipment;
+        player.OnSetStateIdle += SetStateIdleCallback;
+
         string nameAnimation = unit.HasUnitStateAdditional(Unit.UNIT_STATE_ADDITIONAL.Berserker) ?
             C.Animations.PlayerIdle + C.StatesAdditional.Berserker :
             C.Animations.PlayerIdle;
@@ -27,6 +29,7 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
         Debug.Log("Translating Equipment state [EXIT]");
 
         player.OnTranslateEquipment -= SomeTranslateEquipment;
+        player.OnSetStateIdle -= SetStateIdleCallback;
     }
 
 }
