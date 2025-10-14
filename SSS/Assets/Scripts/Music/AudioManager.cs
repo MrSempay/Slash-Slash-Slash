@@ -1,13 +1,9 @@
 using UnityEngine;
 using static GameManager;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using static AudioManager;
-using Unity.VisualScripting;
-using UnityEngine.LowLevel;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class AudioManager : MonoBehaviour
 {
@@ -29,6 +25,7 @@ public class AudioManager : MonoBehaviour
     private string _pathToSoundsEffect = "Music/Effects/";
     private string _nameBeginningMusic = "BeginningLevelMusic";
     private string _nameTransitionMusic = "TransitionMusic";
+    private Coroutine _fadeEnvironmentSoundsCoroutine;
 
     //DefaultAS - по сути тот же смысл, что и у Default, но он для AudioSource, у которых установлен AudioSource и проигрывается он как "музыка", зачастую в loop
     public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, DefaultAS, Death, Destroy}; 
@@ -36,7 +33,8 @@ public class AudioManager : MonoBehaviour
     public Dictionary<GameObject, Dictionary<TYPE_SOUND, AudioSourceExtended>> dictionaryObjectsAndTheirAudioSourcesByTypes = new(); // возможно скоро будет Legacy, переходим на emitters
     public List<AudioEmitter> emitters = new();
     public AudioSource audioMusicComponent; // Ссылка на AudioSource для музыки
-    public AudioSource audioEffectsComponent; // Ссылка на AudioSource для звуковых эффектов
+    public AudioSource audioEffectsUIComponent; // Ссылка на AudioSource для UI-звуковых эффектов
+    public bool LockVolumeEnviromentSounds { get; set; }
 
     public static AudioManager Instance
     {
@@ -81,7 +79,7 @@ public class AudioManager : MonoBehaviour
         audioMusicComponent = gameObject.AddComponent<AudioSource>();
         audioMusicComponent.loop = false;
 
-        audioEffectsComponent = gameObject.AddComponent<AudioSource>();
+        audioEffectsUIComponent = gameObject.AddComponent<AudioSource>();
 
         CoroutineManager.Instance.StartManagedCoroutine(gameObject, ControlSoundSourcesDictionary());
 
@@ -221,14 +219,14 @@ public class AudioManager : MonoBehaviour
 
         if (_sourcesSounds.TryGetValue(nameEffect, out var audioClip))
         {
-            audioEffectsComponent.PlayOneShot(audioClip);
+            audioEffectsUIComponent.PlayOneShot(audioClip);
 
         }
         else
         {
             AudioClip _currentEffect = Resources.Load<AudioClip>(_pathToSoundsEffect + nameEffect);
             _sourcesSounds[nameEffect] = _currentEffect;
-            audioEffectsComponent.PlayOneShot(_currentEffect);
+            audioEffectsUIComponent.PlayOneShot(_currentEffect);
         }
     }
 
@@ -300,6 +298,75 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public async Task FadeAllEnviromentSoundsAsync(float duration = 1f) // по идее, эту штуку мне не надо отменять, поэтому CanelationToken сюда не передаём. Может потом изменим сигнатуру...
+    {
+        if (_fadeEnvironmentSoundsCoroutine != null)
+        {
+            Debug.LogWarning("Fade already in progress!");
+            return;
+        }
+
+        LockVolumeEnviromentSounds = true;
+
+        IEnumerator FadeAllEnviromentSoundsCoroutine(float duration)
+        {
+            // Собираем все аудиосорсы, чтобы работать с копией
+            var allAudioSources = new List<AudioSourceExtended>();
+            foreach (var objAudioSourcesCluster in dictionaryObjectsAndTheirAudioSourcesByTypes.Values) // поддержка Legacy
+            {
+                foreach (AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
+                {
+                    if (audioSourceExtended.audioSource != null)
+                    {
+                        allAudioSources.Add(audioSourceExtended);
+                    }
+                }
+            }
+            foreach (AudioEmitter emitter in emitters)
+            {
+                foreach (AudioSourceExtended audioSourceExtended in emitter.sources.Values)
+                {
+                    if (audioSourceExtended.audioSource != null)
+                    {
+                        allAudioSources.Add(audioSourceExtended);
+                    }
+                }
+            }
+            // Сохраняем исходные значения объёмов
+            var startVolumes = allAudioSources.Select(a => a.audioSource.volume).ToArray();
+
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+
+                for (int i = 0; i < allAudioSources.Count; i++)
+                {
+                    var audioSource = allAudioSources[i].audioSource;
+                    if (audioSource != null)
+                    {
+                        audioSource.volume = Mathf.Lerp(startVolumes[i], 0f, t);
+                    }
+                }
+
+                yield return null;
+            }
+
+            // Финально обнуляем все значения
+            foreach (var audioSourceExtended in allAudioSources)
+            {
+                if (audioSourceExtended.audioSource != null)
+                    audioSourceExtended.audioSource.volume = 0f;
+            }
+        }
+        var tcs = new TaskCompletionSource<bool>();
+
+        _fadeEnvironmentSoundsCoroutine = StartCoroutine(RunCoroutineAsync(FadeAllEnviromentSoundsCoroutine(duration), tcs));
+
+        await tcs.Task;
+    }
 
     private void JustStartAmbientOrFightMusic(AudioClip targetMusic, bool isFightMusic)
     {
@@ -551,7 +618,13 @@ public class AudioManager : MonoBehaviour
 
         StartCertainMusicInLoop(nameMusic);
     }
+    private IEnumerator RunCoroutineAsync(IEnumerator coroutine, TaskCompletionSource<bool> tcs)
+    {
+        yield return coroutine;
+        _fadeEnvironmentSoundsCoroutine = null;
+        tcs.SetResult(true);
 
+    }
 
     // -------------------------------------------- КОНЕЦ НОВОГО УПРАВЛЯТОРА --------------------------------------------- // 
 
@@ -634,5 +707,11 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        if (_fadeEnvironmentSoundsCoroutine != null)
+            StopCoroutine(_fadeEnvironmentSoundsCoroutine);
     }
 }

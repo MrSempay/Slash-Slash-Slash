@@ -8,6 +8,7 @@ using static DialogueParser;
 using System.Threading.Tasks;
 using System.Threading;
 using UnityEngine.UI;
+using static StaticClassForAdditionalFunctions;
 
 public class ScenarioScript : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class ScenarioScript : MonoBehaviour
     private CancellationTokenSource _cts;
 
     protected List<IMainTarget> _aliveMTExceptedPlayer = new();
+    protected List<IMainTarget> _allDeterminedMTExceptedPlayer = new();
     protected GameObject buttonSkipTime;
     protected LevelBuilder levelBuildScript;
 
     protected Transform transformPlayer;
     protected Player scriptPlayer;
+
 
     [NonSerialized] public static float timeWhenSceneStarted;
     [NonSerialized] public static ScenarioScript instance;
@@ -76,6 +79,7 @@ public class ScenarioScript : MonoBehaviour
 
         _cts = new CancellationTokenSource(); // пока не используем, но путь будет
 
+        CameraService.CreateInstance();
 
     }
 
@@ -86,9 +90,10 @@ public class ScenarioScript : MonoBehaviour
         FinishLevel();
     }
 
-    public void AddMainTarget(IMainTarget target)
+    public void AddMainTargetNotPlayer(IMainTarget target)
     {
         _aliveMTExceptedPlayer.Add(target);
+        _allDeterminedMTExceptedPlayer.Add(target);
     }
     public void RemoveMainTarget(IMainTarget target)
     {
@@ -104,7 +109,16 @@ public class ScenarioScript : MonoBehaviour
 
     protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
-    protected virtual void DialogueFinished(string nameDialogueWithFolder) { ScriptCurrentDialogue = null; } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
+    protected virtual void DialogueFinished(string nameDialogueWithFolder) 
+    { 
+        ScriptCurrentDialogue = null;
+
+        _activeDialogueTcs?.TrySetResult(true);
+        _activeDialogueTcs = null;
+        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
+
+
+    } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit)
     {
         if (unit.nameOfUnit == C.DK.Player)
@@ -184,13 +198,13 @@ public class ScenarioScript : MonoBehaviour
         transformObject.position = targetPoint;
     }
 
-    protected virtual void StartDialogue(string nameDialogue) // взять образец из зоны диалога 
+    protected virtual PlayerDialogue StartDialogue(string nameDialogue) // взять образец из зоны диалога 
     {
-        GameManager.Instance.StartDialogue(nameDialogue);
+        return GameManager.Instance.StartDialogue(nameDialogue);
     }
-    protected virtual void StartDialogueNEW(string nameDialogue) // взять образец из зоны диалога 
+    protected virtual PlayerDialogue StartDialogueNEW(string nameDialogue) // взять образец из зоны диалога 
     {
-        GameManager.Instance.StartDialogueNEW(nameDialogue);
+        return GameManager.Instance.StartDialogueNEW(nameDialogue);
     }
     protected virtual void FinishLevel()
     {
@@ -299,6 +313,88 @@ public class ScenarioScript : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         TimerFinished(markerTimeWait);
     }
+
+
+    #region FSM-async scenario integraion
+
+
+    protected internal CancellationTokenSource _stepCts; // per-step CTS to cancel waits on jump
+    protected internal SkipTimerStuff _skipTimerStuff;
+
+
+    protected internal CancellationTokenSource CreateLinkedStepCts(CancellationToken masterToken)
+    {
+        var newCts = CancellationTokenSource.CreateLinkedTokenSource(masterToken);
+        // atomically replace old stepCts, cancel+dispose old
+        var old = Interlocked.Exchange(ref _stepCts, newCts);
+        if (old != null)
+        {
+            try { old.Cancel(); } catch { }
+            try { old.Dispose(); } catch { }
+        }
+        return newCts;
+    }
+
+    private TaskCompletionSource<bool> _activeDialogueTcs;
+    private PlayerDialogue _activeDialogue;
+    protected internal Task StartDialogueAsync(string dialogueName, CancellationToken ct)
+    {
+        // АТОМАРНО обрабатываем предыдущий диалог
+        var oldTcs = Interlocked.Exchange(ref _activeDialogueTcs, null);
+        oldTcs?.TrySetCanceled();
+
+        if (_activeDialogue)
+        {
+            Destroy(_activeDialogue.gameObject);
+            _activeDialogue = null;
+        }
+
+        var newTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        _activeDialogueTcs = newTcs;
+
+        // Сразу получаем синхронизацию главного потока
+        var syncContext = SynchronizationContext.Current;
+
+        var reg = ct.Register(() =>
+        {
+            // ВСЕ операции с Unity в главном потоке
+            if (syncContext != null)
+            {
+                syncContext.Post(_ =>
+                {
+                    var tcsToCancel = Interlocked.Exchange(ref _activeDialogueTcs, null);
+                    tcsToCancel?.TrySetCanceled(ct);
+
+                    if (_activeDialogue)
+                    {
+                        Destroy(_activeDialogue.gameObject);
+                        _activeDialogue = null;
+                    }
+                }, null);
+            }
+        });
+
+        try
+        {
+            _activeDialogue = StartDialogue(dialogueName);
+        }
+        catch (Exception ex)
+        {
+            reg.Dispose();
+            newTcs.TrySetException(ex);
+            throw;
+        }
+
+        // Упрощённый ContinueWith - только диспоз рега
+        _ = newTcs.Task.ContinueWith(_ => reg.Dispose(),
+            TaskContinuationOptions.ExecuteSynchronously);
+
+        return newTcs.Task;
+    }
+
+
+
+    #endregion FSM-async scenario integraion
 
 
     protected virtual void OnDestroy()

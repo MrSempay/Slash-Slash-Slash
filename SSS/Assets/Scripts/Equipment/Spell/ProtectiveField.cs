@@ -93,7 +93,7 @@ public class ProtectiveField : Spell
             _scriptProtectiveFieldSprite.OnSomeAnimationWasFninished -= SomeAnimationOfProtectiveFieldWasFinished;
 
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
-            _ownerProtectiveField.isInvicible = false;
+            _ownerProtectiveField.IsInvincible = false;
 
             Destroy(_scriptProtectiveFieldSprite.gameObject);
             _scriptProtectiveFieldSprite = null;
@@ -132,7 +132,7 @@ public class ProtectiveField : Spell
         {
             //Debug.Log("Ибо");
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
-            _ownerProtectiveField.isInvicible = false;
+            _ownerProtectiveField.IsInvincible = false;
         }
 
         AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ShieldWasHit, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
@@ -160,7 +160,7 @@ public class ProtectiveField : Spell
             case "ProtectiveFieldAppear": // очнеь важная штука для понимания! При преждевременной деактивации, спрайт удалится и сигнал о завершении анимации не придёт, эти эффекты в таком случае не применятся!
 
                 _ownerProtectiveField.OnThisUnitWasAttacked += ProtectiveFieldWasHit;
-                _ownerProtectiveField.isInvicible = true;
+                _ownerProtectiveField.IsInvincible = true;
                 _scriptProtectiveFieldSprite.animator.Play(equipmentName + C.Prefixes.Idle);
 
                 StartTimerActiveState(_ownerProtectiveField);

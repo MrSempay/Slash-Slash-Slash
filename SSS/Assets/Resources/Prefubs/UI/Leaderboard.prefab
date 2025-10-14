@@ -837,6 +837,7 @@ MonoBehaviour:
   place_3: {fileID: 5194175233302292754, guid: 036a8d39d3c0dd94080a80758f13dc7a, type: 3}
   place_another: {fileID: -2971494618620036205, guid: 63c2da7332875374b85aa146ec9530b5, type: 3}
   _rtContainerButtons: {fileID: 7169520553754899764}
+  _buttonCloseLeaderboard: {fileID: 3713494918979909680}
 --- !u!114 &8488845575197404061
 MonoBehaviour:
   m_ObjectHideFlags: 0

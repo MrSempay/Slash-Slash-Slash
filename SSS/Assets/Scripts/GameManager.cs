@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
     public LocalizationManager localizationManager;
     public TMP_FontAsset globalFont;
     public RectTransform notificationPlacement;
+    public static SynchronizationContext UnityContext { get; private set; }
 
     [System.Serializable] public class CurrentSettings
     {
@@ -163,24 +165,27 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("А как так вышло");
                 volumeEffects = value;
-                AudioManager.Instance.audioEffectsComponent.volume = Mathf.Clamp01(value);
+                AudioManager.Instance.audioEffectsUIComponent.volume = Mathf.Clamp01(value);
 
-                foreach (var objAudioSourcesCluster in AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes.Values) // поддержка Legacy
+                if (!AudioManager.Instance.LockVolumeEnviromentSounds)
                 {
-                    foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
+                    foreach (var objAudioSourcesCluster in AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes.Values) // поддержка Legacy
                     {
-                        Debug.Log(value);
-                        if (audioSourceExtended.audioSource != null)
+                        foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
                         {
-                            audioSourceExtended.audioSource.volume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
-                            Debug.Log(Mathf.Clamp01(audioSourceExtended.maxVolume * value));
+                            Debug.Log(value);
+                            if (audioSourceExtended.audioSource != null)
+                            {
+                                audioSourceExtended.audioSource.volume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
+                                Debug.Log(Mathf.Clamp01(audioSourceExtended.maxVolume * value));
+                            }
                         }
                     }
-                }
 
-                foreach (AudioEmitter audioEmitter in AudioManager.Instance.emitters)
-                {
-                    audioEmitter.SetVolume(value); // функция обрабатывает сразу весь словарь source в audioEmitter и выставляет нужную громкость для каждого AudioSourceExtended
+                    foreach (AudioEmitter audioEmitter in AudioManager.Instance.emitters)
+                    {
+                        audioEmitter.SetVolume(value); // функция обрабатывает сразу весь словарь source в audioEmitter и выставляет нужную громкость для каждого AudioSourceExtended
+                    }
                 }
             }
         }
@@ -348,6 +353,8 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
 
+        UnityContext = SynchronizationContext.Current;
+
         prefubAppearingSprite = Resources.Load<GameObject>(C.Paths.PrefubAppearingSprite);
         prefubAppearingText = Resources.Load<GameObject>(C.Paths.PrefubAppearingText);
         prefubAppearingNotification = Resources.Load<GameObject>(C.Paths.PrefubAppearingNotification);
@@ -450,7 +457,7 @@ public class GameManager : MonoBehaviour
         _nameCurrentScene = _nameTargetScene; // по идее это поле нам нужно чтоб просто находить диалоги на целевой сцене. К примеру _nameCurrentScene будет указывать на папку диалогов
         SceneManager.LoadScene(_nameTargetScene);
     }
-    public void StartDialogue(string nameDialogueWithFolder)
+    public PlayerDialogue StartDialogue(string nameDialogueWithFolder)
     {
         nameDialogueCurrent = nameDialogueWithFolder; // Level1/Dialogue1 - пример
 
@@ -468,9 +475,11 @@ public class GameManager : MonoBehaviour
         {
             sciptPlayerDialogue = Instantiate(_prefubPlayerDialogue, rectTransformPositionDialogue.position, rectTransformPositionDialogue.rotation, UI).GetComponent<PlayerDialogue>();
         }
-        onDialogueStarted?.Invoke(sciptPlayerDialogue);
+        //onDialogueStarted?.Invoke(sciptPlayerDialogue);
+
+        return sciptPlayerDialogue;
     }
-    public void StartDialogueNEW(string nameDialogue) // этот метод для старта диалога, который получает папку не через параметр, а через LevelBuilder.Instance
+    public PlayerDialogue StartDialogueNEW(string nameDialogue) // этот метод для старта диалога, который получает папку не через параметр, а через LevelBuilder.Instance
     {
         nameDialogueCurrent = LevelBuilder.instance.selfName + $"/{nameDialogue}"; // Level1/Dialogue1 - пример
         Debug.Log(nameDialogueCurrent);
@@ -490,6 +499,8 @@ public class GameManager : MonoBehaviour
         }
         //onDialogueStarted?.Invoke(sciptPlayerDialogue);  // !!! Перенесено DialogueWasStarted, который вызывается из Awake() PlayerDialogue, чтоб точно успели подписаться на старта
         // диалога, даже если тот будет преждевременно завершен в тот же Awake(), в противном случае эта строка просто не выполнится, бо диалог будет уничтожен
+
+        return sciptPlayerDialogue;
     }
 
     // вызываем из Awake() PlayerDialogue

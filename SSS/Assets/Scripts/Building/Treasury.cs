@@ -23,7 +23,7 @@ public class Treasury : Building, IMainTarget
                 _wasDestroyed = value;
 
                 if (value) ScenarioScript.instance.RemoveMainTarget(this);
-                else ScenarioScript.instance.AddMainTarget(this);
+                else ScenarioScript.instance.AddMainTargetNotPlayer(this);
 
             }
         }
@@ -36,7 +36,7 @@ public class Treasury : Building, IMainTarget
         if (IsMainTarget)
         {
             LevelBuilder.instance.listMainTargets.Add(this);
-            ScenarioScript.instance.AddMainTarget(this);
+            ScenarioScript.instance.AddMainTargetNotPlayer(this);
         }
     }
 

@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class UISceneManager : UIController
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake();
         SettingsMenu.Instance.Start(); 

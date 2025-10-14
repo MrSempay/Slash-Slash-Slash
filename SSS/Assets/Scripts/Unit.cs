@@ -2,18 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-using static Unit;
-using static UnityEngine.EventSystems.EventTrigger;
 using static StaticClassForAdditionalFunctions;
 
 public abstract class Unit : MonoBehaviour, IInventory
 {
+    private bool _isInvincible = false; // неуязвимость к УРОНУ (но не к эффектам, наверное)
 
     [SerializeField] private float _damageReductionPercentage; //Поглощение урона
     [SerializeField] private float _healthCurrent; // Начальное здоровье
@@ -36,7 +31,6 @@ public abstract class Unit : MonoBehaviour, IInventory
     public string nameSoundDeath;
     public string nameSoundWalk;
     public bool isGrounded = true; // Проверка, находится ли игрок на земле
-    public bool isInvicible = false; // неуязвимость к УРОНУ (но не к эффектам, наверное)
     public Fsm _fsm;
     public Transform stunePlace; // место для спрайта эффекта стана
     public Dictionary<string, object> baseParametersValues; // значения из скриптов Adjust
@@ -85,6 +79,14 @@ public abstract class Unit : MonoBehaviour, IInventory
         set
         {
             damage = value;
+        }
+    }
+    public bool IsInvincible // назначаем _inventory в инспекторе
+    {
+        get { return _isInvincible; }
+        set
+        {
+            _isInvincible = value;
         }
     }
     public Unit UnitSelf
@@ -242,7 +244,7 @@ public abstract class Unit : MonoBehaviour, IInventory
         {
             ThisUnitWasAttacked(this, unitFromWhoWasGottenDamage);
 
-            if (!isInvicible)
+            if (!IsInvincible)
             {
                 if (unitFromWhoWasGottenDamage)
                 {

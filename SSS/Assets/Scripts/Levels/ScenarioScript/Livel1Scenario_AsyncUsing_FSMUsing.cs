@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using static StaticClassForAdditionalFunctions;
 
 public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 {
@@ -96,7 +97,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     private volatile StepMS _currentStepMS = StepMS.WaitDialogue1_1;
     private volatile StepDS _currentStepDS = StepDS.Start;
 
-    private CancellationTokenSource _stepCts; // per-step CTS to cancel waits on jump
 
     protected override void Awake()
     {
@@ -122,7 +122,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
             { "JustSecondWave", 10000 },
         };
 
-        CameraService.CreateInstance();
     }
 
     protected override void Start()
@@ -148,19 +147,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     /// Запрос на прыжок к другому шагу сценария.
     /// Вызов может идти извне (кнопка skip, событие и т.п.).
     /// </summary>
-    private CancellationTokenSource CreateLinkedStepCts(CancellationToken masterToken)
-    {
-        var newCts = CancellationTokenSource.CreateLinkedTokenSource(masterToken);
-        // atomically replace old stepCts, cancel+dispose old
-        var old = Interlocked.Exchange(ref _stepCts, newCts);
-        if (old != null)
-        {
-            try { old.Cancel(); } catch { }
-            try { old.Dispose(); } catch { }
-        }
-        return newCts;
-    }
-
     public void RequestJumpStep(StepMS target)
     {
         Debug.Log($"[Scenario Step] RequestJump -> {target}");
@@ -249,8 +235,18 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                             break;
 
                         case StepMS.TeleportToSchool_MoveCameraAfterEnemyKill:
-                            //await MoveCameraToPlayerAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterEnemyKilling, stepToken);
-                            await CameraService.Instance.MoveCameraToTargetAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterEnemyKilling, stepToken, true);
+
+                            var param = new CameraService.CameraMoveParams
+                            {
+                                Camera = _cameraPlayer,
+                                Target = transformPlayer,
+                                FinishKey = C.SS.Level1.CM.MoveAfterEnemyKilling,
+                                CancellationToken = stepToken,
+                                MoveToPlayer = true,
+                                Speed = 16f,
+                            };
+                            await CameraService.Instance.MoveCameraToTargetAsync(param);
+
                             _currentStepMS = StepMS.Dialogue2_1;
                             break;
 
@@ -295,8 +291,18 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                             break;
 
                         case StepMS.MoveAfterFirstSpellBuy:
-                            //await MoveCameraToPlayerAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterFirstSpellBue, stepToken);
-                            await CameraService.Instance.MoveCameraToTargetAsync(_cameraPlayer, transformPlayer, 16f, C.SS.Level1.CM.MoveAfterFirstSpellBue, stepToken, true);
+
+                            var spellBuyParams = new CameraService.CameraMoveParams
+                            {
+                                Camera = _cameraPlayer,
+                                Target = transformPlayer,
+                                FinishKey = C.SS.Level1.CM.MoveAfterFirstSpellBue,
+                                CancellationToken = stepToken,
+                                MoveToPlayer = true,
+                                Speed = 16f,
+                            };
+                            await CameraService.Instance.MoveCameraToTargetAsync(spellBuyParams);
+
                             _currentStepMS = StepMS.Dialogue3_1;
                             break;
 
@@ -449,7 +455,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
             {
                 try { stepCts.Cancel(); } catch { }
                 // cleanup happens in finally
-                continue;
+                break;
             }
 
             try
@@ -457,23 +463,72 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                 switch (_currentStepDS)
                 {
                     case StepDS.Start:
+
                         CameraService.Instance.DelinkCameraPlayer();
+                        Player.instance.scriptUI.HideAllUI();
+
                         _currentStepDS = StepDS.MoveCameraThroughMainTargets;
                         break;
-
                     case StepDS.MoveCameraThroughMainTargets:
 
-                        await CameraService.Instance.MoveCameraToTargetAsync(_cameraPlayer, _transformSchool, 16f, C.SS.Level1.CM.Move1AfterDefeat, stepToken, false);
-                        await CameraService.Instance.MoveCameraToTargetAsync(_cameraPlayer, _transformTreasury, 16f, C.SS.Level1.CM.Move1AfterDefeat, stepToken, false);
+                        var paramSchool = new CameraService.CameraMoveParams
+                        {
+                            Camera = _cameraPlayer,
+                            Target = _transformSchool,
+                            FinishKey = C.SS.Level1.CM.Move1AfterDefeat,
+                            CancellationToken = stepToken,
+                            MoveToPlayer = false,
+                            Time = 1f,
+                            MoveType = CameraService.CameraMoveType.Linear
+                        };
+                        await CameraService.Instance.MoveCameraToTargetAsync(paramSchool);
+
+                        var paramTreasury = new CameraService.CameraMoveParams
+                        {
+                            Camera = _cameraPlayer,
+                            Target = _transformTreasury,
+                            FinishKey = C.SS.Level1.CM.Move2AfterDefeat, 
+                            CancellationToken = stepToken,
+                            MoveToPlayer = false,
+                            Time = 1f,
+                            MoveType = CameraService.CameraMoveType.Linear
+                        };
+                        await CameraService.Instance.MoveCameraToTargetAsync(paramTreasury);
+
                         _currentStepDS = StepDS.MoveCameraToPlayerAndFadeLight;
                         break;
                     case StepDS.MoveCameraToPlayerAndFadeLight:
-                        // по идее используем false ибо... ибо пофиг, в целом, она по плану всё равно до него не дойдёт
-                        await CameraService.Instance.MoveCameraToTargetAsync(_cameraPlayer, Player.instance.transform, 16f, C.SS.Level1.CM.Move1AfterDefeat, stepToken, false);
+
+                        var paramPlayer = new CameraService.CameraMoveParams
+                        {
+                            Camera = _cameraPlayer,
+                            Target = Player.instance.transform,
+                            FinishKey = C.SS.Level1.CM.Move3AfterDefeat,
+                            CancellationToken = stepToken,
+                            MoveToPlayer = true,
+                            Speed = 16f,
+                            EnableUpdateFuncAfter = false
+                        };
+                        _ = CameraService.Instance.MoveCameraToTargetAsync(paramPlayer);
+                        _ = AudioManager.Instance.FadeAllEnviromentSoundsAsync();
+
+                        await LightManager.Instance.FadeAllLightsAsync(1);
+
                         _currentStepDS = StepDS.StartEndDialogue;
                         break;
                     case StepDS.StartEndDialogue:
-                        await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue1_1, ct);
+
+                        Task lastDialogueTask = StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue1_1, ct); // запустили диалог в фоне, не ждём
+                        Task getActualLeaderboardTask = ScoreManager.Instance.GetActualLeaderboardAsync(); // запустили обновление лидерборда в фоне, не ждём
+                        Task safeLeaderboardTask = SafeIgnoreErrors(getActualLeaderboardTask);
+
+                        // Короче! Немного о WhenAll - если одна из задач будет по той или иной причине Canel, то await Task.WhenAll, во-первых, перестанет await-ить это всё дело, а
+                        // во-вторых - выкинет OperationCanceledException. То есть код после него не выполнится. Но при этом он НЕ ПРЕРВЁТ выполнение других задач в его рамках. Ну, например,
+                        // если getActualLeaderboardTask отменится. то произойдёт всё вышеописанное, но lastDialogueTask не отменится и будет в фоне выполняться, вот так.
+                        await Task.WhenAll(lastDialogueTask, safeLeaderboardTask); // ждём, покуда выполнятся обе задачи
+
+                        ScoreManager.Instance.ShowLeaderboard(Leaderboard.INSTANTIATION_CONTEXT.Defeat);
+
                         _currentStepDS = StepDS.End;
                         break;
                     case StepDS.End:                        
@@ -487,7 +542,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Level1Scenario: ошибка в RunScenarioLoop: {ex}");
+                Debug.LogError($"Level1Scenario: ошибка в RunDefeatScenarioLoop: {ex}");
             }
             finally
             {
@@ -503,7 +558,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     // ---------------------- helper-обёртки (как у тебя были) ----------------------
 
 
-    private Task StartDialogueAsync(string dialogueName, CancellationToken ct)
+    private Task StartDialogueAsyncL(string dialogueName, CancellationToken ct)
     {
         var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -537,6 +592,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
         return tcs.Task;
     }
+
 
     private Task WaitForTimerAsync(string timerMarker, float seconds, CancellationToken ct)
     {
@@ -757,7 +813,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         }
     }
 
-    private SkipTimerStuff _skipTimerStuff;
+
     private async Task WaitForTimerWithSkipAsyncNEW(string timerMarker, float seconds, string textButtonSkip, CancellationToken ctExtended = default)
     {
 
@@ -901,39 +957,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         }
     } // не подходит нам, ибо при паузах (timerScale = 0) этот таймер не будет приостанавли-
     // ваться, нужно вернуться к корутинам. Эх, а такой метод был...
-
-    //private Task MoveCameraToPlayerAsync(Camera cam, Transform playerTransform, float speed, string finishKey, CancellationToken ct)
-    //{
-    //    var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-    //    _cameraMoveTcs[finishKey] = tcs;
-
-    //    var reg = ct.Register(() =>
-    //    {
-    //        if (_cameraMoveTcs.Remove(finishKey))
-    //            tcs.TrySetCanceled(ct);
-    //    });
-
-    //    try
-    //    {
-    //        MovingCameraPlayerToPoint(cam, playerTransform, speed, finishKey);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        _cameraMoveTcs.Remove(finishKey);
-    //        reg.Dispose();
-    //        tcs.TrySetException(ex);
-    //        return tcs.Task;
-    //    }
-
-    //    tcs.Task.ContinueWith(_ => {
-    //        reg.Dispose();
-    //        _cameraMoveTcs.Remove(finishKey);
-    //    }, TaskScheduler.Default);
-
-    //    return tcs.Task;
-    //}
-      
-
+    
     private async Task<Unit> SpawnFirstEnemyAndWaitKillAsync(GameObject enemyPrefab, Vector3 pos, CancellationToken ct)
     {
         //Debug.Log("А хули не спавним?");
@@ -996,19 +1020,22 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     // ---------------------- переопределённые обработчики событий ---------------------- 
     protected override void Defeat()
     {
+        Player.instance.IsInvincible = true;
         RequestJumpScenario(ScenarioMode.DefeatScenario);
     }
 
-    protected override void DialogueFinished(string nameDialogueWithFolder)
-    {
-        base.DialogueFinished(nameDialogueWithFolder);
-        if (_dialogueTcs.TryGetValue(nameDialogueWithFolder, out var tcs))
-        {
-            tcs.TrySetResult(true);
-            return;
-        }
-        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
-    }
+    //protected override void DialogueFinished(string nameDialogueWithFolder)
+    //{
+    //    base.DialogueFinished(nameDialogueWithFolder);
+    //    if (_dialogueTcs.TryGetValue(nameDialogueWithFolder, out var tcs))
+    //    {
+    //        tcs.TrySetResult(true);
+    //        return;
+    //    }
+    //    _activeDialogueTcs?.TrySetResult(true);
+    //    _activeDialogueTcs = null;
+    //    Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
+    //}
 
     protected override void TimerFinished(string markerTimeWait)
     {
@@ -1032,17 +1059,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
         Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
     }
-
-    //protected override void MovingCameraPlayerWasFinished(string keyFinishing)
-    //{
-    //    base.MovingCameraPlayerWasFinished(keyFinishing);
-    //    if (_cameraMoveTcs.TryGetValue(keyFinishing, out var tcs))
-    //    {
-    //        tcs.TrySetResult(true);
-    //        return;
-    //    }
-    //    Debug.Log($"MovingCameraPlayerWasFinished (no awaiter): {keyFinishing}");
-    //}
 
     protected override void EnemiesWaveWasDestroyed(string nameWave)
     {
@@ -1108,6 +1124,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         //_mainScenarioCts?.Cancel();
         //_mainScenarioCts?.Dispose();
         //_mainScenarioCts = null;
+        Debug.Log("Чё за нах?&&&&");
         _masterScenarioCts?.Cancel();
         _masterScenarioCts?.Dispose();
         _masterScenarioCts = null;

@@ -9,9 +9,7 @@ public class SkipTimerStuff : ICleanUp
 {
     private GameObject _objButton;
     private GameObject _objHourglass;
-    private TextEdit _textHourglassTime;
     private Coroutine _coroutineExternalTimer;
-    private Hourglass _hourglass;
     private GameObject _ownerCoroutine;
 
     public SkipTimerStuff(Coroutine coroutineExternalTimer,
@@ -63,7 +61,6 @@ public class SkipTimerStuff : ICleanUp
         );
         return skipButton;
     }
-
 
 
     private IEnumerator UpdateTimeText()

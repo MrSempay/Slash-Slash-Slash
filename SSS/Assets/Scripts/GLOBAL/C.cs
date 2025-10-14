@@ -353,6 +353,7 @@ public class C
                 public const string Move1AfterDefeat = "Move1AfterDefeat";
                 public const string Move2AfterDefeat = "Move2AfterDefeat";
                 public const string Move3AfterDefeat = "Move3AfterDefeat";
+                public const string MoveThroughSomeMT = "MoveThroughSomeMT";
             }
             public static class WN // WavesNames
             {

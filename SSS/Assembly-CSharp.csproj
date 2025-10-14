@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\RewardedAdClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyAppOpenAdLoaderClient.cs" />
+    <Compile Include="Assets\Scripts\CoroutineExtensions.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\AppStateObserverClient.cs" />
     <Compile Include="Assets\Scripts\DebugExtension.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdRequestConfigurationFactory.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\YandexMobileAds\AppStateObserver.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
+    <Compile Include="Assets\Scripts\LightManager.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\Yandex\YandexMobileAdsBannerDemoScript.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\InterstitialAdComponent.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\RewardedAdLoaderClient.cs" />
@@ -326,6 +328,7 @@
     <Compile Include="Assets\Scripts\SaveLoad\DataWrapperUnit.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\AppOpenAdComponent.cs" />
     <Compile Include="Assets\Scripts\Unit\Player\AreaDetectors\EnemyNearDetector.cs" />
+    <Compile Include="Assets\Scripts\Markersss\NoHideUI.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\BannerAdSizeClient.cs" />
     <Compile Include="Assets\Scripts\CoroutineManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\BannerComponent.cs" />

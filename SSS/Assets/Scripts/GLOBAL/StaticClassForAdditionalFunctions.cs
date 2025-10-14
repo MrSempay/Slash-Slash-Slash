@@ -8,6 +8,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using System.Linq;
 using System.IO;
+using System.Threading.Tasks;
 
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
 public static class StaticClassForAdditionalFunctions : object
@@ -366,6 +367,19 @@ public static class StaticClassForAdditionalFunctions : object
         }
 
         return transformEmptyObject;
+    }
+
+    // Вспомогательная обёртка. Игнорируем все отмены/ошибки для указанной задачи, Task t не выбросит исключений наружу, никаких
+    public static async Task SafeIgnoreErrors(Task t)
+    {
+        try
+        {
+            await t;
+        }
+        catch
+        {
+            // подавляем любое исключение (ошибка или отмена)
+        }
     }
 
 }

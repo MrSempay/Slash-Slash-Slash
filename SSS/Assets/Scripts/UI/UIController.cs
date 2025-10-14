@@ -1,13 +1,16 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] public RectTransform rtTopCenterPanel;
-    [SerializeField] public RectTransform rtTopRightPanel;
-    [SerializeField] public RectTransform rtBottomCenterPanel;
-    [SerializeField] public RectTransform rtBottomLeftPanel;
-    [SerializeField] public RectTransform rtTopLeftPanel;
+    public RectTransform rtTopCenterPanel;
+    public RectTransform rtTopRightPanel;
+    public RectTransform rtBottomCenterPanel;
+    public RectTransform rtBottomLeftPanel;
+    public RectTransform rtTopLeftPanel;
+    public enum TYPES_UI { Dialogue, MenuButton }
 
     [SerializeField] protected GameObject playMenu;
     [SerializeField] protected GameObject settingsMenu;
@@ -19,6 +22,8 @@ public class UIController : MonoBehaviour
     protected Vector2 topRight;
     protected Vector2 topCenter;
     protected Vector2 bottomCenter;
+
+    private List<RectTransform> _listRTPanels = new();
     public void OpenOrClosePlayMenu()
     {
         //Debug.Log(settingsMenu.activeSelf);
@@ -55,26 +60,53 @@ public class UIController : MonoBehaviour
             if (rtTopLeftPanel != null)
             {
                 rtTopLeftPanel.position = topLeft;
+                _listRTPanels.Add(rtTopLeftPanel);
             }
             if (rtBottomLeftPanel != null)
             {
                 rtBottomLeftPanel.position = bottomLeft;
+                _listRTPanels.Add(rtBottomLeftPanel);
             }
             if (rtTopCenterPanel != null)
             {
                 rtTopCenterPanel.position = topCenter;
+                _listRTPanels.Add(rtTopCenterPanel);
             }
             if (rtBottomCenterPanel != null)
             {
                 rtBottomCenterPanel.position = bottomCenter;
+                _listRTPanels.Add(rtBottomCenterPanel);
             }
             if (rtTopRightPanel != null)
             {
                 rtTopRightPanel.position = topRight;
+                _listRTPanels.Add(rtTopRightPanel);
             }
         }
     }
     protected virtual void Start()
     {
+    }
+
+    public void HideAllUI()
+    {
+        foreach (RectTransform rtPanel in _listRTPanels)
+        {
+            foreach(Transform uiElement in rtPanel)
+            {
+                if (uiElement.GetComponent<NoHideUI>()) continue;
+                uiElement.gameObject.SetActive(false);
+            }
+        }
+    }
+    public void ShowAllUI()
+    {
+        foreach (RectTransform rtPanel in _listRTPanels)
+        {
+            foreach (Transform uiElement in rtPanel)
+            {
+                uiElement.gameObject.SetActive(true);
+            }
+        }
     }
 }

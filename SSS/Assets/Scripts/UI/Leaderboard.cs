@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
-    public enum INSTANTIATION_CONTEXT { FinishLevel, PlayerDeath };
+    public enum INSTANTIATION_CONTEXT { FinishLevel, Defeat };
 
     [SerializeField] private RectTransform _rectTransformPlaceForFields;  
     [SerializeField] private TextEdit _textNotification;
@@ -17,6 +17,7 @@ public class Leaderboard : MonoBehaviour
     [SerializeField] private Sprite place_3;
     [SerializeField] private Sprite place_another;
     [SerializeField] private RectTransform _rtContainerButtons;
+    [SerializeField] private GameObject _buttonCloseLeaderboard;
 
     private HorizontalOrVerticalLayoutGroup _HOVLayoutGroupPlaceForFields;  
     private HorizontalOrVerticalLayoutGroup _HOVLayoutGroupContainerButtons;
@@ -119,7 +120,7 @@ public class Leaderboard : MonoBehaviour
                     }
                     break;
 
-                case INSTANTIATION_CONTEXT.PlayerDeath:
+                case INSTANTIATION_CONTEXT.Defeat:
                     Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
                     Instantiate(GameManager.Instance.prefubBigButtonRetry, _rtContainerButtons).onClick.AddListener(RetryLevel);
                     break;
@@ -132,11 +133,15 @@ public class Leaderboard : MonoBehaviour
                 case INSTANTIATION_CONTEXT.FinishLevel:
                     GameManager.Instance.InstanceTextButton(true, _rtContainerButtons, C.Just.NextLevel, NextLevel);
                     break;
-                case INSTANTIATION_CONTEXT.PlayerDeath:
+                case INSTANTIATION_CONTEXT.Defeat:
                     Instantiate(GameManager.Instance.prefubButtonBigMainMenu, _rtContainerButtons).onClick.AddListener(GoToMainMenu);
                     Instantiate(GameManager.Instance.prefubBigButtonRetry, _rtContainerButtons).onClick.AddListener(RetryLevel);
                     break;
             }
+        }
+        if (instContext == INSTANTIATION_CONTEXT.Defeat)
+        {
+            _buttonCloseLeaderboard.SetActive(false);
         }
     }
 

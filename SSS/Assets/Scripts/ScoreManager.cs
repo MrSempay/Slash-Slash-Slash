@@ -8,6 +8,7 @@ using static StaticClassForAdditionalFunctions;
 using Unity.VisualScripting.Antlr3.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -545,16 +546,7 @@ public class ScoreManager : MonoBehaviour
         {
             await GetActualLeaderboardAsync();
 
-            //                           ВВВВВВВВВВНННННННННИИИИИИИИИИИММММММММММААААААААААНННННННННННИИИИИИИИИИИИИИЕЕЕЕЕЕЕЕЕЕЕЕ!!!!!!!!!!!! !!!!!!!!!!!!!
-            // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); ЗАДАЁТ ГЛОБАЛЬНУЮ ПОЗИЦИЮ ДЛЯ ОБЪЕКТА. ТО ЕСТЬ ЧТОБ ОН ЗАСПАВНИЛСЯ В НУЛЕВОЙ ТОЧКЕ
-            // ОТНОСИТЕЛЬНО РОДИТЕЛЯ НУЖНО УКАЗЫВАТЬ ВОТ ЭТО ВОТ: _player.UI.position --- ГЛОБАЛЬНУЮ ПОЗИЦИЮ РОДИТЕЛЯ !!!
-            Debug.Log("И вот тут создаём");
-            // ↓ НЕПОСРЕДСТВЕННО после await - создаём UI
-            var parent = Player.instance.UIUpscaledMod
-                ? _player.placementLeaderbaord
-                : _player.UI;
-            Leaderboard leaderboard = Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, parent).GetComponent<Leaderboard>();
-            leaderboard.AdjustLeaderboardAtInstantiate(instContext);
+            ShowLeaderboard(instContext);
         }
         catch (OperationCanceledException)
         {
@@ -586,6 +578,20 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("🔄 Leaderboard data update canceled - duplicate prevention");
             throw;            
         }
+    }
+
+    public void ShowLeaderboard(Leaderboard.INSTANTIATION_CONTEXT instContext)
+    {
+        //                           ВВВВВВВВВВНННННННННИИИИИИИИИИИММММММММММААААААААААНННННННННННИИИИИИИИИИИИИИЕЕЕЕЕЕЕЕЕЕЕЕ!!!!!!!!!!!! !!!!!!!!!!!!!
+        // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); ЗАДАЁТ ГЛОБАЛЬНУЮ ПОЗИЦИЮ ДЛЯ ОБЪЕКТА. ТО ЕСТЬ ЧТОБ ОН ЗАСПАВНИЛСЯ В НУЛЕВОЙ ТОЧКЕ
+        // ОТНОСИТЕЛЬНО РОДИТЕЛЯ НУЖНО УКАЗЫВАТЬ ВОТ ЭТО ВОТ: _player.UI.position --- ГЛОБАЛЬНУЮ ПОЗИЦИЮ РОДИТЕЛЯ !!!
+        Debug.Log("И вот тут создаём");
+        // ↓ НЕПОСРЕДСТВЕННО после await - создаём UI
+        var parent = Player.instance.UIUpscaledMod
+            ? _player.placementLeaderbaord
+            : _player.UI;
+        Leaderboard leaderboard = Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, parent).GetComponent<Leaderboard>();
+        leaderboard.AdjustLeaderboardAtInstantiate(instContext);
     }
 
 
