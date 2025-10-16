@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4930173856381275297}
   - component: {fileID: 1769522644214794205}
   - component: {fileID: 1528848228665400308}
+  - component: {fileID: 2498370445724360752}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -100,6 +101,19 @@ MonoBehaviour:
   baseIntensity: 1.45
   flickerAmplitude: 0.07
   flickerSpeed: 0.11
+--- !u!114 &2498370445724360752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303942489312835877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aa133148ecc524bb99b32f6f1f1c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxBrightness: -1
 --- !u!1 &1720001968945036096
 GameObject:
   m_ObjectHideFlags: 0

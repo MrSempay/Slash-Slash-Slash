@@ -1,15 +1,20 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using static GameManager;
+using static StaticClassForAdditionalFunctions;
 
 public class LightManager : MonoBehaviour
 {
+    public static bool isExisting; // флаг для того, чтоб не обращаться к LightManager.Instance
+
     private static LightManager _instance;
 
     private Coroutine _fadeAllLightsCoroutine;
+    private List<LightEmitter> _emitters = new();
 
     public static LightManager Instance
     {
@@ -33,10 +38,20 @@ public class LightManager : MonoBehaviour
             return;
         }
         _instance = this;
+        isExisting = true;
 
     }
 
-    public async Task FadeAllLightsAsync(float fadeDuration) // по идее, эту штуку мне не надо отменять, поэтому CanelationToken сюда не передаём. Может потом изменим сигнатуру...
+    public void AddLightEmitter(LightEmitter emitter) // ну дублей, по идее, быть не должно. В Awake ведь вызываем
+    {
+        _emitters.Add(emitter); 
+    }
+    public void RemoveLightEmitter(LightEmitter emitter) // не быть, по идее, не должно...
+    {
+        _emitters.Remove(emitter); 
+    }
+
+    public async Task FadeAllLightsAsyncL(float fadeDuration) // по идее, эту штуку мне не надо отменять, поэтому CanelationToken сюда не передаём. Может потом изменим сигнатуру...
     {
         // Находим все Light2D на сцене
         Light2D[] lights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
@@ -87,8 +102,29 @@ public class LightManager : MonoBehaviour
 
         //await tcs.Task;
 
-        //_fadeAllLightsCoroutine = null;
+        _fadeAllLightsCoroutine = null;
     }
+    public async Task FadeAllLightsAsync(float fadeDuration)
+    {
+        if (_emitters.Count == 0)
+            return;
+
+        LightEmitter[] snapshot = _emitters.ToArray();
+
+        List<Task> fadeTasks = new List<Task>();
+        foreach (var emitter in snapshot)
+        {
+            if (emitter != null)
+            {
+                Task safeTask = SafeIgnoreErrors(emitter.FadeOutAsync(fadeDuration));
+                fadeTasks.Add(safeTask);
+            }
+        }
+
+        await Task.WhenAll(fadeTasks); // ждём, пока все погаснут
+    }
+
+
     public async Task RiseAllLightsAsync(float riseDuration) // по идее, эту штуку мне не надо отменять, поэтому CanelationToken сюда не передаём. Может потом изменим сигнатуру...
     {
 
@@ -106,5 +142,6 @@ public class LightManager : MonoBehaviour
     {
         if (_fadeAllLightsCoroutine != null)
             StopCoroutine(_fadeAllLightsCoroutine);
+        isExisting = false;
     }
 }

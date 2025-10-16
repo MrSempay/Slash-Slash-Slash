@@ -229,14 +229,14 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                         case StepMS.Dialogue1_2:
                             await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue1_2, stepToken);
                             // teleport to school synchronously (as original)
-                            CameraService.Instance.DelinkCameraPlayer();
+                            CameraManager.Instance.DelinkCameraPlayer();
                             TeleportObjectToPoint(player, _transformPointTeleportSchool.position);
                             _currentStepMS = StepMS.TeleportToSchool_MoveCameraAfterEnemyKill;
                             break;
 
                         case StepMS.TeleportToSchool_MoveCameraAfterEnemyKill:
 
-                            var param = new CameraService.CameraMoveParams
+                            var param = new CameraManager.CameraMoveParams
                             {
                                 Camera = _cameraPlayer,
                                 Target = transformPlayer,
@@ -245,7 +245,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                                 MoveToPlayer = true,
                                 Speed = 16f,
                             };
-                            await CameraService.Instance.MoveCameraToTargetAsync(param);
+                            await CameraManager.Instance.MoveCameraToTargetAsync(param);
 
                             _currentStepMS = StepMS.Dialogue2_1;
                             break;
@@ -284,7 +284,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                                 catch (OperationCanceledException) { throw; }
                                 catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
 
-                                CameraService.Instance.DelinkCameraPlayer();
+                                CameraManager.Instance.DelinkCameraPlayer();
                                 TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
                                 _currentStepMS = StepMS.MoveAfterFirstSpellBuy;
                             }
@@ -292,7 +292,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
                         case StepMS.MoveAfterFirstSpellBuy:
 
-                            var spellBuyParams = new CameraService.CameraMoveParams
+                            var spellBuyParams = new CameraManager.CameraMoveParams
                             {
                                 Camera = _cameraPlayer,
                                 Target = transformPlayer,
@@ -301,7 +301,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                                 MoveToPlayer = true,
                                 Speed = 16f,
                             };
-                            await CameraService.Instance.MoveCameraToTargetAsync(spellBuyParams);
+                            await CameraManager.Instance.MoveCameraToTargetAsync(spellBuyParams);
 
                             _currentStepMS = StepMS.Dialogue3_1;
                             break;
@@ -464,14 +464,14 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                 {
                     case StepDS.Start:
 
-                        CameraService.Instance.DelinkCameraPlayer();
+                        CameraManager.Instance.DelinkCameraPlayer();
                         Player.instance.scriptUI.HideAllUI();
 
                         _currentStepDS = StepDS.MoveCameraThroughMainTargets;
                         break;
                     case StepDS.MoveCameraThroughMainTargets:
 
-                        var paramSchool = new CameraService.CameraMoveParams
+                        var paramSchool = new CameraManager.CameraMoveParams
                         {
                             Camera = _cameraPlayer,
                             Target = _transformSchool,
@@ -479,11 +479,11 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                             CancellationToken = stepToken,
                             MoveToPlayer = false,
                             Time = 1f,
-                            MoveType = CameraService.CameraMoveType.Linear
+                            MoveType = CameraManager.CameraMoveType.EaseInOut33
                         };
-                        await CameraService.Instance.MoveCameraToTargetAsync(paramSchool);
+                        await CameraManager.Instance.MoveCameraToTargetAsync(paramSchool);
 
-                        var paramTreasury = new CameraService.CameraMoveParams
+                        var paramTreasury = new CameraManager.CameraMoveParams
                         {
                             Camera = _cameraPlayer,
                             Target = _transformTreasury,
@@ -491,15 +491,15 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                             CancellationToken = stepToken,
                             MoveToPlayer = false,
                             Time = 1f,
-                            MoveType = CameraService.CameraMoveType.Linear
+                            MoveType = CameraManager.CameraMoveType.EaseInOut33
                         };
-                        await CameraService.Instance.MoveCameraToTargetAsync(paramTreasury);
+                        await CameraManager.Instance.MoveCameraToTargetAsync(paramTreasury);
 
                         _currentStepDS = StepDS.MoveCameraToPlayerAndFadeLight;
                         break;
                     case StepDS.MoveCameraToPlayerAndFadeLight:
 
-                        var paramPlayer = new CameraService.CameraMoveParams
+                        var paramPlayer = new CameraManager.CameraMoveParams
                         {
                             Camera = _cameraPlayer,
                             Target = Player.instance.transform,
@@ -509,7 +509,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                             Speed = 16f,
                             EnableUpdateFuncAfter = false
                         };
-                        _ = CameraService.Instance.MoveCameraToTargetAsync(paramPlayer);
+                        _ = CameraManager.Instance.MoveCameraToTargetAsync(paramPlayer);
                         _ = AudioManager.Instance.FadeAllEnviromentSoundsAsync();
 
                         await LightManager.Instance.FadeAllLightsAsync(1);
@@ -682,138 +682,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     /// Вызывать этот метод из main thread (обычно так и делается в Unity).
     /// </summary>
     private readonly object _timerTcsLock = new object();
-    private async Task WaitForTimerWithSkipAsyncNEWL(string timerMarker, float seconds, string textButtonSkip, CancellationToken ctExtended = default)
-    {
-
-        // создаём tcs правильно
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        // атомарно добавляем в словарь
-        lock (_timerTcsLock)
-        {
-            if (_timerTcs.ContainsKey(timerMarker))
-                throw new InvalidOperationException($"Timer '{timerMarker}' already exists.");
-            _timerTcs[timerMarker] = tcs;
-        }
-
-        // захватим текущий sync context (main thread) чтобы можно было безопасно постить Destroy
-        var sync = SynchronizationContext.Current;
-
-        // запустим корутину (она в конце вызовет TimerFinished(marker), который должен
-        // найти tcs и TrySetResult(true); JustTimeWait возвращает handle, если нужно)
-        var coroutineHandle = JustTimeWait(seconds, timerMarker);
-
-        // создаём кнопку — её callback выполняется на main thread
-        GameObject skipButton = GameManager.Instance.InstanceTextButton(
-            false,
-            Player.instance.scriptUI.rtContainerButtonsUI,
-            textButtonSkip,
-            () =>
-            {
-                // main thread: атомарно удалить и завершить tcs как успешное завершение (skip == success)
-                TaskCompletionSource<bool> removed = null;
-                lock (_timerTcsLock)
-                {
-                    if (_timerTcs.TryGetValue(timerMarker, out var tmp))
-                    {
-                        removed = tmp;
-                        _timerTcs.Remove(timerMarker);
-                    }
-                }
-                if (removed != null)
-                {
-                    // помечаем как нормальное завершение — await вернётся и шаг продвинется
-                    removed.TrySetResult(true);
-                }
-
-                // останавливаем корутину (на main thread) — безопасно
-                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-            }
-        );
-
-        // Регистрация внешней отмены. Callback может выполняться на thread-pool,
-        // поэтому в нем НЕ вызываем Unity API напрямую.
-        CancellationTokenRegistration reg = default;
-        if (ctExtended.CanBeCanceled && ctExtended != default)
-        {
-            reg = ctExtended.Register(() =>
-            {
-                // этот код может выполняться на любом потоке!
-                TaskCompletionSource<bool> removed = null;
-                lock (_timerTcsLock)
-                {
-                    if (_timerTcs.TryGetValue(timerMarker, out var tmp))
-                    {
-                        removed = tmp;
-                        _timerTcs.Remove(timerMarker);
-                    }
-                }
-
-                if (removed != null)
-                {
-                    removed.TrySetCanceled(); // пометить как отменённый
-                }
-
-                // Постим на main-thread удаление UI/остановку корутины
-                if (sync != null)
-                {
-                    sync.Post(_ =>
-                    {
-                        try { if (skipButton != null) UnityEngine.Object.Destroy(skipButton); } catch { }
-                        try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-                    }, null);
-                }
-                else
-                {
-                    // Если sync == null (редко в Unity), попытаться безопасно выполнить — но это небезопасно.
-                    try { if (skipButton != null) UnityEngine.Object.Destroy(skipButton); } catch { }
-                    try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-                }
-            });
-        }
-
-        try
-        {
-            // Ожидаем завершения tcs. Этот await вернёт управление на тот же SynchronizationContext,
-            // с которого был вызван метод (обычно main thread), поэтому cleanup в finally сможет вызывать Unity API напрямую.
-            await tcs.Task;
-        }
-        finally
-        {
-            // cleanup
-            reg.Dispose();
-
-            // удаляем из словаря, если кто-то ещё не удалил
-            lock (_timerTcsLock)
-            {
-                _timerTcs.Remove(timerMarker);
-            }
-
-            // удаление кнопки и стоп корутины — выполняем на main thread либо через sync.Post
-            if (SynchronizationContext.Current == sync && sync != null)
-            {
-                // уже на main thread
-                if (skipButton != null) UnityEngine.Object.Destroy(skipButton);
-                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-            }
-            else if (sync != null)
-            {
-                sync.Post(_ =>
-                {
-                    if (skipButton != null) UnityEngine.Object.Destroy(skipButton);
-                    try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-                }, null);
-            }
-            else
-            {
-                // no sync — best-effort
-                if (skipButton != null) UnityEngine.Object.Destroy(skipButton);
-                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, coroutineHandle); } catch { }
-            }
-        }
-    }
-
-
     private async Task WaitForTimerWithSkipAsyncNEW(string timerMarker, float seconds, string textButtonSkip, CancellationToken ctExtended = default)
     {
 
@@ -1024,18 +892,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         RequestJumpScenario(ScenarioMode.DefeatScenario);
     }
 
-    //protected override void DialogueFinished(string nameDialogueWithFolder)
-    //{
-    //    base.DialogueFinished(nameDialogueWithFolder);
-    //    if (_dialogueTcs.TryGetValue(nameDialogueWithFolder, out var tcs))
-    //    {
-    //        tcs.TrySetResult(true);
-    //        return;
-    //    }
-    //    _activeDialogueTcs?.TrySetResult(true);
-    //    _activeDialogueTcs = null;
-    //    Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
-    //}
 
     protected override void TimerFinished(string markerTimeWait)
     {

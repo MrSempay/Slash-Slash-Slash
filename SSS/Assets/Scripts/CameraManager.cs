@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class CameraService : ICleanUp
+public class CameraManager : ICleanUp
 {
 
     public AnimationCurve customCurve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -15,9 +15,10 @@ public class CameraService : ICleanUp
     {
         Linear,
         SmoothStep,
-        CustomCurve
+        CustomCurve,
+        EaseInOut33
     }
-    public static CameraService Instance => _instance ?? throw new InvalidOperationException("CameraService not initialized. Create via CameraService.CreateInstance() in bootstrap.");
+    public static CameraManager Instance => _instance ?? throw new InvalidOperationException("CameraService not initialized. Create via CameraService.CreateInstance() in bootstrap.");
 
     private class MoveInfo
     {
@@ -38,22 +39,22 @@ public class CameraService : ICleanUp
         public bool MoveToPlayer { get; set; } = false;
         public float Speed { get; set; } = 0f;
         public float Time { get; set; } = 0f;
-        public CameraService.CameraMoveType MoveType { get; set; } = CameraService.CameraMoveType.Linear;
+        public CameraManager.CameraMoveType MoveType { get; set; } = CameraManager.CameraMoveType.Linear;
     }
 
     private readonly ConcurrentDictionary<string, MoveInfo> _moves = new();
     private int _disposed = 0;
-    private static CameraService _instance;
+    private static CameraManager _instance;
 
     // Внутри конструктора регистрируемся
-    private CameraService()
+    private CameraManager()
     {
         CleanupManager.RegisterDisposeSceneChanged(this);
     }
-    public static CameraService CreateInstance()
+    public static CameraManager CreateInstance()
     {
         if (_instance != null) throw new InvalidOperationException("CameraService already created for this scene.");
-        _instance = new CameraService();
+        _instance = new CameraManager();
         return _instance;
     }
 
@@ -67,7 +68,7 @@ public class CameraService : ICleanUp
     {
         if (param.Target == null) throw new ArgumentNullException(nameof(param.Target));
         if (string.IsNullOrEmpty(param.FinishKey)) throw new ArgumentNullException(nameof(param.FinishKey));
-        if (IsDisposed) throw new ObjectDisposedException(nameof(CameraService));
+        if (IsDisposed) throw new ObjectDisposedException(nameof(CameraManager));
         Debug.Log(1231);
         //param.Target = null;
         Debug.Log(param.Target.position);
@@ -156,7 +157,7 @@ public class CameraService : ICleanUp
             }
         }
 
-        return tcs.Task;
+        return tcs.Task; 
     }
 
     private IEnumerator MoveCameraToPlayerSpeedCoroutine(Transform tCam, Transform tTarget, float speed, Action onFinished, bool enableUpdateFuncAfter)
@@ -176,19 +177,19 @@ public class CameraService : ICleanUp
         while (Vector3.Distance(tCam.position, desired) > distanceThreshold)
         {
             //Debug.Log("...");
-            if (Player.instance == null || tCam == null || tTarget == null) yield break;
+            //if (Player.instance == null || tCam == null || tTarget == null) yield break;
             desired = tTarget.position + Player.instance.localPositionCamera;
             tCam.position = Vector3.MoveTowards(tCam.position, desired, speed * Time.deltaTime);
             yield return null;
         }
-        if (Player.instance == null || tCam == null || tTarget == null) yield break;
+        //if (Player.instance == null || tCam == null || tTarget == null) yield break;
         tCam.position = tTarget.position + Player.instance.localPositionCamera;
         tCam.SetParent(Player.instance.transform); // по сути это у меня tTarget
         tCam.localPosition = Player.instance.localPositionCamera;
-        if (Player.instance == null || tCam == null || tTarget == null) yield break;
+        //if (Player.instance == null || tCam == null || tTarget == null) yield break;
         if (enableUpdateFuncAfter)
             Player.instance?.SetStateIdleToPlayerAndBlockAnyUpdateFunctions(false);
-        if (Player.instance == null || tCam == null || tTarget == null) yield break;
+        //if (Player.instance == null || tCam == null || tTarget == null) yield break;
         onFinished?.Invoke();
     }
     private IEnumerator MoveCameraToPlayerTimeCoroutine(Transform tCam,
@@ -227,6 +228,9 @@ public class CameraService : ICleanUp
                     break;
                 case CameraMoveType.CustomCurve:
                     tFinal = customCurve.Evaluate(t);
+                    break;
+                case CameraMoveType.EaseInOut33:
+                    tFinal = EaseInOut33(t);
                     break;
                 case CameraMoveType.Linear:
                 default:
@@ -316,6 +320,9 @@ public class CameraService : ICleanUp
                 case CameraMoveType.CustomCurve:
                     tFinal = customCurve.Evaluate(t);
                     break;
+                case CameraMoveType.EaseInOut33:
+                    tFinal = EaseInOut33(t);
+                    break;
                 case CameraMoveType.Linear:
                 default:
                     tFinal = t;
@@ -336,7 +343,25 @@ public class CameraService : ICleanUp
 
         onFinished?.Invoke();
     }
-
+    private float EaseInOut33(float t)
+    {
+        if (t < 0.33f)
+        {
+            float nt = t / 0.33f;
+            return 0.5f * nt * nt; // плавное ускорение
+        }
+        else if (t > 0.66f)
+        {
+            float nt = (t - 0.66f) / 0.34f;
+            float decel = 1f - (1f - nt) * (1f - nt); // плавное замедление
+            return 0.67f + 0.33f * decel;
+        }
+        else
+        {
+            // середина (постоянная скорость)
+            return 0.33f + (t - 0.33f);
+        }
+    }
 
     private static void MainThreadPost(Action a)
     {

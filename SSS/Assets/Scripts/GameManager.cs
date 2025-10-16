@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
             set
             {
                 volumeBrightness = value;
-                _liftGammaGain.gain.value = new Vector4(-0.25f + value, -0.25f + value, -0.25f + value, -0.25f + value); // да, магические константы
+                _liftGammaGain.gain.value = new Vector4(-0.5f + value, -0.5f + value, -0.5f + value, -0.5f + value); // да, магические константы
             }
         }
         public float VolumeMusic

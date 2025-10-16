@@ -242,7 +242,7 @@ public class DefaultLevelScenario : ScenarioScript
                 {
                     case StepDS.Start:
 
-                        CameraService.Instance.DelinkCameraPlayer();
+                        CameraManager.Instance.DelinkCameraPlayer();
                         Player.instance.scriptUI.HideAllUI();
 
                         _currentStepDS = StepDS.MoveCameraThroughMainTargets;
@@ -251,7 +251,7 @@ public class DefaultLevelScenario : ScenarioScript
 
                         foreach (IMainTarget mainTarget in _allDeterminedMTExceptedPlayer)
                         {
-                            var paramSchool = new CameraService.CameraMoveParams
+                            var paramSchool = new CameraManager.CameraMoveParams
                             {
                                 Camera = Player.instance.mainCamera,
                                 Target = mainTarget.targetTransform,
@@ -259,16 +259,16 @@ public class DefaultLevelScenario : ScenarioScript
                                 CancellationToken = stepToken,
                                 MoveToPlayer = false,
                                 Time = 1f,
-                                MoveType = CameraService.CameraMoveType.Linear
+                                MoveType = CameraManager.CameraMoveType.EaseInOut33
                             };
-                            await CameraService.Instance.MoveCameraToTargetAsync(paramSchool);
+                            await CameraManager.Instance.MoveCameraToTargetAsync(paramSchool);
                         }
 
                         _currentStepDS = StepDS.MoveCameraToPlayerAndFadeLight;
                         break;
                     case StepDS.MoveCameraToPlayerAndFadeLight:
 
-                        var paramPlayer = new CameraService.CameraMoveParams
+                        var paramPlayer = new CameraManager.CameraMoveParams
                         {
                             Camera = Player.instance.mainCamera,
                             Target = Player.instance.transform,
@@ -278,7 +278,7 @@ public class DefaultLevelScenario : ScenarioScript
                             Speed = 16f,
                             EnableUpdateFuncAfter = false
                         };
-                        _ = CameraService.Instance.MoveCameraToTargetAsync(paramPlayer);
+                        _ = CameraManager.Instance.MoveCameraToTargetAsync(paramPlayer);
                         _ = AudioManager.Instance.FadeAllEnviromentSoundsAsync();
 
                         await LightManager.Instance.FadeAllLightsAsync(1);
@@ -343,6 +343,11 @@ public class DefaultLevelScenario : ScenarioScript
 
     #endregion FSM-async scenario integraion
 
-
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        _defeatScenarioCts?.Cancel();
+        _defeatScenarioCts?.Dispose();
+    }
 
 }

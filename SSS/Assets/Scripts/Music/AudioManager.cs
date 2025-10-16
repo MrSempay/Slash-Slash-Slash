@@ -1,5 +1,5 @@
 using UnityEngine;
-using static GameManager;
+using static StaticClassForAdditionalFunctions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -311,7 +311,7 @@ public class AudioManager : MonoBehaviour
         IEnumerator FadeAllEnviromentSoundsCoroutine(float duration)
         {
             // Собираем все аудиосорсы, чтобы работать с копией
-            var allAudioSources = new List<AudioSourceExtended>();
+            List<AudioSourceExtended> allAudioSources = new List<AudioSourceExtended>();
             foreach (var objAudioSourcesCluster in dictionaryObjectsAndTheirAudioSourcesByTypes.Values) // поддержка Legacy
             {
                 foreach (AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
@@ -322,18 +322,20 @@ public class AudioManager : MonoBehaviour
                     }
                 }
             }
-            foreach (AudioEmitter emitter in emitters)
-            {
-                foreach (AudioSourceExtended audioSourceExtended in emitter.sources.Values)
-                {
-                    if (audioSourceExtended.audioSource != null)
-                    {
-                        allAudioSources.Add(audioSourceExtended);
-                    }
-                }
-            }
+            //foreach (AudioEmitter emitter in emitters)
+            //{
+            //    Debug.Log(emitter);
+            //    Debug.Log(emitter.gameObject);
+            //    foreach (AudioSourceExtended audioSourceExtended in emitter.sources.Values)
+            //    {
+            //        if (audioSourceExtended.audioSource != null)
+            //        {
+            //            allAudioSources.Add(audioSourceExtended);
+            //        }
+            //    }
+            //}
             // Сохраняем исходные значения объёмов
-            var startVolumes = allAudioSources.Select(a => a.audioSource.volume).ToArray();
+            float[] startVolumes = allAudioSources.Select(a => a.audioSource.volume).ToArray();
 
             float elapsed = 0f;
 
@@ -361,11 +363,30 @@ public class AudioManager : MonoBehaviour
                     audioSourceExtended.audioSource.volume = 0f;
             }
         }
+
+        AudioEmitter[] snapshot = emitters.ToArray();
+
+        List<Task> fadeTasks = new List<Task>();
+
+        foreach (var emitter in snapshot)
+        {
+            if (emitter != null)
+            {
+                Task safeTask = SafeIgnoreErrors(emitter.FadeOutAsync(duration));
+                fadeTasks.Add(safeTask);
+            }
+        }
+
+
         var tcs = new TaskCompletionSource<bool>();
 
         _fadeEnvironmentSoundsCoroutine = StartCoroutine(RunCoroutineAsync(FadeAllEnviromentSoundsCoroutine(duration), tcs));
 
-        await tcs.Task;
+        fadeTasks.Add(SafeIgnoreErrors(tcs.Task));
+
+        await Task.WhenAll(fadeTasks); // ждём, пока все погаснут
+
+        //await tcs.Task;
     }
 
     private void JustStartAmbientOrFightMusic(AudioClip targetMusic, bool isFightMusic)

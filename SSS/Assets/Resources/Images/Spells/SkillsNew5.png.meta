@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 499f2b99bee3c9f4cbc48d550ba9532b
+guid: a697d46cdf1092343a51415a47dee4b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2799262671131402220
-    second: SkillsNew5_1_0
+      213: 1350423368896645517
+    second: SkillsNew5_0
+  - first:
+      213: -6674210252031744211
+    second: SkillsNew5_1
+  - first:
+      213: -2193617655876793055
+    second: SkillsNew5_2
+  - first:
+      213: 3921008731662842108
+    second: SkillsNew5_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -47,11 +56,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,11 +148,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SkillsNew5_1_0
+      name: SkillsNew5_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 9
+        y: 11
         width: 46
         height: 43
       alignment: 0
@@ -154,8 +163,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cef5cc9719af8d620800000000000000
-      internalID: 2799262671131402220
+      spriteID: d89887f26eaadb210800000000000000
+      internalID: 1350423368896645517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkillsNew5_1
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 11
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d27a06323217063a0800000000000000
+      internalID: -6674210252031744211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkillsNew5_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 11
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12d40704d54be81e0800000000000000
+      internalID: -2193617655876793055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkillsNew5_3
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 11
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf8f7f3caa83a6630800000000000000
+      internalID: 3921008731662842108
       vertices: []
       indices: 
       edges: []
@@ -164,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SkillsNew5_1_0: 2799262671131402220
+      SkillsNew5_0: 1350423368896645517
+      SkillsNew5_1: -6674210252031744211
+      SkillsNew5_2: -2193617655876793055
+      SkillsNew5_3: 3921008731662842108
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

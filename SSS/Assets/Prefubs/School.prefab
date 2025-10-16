@@ -418,6 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7386339641832503477}
   - component: {fileID: 3243196144147304349}
+  - component: {fileID: 210731511716233499}
   m_Layer: 0
   m_Name: Light 2D (4)
   m_TagString: Untagged
@@ -492,6 +493,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &210731511716233499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145586698431321461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aa133148ecc524bb99b32f6f1f1c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxBrightness: -1
 --- !u!1 &3580074959444845534
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2510323074787937644}
   - component: {fileID: 5183457742845551981}
+  - component: {fileID: 6874289138330973684}
   m_Layer: 0
   m_Name: Light 2D (3)
   m_TagString: Untagged
@@ -1006,6 +1021,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &6874289138330973684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4563836028731265560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aa133148ecc524bb99b32f6f1f1c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxBrightness: -1
 --- !u!1 &5674927502056600402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8841680697223307115}
   - component: {fileID: 764070818704370260}
+  - component: {fileID: 588648938391026055}
   m_Layer: 0
   m_Name: Light 2D (1)
   m_TagString: Untagged
@@ -1299,6 +1328,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &588648938391026055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5939672719920385263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aa133148ecc524bb99b32f6f1f1c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxBrightness: -1
 --- !u!1 &6267595428350737777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7661447168291812751}
   - component: {fileID: 6308849308692448092}
+  - component: {fileID: 1195135766264993074}
   m_Layer: 0
   m_Name: Light 2D (2)
   m_TagString: Untagged
@@ -1526,6 +1569,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1195135766264993074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054512120609912117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57aa133148ecc524bb99b32f6f1f1c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxBrightness: -1
 --- !u!1 &7351971840467771016
 GameObject:
   m_ObjectHideFlags: 0

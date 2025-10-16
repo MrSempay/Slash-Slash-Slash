@@ -75,6 +75,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\InterstitialAdLoaderClient.cs" />
     <Compile Include="Assets\YandexMobileAds\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleFixedOneWay.cs" />
+    <Compile Include="Assets\Scripts\Light\LightEmitter.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder\LevelBuildLevel1.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateCastUnit.cs" />
     <Compile Include="Assets\Scripts\Building.cs" />
     <Compile Include="Assets\Scripts\StateMachine\FSMAsync\FsmStateAsync\SFsmStateDefeat.cs" />
-    <Compile Include="Assets\Scripts\ScenarioServices\CameraService.cs" />
     <Compile Include="Assets\Scripts\Dialogues\DialogueParser\SceneDialogueBuild.cs" />
     <Compile Include="Assets\Scripts\UI\Titles\TitlesParser.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
@@ -186,6 +186,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\LocationBridge.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
+    <Compile Include="Assets\Scripts\Light\LightManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\BannerBridge.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\WrapperGlobal.cs" />
     <Compile Include="Assets\Scripts\UI\UIController\UIPlayerManager.cs" />
@@ -208,7 +209,6 @@
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\YandexMobileAds\AppStateObserver.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateEquipment\FsmStateEquipmentInsideShop.cs" />
-    <Compile Include="Assets\Scripts\LightManager.cs" />
     <Compile Include="Assets\Scripts\AdvertisingIntegration\Yandex\YandexMobileAdsBannerDemoScript.cs" />
     <Compile Include="Assets\YandexMobileAds\Inspector\InterstitialAdComponent.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\RewardedAdLoaderClient.cs" />
@@ -345,6 +345,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\Idles\FsmStateIdle.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\ScreenClient.cs" />
     <Compile Include="Assets\Scripts\EventBus.cs" />
+    <Compile Include="Assets\Scripts\CameraManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyRewardedAdClient.cs" />
     <Compile Include="Assets\Scripts\Levels\TitlesBuilder.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\BannerAdSizeClient.cs" />

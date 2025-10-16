@@ -48,9 +48,10 @@ public static class CoroutineExtensions // Context.Post мы тут ещё не реализовыв
         var c = runner.StartCoroutine(RunCoroutineSafe(coroutine, tcs, token, onCancel, onComplete, onError));
 
         // Если токен отменён — прерываем корутину
+        CancellationTokenRegistration registration = new();
         if (token.CanBeCanceled)
         {
-            token.Register(() =>
+            registration = token.Register(() =>
             {
                 if (runner != null && c != null)
                 {
@@ -60,6 +61,7 @@ public static class CoroutineExtensions // Context.Post мы тут ещё не реализовыв
                 tcs.TrySetCanceled(token);
             });
         }
+        tcs.Task.ContinueWith(_ => registration.Dispose());
 
         return new CoroutineHandle(tcs.Task, c);
     }

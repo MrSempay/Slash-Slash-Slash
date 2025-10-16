@@ -79,7 +79,7 @@ public class ScenarioScript : MonoBehaviour
 
         _cts = new CancellationTokenSource(); // пока не используем, но путь будет
 
-        CameraService.CreateInstance();
+        CameraManager.CreateInstance();
 
     }
 
