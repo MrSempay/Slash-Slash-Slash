@@ -287,7 +287,7 @@ public class DefaultLevelScenario : ScenarioScript
                         break;
                     case StepDS.StartEndDialogue:
 
-                        Task lastDialogueTask = StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue1_1, ct); // запустили диалог в фоне, не ждём
+                        Task lastDialogueTask = StartDialogueAsync(LevelBuilder.instance.selfName + "/" + C.SS.General.Dialogues.DefeatByTargets, ct); // запустили диалог в фоне, не ждём
                         Task getActualLeaderboardTask = ScoreManager.Instance.GetActualLeaderboardAsync(); // запустили обновление лидерборда в фоне, не ждём
                         Task safeLeaderboardTask = SafeIgnoreErrors(getActualLeaderboardTask);
 

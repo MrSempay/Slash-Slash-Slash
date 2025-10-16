@@ -334,8 +334,16 @@ public class C
 
     public static class SS // ScenarioStuff
     {
+        public static class General
+        {
+            public static class Dialogues
+            {
+                public const string DefeatByTargets = "DefeatByTargets";
+            }
+        }
         public static class Level1
         {
+
             public static class Dialogues
             {
                 public const string Dialogue1_1 = "Level1/Dialogue1.1";
@@ -371,6 +379,11 @@ public class C
                 public const string BeforeFourthWave = "BeforeFourthWave";
                 public const string BeforeFifthWave = "BeforeFifthWave";
             }
+        }
+
+        public static class LevelDefault
+        {
+            public const string Dialogue1_1 = "Level1/Dialogue1.1";
         }
     }
 
