@@ -23,7 +23,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     private GameObject _objectInternetSettingsPanel; 
 
     [NonSerialized]private bool a = false;
-    public bool AwakeWasCalledAlready { get { return a; } set { a = value; Debug.Log("ну и дичь..."); } }
+    public bool AwakeWasCalledAlready { get { return a; } set { a = value; } }
     public bool StartWasCalledAlready { get; set; }
 
     public static SettingsMenu Instance

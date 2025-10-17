@@ -980,7 +980,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         //_mainScenarioCts?.Cancel();
         //_mainScenarioCts?.Dispose();
         //_mainScenarioCts = null;
-        Debug.Log("Чё за нах?&&&&");
+        //Debug.Log("Чё за нах?&&&&");
         _masterScenarioCts?.Cancel();
         _masterScenarioCts?.Dispose();
         _masterScenarioCts = null;

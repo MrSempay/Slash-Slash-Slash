@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
             get { return volumeEffects; }
             set
             {
-                Debug.Log("А как так вышло");
+                //Debug.Log("А как так вышло");
                 volumeEffects = value;
                 AudioManager.Instance.audioEffectsUIComponent.volume = Mathf.Clamp01(value);
 
@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
                     {
                         foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
                         {
-                            Debug.Log(value);
+                            //Debug.Log(value);
                             if (audioSourceExtended.audioSource != null)
                             {
                                 audioSourceExtended.audioSource.volume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);

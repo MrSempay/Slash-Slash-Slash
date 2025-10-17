@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEditor.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class AudioManager : MonoBehaviour
     private string _nameBeginningMusic = "BeginningLevelMusic";
     private string _nameTransitionMusic = "TransitionMusic";
     private Coroutine _fadeEnvironmentSoundsCoroutine;
+    private MusicManager _musicManager;
 
     //DefaultAS - по сути тот же смысл, что и у Default, но он для AudioSource, у которых установлен AudioSource и проигрывается он как "музыка", зачастую в loop
     public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, DefaultAS, Death, Destroy}; 
@@ -68,6 +70,7 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Что за ебунячейшая блядоёбская парашница?");
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -78,6 +81,13 @@ public class AudioManager : MonoBehaviour
 
         audioMusicComponent = gameObject.AddComponent<AudioSource>();
         audioMusicComponent.loop = false;
+
+        _musicManager = gameObject.AddComponent<MusicManager>();
+        _musicManager.musicSource = audioMusicComponent;
+        _musicManager.musicSource.loop = false;
+
+        UploadOtherMusic();
+
 
         audioEffectsUIComponent = gameObject.AddComponent<AudioSource>();
 
@@ -91,7 +101,7 @@ public class AudioManager : MonoBehaviour
     //            ------------------------------------ НОВЫЙ УПРАВЛЯТОР АУДИО !!! ----------------------------------------               //
 
 
-    public void UpdateMusicLevelSet()
+    public void UpdateMusicLevelSetL()
     {
         _beginningMusic = Resources.Load<AudioClip>(_pathToMusicFolder + LevelBuilder.instance.selfName + "/" + _nameBeginningMusic);
         _transitionMusic = Resources.Load<AudioClip>(_pathToMusicFolder + LevelBuilder.instance.selfName + "/" + _nameTransitionMusic);
@@ -107,14 +117,76 @@ public class AudioManager : MonoBehaviour
         LoadSoundsDictionary(fightMusicFolder, _dictionaryFightMusic);
         LoadSoundsDictionary(ambientMusicFolder, _dictionaryAmbientMusic);
     }
+    public void UpdateMusicLevelSetL2()
+    {
+        if (_beginningMusic != LevelBuilder.instance.beginningMusic)
+            _beginningMusic = LevelBuilder.instance.beginningMusic;
+        if (_transitionMusic != LevelBuilder.instance.transitionMusic)
+            _transitionMusic = LevelBuilder.instance.transitionMusic;
+
+        if (_beginningMusic == null || _transitionMusic == null)
+        {
+            Debug.LogError("Отсутствует музыка перехода или начальная музыка для уровня!");
+        }
+
+        foreach (AudioClip clip in LevelBuilder.instance.listAmbientMusics)
+        {
+            _dictionaryAmbientMusic.TryAdd(clip.name, clip);
+        }
+        foreach (AudioClip clip in LevelBuilder.instance.listFightMusics)
+        {
+            _dictionaryFightMusic.TryAdd(clip.name, clip);
+        }
+    }
+
+    #region Mega new Controller
+    public void UpdateMusicLevelSet()
+    {
+        _musicManager.UpdateMusicLevelSet(
+            beginning: LevelBuilder.instance.beginningMusic,
+            transition: LevelBuilder.instance.transitionMusic,
+            ambient: LevelBuilder.instance.listAmbientMusics,
+            fight: LevelBuilder.instance.listFightMusics
+        );
+    }
+    public void UploadOtherMusic()
+    {
+        List<AudioClip> musicList = new List<AudioClip>();
+
+        // Загружаем все аудиоклипы из папки Resources
+        AudioClip[] clips = Resources.LoadAll<AudioClip>("Music/Musics/MusicPool/Other");
+
+        // Преобразуем массив в List
+        musicList = new List<AudioClip>(clips);
+
+        _musicManager.UploadOtherMusic(musicList);
+    }
 
     public void StartBeginningMusic()
     {
-        //Debug.Log(nameMusic);
+        _musicManager.PlayBeginningMusic();
+    }
+    public void PlayFightOrAmbientMusic(bool isFightMusic)
+    {
+        if (isFightMusic) _musicManager.PlayFightMusic();
+        else _musicManager.PlayAmbientMusic();
+    }
+    public void StartCertainMusicInLoop(string nameMusic)
+    {
+        _musicManager.PlayCertainMusic(nameMusic);
+    }
+
+
+    #endregion Mega new Controller
+
+    public void StartBeginningMusicL()
+    {
+        Debug.Log("Да как так " + _musicWasEndedByItself);
         StopAllCoroutines();
 
         if (!_musicWasEndedByItself)
         {
+            Debug.Log("И что это?");
             StartCoroutine(FadePreviousMusicAndStartBeginning());
             return;
         }
@@ -125,7 +197,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeCurrentMusicTickStartTransitionAndStartTargetMusicAmbientOrFight(_beginningMusic, null));
     }
 
-    public void PlayFightOrAmbientMusic(bool isFightMusic)
+    public void PlayFightOrAmbientMusicL(bool isFightMusic)
     {
         StopAllCoroutines();
 
@@ -170,7 +242,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void StartCertainMusicInLoop(string nameMusic)
+    public void StartCertainMusicInLoopL(string nameMusic)
     {
         StopAllCoroutines();
 
@@ -448,6 +520,7 @@ public class AudioManager : MonoBehaviour
     {
         while (audioMusicComponent.volume > 0.03f)
         {
+            Debug.Log("И 1");
             audioMusicComponent.volume -= 0.015f;
             yield return new WaitForSecondsRealtime(_timeTickOfChangingVolumeBetweenMusic);
         }

@@ -796,7 +796,7 @@ public class PlayFabManager : MonoBehaviour
 
             // Подожди пару секунд (нужно, чтобы лидерборд успел применить обновления)
             await Task.Delay(2000, token);
-            Debug.Log("Или мы только тут?");
+            //Debug.Log("Или мы только тут?");
             token.ThrowIfCancellationRequested();
 
             Debug.Log("[Leaderboard] Successfully updated leaderboard stats.");

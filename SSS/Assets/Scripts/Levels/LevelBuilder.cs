@@ -38,6 +38,10 @@ public class LevelBuilder : MonoBehaviour
 
     public Transform BoxSplitTargetPointsForEnemies;
     public List<IMainTarget> listMainTargets = new();
+    public List<AudioClip> listAmbientMusics = new();
+    public List<AudioClip> listFightMusics = new();
+    public AudioClip beginningMusic;
+    public AudioClip transitionMusic;
 
     public Dictionary<Transform, int> TargetPointsForEnemy
     {

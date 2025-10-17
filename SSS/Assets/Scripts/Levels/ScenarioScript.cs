@@ -62,7 +62,7 @@ public class ScenarioScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Debug.Log("А мы вообще, тут?");
+        //Debug.Log("А мы вообще, тут?");
 
         //player = Player.instance.gameObject;
 

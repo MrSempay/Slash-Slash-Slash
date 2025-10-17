@@ -301,6 +301,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\MobileAdsPackageInfo.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\Healing.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\Berserker.cs" />
+    <Compile Include="Assets\Scripts\Music\MusicManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Banner.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder\LevelBuildDefaultLevel.cs" />
