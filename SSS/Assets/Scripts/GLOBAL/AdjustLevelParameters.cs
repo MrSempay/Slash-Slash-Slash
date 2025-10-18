@@ -12,15 +12,15 @@ public static class AdjustLevelParameters
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
-                                { "healthMax", 5f },
-                                { "DamageReductionPercentage", 0f },
+                                { "healthMax", 20f },
+                                { "DamageReductionPercentage", 2f },
                                 { "speed", 1f },
                                 { "jumpForce", 0f },
                                 //{ C.DK.speed, 20 },
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
                             {
-                                { "DamageReductionPercentage", 0.001f } } },
+                                { "DamageReductionPercentage", 0.007f } } },
                 }
             },
             {
@@ -28,9 +28,9 @@ public static class AdjustLevelParameters
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
-                                { "healthMax", 3f },
-                                { "DamageReductionPercentage", 0f },
-                                { "speed", 0.1f },
+                                { "healthMax", 10f },
+                                { "DamageReductionPercentage", 2f },
+                                { "speed", 2f },
                                 { "jumpForce", 0f },
                                 { "damage", 3f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
@@ -43,11 +43,11 @@ public static class AdjustLevelParameters
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
-                                { "healthMax", 5f },
-                                { "DamageReductionPercentage", 0f },
-                                { "speed", 0f },
+                                { "healthMax", 10f },
+                                { "DamageReductionPercentage", 2f },
+                                { "speed", 2f },
                                 { "jumpForce", 0f },
-                                { "damage", 5f } } },
+                                { "damage", 3f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
                             {
                                 { "DamageReductionPercentage",  0.01f } } },
@@ -58,9 +58,9 @@ public static class AdjustLevelParameters
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
-                                { "healthMax", 5f },
-                                { "DamageReductionPercentage", 0f },
-                                { "speed", 0f },
+                                { "healthMax", 15f },
+                                { "DamageReductionPercentage", 2f },
+                                { "speed", 2f },
                                 { "jumpForce", 0f },
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
@@ -73,9 +73,9 @@ public static class AdjustLevelParameters
                 {
                     { C.DK.percentageIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов %
                             {
-                                { "healthMax", 5f },
-                                { "DamageReductionPercentage", 0f },
-                                { "speed", 0f },
+                                { "healthMax", 20f },
+                                { "DamageReductionPercentage", 2f },
+                                { "speed", 2f },
                                 { "jumpForce", 0f },
                                 { "damage", 5f } } },
                     { C.DK.absoluteIncreaseEnemiesParametersBySpawnIteration, new Dictionary<string, float>() // увеличение параметров на  при спавне врагов, абсолютное значение параметра
