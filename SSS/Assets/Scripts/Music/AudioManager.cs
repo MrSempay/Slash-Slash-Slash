@@ -28,6 +28,10 @@ public class AudioManager : MonoBehaviour
     private string _nameTransitionMusic = "TransitionMusic";
     private Coroutine _fadeEnvironmentSoundsCoroutine;
     private MusicManager _musicManager;
+    private int _amountSoundEffectsInNearTime = 0;
+    private int _maxSoundEffectsInNearTime = 3;
+    private float _nearTime = 0.3f;
+    private Coroutine _resetAmountSoundsEffectsCorotune;
 
     //DefaultAS - по сути тот же смысл, что и у Default, но он для AudioSource, у которых установлен AudioSource и проигрывается он как "музыка", зачастую в loop
     public enum TYPE_SOUND { Walk, AttackPeak, GetDamage, Default, DefaultAS, Death, Destroy}; 
@@ -70,7 +74,6 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Что за ебунячейшая блядоёбская парашница?");
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -299,74 +302,6 @@ public class AudioManager : MonoBehaviour
             AudioClip _currentEffect = Resources.Load<AudioClip>(_pathToSoundsEffect + nameEffect);
             _sourcesSounds[nameEffect] = _currentEffect;
             audioEffectsUIComponent.PlayOneShot(_currentEffect);
-        }
-    }
-
-    public void StartSoundEffectAtSpecifiedObjectLEGACY(string nameEffect,
-                                                  GameObject obj,
-                                                  TYPE_SOUND typeSound,
-                                                  TYPE_AUDIO_SOURCE typeAudioSource,
-                                                  List<TYPE_SOUND> typeSoundsToStop = null,
-                                                  float maxVolume = 1,
-                                                  bool asAudioSource = false,
-                                                  bool playInLoop = true)
-    {
-        if (string.IsNullOrEmpty(nameEffect) || !_sourcesSounds.ContainsKey(nameEffect))
-        {
-            return;
-        }
-
-        AudioSource audioSourceTarget;
-
-        if (!dictionaryObjectsAndTheirAudioSourcesByTypes.TryGetValue(obj, out var map))
-        {
-            map = new Dictionary<TYPE_SOUND, AudioSourceExtended>();
-            dictionaryObjectsAndTheirAudioSourcesByTypes[obj] = map;
-        }
-        if (!map.TryGetValue(typeSound, out var ext))
-        {
-            // Создаем новый AudioSourceExtended и добавляем его в map
-            audioSourceTarget = AttachToObjectAndCashAudioSource(obj, typeSound, typeAudioSource, maxVolume);
-            ext = new AudioSourceExtended(audioSourceTarget, maxVolume); // Предполагается, что AudioSourceExtended принимает audioSource и maxVolume
-            map[typeSound] = ext; // Добавляем новую запись в map
-        }
-        else
-        {
-            audioSourceTarget = ext.audioSource;
-        }
-
-        if (typeSoundsToStop != null)
-        {
-            // Используем 'map', который мы уже получили или создали
-            foreach (TYPE_SOUND typeSoundToStop in typeSoundsToStop)
-            {
-                if (map.TryGetValue(typeSoundToStop, out var audioSourceExtended))
-                {
-                    audioSourceExtended.audioSource.Stop();
-                }
-            }
-        }
-
-        if (asAudioSource)
-        {
-            audioSourceTarget.loop = playInLoop;
-            audioSourceTarget.clip = _sourcesSounds[nameEffect];
-            audioSourceTarget.Play();
-        }
-        else
-        {
-            audioSourceTarget.PlayOneShot(_sourcesSounds[nameEffect]);
-        }
-    }
-
-    public void StopSomeTypeSoundOnObjectLEGACY(TYPE_SOUND typeSound, GameObject obj)
-    {
-        if (dictionaryObjectsAndTheirAudioSourcesByTypes.ContainsKey(obj))
-        {
-            if (dictionaryObjectsAndTheirAudioSourcesByTypes[obj].ContainsKey(typeSound))
-            {
-                dictionaryObjectsAndTheirAudioSourcesByTypes[obj][typeSound].audioSource.Stop();
-            }
         }
     }
 
@@ -759,9 +694,19 @@ public class AudioManager : MonoBehaviour
                                                    bool asAudioSource = false,
                                                    bool playInLoop = true)
     {
-        if (string.IsNullOrEmpty(nameEffect) || !_sourcesSounds.ContainsKey(nameEffect))
+        if (string.IsNullOrEmpty(nameEffect) || !_sourcesSounds.ContainsKey(nameEffect) || _amountSoundEffectsInNearTime >= _maxSoundEffectsInNearTime)
         {
             return;
+        }
+
+        if (typeSound == TYPE_SOUND.AttackPeak || typeSound == TYPE_SOUND.Death ||  typeSound == TYPE_SOUND.GetDamage)
+        {
+            _amountSoundEffectsInNearTime++;
+
+            if (_resetAmountSoundsEffectsCorotune == null)
+            {
+                StartCoroutine(ResetAmountSoundsEffects());
+            }
         }
 
         if (typeSoundsToStop != null)
@@ -787,6 +732,13 @@ public class AudioManager : MonoBehaviour
     public void StopSomeTypeSoundOnEmitter(TYPE_SOUND typeSound, AudioEmitter audioEmitter)
     {
         audioEmitter.Stop(typeSound);
+    }
+
+    private IEnumerator ResetAmountSoundsEffects()
+    {
+        yield return new WaitForSecondsRealtime(_nearTime);
+        _amountSoundEffectsInNearTime = 0;
+        _resetAmountSoundsEffectsCorotune = null;
     }
 
 
