@@ -306,15 +306,15 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f }, 
-                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f }, 
-                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1f }, 
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f }, 
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 4f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f },
-                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f },
-                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 4f } }, false);
         }
 
     }
@@ -322,15 +322,15 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f }, 
-                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f }, 
-                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 4f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 10f },
-                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 10f },
-                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 10f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 4f } }, false);
         }
 
     }
@@ -338,11 +338,15 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 100f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 2f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 6f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 100f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 2f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 6f } }, false);
         }
 
     }
@@ -350,11 +354,15 @@ public class ScoreManager : MonoBehaviour
     {
         if (isApplying)
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1000f } }, true);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 3f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 6f } }, true);
         }
         else
         {
-            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 1000f } }, false);
+            _player.ChangeUnitParametersByPercentage(new Dictionary<string, float> { { C.DK.damage, 3f },
+                                                                                     { C.DK.increasingGettingExperienceByKillComboTickPercentage, 6f },
+                                                                                     { C.DK.increasingGettingMoneyByKillComboTickPercentage, 6f } }, false);
         }
 
     }

@@ -21,7 +21,7 @@ public static class AdjustUnitParameters
                 { C.DK.timeStuneByStanartAttack, 2 },
                 { C.DK.evasionPercentage, 0 },
                 { C.DK.comboOneHitKillMultiplayer, 10f },
-                { C.DK.timeRecoverStaminaPoint, 1.6f },
+                { C.DK.timeRecoverStaminaPoint, 1.55f },
                 //{ C.DK.timeZeroizeKillComboTicks, 1f },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.PlayerGotDamage }, // и какого хрена я это константой не делаю... шиза. 20.09 - Делаю!
                 { C.DK.nameSoundDeath, C.MusicSounds.PlayerDeath },
@@ -66,7 +66,7 @@ public static class AdjustUnitParameters
         {
             C.DK.Door, new Dictionary<string, object>()
             {
-                { C.DK.healthMax, 1250 }
+                { C.DK.healthMax, 1500 }
             }
         }
         };
