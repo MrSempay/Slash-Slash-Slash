@@ -472,7 +472,7 @@ public class Equipment : MonoBehaviour
         CoroutineManager.Instance.StopManagedCoroutine(gameObject, _callDownAnimationCoroutine);
         _areaDetectEnteringExiting.somethingEnterExitArea -= PlayerEnteredInfoArea;
 
-        _fsm.StateCurrent.Exit(); // Если снаряжении находится в состоянии Selected, то дабы корректно завершить состояние Translate у Player необходимо выйти из состояния Selected.
+        _fsm?.StateCurrent.Exit(); // Если снаряжении находится в состоянии Selected, то дабы корректно завершить состояние Translate у Player необходимо выйти из состояния Selected.
 
         StopAllCoroutines();
 

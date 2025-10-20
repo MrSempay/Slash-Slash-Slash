@@ -31,13 +31,10 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     // --- Async scaffolding ---
     //private CancellationTokenSource _mainScenarioCts;
     //private CancellationTokenSource _defeatScenarioCts;
-    private CancellationTokenSource _masterScenarioCts;
 
     // ожидалки (по старому — словари для внешних событий)
     private Dictionary<string, TaskCompletionSource<bool>> _dialogueTcs = new(StringComparer.OrdinalIgnoreCase);
-    private Dictionary<string, TaskCompletionSource<bool>> _timerTcs = new(StringComparer.OrdinalIgnoreCase);
     //private Dictionary<string, TaskCompletionSource<bool>> _cameraMoveTcs = new(StringComparer.OrdinalIgnoreCase);
-    private Dictionary<string, TaskCompletionSource<bool>> _waveTcs = new(StringComparer.OrdinalIgnoreCase);
 
     // покупки — (оставил для совместимости, но используем ReplayableEvent)
     private TaskCompletionSource<bool> _firstSpellBuyTcs;
@@ -161,6 +158,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         var current = Volatile.Read(ref _stepCts);
         try { current?.Cancel(); } catch { }
     }
+
 
     private async Task RunMasterScenarioLoop(CancellationToken ct)
     {
@@ -558,273 +556,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     // ---------------------- helper-обёртки (как у тебя были) ----------------------
 
 
-    private Task StartDialogueAsyncL(string dialogueName, CancellationToken ct)
-    {
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        // Положим в словарь до вызова StartDialogueNEW — чтобы не пропустить быстрый ответ
-        _dialogueTcs[dialogueName] = tcs;
-
-        var reg = ct.Register(() =>
-        {
-            if (_dialogueTcs.Remove(dialogueName))
-                tcs.TrySetCanceled(ct);
-        });
-
-        try
-        {
-            //Debug.Log(dialogueName);
-            StartDialogue(dialogueName);
-        }
-        catch (Exception ex)
-        {
-            _dialogueTcs.Remove(dialogueName);
-            reg.Dispose();
-            tcs.TrySetException(ex);
-            return tcs.Task;
-        }
-
-        // Очистка словаря по завершению
-        tcs.Task.ContinueWith(_ => {
-            reg.Dispose();
-            _dialogueTcs.Remove(dialogueName);
-        }, TaskScheduler.Default);
-
-        return tcs.Task;
-    }
-
-
-    private Task WaitForTimerAsync(string timerMarker, float seconds, CancellationToken ct)
-    {
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        _timerTcs[timerMarker] = tcs;
-
-        var reg = ct.Register(() =>
-        {
-            if (_timerTcs.Remove(timerMarker))
-                tcs.TrySetCanceled(ct);
-        });
-
-        try
-        {
-
-            JustTimeWait(seconds, timerMarker);
-        }
-        catch (Exception ex)
-        {
-            _timerTcs.Remove(timerMarker);
-            reg.Dispose();
-            tcs.TrySetException(ex);
-            return tcs.Task;
-        }
-
-        tcs.Task.ContinueWith(_ => {
-            reg.Dispose();
-            _timerTcs.Remove(timerMarker);
-        }, TaskScheduler.Default);
-
-        return tcs.Task;
-    }
-
-    // Таймер с кнопкой пропуска
-    private Task WaitForTimerWithSkipAsync(string timerMarker, float seconds, CancellationToken ct, string textButtonSkip)
-    {
-        var tcs = new TaskCompletionSource<bool>();
-        _timerTcs[timerMarker] = tcs;
-
-        // Создаём кнопку и привязываем к ЭТОМУ tcs
-        var skipButton = GameManager.Instance.InstanceTextButton(
-            false, Player.instance.scriptUI.rtContainerButtonsUI,
-            textButtonSkip,
-            () => tcs.TrySetResult(true)
-        );
-
-        var reg = ct.Register(() =>
-        {
-            if (_timerTcs.Remove(timerMarker))
-            {
-                Destroy(skipButton);
-                tcs.TrySetCanceled(ct); // вот ТАКАЯ структура автоматически выбрасывает throw new OperationCanceledException(ct)!!! Очень удобно, можно сразу ловить в вызываемом контексте
-            }
-        });
-
-        JustTimeWait(seconds, timerMarker);
-
-        // захватываем main thread context
-        var sync = SynchronizationContext.Current;
-
-        tcs.Task.ContinueWith(_ =>
-        {
-            reg.Dispose();
-            _timerTcs.Remove(timerMarker);
-
-            // Очистка должна быть на main thread:
-            if (sync != null)
-            {
-                sync.Post(__ =>
-                {
-                    if (skipButton != null)
-                        UnityEngine.Object.Destroy(skipButton);
-                }, null);
-            }
-            else
-            {
-                // fallback — если по какой-то причине контекста нет
-                UnityEngine.Object.Destroy(skipButton);
-            }
-        });
-
-        return tcs.Task;
-    }
-
-    /// <summary>
-    /// Корутинный таймер (scaled time). Возвращаем Task, который завершается когда таймер сработал или был пропущен/отменён.
-    /// Вызывать этот метод из main thread (обычно так и делается в Unity).
-    /// </summary>
-    private readonly object _timerTcsLock = new object();
-    private async Task WaitForTimerWithSkipAsyncNEW(string timerMarker, float seconds, string textButtonSkip, CancellationToken ctExtended = default)
-    {
-
-        // создаём tcs правильно
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        // атомарно добавляем в словарь
-        lock (_timerTcsLock)
-        {
-            if (_timerTcs.ContainsKey(timerMarker))
-                throw new InvalidOperationException($"Timer '{timerMarker}' already exists.");
-            _timerTcs[timerMarker] = tcs;
-        }
-
-        // захватим текущий sync context (main thread) чтобы можно было безопасно постить Destroy
-        var sync = SynchronizationContext.Current;
-
-        // запустим корутину (она в конце вызовет TimerFinished(marker), который должен
-        // найти tcs и TrySetResult(true); JustTimeWait возвращает handle, если нужно)
-        var coroutineHandle = JustTimeWait(seconds, timerMarker);
-
-        // создаём кнопку — её callback выполняется на main thread
-        _skipTimerStuff = new SkipTimerStuff(coroutineHandle, gameObject, textButtonSkip, timerMarker, seconds, _timerTcs, _timerTcsLock);
-
-        // Регистрация внешней отмены. Callback может выполняться на thread-pool,
-        // поэтому в нем НЕ вызываем Unity API напрямую.
-        CancellationTokenRegistration reg = default;
-        if (ctExtended.CanBeCanceled && ctExtended != default)
-        {
-            reg = ctExtended.Register(() =>
-            {
-                // этот код может выполняться на любом потоке!
-                TaskCompletionSource<bool> removed = null;
-                lock (_timerTcsLock)
-                {
-                    if (_timerTcs.TryGetValue(timerMarker, out var tmp))
-                    {
-                        removed = tmp;
-                        _timerTcs.Remove(timerMarker);
-                    }
-                }
-
-                if (removed != null)
-                {
-                    removed.TrySetCanceled(); // пометить как отменённый
-                }
-
-                // Постим на main-thread удаление UI/остановку корутины
-                if (sync != null)
-                {
-                    sync.Post(_ =>
-                    {
-                        //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-
-                        SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
-                        if (lastSTF != null) lastSTF.Dispose();
-
-                    }, null);
-                }
-                else
-                {
-                    // Если sync == null (редко в Unity), попытаться безопасно выполнить — но это небезопасно.
-                    //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-
-                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
-                    if (lastSTF != null) lastSTF.Dispose();
-                }
-            });
-        }
-
-        try
-        {
-            // Ожидаем завершения tcs. Этот await вернёт управление на тот же SynchronizationContext,
-            // с которого был вызван метод (обычно main thread), поэтому cleanup в finally сможет вызывать Unity API напрямую.
-            await tcs.Task;
-        }
-        finally
-        {
-            // cleanup
-            reg.Dispose();
-
-            // удаляем из словаря, если кто-то ещё не удалил
-            lock (_timerTcsLock)
-            {
-                _timerTcs.Remove(timerMarker);
-            }
-
-            // удаление кнопки и стоп корутины — выполняем на main thread либо через sync.Post
-            if (SynchronizationContext.Current == sync && sync != null)
-            {
-                // уже на main thread
-                //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-
-                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
-                if (lastSTF != null) lastSTF.Dispose();
-            }
-            else if (sync != null)
-            {
-                sync.Post(_ =>
-                {
-                    //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
-                    if (lastSTF != null) lastSTF.Dispose();
-
-                }, null);
-            }
-            else
-            {
-                // no sync — best-effort
-                //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
-                if (lastSTF != null) lastSTF.Dispose();
-            }
-        }
-    }
-
-    private async Task WaitForTimerAsyncL(string timerMarker, float seconds, CancellationToken ct)
-    {
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously); ;
-        _timerTcs[timerMarker] = tcs;
-        var reg = ct.Register(() => tcs.TrySetCanceled(ct)); // в теории эта штука избыточна, ибо мы обрабатываем отмену в catch (OperationCanceledException), но, в теории, если кто-то
-        // вызовет отмену до await, то это поможет нам её отследить. Делаем реактивным методм сразу же, по сути. В теории, опять же, у нас такого не будет, но как интересный экземпляр - оставим
-
-        try
-        {
-            await Task.Delay(TimeSpan.FromSeconds(seconds), ct);
-            tcs.TrySetResult(true); // ← Говорим что таймер успешно завершился
-        }
-        catch (OperationCanceledException)
-        {
-            tcs.TrySetCanceled(ct);
-        }
-        catch (Exception ex)
-        {
-            tcs.TrySetException(ex); // ← Передаём ошибку
-        }
-        finally
-        {
-            reg.Dispose();
-            _timerTcs.Remove(timerMarker);
-        }
-    } // не подходит нам, ибо при паузах (timerScale = 0) этот таймер не будет приостанавли-
-    // ваться, нужно вернуться к корутинам. Эх, а такой метод был...
     
     private async Task<Unit> SpawnFirstEnemyAndWaitKillAsync(GameObject enemyPrefab, Vector3 pos, CancellationToken ct)
     {
@@ -864,25 +595,6 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         }
     }
 
-    private Task WaitForWaveDestroyAsync(string waveName, CancellationToken ct)
-    {
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        _waveTcs[waveName] = tcs;
-
-        var reg = ct.Register(() =>
-        {
-            if (_waveTcs.Remove(waveName))
-                tcs.TrySetCanceled(ct);
-        });
-
-        tcs.Task.ContinueWith(_ =>
-        {
-            reg.Dispose();
-            _waveTcs.Remove(waveName);
-        }, TaskScheduler.Default);
-
-        return tcs.Task;
-    }
 
 
     // ---------------------- переопределённые обработчики событий ---------------------- 
@@ -893,40 +605,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     }
 
 
-    protected override void TimerFinished(string markerTimeWait)
-    {
-        base.TimerFinished(markerTimeWait);
 
-        TaskCompletionSource<bool> tcs = null;
-        lock (_timerTcsLock)
-        {
-            if (_timerTcs.TryGetValue(markerTimeWait, out var tmp))
-            {
-                tcs = tmp;
-                _timerTcs.Remove(markerTimeWait);
-            }
-        }
-
-        if (tcs != null)
-        {
-            tcs.TrySetResult(true);
-            return;
-        }
-
-        Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
-    }
-
-    protected override void EnemiesWaveWasDestroyed(string nameWave)
-    {
-        base.EnemiesWaveWasDestroyed(nameWave);
-        if (_waveTcs.TryGetValue(nameWave, out var waveInfo))
-        {
-            waveInfo.TrySetResult(true);
-
-            return;
-        }
-        Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
-    }
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
@@ -989,14 +668,14 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         foreach (var kv in _dialogueTcs) kv.Value.TrySetCanceled();
         _dialogueTcs.Clear();
 
-        foreach (var kv in _timerTcs) kv.Value.TrySetCanceled();
-        _timerTcs.Clear();
+        //foreach (var kv in _timerTcs) kv.Value.TrySetCanceled();
+        //_timerTcs.Clear();
 
         //foreach (var kv in _cameraMoveTcs) kv.Value.TrySetCanceled();
         //_cameraMoveTcs.Clear();
 
-        foreach (var kv in _waveTcs) kv.Value.TrySetCanceled();
-        _waveTcs.Clear();
+        //foreach (var kv in _waveTcs) kv.Value.TrySetCanceled();
+        //_waveTcs.Clear();
 
         _firstSpellBuyTcs?.TrySetCanceled();
         _firstAmmunitionBuyTcs?.TrySetCanceled();

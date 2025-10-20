@@ -339,6 +339,8 @@ public class C
             public static class Dialogues
             {
                 public const string DefeatByTargets = "DefeatByTargets";
+                public const string DialogueStart = "DialogueStart";
+                public const string DialogueFinish = "DialogueFinish";
             }
         }
         public static class Level1
@@ -384,6 +386,9 @@ public class C
         public static class LevelDefault
         {
             public const string Dialogue1_1 = "Level1/Dialogue1.1";
+            public const string WaitBeforeFirstWave = "WaitBeforeFirstWave";
+            public const string WaitBeforeLastDialogue = "WaitBeforeLastDialogue";
+            public const string WaitAfterLastDialogue = "WaitBeforeFirstWave";
         }
     }
 

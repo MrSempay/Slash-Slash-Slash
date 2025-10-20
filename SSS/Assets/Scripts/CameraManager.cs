@@ -69,31 +69,28 @@ public class CameraManager : ICleanUp
         if (param.Target == null) throw new ArgumentNullException(nameof(param.Target));
         if (string.IsNullOrEmpty(param.FinishKey)) throw new ArgumentNullException(nameof(param.FinishKey));
         if (IsDisposed) throw new ObjectDisposedException(nameof(CameraManager));
-        Debug.Log(1231);
-        //param.Target = null;
-        Debug.Log(param.Target.position);
-        Debug.Log(12312412);
+
         var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         var mi = new MoveInfo { Tcs = tcs };
 
         if (!_moves.TryAdd(param.FinishKey, mi))
             throw new InvalidOperationException($"Move with key '{param.FinishKey}' is already running.");
-        Debug.Log("Чё за хрень?");
+        //Debug.Log("Чё за хрень?");
         if (param.CancellationToken.CanBeCanceled)
         {
             mi.CancelReg = param.CancellationToken.Register(() =>
             {
-                Debug.Log(1);
+                //Debug.Log(1);
                 if (_moves.TryRemove(param.FinishKey, out var removed))
                 {
-                    Debug.Log(2);
+                    //Debug.Log(2);
                     removed.Tcs.TrySetCanceled(param.CancellationToken);
                     MainThreadPost(() =>
                     {
-                        Debug.Log(3);
-                        try { if (removed.Coroutine != null) CoroutineManager.Instance.StopManagedCoroutine(removed.OwnerCoroutine, removed.Coroutine); }
-                        catch { }
-                    }); Debug.Log(4);
+                        //Debug.Log(3);
+                        //try { if (removed.Coroutine != null) CoroutineManager.Instance.StopManagedCoroutine(removed.OwnerCoroutine, removed.Coroutine); }
+                        //catch { }
+                    });
                     removed.CancelReg.Dispose();
                 }
             });

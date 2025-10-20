@@ -51,86 +51,87 @@ public class DefaultLevelScenario : ScenarioScript
     protected override void Start()
     {
         base.Start();
-        StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueStart}");
+        //StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueStart}");
+        StartScenario();
     }
 
     // ########################################        БЛОК ФУНКЦИЙ-РЕАКЦИЙ        ######################################## //
 
 
-    protected override void DialogueFinished(string nameDialogueWithFolder)
-    {
+    //protected override void DialogueFinished(string nameDialogueWithFolder)
+    //{
         
-        base.DialogueFinished(nameDialogueWithFolder);
-        if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueStart)
-        {
-            _coroutineWaitNextWave = JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeFirstWave");
+    //    base.DialogueFinished(nameDialogueWithFolder);
+    //    if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueStart)
+    //    {
+    //        _coroutineWaitNextWave = JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeFirstWave");
 
-            _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
+    //        _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
 
-            buttonSkipTime = GameManager.Instance.InstanceTextButton(
-            false,
-            Player.instance.scriptUI.rtContainerButtonsUI,
-            C.Other.SkipWaveWait,
-            () =>
-            {
-                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
-                Destroy(buttonSkipTime);
-                Destroy(_objHourglass);
-                buttonSkipTime = null;
-                TimerFinished("waitTimeBeforeFirstWave");
-            }
-            );
-        }
-        else if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueFinish) // в теории, может, у нас будут и другие диалоги на уровне кроме этих двух. Ну, в будущем... недалёком...
-        {
-            JustTimeWait(_timeAfterFinishDialogueBeforePassLevel, "waitTimeAfterFinishDialogueBeforePassLevel");
-        }
+    //        buttonSkipTime = GameManager.Instance.InstanceTextButton(
+    //        false,
+    //        Player.instance.scriptUI.rtContainerButtonsUI,
+    //        C.Other.SkipWaveWait,
+    //        () =>
+    //        {
+    //            try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
+    //            Destroy(buttonSkipTime);
+    //            Destroy(_objHourglass);
+    //            buttonSkipTime = null;
+    //            TimerFinished("waitTimeBeforeFirstWave");
+    //        }
+    //        );
+    //    }
+    //    else if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueFinish) // в теории, может, у нас будут и другие диалоги на уровне кроме этих двух. Ну, в будущем... недалёком...
+    //    {
+    //        JustTimeWait(_timeAfterFinishDialogueBeforePassLevel, "waitTimeAfterFinishDialogueBeforePassLevel");
+    //    }
 
-    }
+    //}
 
-    protected override void TimerFinished(string markerTimeWait)
-    {
-        base.TimerFinished(markerTimeWait);
-        switch (markerTimeWait)
-        {
-            case "waitTimeBeforeFirstWave":
+    //protected internal override void TimerFinished(string markerTimeWait)
+    //{
+    //    base.TimerFinished(markerTimeWait);
+    //    switch (markerTimeWait)
+    //    {
+    //        case "waitTimeBeforeFirstWave":
 
-                if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
-                {
-                    Destroy(buttonSkipTime);
-                    Destroy(_objHourglass);
-                }
+    //            if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
+    //            {
+    //                Destroy(buttonSkipTime);
+    //                Destroy(_objHourglass);
+    //            }
 
-                StartDefaultEnemiesWave();
+    //            StartDefaultEnemiesWave();
 
-                break;
-            case "waitTimeBeforeNextWave":
+    //            break;
+    //        case "waitTimeBeforeNextWave":
 
-                _currentNumberWave++;
+    //            _currentNumberWave++;
 
-                if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
-                { 
-                    Destroy(buttonSkipTime);
-                    Destroy(_objHourglass);
-                }
+    //            if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
+    //            {
+    //                Destroy(buttonSkipTime);
+    //                Destroy(_objHourglass);
+    //            }
 
-                StartDefaultEnemiesWave();
+    //            StartDefaultEnemiesWave();
 
-                break;
+    //            break;
 
-            case "waitAfterLastWaveBeforeFinishDialogue":
+    //        case "waitAfterLastWaveBeforeFinishDialogue":
 
-                StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueFinish}");
+    //            StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueFinish}");
 
-                break;
+    //            break;
 
-            case "waitTimeAfterFinishDialogueBeforePassLevel":
+    //        case "waitTimeAfterFinishDialogueBeforePassLevel":
 
-                FinishLevel();
+    //            FinishLevel();
 
-                break;
-        }
-    }
+    //            break;
+    //    }
+    //}
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
@@ -140,36 +141,36 @@ public class DefaultLevelScenario : ScenarioScript
         scriptPlayer.GiveRewardScore(dictionaryNamesEnemiesWavesAndRewards[nameWave]);
     }
 
-    protected override void EnemiesWaveWasDestroyed(string nameWave)
-    {
-        base.EnemiesWaveWasDestroyed(nameWave);
-        if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1)
-        {
-            _coroutineWaitNextWave = JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
+    //protected internal override void EnemiesWaveWasDestroyed(string nameWave)
+    //{
+    //    base.EnemiesWaveWasDestroyed(nameWave);
+    //    if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1)
+    //    {
+    //        _coroutineWaitNextWave = JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
 
-            _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
+    //        _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
 
-            buttonSkipTime = GameManager.Instance.InstanceTextButton(
-            false,
-            Player.instance.scriptUI.rtContainerButtonsUI,
-            C.Other.SkipWaveWait,
-            () =>
-            {                
-                try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
-                Destroy(buttonSkipTime);
-                Destroy(_objHourglass);
-                buttonSkipTime = null;
-                TimerFinished("waitTimeBeforeNextWave");
-            }
-            );
-        }
-        else
-        {
-            JustTimeWait(_timeAfterLastWaveBeforeFinishDialogue, "waitAfterLastWaveBeforeFinishDialogue");
-        }
+    //        buttonSkipTime = GameManager.Instance.InstanceTextButton(
+    //        false,
+    //        Player.instance.scriptUI.rtContainerButtonsUI,
+    //        C.Other.SkipWaveWait,
+    //        () =>
+    //        {
+    //            try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
+    //            Destroy(buttonSkipTime);
+    //            Destroy(_objHourglass);
+    //            buttonSkipTime = null;
+    //            TimerFinished("waitTimeBeforeNextWave");
+    //        }
+    //        );
+    //    }
+    //    else
+    //    {
+    //        JustTimeWait(_timeAfterLastWaveBeforeFinishDialogue, "waitAfterLastWaveBeforeFinishDialogue");
+    //    }
 
-        
-    }
+
+    //}
 
     // ########################################        СЛУЖЕБНЫЕ ФУНКЦИИ        ######################################## //
 
@@ -210,6 +211,16 @@ public class DefaultLevelScenario : ScenarioScript
         StartEndDialogue,
         End
     }
+    public enum StepMS // Step Defeat Scenario
+    {
+        Start,
+        StartDialogue,
+        WavesFighting,
+        WaitBeforeEndDialogue,
+        EndDialogue,
+        WaitAfterEndDialogue,
+        End
+    }
     public enum ScenarioMode
     {
         MainScenario,      // Обычный проход уровня
@@ -218,9 +229,157 @@ public class DefaultLevelScenario : ScenarioScript
     }
 
 
-    private volatile ScenarioMode _currentMode = ScenarioMode.DefeatScenario;
+    private volatile ScenarioMode _currentMode = ScenarioMode.MainScenario;
     private volatile StepDS _currentStepDS = StepDS.Start;
+    private volatile StepMS _currentStepMS = StepMS.Start;
     private CancellationTokenSource _defeatScenarioCts;
+
+    private void StartScenario()
+    {
+        _masterScenarioCts?.Cancel();
+        _masterScenarioCts?.Dispose();
+        _masterScenarioCts = new CancellationTokenSource();
+
+        // запуск FSM (fire-and-forget)
+        //_ = RunMainScenarioLoop(_mainScenarioCts.Token);
+        _ = RunMasterScenarioLoop(_masterScenarioCts.Token);
+    }
+
+    private async Task RunMasterScenarioLoop(CancellationToken ct)
+    {
+        try
+        {
+            while (_currentMode != ScenarioMode.End && !ct.IsCancellationRequested)
+            {
+                switch (_currentMode)
+                {
+                    case ScenarioMode.MainScenario:
+                        await RunMainScenarioLoop(ct);
+                        break;
+
+                    case ScenarioMode.DefeatScenario:
+                        await RunDefeatScenarioLoop(ct);
+                        // Сценарий поражения завершился
+                        _currentMode = ScenarioMode.End;
+                        break;
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("Master scenario cancelled");
+        }
+    }
+
+    private async Task RunMainScenarioLoop(CancellationToken ct)
+    {
+        while (!ct.IsCancellationRequested && _currentMode == ScenarioMode.MainScenario)
+        {
+            var stepCts = CreateLinkedStepCts(ct);
+            var stepToken = stepCts.Token;
+
+            if (_currentMode != ScenarioMode.MainScenario) // or DefeatScenario in defeat loop
+            {
+                try { stepCts.Cancel(); } catch { }
+                // cleanup happens in finally
+                break;
+            }
+
+            try
+            {
+                switch (_currentStepMS)
+                {
+                    case StepMS.Start:
+
+                        _currentStepMS = StepMS.StartDialogue;
+                        break;
+                    case StepMS.StartDialogue:
+
+                        await StartDialogueAsync(LevelBuilder.instance.selfName + "/" + C.SS.General.Dialogues.DialogueStart, stepToken);
+                        //await Task.Delay(TimeSpan.FromSeconds(_timeAfterFinishDialogueBeforePassLevel), stepToken);
+                        //FinishLevel();
+                        await WaitForTimerWithSkipAsyncNEW(C.SS.LevelDefault.WaitBeforeFirstWave, _listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, C.Other.SkipWaveWait, stepToken);
+
+                        _currentStepMS = StepMS.WavesFighting;
+                        break;
+                    case StepMS.WavesFighting:
+
+                        foreach (var wave in _listInfoAboutEnemiesWaves)
+                        {
+                            string nameWave = _currentNumberWave.ToString();
+                            if (_listInfoAboutEnemiesWaves.Count > 0)
+                            {
+                                Dictionary<Transform, int> dictionaryTargetsAndEnemies = new();
+
+                                foreach (TransformIntPair targetCountPair in _listInfoAboutEnemiesWaves[_currentNumberWave].targetPointAndAmountEnemiesList)
+                                {
+                                    dictionaryTargetsAndEnemies[targetCountPair.target] = targetCountPair.enemyCount;
+                                }
+
+                                LevelBuilder.instance.timeBetweenEnemySpawnIteration = _listInfoAboutEnemiesWaves[_currentNumberWave].timeBetweenEnemySpawnIteration;
+
+                                StartWaveEnemies(dictionaryTargetsAndEnemies,
+                                                 _currentNumberWave.ToString());
+                            }
+
+                            await WaitForWaveDestroyAsync(nameWave, stepToken);
+
+                            if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1) // если не достигли последней волны
+                            {
+                                await WaitForTimerWithSkipAsyncNEW(nameWave, _listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, C.Other.SkipWaveWait, stepToken);
+                                _currentNumberWave++;
+                            }
+
+                        }
+
+                        //FinishLevel();
+                        _currentStepMS = StepMS.WaitBeforeEndDialogue;
+                        break;
+                    case StepMS.WaitBeforeEndDialogue:
+
+                        //await WaitForTimerAsync(C.SS.LevelDefault.WaitBeforeLastDialogue, _timeAfterLastWaveBeforeFinishDialogue, stepToken);
+                        await Task.Delay(TimeSpan.FromSeconds(_timeAfterLastWaveBeforeFinishDialogue), stepToken);
+
+                        _currentStepMS = StepMS.EndDialogue;
+                        break;
+                    case StepMS.EndDialogue:
+
+                        await StartDialogueAsync(LevelBuilder.instance.selfName + "/" + C.SS.General.Dialogues.DialogueFinish, stepToken);
+
+                        _currentStepMS = StepMS.WaitAfterEndDialogue;
+                        break;
+                    case StepMS.WaitAfterEndDialogue:
+
+                        //await WaitForTimerAsync(C.SS.LevelDefault.WaitAfterLastDialogue, _timeAfterFinishDialogueBeforePassLevel, stepToken);
+                        await Task.Delay(TimeSpan.FromSeconds(_timeAfterFinishDialogueBeforePassLevel), stepToken);
+                        _currentStepMS = StepMS.End;
+                        break;
+                    case StepMS.End:
+
+                        FinishLevel();
+                        await Task.Delay(Timeout.Infinite, stepToken);
+                        break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                if (_currentMode != ScenarioMode.MainScenario) return;
+                Debug.Log($"{levelBuildScript.selfName}: сценарий отменён (глобально).");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{levelBuildScript.selfName}: ошибка в RunDefeatScenarioLoop: {ex}");
+            }
+            finally
+            {
+                if (Interlocked.CompareExchange(ref _stepCts, null, stepCts) == stepCts)
+                {
+                    try { stepCts.Dispose(); } catch { }
+                }
+            }
+
+        }
+    }
 
     private async Task RunDefeatScenarioLoop(CancellationToken ct)
     {
@@ -287,7 +446,7 @@ public class DefaultLevelScenario : ScenarioScript
                         break;
                     case StepDS.StartEndDialogue:
 
-                        Task lastDialogueTask = StartDialogueAsync(LevelBuilder.instance.selfName + "/" + C.SS.General.Dialogues.DefeatByTargets, ct); // запустили диалог в фоне, не ждём
+                        Task lastDialogueTask = StartDialogueAsync(LevelBuilder.instance.selfName + "/" + C.SS.General.Dialogues.DefeatByTargets, stepToken); // запустили диалог в фоне, не ждём
                         Task getActualLeaderboardTask = ScoreManager.Instance.GetActualLeaderboardAsync(); // запустили обновление лидерборда в фоне, не ждём
                         Task safeLeaderboardTask = SafeIgnoreErrors(getActualLeaderboardTask);
 

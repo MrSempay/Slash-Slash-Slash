@@ -66,7 +66,7 @@ public class Level1Scenario : ScenarioScript
 
     /* ############################# ¡ÀŒ  ‘”Õ ÷»…-—»√Õ¿ÀŒ¬, »Õ‘Œ–Ã»–”ﬁŸ»’ Œ “ŒÃ, ◊“Œ —ﬁ∆≈“ ƒ¬»∆≈“—ﬂ “¿  »À» »Õ¿◊≈ ############################# */
 
-    protected override void DialogueFinished(string nameDialogueWithFolder)
+    protected internal override void DialogueFinished(string nameDialogueWithFolder)
     {
         base.DialogueFinished(nameDialogueWithFolder);
         switch (nameDialogueWithFolder)
@@ -124,7 +124,7 @@ public class Level1Scenario : ScenarioScript
         
     }
 
-    protected override void TimerFinished(string markerTimeWait)
+    protected internal override void TimerFinished(string markerTimeWait)
     {
         base.TimerFinished(markerTimeWait);
         switch (markerTimeWait)
@@ -186,7 +186,7 @@ public class Level1Scenario : ScenarioScript
         scriptPlayer.GiveRewardScore(dictionaryNamesEnemiesWavesAndRewards[nameWave]);
     }
 
-    protected override void EnemiesWaveWasDestroyed(string nameWave)
+    protected internal override void EnemiesWaveWasDestroyed(string nameWave)
     {
         base.EnemiesWaveWasDestroyed(nameWave);
         switch (nameWave)

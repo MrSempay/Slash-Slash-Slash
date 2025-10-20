@@ -107,18 +107,8 @@ public class ScenarioScript : MonoBehaviour
 
     /* ############################# БЛОК ФУНКЦИЙ-СИГНАЛОВ, ИНФОРМИРУЮЩИХ О ТОМ, ЧТО СЮЖЕТ ДВИЖЕТСЯ ТАК ИЛИ ИНАЧЕ ############################# */
 
-    protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
+    //protected virtual void EnemiesWaveWasDestroyed(string nameWave) { AudioManager.Instance.PlayFightOrAmbientMusic(false); } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
     protected virtual void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave) { } // эмулируется, когда ИГРОК забил всех врагов из текущей волны
-    protected virtual void DialogueFinished(string nameDialogueWithFolder) 
-    { 
-        ScriptCurrentDialogue = null;
-
-        _activeDialogueTcs?.TrySetResult(true);
-        _activeDialogueTcs = null;
-        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
-
-
-    } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
     protected virtual void UnitWasKilled(Unit unit)
     {
         if (unit.nameOfUnit == C.DK.Player)
@@ -126,15 +116,15 @@ public class ScenarioScript : MonoBehaviour
             JustTimeWait(2, "timeAfterPlayerDeathBeforeAdvertisement");
         }
     }
-    protected virtual void TimerFinished(string markerTimeWait)
-    {
-        switch (markerTimeWait)
-        {
-            case "timeAfterPlayerDeathBeforeAdvertisement":
-                //scriptPlayer.interstitialAds.ShowAd();
-                break;
-        }
-    }
+    //protected virtual void TimerFinished(string markerTimeWait)
+    //{
+    //    switch (markerTimeWait)
+    //    {
+    //        case "timeAfterPlayerDeathBeforeAdvertisement":
+    //            //scriptPlayer.interstitialAds.ShowAd();
+    //            break;
+    //    }
+    //}
     protected virtual void DialogueWasStarted(PlayerDialogue playerDialogue)
     {
         //Debug.Log("А он, блять, начался");
@@ -320,6 +310,12 @@ public class ScenarioScript : MonoBehaviour
 
     protected internal CancellationTokenSource _stepCts; // per-step CTS to cancel waits on jump
     protected internal SkipTimerStuff _skipTimerStuff;
+    protected internal CancellationTokenSource _masterScenarioCts;
+
+    private Dictionary<string, TaskCompletionSource<bool>> _timerTcs = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, TaskCompletionSource<bool>> _waveTcs = new(StringComparer.OrdinalIgnoreCase);
+    private TaskCompletionSource<bool> _activeDialogueTcs;
+    private PlayerDialogue _activeDialogue;
 
 
     protected internal CancellationTokenSource CreateLinkedStepCts(CancellationToken masterToken)
@@ -335,8 +331,10 @@ public class ScenarioScript : MonoBehaviour
         return newCts;
     }
 
-    private TaskCompletionSource<bool> _activeDialogueTcs;
-    private PlayerDialogue _activeDialogue;
+
+    // ---------------------- helper-обёртки ----------------------
+
+
     protected internal Task StartDialogueAsync(string dialogueName, CancellationToken ct)
     {
         // АТОМАРНО обрабатываем предыдущий диалог
@@ -392,7 +390,227 @@ public class ScenarioScript : MonoBehaviour
         return newTcs.Task;
     }
 
+    protected internal Task WaitForTimerAsync(string timerMarker, float seconds, CancellationToken ct)
+    {
+        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        _timerTcs[timerMarker] = tcs;
 
+        var reg = ct.Register(() =>
+        {
+            if (_timerTcs.Remove(timerMarker))
+                tcs.TrySetCanceled(ct);
+        });
+
+        try
+        {
+            JustTimeWait(seconds, timerMarker);
+        }
+        catch (Exception ex)
+        {
+            _timerTcs.Remove(timerMarker);
+            reg.Dispose();
+            tcs.TrySetException(ex);
+            return tcs.Task;
+        }
+
+        tcs.Task.ContinueWith(_ => {
+            reg.Dispose();
+            _timerTcs.Remove(timerMarker);
+        }, TaskScheduler.Default);
+
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Корутинный таймер (scaled time). Возвращаем Task, который завершается когда таймер сработал или был пропущен/отменён.
+    /// Вызывать этот метод из main thread (обычно так и делается в Unity).
+    /// </summary>
+    private readonly object _timerTcsLock = new object();
+    protected internal async Task WaitForTimerWithSkipAsyncNEW(string timerMarker, float seconds, string textButtonSkip, CancellationToken ctExtended = default)
+    {
+
+        // создаём tcs правильно
+        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        // атомарно добавляем в словарь
+        lock (_timerTcsLock)
+        {
+            if (_timerTcs.ContainsKey(timerMarker))
+                throw new InvalidOperationException($"Timer '{timerMarker}' already exists.");
+            _timerTcs[timerMarker] = tcs;
+        }
+
+        // захватим текущий sync context (main thread) чтобы можно было безопасно постить Destroy
+        var sync = SynchronizationContext.Current;
+
+        // запустим корутину (она в конце вызовет TimerFinished(marker), который должен
+        // найти tcs и TrySetResult(true); JustTimeWait возвращает handle, если нужно)
+        var coroutineHandle = JustTimeWait(seconds, timerMarker);
+
+        // создаём кнопку — её callback выполняется на main thread
+        _skipTimerStuff = new SkipTimerStuff(coroutineHandle, gameObject, textButtonSkip, timerMarker, seconds, _timerTcs, _timerTcsLock);
+
+        // Регистрация внешней отмены. Callback может выполняться на thread-pool,
+        // поэтому в нем НЕ вызываем Unity API напрямую.
+        CancellationTokenRegistration reg = default;
+        if (ctExtended.CanBeCanceled && ctExtended != default)
+        {
+            reg = ctExtended.Register(() =>
+            {
+                // этот код может выполняться на любом потоке!
+                TaskCompletionSource<bool> removed = null;
+                lock (_timerTcsLock)
+                {
+                    if (_timerTcs.TryGetValue(timerMarker, out var tmp))
+                    {
+                        removed = tmp;
+                        _timerTcs.Remove(timerMarker);
+                    }
+                }
+
+                if (removed != null)
+                {
+                    removed.TrySetCanceled(); // пометить как отменённый
+                }
+
+                // Постим на main-thread удаление UI/остановку корутины
+                if (sync != null)
+                {
+                    sync.Post(_ =>
+                    {
+                        //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
+
+                        SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
+                        if (lastSTF != null) lastSTF.Dispose();
+
+                    }, null);
+                }
+                else
+                {
+                    // Если sync == null (редко в Unity), попытаться безопасно выполнить — но это небезопасно.
+                    //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
+
+                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
+                    if (lastSTF != null) lastSTF.Dispose();
+                }
+            });
+        }
+
+        try
+        {
+            // Ожидаем завершения tcs. Этот await вернёт управление на тот же SynchronizationContext,
+            // с которого был вызван метод (обычно main thread), поэтому cleanup в finally сможет вызывать Unity API напрямую.
+            await tcs.Task;
+        }
+        finally
+        {
+            // cleanup
+            reg.Dispose();
+
+            // удаляем из словаря, если кто-то ещё не удалил
+            lock (_timerTcsLock)
+            {
+                _timerTcs.Remove(timerMarker);
+            }
+
+            // удаление кнопки и стоп корутины — выполняем на main thread либо через sync.Post
+            if (SynchronizationContext.Current == sync && sync != null)
+            {
+                // уже на main thread
+                //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
+
+                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
+                if (lastSTF != null) lastSTF.Dispose();
+            }
+            else if (sync != null)
+            {
+                sync.Post(_ =>
+                {
+                    //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
+                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
+                    if (lastSTF != null) lastSTF.Dispose();
+
+                }, null);
+            }
+            else
+            {
+                // no sync — best-effort
+                //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
+                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); // КОРОЧЕ, ЭТО - ЕБАНННЫЫЫЕЕЕ рудиментные ДЕЙСТВИЯ. Ибо Dispose сам мы уже защитили.
+                if (lastSTF != null) lastSTF.Dispose();
+            }
+        }
+    }
+
+    protected internal Task WaitForWaveDestroyAsync(string waveName, CancellationToken ct)
+    {
+        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        _waveTcs[waveName] = tcs;
+
+        var reg = ct.Register(() =>
+        {
+            if (_waveTcs.Remove(waveName))
+                tcs.TrySetCanceled(ct);
+        });
+
+        tcs.Task.ContinueWith(_ =>
+        {
+            reg.Dispose();
+            _waveTcs.Remove(waveName);
+        }, TaskScheduler.Default);
+
+        return tcs.Task;
+    }
+    protected internal virtual void DialogueFinished(string nameDialogueWithFolder)
+    {
+        ScriptCurrentDialogue = null;
+
+        _activeDialogueTcs?.TrySetResult(true);
+        _activeDialogueTcs = null;
+        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
+
+
+    } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
+
+
+    // ---------------------- обработчики событий ---------------------- 
+
+
+    protected internal virtual void EnemiesWaveWasDestroyed(string nameWave)
+    {
+        //base.EnemiesWaveWasDestroyed(nameWave);
+        AudioManager.Instance.PlayFightOrAmbientMusic(false);
+        if (_waveTcs.TryGetValue(nameWave, out var waveInfo))
+        {
+            waveInfo.TrySetResult(true);
+
+            return;
+        }
+        Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
+    }
+
+    protected internal virtual void TimerFinished(string markerTimeWait)
+    {
+        //base.TimerFinished(markerTimeWait);
+
+        TaskCompletionSource<bool> tcs = null;
+        lock (_timerTcsLock)
+        {
+            if (_timerTcs.TryGetValue(markerTimeWait, out var tmp))
+            {
+                tcs = tmp;
+                _timerTcs.Remove(markerTimeWait);
+            }
+        }
+
+        if (tcs != null)
+        {
+            tcs.TrySetResult(true);
+            return;
+        }
+
+        Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
+    }
 
     #endregion FSM-async scenario integraion
 
@@ -401,6 +619,13 @@ public class ScenarioScript : MonoBehaviour
     {
         _cts?.Cancel();
         _cts?.Dispose();
+
+        foreach (var kv in _timerTcs) kv.Value.TrySetCanceled();
+        _timerTcs.Clear();
+
+        foreach (var kv in _waveTcs) kv.Value.TrySetCanceled();
+        _waveTcs.Clear();
+
 
         if (_moveCameraCoroutine != null)
         {

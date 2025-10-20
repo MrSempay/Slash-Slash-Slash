@@ -440,7 +440,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
     // ---------------------- переопределённые обработчики событий ----------------------
 
-    protected override void DialogueFinished(string nameDialogueWithFolder)
+    protected internal override void DialogueFinished(string nameDialogueWithFolder)
     {
         //Debug.Log("А диалог-то закончили");
         base.DialogueFinished(nameDialogueWithFolder);
@@ -454,7 +454,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
         Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
     }
 
-    protected override void TimerFinished(string markerTimeWait)
+    protected internal override void TimerFinished(string markerTimeWait)
     {
         base.TimerFinished(markerTimeWait);
         if (_timerTcs.TryGetValue(markerTimeWait, out var tcs))
@@ -485,7 +485,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
         Debug.Log($"MovingCameraPlayerWasFinished (no awaiter): {keyFinishing}");
     }
 
-    protected override void EnemiesWaveWasDestroyed(string nameWave)
+    protected internal override void EnemiesWaveWasDestroyed(string nameWave)
     {
         base.EnemiesWaveWasDestroyed(nameWave);
 
