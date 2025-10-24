@@ -227,7 +227,8 @@ public class CameraManager : ICleanUp
                     tFinal = customCurve.Evaluate(t);
                     break;
                 case CameraMoveType.EaseInOut33:
-                    tFinal = EaseInOut33(t);
+                    //tFinal = EaseInOut33(t);
+                    tFinal = EaseInOutCubic(t);
                     break;
                 case CameraMoveType.Linear:
                 default:
@@ -318,7 +319,8 @@ public class CameraManager : ICleanUp
                     tFinal = customCurve.Evaluate(t);
                     break;
                 case CameraMoveType.EaseInOut33:
-                    tFinal = EaseInOut33(t);
+                    //tFinal = EaseInOut33(t);
+                    tFinal = EaseInOutCubic(t);
                     break;
                 case CameraMoveType.Linear:
                 default:
@@ -340,7 +342,7 @@ public class CameraManager : ICleanUp
 
         onFinished?.Invoke();
     }
-    private float EaseInOut33(float t)
+    private float EaseInOut33L(float t)
     {
         if (t < 0.33f)
         {
@@ -360,12 +362,50 @@ public class CameraManager : ICleanUp
         }
     }
 
+    private float EaseInOut33(float t)
+    {
+        // clamp for safety
+        t = Mathf.Clamp01(t);
+
+        if (t < 0.33f)
+        {
+            float nt = t / 0.33f;
+            // Ускорение от 0 до 0.33
+            return 0.165f * nt * nt; // 0.5 * 0.33f = 0.165f
+        }
+        else if (t > 0.66f)
+        {
+            float nt = (t - 0.66f) / 0.34f;
+            float decel = 1f - (1f - nt) * (1f - nt);
+            // Плавное замедление от 0.66 до 1.0
+            return 0.66f + 0.34f * decel * 0.5f;
+        }
+        else
+        {
+            // Средний участок — линейный
+            return 0.165f + (t - 0.33f); // Смещаем с учётом первых 0.165f
+        }
+    }
+
     private static void MainThreadPost(Action a)
     {
         var sync = SynchronizationContext.Current;
         if (sync != null) GameManager.UnityContext.Post(_ => a(), null);
         else a();
     }
+    private float EaseInOutCubic(float t)
+    {
+        t = Mathf.Clamp01(t);
+        if (t < 0.5f)
+            return 4f * t * t * t;        // 0..0.5
+        else
+        {
+            float f = (2f * t) - 2f;
+            return 0.5f * f * f * f + 1f; // 0.5..1
+        }
+    }
+
+
 
     public bool IsDisposed => Volatile.Read(ref _disposed) == 1;
 

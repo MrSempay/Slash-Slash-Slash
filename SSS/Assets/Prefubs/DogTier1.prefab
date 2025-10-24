@@ -305,14 +305,12 @@ GameObject:
   - component: {fileID: 3534268453758617834}
   - component: {fileID: 7629688906042708177}
   - component: {fileID: 8710877732140943271}
-  - component: {fileID: 2405952827310194547}
-  - component: {fileID: 3562836757429485931}
   - component: {fileID: 2532169821740939361}
   - component: {fileID: 9078874140750268131}
   - component: {fileID: 5745024879600731210}
-  - component: {fileID: 1159026097754620854}
+  - component: {fileID: 5934356755869602230}
   m_Layer: 3
-  m_Name: Dog
+  m_Name: DogTier1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,35 +414,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &2405952827310194547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2534148408775844546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 569e7eb5a7031914f8541281e3aecabd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentHealth: 100
-  healthMax: 100
-  DamageReductionPercentage: 0
---- !u!114 &3562836757429485931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2534148408775844546}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b1056b889ad7e14dafe4fb9fadb0138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
-  damageInterval: 1
 --- !u!195 &2532169821740939361
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -671,7 +640,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1159026097754620854
+--- !u!114 &5934356755869602230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -680,7 +649,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2534148408775844546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c257ad58d0a22a840b1de93c20e85ae7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f889c680c9c8ba4b9f1af4c6a94fe5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _damageReductionPercentage: 0
@@ -697,7 +666,6 @@ MonoBehaviour:
   nameSoundDeath: 
   nameSoundWalk: 
   isGrounded: 1
-  isInvicible: 0
   stunePlace: {fileID: 3576711239184067755}
   healthMax: 0
   jumpForce: 0

@@ -100,6 +100,7 @@ public class ScenarioScript : MonoBehaviour
         _aliveMTExceptedPlayer.Remove(target);
         if (_aliveMTExceptedPlayer.Count == 0)
         {
+            Debug.Log("≈банашка");
             Defeat();
         }
     }
@@ -253,7 +254,7 @@ public class ScenarioScript : MonoBehaviour
         levelBuildScript.currentWave = nameWave;
         levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
     }
-    protected virtual void Defeat()
+    protected internal virtual void Defeat()
     {
         
     }
@@ -330,6 +331,7 @@ public class ScenarioScript : MonoBehaviour
         }
         return newCts;
     }
+
 
 
     // ---------------------- helper-обЄртки ----------------------

@@ -18,7 +18,7 @@ public class DefaultLevelScenario : ScenarioScript
     [SerializeField] private float _timeAfterFirstDialogueBeforeFirstWave = 15f;
     [SerializeField] private float _timeAfterLastWaveBeforeFinishDialogue = 3f;
     [SerializeField] private float _timeAfterFinishDialogueBeforePassLevel = 15f;
-    [SerializeField] private List<InfoAboutEnemyWave> _listInfoAboutEnemiesWaves; 
+    [SerializeField] private List<InfoAboutEnemyWave> _listInfoAboutEnemiesWaves;
 
     [System.Serializable]
     class InfoAboutEnemyWave // планируется использовать для шаблона уровней типа: диалог => N-ое кол-во волн => диалог 
@@ -234,6 +234,21 @@ public class DefaultLevelScenario : ScenarioScript
     private volatile StepMS _currentStepMS = StepMS.Start;
     private CancellationTokenSource _defeatScenarioCts;
 
+    private void RequestJumpStep(StepMS target)
+    {
+        Debug.Log($"[Scenario Step] RequestJump -> {target}");
+        _currentStepMS = target;
+        var current = Volatile.Read(ref _stepCts);
+        try { current?.Cancel(); } catch { }
+    }
+    private void RequestJumpScenario(ScenarioMode target)
+    {
+        Debug.Log($"[Scenario Mode] RequestJump -> {target}");
+        _currentMode = target;
+        var current = Volatile.Read(ref _stepCts);
+        try { current?.Cancel(); } catch { }
+    }
+
     private void StartScenario()
     {
         _masterScenarioCts?.Cancel();
@@ -383,10 +398,12 @@ public class DefaultLevelScenario : ScenarioScript
 
     private async Task RunDefeatScenarioLoop(CancellationToken ct)
     {
-        while (_currentStepDS != StepDS.End && !ct.IsCancellationRequested && _currentMode == ScenarioMode.DefeatScenario)
+        while (!ct.IsCancellationRequested && _currentMode == ScenarioMode.DefeatScenario)
         {
+
             var stepCts = CreateLinkedStepCts(ct);
             var stepToken = stepCts.Token;
+            //Debug.Log("Ебанейший пиздец");
 
             if (_currentMode != ScenarioMode.DefeatScenario) // or DefeatScenario in defeat loop
             {
@@ -401,6 +418,7 @@ public class DefaultLevelScenario : ScenarioScript
                 {
                     case StepDS.Start:
 
+                            //Debug.Log("И чё за параша?");
                         CameraManager.Instance.DelinkCameraPlayer();
                         Player.instance.scriptUI.HideAllUI();
 
@@ -410,6 +428,7 @@ public class DefaultLevelScenario : ScenarioScript
 
                         foreach (IMainTarget mainTarget in _allDeterminedMTExceptedPlayer)
                         {
+                            //Debug.Log("И чё за параша?");
                             var paramSchool = new CameraManager.CameraMoveParams
                             {
                                 Camera = Player.instance.mainCamera,
@@ -460,6 +479,7 @@ public class DefaultLevelScenario : ScenarioScript
                         _currentStepDS = StepDS.End;
                         break;
                     case StepDS.End:
+                        await Task.Delay(Timeout.Infinite, stepToken);
                         break;
                 }
             }
@@ -483,9 +503,9 @@ public class DefaultLevelScenario : ScenarioScript
         }
     }
 
-    protected override void Defeat()
+    protected internal override void Defeat()
     {
-        Debug.Log("aaa");
+        //Debug.Log("aaa");
         _defeatScenarioCts?.Cancel();
         _defeatScenarioCts?.Dispose();
         _defeatScenarioCts = new CancellationTokenSource();
@@ -493,7 +513,9 @@ public class DefaultLevelScenario : ScenarioScript
         // запуск FSM (fire-and-forget)
         //_ = RunMainScenarioLoop(_mainScenarioCts.Token);
         Player.instance.IsInvincible = true;
-        _ = RunDefeatScenarioLoop(_defeatScenarioCts.Token);
+
+        RequestJumpScenario(ScenarioMode.DefeatScenario);
+        //_ = RunDefeatScenarioLoop(_defeatScenarioCts.Token);
 
     }
 
@@ -507,6 +529,11 @@ public class DefaultLevelScenario : ScenarioScript
         base.OnDestroy();
         _defeatScenarioCts?.Cancel();
         _defeatScenarioCts?.Dispose();
+        _defeatScenarioCts = null;
+
+        _masterScenarioCts?.Cancel();
+        _masterScenarioCts?.Dispose();
+        _masterScenarioCts = null;
     }
 
 }

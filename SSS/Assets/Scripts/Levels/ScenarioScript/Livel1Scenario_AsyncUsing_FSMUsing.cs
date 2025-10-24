@@ -44,7 +44,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     private readonly ReplayableEvent<bool> _ammoBought = new ReplayableEvent<bool>();
 
     // --- State machine ---
-    public enum StepMS // Steop Main Scenario
+    public enum StepMS // Step Main Scenario
     {
         WaitDialogue1_1,
         SpawnFirstEnemyIfNeeded,
@@ -190,7 +190,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     {
         try
         {
-            while (_currentStepMS != StepMS.End && !ct.IsCancellationRequested && _currentMode == ScenarioMode.MainScenario)
+            while (!ct.IsCancellationRequested && _currentMode == ScenarioMode.MainScenario)
             {
                 // per-step CTS — связанный с глобальным cancellation token
                 var stepCts = CreateLinkedStepCts(ct);
@@ -412,6 +412,8 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
                         case StepMS.End:
                         default:
+                            FinishLevel();
+                            await Task.Delay(Timeout.Infinite, stepToken);
                             _currentStepMS = StepMS.End;
                             break;
                     }
@@ -444,7 +446,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
     private async Task RunDefeatScenarioLoop(CancellationToken ct)
     {
-        while (_currentStepDS != StepDS.End && !ct.IsCancellationRequested && _currentMode == ScenarioMode.DefeatScenario)
+        while (!ct.IsCancellationRequested && _currentMode == ScenarioMode.DefeatScenario)
         {
             var stepCts = CreateLinkedStepCts(ct);
             var stepToken = stepCts.Token;
@@ -529,7 +531,8 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
                         _currentStepDS = StepDS.End;
                         break;
-                    case StepDS.End:                        
+                    case StepDS.End:
+                        await Task.Delay(Timeout.Infinite, stepToken);
                         break;
                 }
             }
@@ -598,7 +601,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
 
     // ---------------------- переопределённые обработчики событий ---------------------- 
-    protected override void Defeat()
+    protected internal override void Defeat()
     {
         Player.instance.IsInvincible = true;
         RequestJumpScenario(ScenarioMode.DefeatScenario);

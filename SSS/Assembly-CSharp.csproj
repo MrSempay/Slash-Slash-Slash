@@ -167,6 +167,7 @@
     <Compile Include="Assets\Scripts\SaveLoad\Wrapper.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\InterstitialAdLoaderBridge.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterInputString.cs" />
+    <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy\Dog\DogTier2.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AdInfoBridge.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AdRequestBridge.cs" />
     <Compile Include="Assets\Scripts\Legacy-code\HealthBar.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Assets\Scripts\Levels\ScenarioScript\Livel1Scenario_AsyncUsing_FSMUsing.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyInterstitialClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateStuneUnit.cs" />
+    <Compile Include="Assets\Scripts\Test\WeaponData.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\Location.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateIdleEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\FuckingBuggingRotationForBody.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Assets\YandexMobileAds\Common\IMobileAdsClient.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ICleanUp.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\ImpressionData.cs" />
+    <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy\Dog\DogTier3.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\AreaDetectors\TriggerArea.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingText.cs" />
@@ -306,6 +309,7 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder\LevelBuildDefaultLevel.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdInfo.cs" />
+    <Compile Include="Assets\Scripts\Unit\Enemy\MeleeEnemy\Dog\DogTier1.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyAppOpenAdClient.cs" />
     <Compile Include="Assets\Scripts\Unit\Door.cs" />
     <Compile Include="Assets\Scripts\Music\ButtonClickSoundInitializer.cs" />
