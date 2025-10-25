@@ -254,6 +254,13 @@ public class ScenarioScript : MonoBehaviour
         levelBuildScript.currentWave = nameWave;
         levelBuildScript.TargetPointsForEnemy = new(targetPointsForEnemy);
     }
+    protected virtual void StartWaveEnemiesNEW(Dictionary<Transform, List<TypesAndAmountEnemies>> targetPointsForEnemiesTypes, string nameWave)
+    {
+        AudioManager.Instance.PlayFightOrAmbientMusic(true);
+
+        levelBuildScript.currentWave = nameWave;
+        levelBuildScript.TargetPointsForEnemyNEW = new(targetPointsForEnemiesTypes);
+    }
     protected internal virtual void Defeat()
     {
         

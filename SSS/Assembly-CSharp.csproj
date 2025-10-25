@@ -79,10 +79,10 @@
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelBuilder\LevelBuildLevel1.cs" />
-    <Compile Include="Assets\Scripts\TransformIntPair.cs" />
     <Compile Include="Assets\Scripts\FsmState.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\IRewardedAdClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\MobileAdsClient.cs" />
+    <Compile Include="Assets\Scripts\DataClasses\TransformIntPair.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\InterstitialBridge.cs" />
     <Compile Include="Assets\Scripts\WeaponSettings\StringWeaponInfoPair.cs" />
@@ -224,6 +224,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\MobileAdsClient.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\MonoPInvokeCallbackAttribute.cs" />
     <Compile Include="Assets\Scripts\UI\Titles\ScrollFadeController.cs" />
+    <Compile Include="Assets\Scripts\DataClasses\TypesAndAmountEnemies.cs" />
     <Compile Include="Assets\Scripts\Levels\ScenarioScript\Livel1Scenario_AsyncUsing_FSMUsing.cs" />
     <Compile Include="Assets\YandexMobileAds\Common\DummyInterstitialClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateStuneUnit.cs" />

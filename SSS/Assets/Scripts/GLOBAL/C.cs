@@ -89,6 +89,9 @@ public class C
         // названия юнитов
         public const string Player = "Player";
         public const string MeleeEnemy = "MeleeEnemy";
+        public const string DogTier1 = "DogTier1";
+        public const string DogTier2 = "DogTier2";
+        public const string DogTier3 = "DogTier3";
         public const string Door = "Door";
 
         // Параметры юнитов
@@ -217,6 +220,11 @@ public class C
         public const string SyncGeneralDataFOLDER = "SyncGeneralData";
         public const string defaultJSON = "default.json";
 
+        public const string PrefubDogTier1 = "Prefubs/Unites/Enemies/DogTier1";
+        public const string PrefubDogTier2 = "Prefubs/Unites/Enemies/DogTier2";
+        public const string PrefubDogTier3 = "Prefubs/Unites/Enemies/DogTier3";
+
+
     }
     public static class Other
     {
@@ -321,6 +329,7 @@ public class C
         public const string ShieldWasHit = "ShieldWasHit";
         public const string Buy = "Buy";
         public const string Teach = "Teach";
+        public const string LightningCharge = "LightningCharge";
         public const string DoorOpening = "DoorOpening";
         public const string DoorClosing = "DoorClosing";
         public const string BuildingCrush = "BuildingCrush";

@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Linq;
 using static CoroutineExtensions;
 using static StaticClassForAdditionalFunctions;
 
@@ -55,84 +56,6 @@ public class DefaultLevelScenario : ScenarioScript
         StartScenario();
     }
 
-    // ########################################        БЛОК ФУНКЦИЙ-РЕАКЦИЙ        ######################################## //
-
-
-    //protected override void DialogueFinished(string nameDialogueWithFolder)
-    //{
-        
-    //    base.DialogueFinished(nameDialogueWithFolder);
-    //    if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueStart)
-    //    {
-    //        _coroutineWaitNextWave = JustTimeWait(_timeAfterFirstDialogueBeforeFirstWave, "waitTimeBeforeFirstWave");
-
-    //        _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
-
-    //        buttonSkipTime = GameManager.Instance.InstanceTextButton(
-    //        false,
-    //        Player.instance.scriptUI.rtContainerButtonsUI,
-    //        C.Other.SkipWaveWait,
-    //        () =>
-    //        {
-    //            try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
-    //            Destroy(buttonSkipTime);
-    //            Destroy(_objHourglass);
-    //            buttonSkipTime = null;
-    //            TimerFinished("waitTimeBeforeFirstWave");
-    //        }
-    //        );
-    //    }
-    //    else if (nameDialogueWithFolder.Split('/')[1] == C.Dilogues.DialogueFinish) // в теории, может, у нас будут и другие диалоги на уровне кроме этих двух. Ну, в будущем... недалёком...
-    //    {
-    //        JustTimeWait(_timeAfterFinishDialogueBeforePassLevel, "waitTimeAfterFinishDialogueBeforePassLevel");
-    //    }
-
-    //}
-
-    //protected internal override void TimerFinished(string markerTimeWait)
-    //{
-    //    base.TimerFinished(markerTimeWait);
-    //    switch (markerTimeWait)
-    //    {
-    //        case "waitTimeBeforeFirstWave":
-
-    //            if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
-    //            {
-    //                Destroy(buttonSkipTime);
-    //                Destroy(_objHourglass);
-    //            }
-
-    //            StartDefaultEnemiesWave();
-
-    //            break;
-    //        case "waitTimeBeforeNextWave":
-
-    //            _currentNumberWave++;
-
-    //            if (buttonSkipTime) // если не через кнопку сюда вошли, до удаляем её принудительно
-    //            {
-    //                Destroy(buttonSkipTime);
-    //                Destroy(_objHourglass);
-    //            }
-
-    //            StartDefaultEnemiesWave();
-
-    //            break;
-
-    //        case "waitAfterLastWaveBeforeFinishDialogue":
-
-    //            StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueFinish}");
-
-    //            break;
-
-    //        case "waitTimeAfterFinishDialogueBeforePassLevel":
-
-    //            FinishLevel();
-
-    //            break;
-    //    }
-    //}
-
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
         Debug.Log("Текущая волна: " + _currentNumberWave);
@@ -140,39 +63,6 @@ public class DefaultLevelScenario : ScenarioScript
         Debug.Log("Текущая волна: " + dictionaryNamesEnemiesWavesAndRewards[nameWave]);
         scriptPlayer.GiveRewardScore(dictionaryNamesEnemiesWavesAndRewards[nameWave]);
     }
-
-    //protected internal override void EnemiesWaveWasDestroyed(string nameWave)
-    //{
-    //    base.EnemiesWaveWasDestroyed(nameWave);
-    //    if (_currentNumberWave < _listInfoAboutEnemiesWaves.Count - 1)
-    //    {
-    //        _coroutineWaitNextWave = JustTimeWait(_listInfoAboutEnemiesWaves[_currentNumberWave].timeBeforeNextWave, "waitTimeBeforeNextWave");
-
-    //        _objHourglass = GameManager.Instance.InvokeHourglass((int)_timeAfterFirstDialogueBeforeFirstWave, true, Player.instance.scriptUI.rtTopRightPanel).gameObject;
-
-    //        buttonSkipTime = GameManager.Instance.InstanceTextButton(
-    //        false,
-    //        Player.instance.scriptUI.rtContainerButtonsUI,
-    //        C.Other.SkipWaveWait,
-    //        () =>
-    //        {
-    //            try { CoroutineManager.Instance.StopManagedCoroutine(gameObject, _coroutineWaitNextWave); } catch { }
-    //            Destroy(buttonSkipTime);
-    //            Destroy(_objHourglass);
-    //            buttonSkipTime = null;
-    //            TimerFinished("waitTimeBeforeNextWave");
-    //        }
-    //        );
-    //    }
-    //    else
-    //    {
-    //        JustTimeWait(_timeAfterLastWaveBeforeFinishDialogue, "waitAfterLastWaveBeforeFinishDialogue");
-    //    }
-
-
-    //}
-
-    // ########################################        СЛУЖЕБНЫЕ ФУНКЦИИ        ######################################## //
 
     private void StartDefaultEnemiesWave()
     {
@@ -324,17 +214,35 @@ public class DefaultLevelScenario : ScenarioScript
                             string nameWave = _currentNumberWave.ToString();
                             if (_listInfoAboutEnemiesWaves.Count > 0)
                             {
-                                Dictionary<Transform, int> dictionaryTargetsAndEnemies = new();
+                                Dictionary<Transform, int> dictionaryTargetsAndEnemies = new(); // для Legacy
+
+                                Dictionary<Transform, List<TypesAndAmountEnemies>> dicionaryTargetsAndTypesEnemies = new();
 
                                 foreach (TransformIntPair targetCountPair in _listInfoAboutEnemiesWaves[_currentNumberWave].targetPointAndAmountEnemiesList)
                                 {
-                                    dictionaryTargetsAndEnemies[targetCountPair.target] = targetCountPair.enemyCount;
+                                    dictionaryTargetsAndEnemies[targetCountPair.target] = targetCountPair.enemyCount; // для Legacy
+                                    dicionaryTargetsAndTypesEnemies[targetCountPair.target] = targetCountPair.typesAndAmountEnemies;
+                                }
+
+                                // если у нас в рамках волны для хоть одного из таргетов массив wave.targetPointAndAmountEnemiesList[?].typesAndAmountEnemies пусть, то
+                                // используем Legacy-вызов волны, иначе - новый
+                                // Вообще, это не лучший вариант. Если мы нашли нулевой массив, для какой-то точки, то нужно ссылаться на targetCountPair.enemyCount и спавнить для него
+                                // только наших врагов по умолчанию (перворанговых собак), но оставим это на совесть балансировщиков.
+                                // Изменили, теперь запускаем Legacy-код только если У ВСЕХ ТАРГЕТОВ список типов врагов пуст!
+                                bool shouldStartWaveLEGACY = wave.targetPointAndAmountEnemiesList.All(targetPoint => targetPoint.typesAndAmountEnemies.Count == 0);
+
+                                if (shouldStartWaveLEGACY)
+                                {
+                                    StartWaveEnemies(dictionaryTargetsAndEnemies,
+                                                    _currentNumberWave.ToString());
+                                }
+                                else
+                                {
+                                    StartWaveEnemiesNEW(dicionaryTargetsAndTypesEnemies,
+                                                    _currentNumberWave.ToString());
                                 }
 
                                 LevelBuilder.instance.timeBetweenEnemySpawnIteration = _listInfoAboutEnemiesWaves[_currentNumberWave].timeBetweenEnemySpawnIteration;
-
-                                StartWaveEnemies(dictionaryTargetsAndEnemies,
-                                                 _currentNumberWave.ToString());
                             }
 
                             await WaitForWaveDestroyAsync(nameWave, stepToken);
@@ -499,7 +407,6 @@ public class DefaultLevelScenario : ScenarioScript
                     try { stepCts.Dispose(); } catch { }
                 }
             }
-
         }
     }
 

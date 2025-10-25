@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using static StaticClassForAdditionalFunctions;
+using static AdjustUnitParameters;
 using System.Collections;
 using System.Linq;
-using static UnityEngine.GraphicsBuffer;
-using Unity.VisualScripting;
 
 
 public class LevelBuilder : MonoBehaviour
@@ -93,7 +92,6 @@ public class LevelBuilder : MonoBehaviour
 
     }
 
-
     protected virtual void Start()
     {
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
@@ -103,14 +101,6 @@ public class LevelBuilder : MonoBehaviour
         AudioManager.Instance.UpdateMusicLevelSet();
         AudioManager.Instance.StartBeginningMusic();
     }
-
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-        
-    }
-
-
 
     protected IEnumerator SpawnEnemyByTimer()
     {
@@ -193,6 +183,130 @@ public class LevelBuilder : MonoBehaviour
 
         }
     }
+
+
+    #region Integration new process waves
+
+    protected Dictionary<Transform, List<TypesAndAmountEnemies>> targetPointsForEnemyNEW = new Dictionary<Transform, List<TypesAndAmountEnemies>>();
+    public Dictionary<Transform, List<TypesAndAmountEnemies>> TargetPointsForEnemyNEW
+    {
+        get { return targetPointsForEnemyNEW; }
+        set
+        {
+            // 1. ќбновл€ем существующий словарь, а не создаем новый
+            targetPointsForEnemyNEW.Clear();
+            foreach (var targetPoint in value)
+            {
+                targetPointsForEnemyNEW[targetPoint.Key] = targetPoint.Value;
+            }
+
+            // 2. ѕровер€ем, есть ли где-то враги дл€ спавна
+            bool shouldSpawnEnemies = targetPointsForEnemyNEW
+                .Any(targetPoint => targetPoint.Value.Any(e => e.amountEnemies > 0));
+
+            // 3. «апускаем или останавливаем корутину
+            if (shouldSpawnEnemies && spawnEnemyByTimerCoroutine == null)
+            {
+                listEnemiesFromLastWave = new();
+                spawnEnemyByTimerCoroutine = CoroutineManager.Instance
+                    .StartManagedCoroutine(this.gameObject, SpawnEnemyByTimerNEW());
+            }
+            else if (!shouldSpawnEnemies && spawnEnemyByTimerCoroutine != null)
+            {
+                CoroutineManager.Instance.StopManagedCoroutine(this.gameObject, spawnEnemyByTimerCoroutine);
+                spawnEnemyByTimerCoroutine = null;
+            }
+        }
+    }
+
+    protected IEnumerator SpawnEnemyByTimerNEW()
+    {
+        while (targetPointsForEnemyNEW.Any(targetPoint => targetPoint.Value.Any(e => e.amountEnemies > 0)))
+        {
+            foreach (var spawnPointTransform in spawnPointsTransforms)
+            {
+                SpawnEnemyNEW(spawnPointTransform);
+            }
+            numberOfSpawnIteration++;
+            if (targetPointsForEnemyNEW.Any(targetPoint => targetPoint.Value.Any(e => e.amountEnemies > 0))) // дабы после последней итерации спавна врагов не ждать 2 секунды до
+            // "завершени€ волны". »бо если за эти 2 секунды будут убиты все враги, то при проверке spawnEnemyByTimerCoroutine на null в методе WasEnemiesWaveDestroyed мы не выдадим true
+            {
+                yield return new WaitForSeconds(timeBetweenEnemySpawnIteration);
+            }
+        }
+        spawnEnemyByTimerCoroutine = null;
+    }
+
+    protected void SpawnEnemyNEW(Transform spawnPointTransform)
+    {
+        if (spawnPointTransform != null)
+        {
+            // получаем список ключей из словар€. ¬ список добавл€ем только те позиции, на которые ещЄ должны идти враги
+            targetsForRandom = new List<Transform>(); // этот список только с теми целевыми точками, куда нужно спавнить более 0 врагов, ибо можем задать точку и указать 0 врагов
+            List<Transform> allTransformTargetPoints = new List<Transform>(); // этот список дл€ вообще всех Transform-ов всех целевых точек. ј может и не надо оно...
+            foreach (var targetPoint in TargetPointsForEnemyNEW)
+            {
+                allTransformTargetPoints.Add(targetPoint.Key);
+                if (targetPoint.Value.Any(targetPoint => targetPoint.amountEnemies > 0)) // если в списке типов врагов у нас хоть где-то их количество больше 0
+                {
+                    if (targetPoint.Key != null) targetsForRandom.Add(targetPoint.Key);
+                }
+            }
+
+            // если массив не пустой (то есть были позици, на которые ещЄ должны идти враги), то движемс€ далее
+            if (targetsForRandom.Count > 0)
+            {
+                // генерируем случайный индекс
+                int randomIndex = UnityEngine.Random.Range(0, targetsForRandom.Count);
+
+                // получаем случайный Transform (ключ) из списка
+                Transform randomTarget = targetsForRandom[randomIndex];
+
+                foreach (TypesAndAmountEnemies infoEnemis in TargetPointsForEnemyNEW[randomTarget]) // проходимс€ по всем типам врагов и смотрим, нужно ли их ещЄ спавнить
+                {
+                    if (infoEnemis.amountEnemies > 0)
+                    {
+                        Enemy newEnemy = Instantiate(enemiesPrefubs[infoEnemis.enemyType], spawnPointTransform.position, spawnPointTransform.rotation);
+                        // уменьшаем количество врагов дл€ заданной врагу позиции в разрезе типов врагов
+                        //Debug.Log(targetsForRandom.Count);
+                        infoEnemis.amountEnemies--;
+                        // присваиваем случайный Transform врагу
+                        newEnemy.CurrentTargetTransform = randomTarget;
+                        newEnemy.isInstancedByLevel = true;
+                        //Debug.Log(targetsForRandom.Count);
+                        newEnemy.transformTargets = allTransformTargetPoints;
+                        listEnemiesFromLastWave.Add(newEnemy);
+                        //Debug.Log(listEnemiesFromLastWave.Count);
+
+                        Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значени€
+                                                                                                                                          // дл€ усилени€ юнитов
+                        Dictionary<string, float> absoluteIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>();
+                        foreach (var increasingValue in percentageIncreaseEnemiesParametersBySpawnIteration)
+                        {
+                            string newKey = string.Copy(increasingValue.Key); // —оздаем новый экземпл€р строки
+                            float newValue = increasingValue.Value * numberOfSpawnIteration; // ƒл€ float это простое копирование значени€
+                            percentageIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
+                        }
+                        foreach (var increasingValue in absoluteIncreaseEnemiesParametersBySpawnIteration)
+                        {
+                            string newKey = string.Copy(increasingValue.Key); // —оздаем новый экземпл€р строки
+                            float newValue = increasingValue.Value * numberOfSpawnIteration; // ƒл€ float это простое копирование значени€
+                            absoluteIncreasedEnemiesParametersBySpawnIteration.Add(newKey, newValue);
+                        }
+                        newEnemy.ChangeUnitParametersByPercentage(percentageIncreasedEnemiesParametersBySpawnIteration, true);
+                        newEnemy.ChangeUnitParametersAndPropertiesByAbsolute(absoluteIncreasedEnemiesParametersBySpawnIteration, true);
+                        return;
+                    }
+                    continue;
+                }
+
+            }
+
+        }
+    }
+
+    #endregion
+
 
 
     // вернЄм true только в случае, если умрЄт последний враг из последней волны

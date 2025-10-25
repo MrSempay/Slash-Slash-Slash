@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     public GameObject prefubTextButtonPanelChoose;
     public GameObject prefubTextButtonScaled;
     public CustomCombo prefubCustomCombo;
+    public DogTier1 prefubDogTier1;
+    public DogTier2 prefubDogTier2;
+    public DogTier3 prefubDogTier3;
     public EquipmentInfoPanel prefubEquipmentInfoPanel;
     public PlaceForEquipment prefubPlaceForEquipment;
     public int currentLevelInOrder = 0;
@@ -371,12 +374,16 @@ public class GameManager : MonoBehaviour
         prefubEquipmentInfoPanel = Resources.Load<EquipmentInfoPanel>(C.Paths.PrefubEquipmentInfoPanel);
         _prefubHourglass = Resources.Load<Hourglass>(C.Paths.PrefubHourglass);
         _prefubPlayerDialogue = Resources.Load<GameObject>(C.Paths.PrefubDialogueWindowForPlayer);
+        prefubDogTier1 = Resources.Load<DogTier1>(C.Paths.PrefubDogTier1);
+        prefubDogTier2 = Resources.Load<DogTier2>(C.Paths.PrefubDogTier2);
+        prefubDogTier3 = Resources.Load<DogTier3>(C.Paths.PrefubDogTier3);
 
         globalFont = Resources.Load<TMP_FontAsset>(C.Paths.FontMonocraft);
 
         currentSettings = CurrentSettings.Instance; // создаём объект настроек и получаем на него ссылку
         PlayFabManager.Instance.Initialize(); // создаём объект PlayFabManager
         ButtonTextPanelChoose.Initialize(); // там подгружаем все изображения для кнопок панели и оттуда будем их тянуть
+        AdjustUnitParameters.Initialize(); 
         YandexMobileAdsInterstitialDemoScript.Instance.Initialize(); // создаём объект YandexMobileAdsInterstitialDemoScript
         //GlobalClickSound.Instance.Initialize(); 
         SyncManager sm = SyncManager.Instance;

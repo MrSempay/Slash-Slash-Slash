@@ -3,6 +3,20 @@ using UnityEngine;
 
 public static class AdjustUnitParameters
 {
+    public enum ENEMIES { DogTier1, DogTier2, DogTier3 }
+    public static Dictionary<ENEMIES, Enemy> enemiesPrefubs;
+
+    public static void Initialize()
+    {
+        enemiesPrefubs = new Dictionary<ENEMIES, Enemy>
+        {
+            { ENEMIES.DogTier1, GameManager.Instance.prefubDogTier1 },
+            { ENEMIES.DogTier2, GameManager.Instance.prefubDogTier2 },
+            { ENEMIES.DogTier3, GameManager.Instance.prefubDogTier3 },
+        };
+    }
+
+
     public static readonly Dictionary<string, Dictionary<string, object>> unitParameters =
         new Dictionary<string, Dictionary<string, object>>()
         {
@@ -41,7 +55,7 @@ public static class AdjustUnitParameters
             }
         },
         {
-            C.DK.MeleeEnemy, new Dictionary<string, object>()
+            C.DK.DogTier1, new Dictionary<string, object>()
             {
                 { C.DK.healthMax, 12 },
                 { C.DK.DamageReductionPercentage, 0 },
@@ -60,6 +74,52 @@ public static class AdjustUnitParameters
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
                 { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
                 { C.DK.callDownMeleeAttack, 1f }
+
+            }
+        },
+        {
+            C.DK.DogTier2, new Dictionary<string, object>()
+            {
+                { C.DK.healthMax, 42 },
+                { C.DK.DamageReductionPercentage, 20 },
+                { C.DK.speed, 12 },
+                { C.DK.stuneChanceByStandardAttackPercentage, 10 }, 
+                { C.DK.evasionPercentage, 0 }, 
+                { C.DK.timeStuneByStanartAttack, 2 },
+                { C.DK.jumpForce, 75 }, // 14 при массе 1
+                { C.DK.moneyFromKill, 10 },
+                { C.DK.experienceFromKill, 20 },
+                { C.DK.scoreFromKill, 60 },
+                { C.DK.som, 14 },
+                { C.DK.damage, 12 },
+                //{ C.DK.nameSoundAttakPeaked, C.MusicSounds.DogMakeDamage },
+                { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
+                { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
+                { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
+                { C.DK.callDownMeleeAttack, 0.6f }
+
+            }
+        },
+        {
+            C.DK.DogTier3, new Dictionary<string, object>()
+            {
+                { C.DK.healthMax, 82 },
+                { C.DK.DamageReductionPercentage, 30 },
+                { C.DK.speed, 16 },
+                { C.DK.stuneChanceByStandardAttackPercentage, 10 }, 
+                { C.DK.evasionPercentage, 0 }, 
+                { C.DK.timeStuneByStanartAttack, 2 },
+                { C.DK.jumpForce, 75 }, // 14 при массе 1
+                { C.DK.moneyFromKill, 20 },
+                { C.DK.experienceFromKill, 40 },
+                { C.DK.scoreFromKill, 90 },
+                { C.DK.som, 14 },
+                { C.DK.damage, 20 },
+                //{ C.DK.nameSoundAttakPeaked, C.MusicSounds.DogMakeDamage },
+                { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
+                { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
+                { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
+                { C.DK.callDownMeleeAttack, 0.3f }
 
             }
         },
