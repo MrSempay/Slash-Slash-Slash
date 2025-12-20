@@ -55,7 +55,7 @@ IEnumerator MoveCameraPlayerWithSpeedToPoint(Transform transformCameraPlayer, Tr
 
     while (Vector3.Distance(transformCameraPlayer.position, specifyTargetPointForCamera) > distanceTreshold)
     {
-        Debug.Log(Vector3.Distance(transformCameraPlayer.position, targetTransform.position));
+        //Debug.Log(Vector3.Distance(transformCameraPlayer.position, targetTransform.position));
         specifyTargetPointForCamera = targetTransform.position + scriptPlayer.localPositionCamera; // всегда камера будет иметь смещение относительно целовой точки такое
                                                                                                    // же, как и относительно игрока
         transformCameraPlayer.position = Vector3.SmoothDamp(transformCameraPlayer.position, specifyTargetPointForCamera, ref _velocity, speed);

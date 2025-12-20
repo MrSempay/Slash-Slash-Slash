@@ -13,7 +13,7 @@ public class FsmStateBuildingNormal : FsmStateBuilding
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("BuildingNormal state [ENTER]");
+        //Debug.Log("BuildingNormal state [ENTER]");
 
         building.selfCollider.enabled = true;
         _coroutineUpdateAssortimentInBuilding = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, TimerUpdateAssortmentInBuilding(building.rectTransformEquipmentPlaces));
@@ -21,7 +21,7 @@ public class FsmStateBuildingNormal : FsmStateBuilding
 
     public override void Exit()
     {
-        Debug.Log("BuildingNormal state [EXIT]");
+        //Debug.Log("BuildingNormal state [EXIT]");
 
         if (_coroutineUpdateAssortimentInBuilding != null)
         {

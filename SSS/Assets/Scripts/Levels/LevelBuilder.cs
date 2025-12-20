@@ -61,7 +61,7 @@ public class LevelBuilder : MonoBehaviour
             // 3. Запускаем или останавливаем корутину в зависимости от условия
             if (shouldSpawnEnemies && spawnEnemyByTimerCoroutine == null)
             {
-                //Debug.Log(listEnemiesFromLastWave.Count);
+                ////Debug.Log(listEnemiesFromLastWave.Count);
                 listEnemiesFromLastWave = new(); // при каждом начале новой волны сбрасываем список врагов, которые были заспавнены на предыдущей волне
                 spawnEnemyByTimerCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, SpawnEnemyByTimer());
             }
@@ -87,7 +87,7 @@ public class LevelBuilder : MonoBehaviour
         BoxSplitTargetPointsForEnemies = InstanceEmptyObjectAndGetTransform(transform, C.NamesObjects.BoxSplitTargetPointsForEnemies, Vector3.zero);
         //foreach (var item in percentageIncreaseEnemiesParametersBySpawnIteration)
         //{
-        //    Debug.Log(item.Value);
+        //    //Debug.Log(item.Value);
 
         //}
 
@@ -152,15 +152,15 @@ public class LevelBuilder : MonoBehaviour
                 Enemy newEnemy = Instantiate(enemy, spawnPointTransform.position, spawnPointTransform.rotation);
 
                 // уменьшаем количество врагов для заданной врагу позиции
-                //Debug.Log(targetsForRandom.Count);
+                ////Debug.Log(targetsForRandom.Count);
                 targetPointsForEnemy[randomTarget]--;
                 // присваиваем случайный Transform врагу
                 newEnemy.CurrentTargetTransform = randomTarget;
                 newEnemy.isInstancedByLevel = true;
-                //Debug.Log(targetsForRandom.Count);
+                ////Debug.Log(targetsForRandom.Count);
                 newEnemy.transformTargets = allTransformTargetPoints;
                 listEnemiesFromLastWave.Add(newEnemy);
-                //Debug.Log(listEnemiesFromLastWave.Count);
+                ////Debug.Log(listEnemiesFromLastWave.Count);
 
                 Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значения
                                                                                                                                   // для усиления юнитов
@@ -269,15 +269,15 @@ public class LevelBuilder : MonoBehaviour
                     {
                         Enemy newEnemy = Instantiate(enemiesPrefubs[infoEnemis.enemyType], spawnPointTransform.position, spawnPointTransform.rotation);
                         // уменьшаем количество врагов для заданной врагу позиции в разрезе типов врагов
-                        //Debug.Log(targetsForRandom.Count);
+                        ////Debug.Log(targetsForRandom.Count);
                         infoEnemis.amountEnemies--;
                         // присваиваем случайный Transform врагу
                         newEnemy.CurrentTargetTransform = randomTarget;
                         newEnemy.isInstancedByLevel = true;
-                        //Debug.Log(targetsForRandom.Count);
+                        ////Debug.Log(targetsForRandom.Count);
                         newEnemy.transformTargets = allTransformTargetPoints;
                         listEnemiesFromLastWave.Add(newEnemy);
-                        //Debug.Log(listEnemiesFromLastWave.Count);
+                        ////Debug.Log(listEnemiesFromLastWave.Count);
 
                         Dictionary<string, float> percentageIncreasedEnemiesParametersBySpawnIteration = new Dictionary<string, float>(); // делаем новый словарь чтоб сохрнаить первозданные значения
                                                                                                                                           // для усиления юнитов

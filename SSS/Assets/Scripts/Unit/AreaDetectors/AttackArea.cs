@@ -21,8 +21,8 @@ public class AttackArea : MonoBehaviour
         // подписываемся в Enemy 
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Allies")) { isPlayerOrAlliesInAttackArea?.Invoke(true, other.gameObject.GetComponent<Unit>()); }
 
-        //Debug.Log(other.gameObject.tag); 
-        //Debug.Log(other.gameObject.CompareTag("Enemy")); 
+        ////Debug.Log(other.gameObject.tag); 
+        ////Debug.Log(other.gameObject.CompareTag("Enemy")); 
         // на данный момент подписаны в FsmStateWalk
         if (other.gameObject.CompareTag("Enemy")) 
         { 

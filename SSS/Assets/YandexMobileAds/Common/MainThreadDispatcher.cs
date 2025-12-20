@@ -55,7 +55,7 @@ namespace YandexMobileAds.Common
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
+                        //Debug.LogException(e);
                     }
                 }
                 if (dequeuedAction != null)

@@ -43,7 +43,7 @@ public class YandexMobileAdsInterstitialDemoScript : MonoBehaviour
     {
         if (interstitial != null)
         {
-            Debug.Log("Полёт нормальный?");
+            //Debug.Log("Полёт нормальный?");
             interstitial.Show();
         }
     }

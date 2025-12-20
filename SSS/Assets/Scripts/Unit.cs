@@ -292,7 +292,7 @@ public abstract class Unit : MonoBehaviour, IInventory
     {
         if (isAlive) // по идее когда помирает юнит, у него коллайдер отключается, но в ряде случаев это происходит не сразу (например, когда юнит умирает в падении и нужно чтоб он корректно приземлился (его останки))
         {
-            Debug.Log(gameObject.name + " уничтожен!");
+            //Debug.Log(gameObject.name + " уничтожен!");
 
             isAlive = false;
 
@@ -356,12 +356,12 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.LogError($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    //Debug.LogError($"Could not convert value for parameter '{parameterName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
             {
-                Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
+                //Debug.LogWarning($"Field '{parameterName}' not found in class '{type.Name}'.");
             }
 
             if (parameterName == "healthMax")
@@ -413,7 +413,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.Log($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    //Debug.Log($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
@@ -436,7 +436,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
                 else
                 {
-                    Debug.LogWarning($"Field '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                    //Debug.LogWarning($"Field '{parameterOrPropertyName}' not found in class '{type.Name}'.");
                 }
 
             }
@@ -481,7 +481,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.Log($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    //Debug.Log($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
@@ -504,7 +504,7 @@ public abstract class Unit : MonoBehaviour, IInventory
                 }
                 else
                 {
-                    Debug.LogWarning($"Field '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                    //Debug.LogWarning($"Field '{parameterOrPropertyName}' not found in class '{type.Name}'.");
                 }
 
             }
@@ -526,9 +526,9 @@ public abstract class Unit : MonoBehaviour, IInventory
         PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
         System.Reflection.FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
 
-        //Debug.Log(nameOfCurrentProperty);
-        //Debug.Log(currentPropertyInfo);
-        //Debug.Log(currentPropertyInfo.CanWrite);
+        ////Debug.Log(nameOfCurrentProperty);
+        ////Debug.Log(currentPropertyInfo);
+        ////Debug.Log(currentPropertyInfo.CanWrite);
         if (currentPropertyInfo != null && currentPropertyInfo.CanWrite) //Убедимся, что свойство существует и доступно для записи
         {
             // Пытаемся преобразовать значение к типу свойства 
@@ -541,24 +541,24 @@ public abstract class Unit : MonoBehaviour, IInventory
                         ? currentPropertyValue + (baseParameterValue * (currentPropertyValue / (maxFieldValue - (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100)) * Math.Sign(increasingValuePercentage) // в теории, при формальном увеличении какого-то параметра мы можем фактически его уменьшать. Типа предмет при надевании даёт штраф в 15% к чему-то
                         : currentPropertyValue - (baseParameterValue * (currentPropertyValue / (maxFieldValue + (baseParameterValue * (increasingValuePercentage / 100)))) * (increasingValuePercentage / 100)) * Math.Sign(increasingValuePercentage);
 
-                //Debug.Log(assigningCurrentPropertyValue);
+                ////Debug.Log(assigningCurrentPropertyValue);
                 object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
                 currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству 
             }
             catch (InvalidCastException e)
             {
-                Debug.LogError($"Could not convert value for property '{currentPropertyInfo}' to type '{currentPropertyInfo.PropertyType.Name}': {e.Message}");
+                //Debug.LogError($"Could not convert value for property '{currentPropertyInfo}' to type '{currentPropertyInfo.PropertyType.Name}': {e.Message}");
             }
         }
         else
         {
             if (currentPropertyInfo == null)
             {
-                Debug.LogWarning($"Property '{currentPropertyInfo}' not found in class '{type.Name}'.");
+                //Debug.LogWarning($"Property '{currentPropertyInfo}' not found in class '{type.Name}'.");
             }
             else if (!currentPropertyInfo.CanWrite)
             {
-                Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
+                //Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
             }
         }
     }
@@ -572,9 +572,9 @@ public abstract class Unit : MonoBehaviour, IInventory
         PropertyInfo currentPropertyInfo = type.GetProperty(nameOfCurrentProperty);
         System.Reflection.FieldInfo maxFieldInfo = type.GetField(nameOfMaxParameter);
 
-        //Debug.Log(nameOfCurrentProperty);
-        //Debug.Log(currentPropertyInfo);
-        //Debug.Log(currentPropertyInfo.CanWrite);
+        ////Debug.Log(nameOfCurrentProperty);
+        ////Debug.Log(currentPropertyInfo);
+        ////Debug.Log(currentPropertyInfo.CanWrite);
         if (currentPropertyInfo != null && currentPropertyInfo.CanWrite) //Убедимся, что свойство существует и доступно для записи
         {
             // Пытаемся преобразовать значение к типу свойства 
@@ -586,24 +586,24 @@ public abstract class Unit : MonoBehaviour, IInventory
                         ? currentPropertyValue + increasingValueAbsolute
                         : currentPropertyValue - increasingValueAbsolute;
 
-                //Debug.Log(assigningCurrentPropertyValue);
+                ////Debug.Log(assigningCurrentPropertyValue);
                 object convertedValue = Convert.ChangeType(assigningCurrentPropertyValue, currentPropertyInfo.PropertyType);
                 currentPropertyInfo.SetValue(this, convertedValue, null); // Присваиваем значение свойству 
             }
             catch (InvalidCastException e)
             {
-                Debug.LogError($"Could not convert value for property '{currentPropertyInfo}' to type '{currentPropertyInfo.PropertyType.Name}': {e.Message}");
+                //Debug.LogError($"Could not convert value for property '{currentPropertyInfo}' to type '{currentPropertyInfo.PropertyType.Name}': {e.Message}");
             }
         }
         else
         {
             if (currentPropertyInfo == null)
             {
-                Debug.LogWarning($"Property '{currentPropertyInfo}' not found in class '{type.Name}'.");
+                //Debug.LogWarning($"Property '{currentPropertyInfo}' not found in class '{type.Name}'.");
             }
             else if (!currentPropertyInfo.CanWrite)
             {
-                Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
+                //Debug.LogWarning($"Property '{currentPropertyInfo}' in class '{type.Name}' does not have a setter (is read-only).");
             }
         }
     }
@@ -651,7 +651,7 @@ public abstract class Unit : MonoBehaviour, IInventory
         switch (nameStartedAnimation) // проверяем анимационные префиксы (постфиксы...)
         {
             case C.Animations.Walk:
-                //Debug.Log("Пик!");
+                ////Debug.Log("Пик!");
                 //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundWalk, gameObject, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundWalk, audioEmitter, AudioManager.TYPE_SOUND.Walk, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 break;
@@ -659,14 +659,14 @@ public abstract class Unit : MonoBehaviour, IInventory
                                       // звуковые эффекты мы по её старту. Делаем это потому, что тяжело найти звуковой эффект, который бы сочетался полностью с началом анимации и действовал
                                       // на протяжении всей её длительности. А, к чёрту, передумал - лучше бахну я тупо для анимации атаки у героя отдельное состояние, а то вся текущая
                                       // проблема заключается в том, что у нас в одном состоянии могут быть сразу 2 анимации, оттого тяжко Герою звуки настроить
-                //Debug.Log("Пик!");
+                ////Debug.Log("Пик!");
                 //AudioManager.Instance.StopSomeTypeSoundOnObject(AudioManager.TYPE_SOUND.Walk, gameObject);
                 break;
         }
     }
     public virtual void SomeAnimationUnitWasPeaked(string namePeackedAnimation) // Когда анимация достигла целевой точки, но не конца. Для Peak такая точка может быть только одна в анимации
     {
-        //Debug.Log("FAISFHJASKJHASK:FAJS:KFAK:FAS:KFASK:F"); 
+        ////Debug.Log("FAISFHJASKJHASK:FAJS:KFAK:FAS:KFASK:F"); 
         string lastFourChars = "";
         if (namePeackedAnimation.Length >= 4) // проверяем, что строка достаточно длинная
         {
@@ -681,7 +681,7 @@ public abstract class Unit : MonoBehaviour, IInventory
         switch (namePeackedAnimation) // проверяем анимационные префиксы (постфиксы...)
         {
             case C.Animations.AttackPeaked:
-                //Debug.Log("Пик!");
+                ////Debug.Log("Пик!");
                 //AudioManager.Instance.StartSoundEffectAtSpecifiedObject(nameSoundAttakPeaked, gameObject, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(nameSoundAttakPeaked, audioEmitter, AudioManager.TYPE_SOUND.AttackPeak, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 break;

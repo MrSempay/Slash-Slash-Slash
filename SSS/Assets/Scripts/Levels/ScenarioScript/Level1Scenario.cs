@@ -107,7 +107,7 @@ public class Level1Scenario : ScenarioScript
                 break;
             case "Level1/Dialogue3.2":
 
-                Debug.Log("И какого хрена эта штука не началась?");
+                //Debug.Log("И какого хрена эта штука не началась?");
                 StartWaveEnemies(new Dictionary<Transform, int>() { { transformPlayer, 5 },
                                                                      { _transformSchool, 5 },
                                                                      { _transformTreasury, 5 } },
@@ -151,7 +151,7 @@ public class Level1Scenario : ScenarioScript
 
             case "WaitAfterFirstAmminitionBueBeforeFirstWave":
 
-                Debug.Log("Study was finished");
+                //Debug.Log("Study was finished");
                 OnStudyFinish?.Invoke();
 
                 break;
@@ -182,7 +182,7 @@ public class Level1Scenario : ScenarioScript
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
-        Debug.Log(nameWave);
+        //Debug.Log(nameWave);
         scriptPlayer.GiveRewardScore(dictionaryNamesEnemiesWavesAndRewards[nameWave]);
     }
 

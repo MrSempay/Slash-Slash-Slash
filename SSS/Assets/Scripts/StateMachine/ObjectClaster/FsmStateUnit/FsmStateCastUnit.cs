@@ -18,7 +18,7 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Player cast state [ENTER]");
+        //Debug.Log("Player cast state [ENTER]");
 
         if (initialConditionsEntering != null)
         {
@@ -55,14 +55,14 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
         }
         else
         {
-            Debug.LogError("Вошли в состояние каста без ПАРАМЕТРОВ!!!");
+            //Debug.LogError("Вошли в состояние каста без ПАРАМЕТРОВ!!!");
         }
 
     }
 
     public override void Exit()
     {
-        Debug.Log("Player cast state [EXIT]");
+        //Debug.Log("Player cast state [EXIT]");
 
         unit.OnCastAnimationFinished -= CastAnimationFinished;
 
@@ -93,13 +93,13 @@ public class FsmStateCastUnit : FsmStateUnit // пока что сделали так, что токмо 
     {
         if (StaticClassForAdditionalFunctions.AnimationExists(nameAnimationCast, unit.animator))
         {
-            //Debug.Log(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
+            ////Debug.Log(equipmentWhatWasPressed.equipmentName + C.Prefixes.Cast);
             unit.animator.Play(nameAnimationCast);
             unit.rb.linearVelocityX = 0;
         }
         else // кастуем мгновенно и уходим в состояние покоя
         {
-            //Debug.Log(2);
+            ////Debug.Log(2);
             wasCastAnimationFinished = true;
             unit._fsm.SetStateIdle(equipmentWhatWasPressed.ownerUnit);
         }

@@ -99,7 +99,7 @@ public class ParameterInternetSettings : MonoBehaviour, IControlLifeCicleFunctio
         DisplayName = GetCleanText(_textDisplayName.Text);
         if (!isLongEnoughDisplayName)
         {
-            //Debug.Log("Таки тут...");
+            ////Debug.Log("Таки тут...");
         }
     }
     public void EmailWasChanged() // только для сохранения в настройках сделали это. Вызывается при окончании редактирования

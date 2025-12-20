@@ -16,7 +16,7 @@ public class FsmStateDoorDestroyed : FsmStateDoor
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Destroyed state [ENTER]");
+        //Debug.Log("Destroyed state [ENTER]");
         door.selfCollider.enabled = false;
         door.enterButton.SetActive(false);
         StaticClassForAdditionalFunctions.Vibrate();
@@ -25,7 +25,7 @@ public class FsmStateDoorDestroyed : FsmStateDoor
 
     public override void Exit()
     {
-        Debug.Log("Destroyed state [EXIT]");
+        //Debug.Log("Destroyed state [EXIT]");
     }
 
 }

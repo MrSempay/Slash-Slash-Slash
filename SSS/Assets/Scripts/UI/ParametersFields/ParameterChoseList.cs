@@ -49,11 +49,11 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
 
     public void Awake()
     {
-        //Debug.Log("3");
+        ////Debug.Log("3");
         if (!AwakeWasCalledAlready)
         {
             _textButton.Awake();
-            //Debug.Log("1");
+            ////Debug.Log("1");
             selfName = gameObject.name;
             StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustSettingsParameters.settingsParameters[selfName], this);
             _nameInvokingFunction = C.Prefixes.PrefixTrigger + selfName;
@@ -74,7 +74,7 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         if (!_lock) // чтоб из этого метода этот же не вызывать, если мы из этого класса его вызываем через CurrentValue
         {
             _lock = true;
-            //Debug.Log("2");
+            ////Debug.Log("2");
             CurrentTextValue = listChosing[_indexCurrentString].ToString();
             CurrentValue = listChosing[_indexCurrentString]; // при вызове этого метода из currentSettings этот вызов не пройдёт, так как у нас стоит проверка на то же значение
             _indexCurrentString++;

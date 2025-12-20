@@ -115,15 +115,15 @@ public class Move_Player : MonoBehaviour
         // Проверяем количество касаний
         if (Input.touchCount > 0) // На мобильном устройстве
         {
-            Debug.Log("Количество касаний: " + Input.touchCount);
+            //Debug.Log("Количество касаний: " + Input.touchCount);
         }
         else if (Input.GetMouseButton(0)) // Если нажата мышь
         {
-            Debug.Log("Мышь нажата");
+            //Debug.Log("Мышь нажата");
         }
         else
         {
-            Debug.Log("Сейчас нет касаний и нажатий мыши");
+            //Debug.Log("Сейчас нет касаний и нажатий мыши");
         }
     }
 

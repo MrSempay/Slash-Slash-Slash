@@ -212,7 +212,7 @@ public class AppearingSprite : MonoBehaviour
     //    _audioMusicComponent.Play();
     //    while (_audioMusicComponent.volume < GameManager.Instance.currentSettings.VolumeMusic)
     //    {
-    //        //Debug.Log("???");
+    //        ////Debug.Log("???");
     //        _audioMusicComponent.volume += 0.015f;
     //        yield return new WaitForSeconds(_timeTickOfChangingVolumeBetweenMusic);
     //    }

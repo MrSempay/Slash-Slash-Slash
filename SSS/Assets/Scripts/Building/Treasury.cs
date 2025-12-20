@@ -142,7 +142,7 @@ public class Treasury : Building, IMainTarget
                 
             if (placeForEquipment.childCount == 2) // если 2 дочерних элемента, то это текстовые поля для цены и названия снаряжения. То есть поле пустое, ибо иначе дочерних > 2
             {
-                //Debug.Log("B<JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+                ////Debug.Log("B<JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                 EquipmentChance FindEquipment()
                 {
                     foreach (var category in AdjustEquipmentParameters.ammunitionParameters)
@@ -151,7 +151,7 @@ public class Treasury : Building, IMainTarget
                         {
                             foreach (var ammunition in rarityType.Value)
                             {
-                                //Debug.Log(ammunition.Key);
+                                ////Debug.Log(ammunition.Key);
                                 if (nameAmmunition == ammunition.Key)
                                 {
                                     return new EquipmentChance() 
@@ -163,7 +163,7 @@ public class Treasury : Building, IMainTarget
                             }
                         }
                     }
-                    Debug.LogError("Аммуниции с таким названием не было найдено!");
+                    //Debug.LogError("Аммуниции с таким названием не было найдено!");
                     return default;
                 }
 

@@ -28,15 +28,15 @@ public class WeaponDatabase : ScriptableObject
                     }
                     else
                     {
-                        Debug.LogError($"Weapon '{weaponName}' not found in type '{type}' and category '{category}'.");
+                        //Debug.LogError($"Weapon '{weaponName}' not found in type '{type}' and category '{category}'.");
                         return null;
                     }
                 }
-                Debug.LogError($"Weapon type '{type}' not found in category '{category}'.");
+                //Debug.LogError($"Weapon type '{type}' not found in category '{category}'.");
                 return null;
             }
         }
-        Debug.LogError($"Weapon category '{category}' not found.");
+        //Debug.LogError($"Weapon category '{category}' not found.");
         return null;
     }
 }

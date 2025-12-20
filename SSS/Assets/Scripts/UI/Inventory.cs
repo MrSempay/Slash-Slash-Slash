@@ -31,8 +31,8 @@ public class Inventory : MonoBehaviour
     {
         amountAmmunitionSlotsInInventory = infoAboutInventory.CountAvailableAmmunitionPlaces;
         amountSpellSlotsInInventory = infoAboutInventory.CountAvailableSpellPlaces;
-        //Debug.Log(owner.CountAvailableSpellPlaces);
-        //Debug.Log(owner.CountAvailableAmmunitionPlaces);
+        ////Debug.Log(owner.CountAvailableSpellPlaces);
+        ////Debug.Log(owner.CountAvailableAmmunitionPlaces);
 
         if (amountAmmunitionSlotsInInventory > 3) // масштабируем панельку с аммуницией, если мест для аммуниции больше 3 (по умолчанию она у нас вмещать 3 штуки должна)
         {
@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour
             scriptPlaceForEquipment.inventory = this;
             if (unitSelf)
             {
-                //Debug.Log("sadasdasdas");
+                ////Debug.Log("sadasdasdas");
                 scriptPlaceForEquipment.isBuildingPlace = false;
             }
         }
@@ -90,7 +90,7 @@ public class Inventory : MonoBehaviour
                 return false;
             }
         }
-        //Debug.Log(infoAboutInventory.IsStaticInventory);
+        ////Debug.Log(infoAboutInventory.IsStaticInventory);
         if (infoAboutInventory.IsStaticInventory)
         {
             equipment.EnteredIntoStaticInventory(infoAboutInventory); // впрочем, вот это явное приведение можно было бы вынести в дочерние классы, ну да ладно

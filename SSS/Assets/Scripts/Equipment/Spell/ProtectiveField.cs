@@ -52,7 +52,7 @@ public class ProtectiveField : Spell
                 scriptLastPF.CurrentAmountAttacksInField = 0;
                 scriptLastPF.StopCoroutine(scriptLastPF.DurationActive(whoCastedSpell));
                 scriptLastPF.StartTimerActiveState(_ownerProtectiveField);
-                //Debug.Log(scriptLastPF.CurrentAmountAttacksInField);
+                ////Debug.Log(scriptLastPF.CurrentAmountAttacksInField);
 
                 AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ProtectiveShieldActivation, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
 
@@ -81,7 +81,7 @@ public class ProtectiveField : Spell
     {
         if (isActivated)
         {
-            //Debug.Log("Что за парашница?");
+            ////Debug.Log("Что за парашница?");
 
             if (gameObject.activeSelf && gameObject.active) // шок... gameObject.activeSelf работает не корректно в отличии от gameObject.active
             {
@@ -111,8 +111,8 @@ public class ProtectiveField : Spell
     // whoMakeHitIntoField может быть null
     private void ProtectiveFieldWasHit(Unit ownerProtectiveField, Unit whoMakeHitIntoField)
     {
-        //Debug.Log("Мы теперь тут");
-        //Debug.Log(_ownerProtectiveField.isInvicible);
+        ////Debug.Log("Мы теперь тут");
+        ////Debug.Log(_ownerProtectiveField.isInvicible);
         AnimateHittingField();
 
         CurrentAmountAttacksInField++;
@@ -128,7 +128,7 @@ public class ProtectiveField : Spell
                                                                              // Этот удар блокироваться не будет. Стоит отметить, что это не полная деактивация, а снятие эффекта неуязви
                                                                              // мости и отписка от детекции OnThisUnitWasAttacked
         {
-            //Debug.Log("Ибо");
+            ////Debug.Log("Ибо");
             _ownerProtectiveField.OnThisUnitWasAttacked -= ProtectiveFieldWasHit;
             _ownerProtectiveField.IsInvincible = false;
         }

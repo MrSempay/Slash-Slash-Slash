@@ -59,8 +59,8 @@ public class Enemy : Unit
             _currentTargetTransform = value;
             if (!isInRazbrestisState)
             {
-                //Debug.Log(value);
-                //Debug.Log(value.GetComponent<IMainTarget>());
+                ////Debug.Log(value);
+                ////Debug.Log(value.GetComponent<IMainTarget>());
                 currentMainTarget = value.GetComponent<IMainTarget>();
                 
             }
@@ -72,13 +72,13 @@ public class Enemy : Unit
         set
         {
             _isThroughAble = value;
-            //Debug.Log("И что за хрень?");
+            ////Debug.Log("И что за хрень?");
             // Включаем игнорирование коллизий
             if (Player.instance != null)
             {
                 if (selfEnemyCollider != null)
                 {
-                    Debug.Log("И что за хрень?");
+                    //Debug.Log("И что за хрень?");
                     Physics2D.IgnoreCollision(selfEnemyCollider, Player.instance.selfCollider, value);
                 }
             }
@@ -132,8 +132,8 @@ public class Enemy : Unit
     private void Update()
     {
 
-        //Debug.Log(_fsm.StateCurrent);
-        //Debug.Log(isGrounded);
+        ////Debug.Log(_fsm.StateCurrent);
+        ////Debug.Log(isGrounded);
         if (areUpdatingFunctionsEnabled)
         {
             _fsm.Update();

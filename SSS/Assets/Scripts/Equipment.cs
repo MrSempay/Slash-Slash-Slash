@@ -112,7 +112,7 @@ public class Equipment : MonoBehaviour
             }
         }
 
-        Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
+        //Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
     }
 
     #endregion
@@ -227,9 +227,9 @@ public class Equipment : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA MUD-da-daYUUU");
+                    ////Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA MUD-da-daYUUU");
                     animator.enabled = false; // ОЧЕНЬ ВАЖНО! Иначе картинку в SpriteRenderer не даст отображать!
-                                              //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+                                              ////Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
                     selfSprite.sprite = sprite; // по идее sprite никогда не будет null, если в префабе по умолчанию уже стоит хоть какой-то спрайт для снаряжения
                 }
             }
@@ -266,11 +266,11 @@ public class Equipment : MonoBehaviour
     protected virtual void Update()
     {
         _fsm.Update();
-        //Debug.Log("Снаряжение " + this + " " + gameObject.GetInstanceID());
-        //Debug.Log("Эх " + selfSprite);
-        //Debug.Log("Спрайт спрайта " + selfSprite.sprite);
-        //Debug.Log("Дичь " + selfSprite.sprite.GetType());
-        //Debug.Log("Дичь1 " + selfSprite.sprite.name);
+        ////Debug.Log("Снаряжение " + this + " " + gameObject.GetInstanceID());
+        ////Debug.Log("Эх " + selfSprite);
+        ////Debug.Log("Спрайт спрайта " + selfSprite.sprite);
+        ////Debug.Log("Дичь " + selfSprite.sprite.GetType());
+        ////Debug.Log("Дичь1 " + selfSprite.sprite.name);
         //selfSprite.sprite = sprite;
     }
 
@@ -303,7 +303,7 @@ public class Equipment : MonoBehaviour
             transform.anchorMax = new Vector2(0.5f, 0.5f);
             transform.anchoredPosition = Vector2.zero; // Устанавливаем смещение относительно якорей в (0, 0)
             transform.localPosition = new Vector3(0, 0, 0);
-            //Debug.Log(this);
+            ////Debug.Log(this);
             if (BuildingWhereEquipmentIs) BuildingWhereEquipmentIs.equipmentInBuilding.Remove(this); // собственно удаляем из списка снаряжения в здании это снаряжение только
                                                                                                      // если оно находится в здании
 
@@ -322,7 +322,7 @@ public class Equipment : MonoBehaviour
 
     public IEnumerator DurationActive(Unit whoCastedSpell)
     {
-        Debug.Log(durationActiveState);
+        //Debug.Log(durationActiveState);
         yield return new WaitForSeconds(durationActiveState);
 
         Deactivate(whoCastedSpell);
@@ -371,7 +371,7 @@ public class Equipment : MonoBehaviour
         else
         {
             animator.enabled = false;
-            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+            ////Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
             selfSprite.sprite = sprite;
         }
 
@@ -386,7 +386,7 @@ public class Equipment : MonoBehaviour
         else
         {
             animator.enabled = false;
-            //Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
+            ////Debug.LogWarning($"Animation '{equipmentName}' not found. Displaying sprite instead.");
             selfSprite.sprite = sprite;
         }
     }
@@ -466,7 +466,7 @@ public class Equipment : MonoBehaviour
 
     public virtual void OnDestroy()
     {
-        //Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
+        ////Debug.Log("Уничтожен, низведён до АТОМОВ!!! " + GetInstanceID());
 
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
         CoroutineManager.Instance.StopManagedCoroutine(gameObject, _callDownAnimationCoroutine);

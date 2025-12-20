@@ -57,7 +57,7 @@ public class FsmAsync : Fsm
             {
                 try { await _current.RunAsync(_stateCts.Token); }
                 catch (OperationCanceledException) { }
-                catch (Exception ex) { Debug.LogError(ex); }
+                catch (Exception ex) {  }
             });
         }
         finally

@@ -7,7 +7,7 @@ public class ThirstySakura : Ammunition
 
     public override void EnteredIntoUnitInventory(Unit ownerInventory)
     {
-        //Debug.Log("mda");
+        ////Debug.Log("mda");
 
 
         // если хотим объединить в один счётчик сразу несколько предметов:
@@ -38,7 +38,7 @@ public class ThirstySakura : Ammunition
     }
     public override void ExitedFromUnitInventory(Unit ownerInventory)
     {
-        //Debug.Log("mda");
+        ////Debug.Log("mda");
 
         base.ExitedFromUnitInventory(ownerInventory);
 

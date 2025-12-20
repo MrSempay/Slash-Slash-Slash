@@ -103,8 +103,8 @@ public class ScrollFadeController : MonoBehaviour
         textMesh.fontSize = fontSize;
         textMesh.gameObject.name = name;
 
-        //Debug.Log(textMesh.gameObject.transform);
-        //Debug.Log(textMesh);
+        ////Debug.Log(textMesh.gameObject.transform);
+        ////Debug.Log(textMesh);
         _dictionaryRTAndTextMeshComponents[textMesh.gameObject.transform] = textMesh;
 
         return textMesh;

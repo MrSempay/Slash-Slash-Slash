@@ -65,7 +65,7 @@ public class BannerComponent : MonoBehaviour
 #elif UNITY_ANDROID
             return adUnitIdAndroid;
 #else
-            Debug.LogWarning("Unsupported platform for Yandex Ads. Using IOS Ad Unit ID by default.");
+            //Debug.LogWarning("Unsupported platform for Yandex Ads. Using IOS Ad Unit ID by default.");
             return adUnitIdAndroid;
 #endif
         }
@@ -80,7 +80,7 @@ public class BannerComponent : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Banner configuration failed. Ad Unit ID is missing.");
+            //Debug.LogError("Banner configuration failed. Ad Unit ID is missing.");
         }
     }
 

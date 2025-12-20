@@ -139,7 +139,7 @@ public class School : Building, IMainTarget
         {
             if (placeForEquipment.childCount == 2)
             {
-                //Debug.Log("B<JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+                ////Debug.Log("B<JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                 string FindSpell()
                 {
                     foreach (var spell in AdjustEquipmentParameters.spellParameters)
@@ -149,7 +149,7 @@ public class School : Building, IMainTarget
                             return spell.Key;
                         }
                     }
-                    Debug.LogError("«аклинание с таким названием не было найдено!");
+                    //Debug.LogError("«аклинание с таким названием не было найдено!");
                     return "";
                 }
                 string nameSpellLocal = FindSpell();

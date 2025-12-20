@@ -38,22 +38,22 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
 
             _verticalGroup = GetComponent<VerticalLayoutGroup>();
 
-            //Debug.Log(_slider);
+            ////Debug.Log(_slider);
             ValueOfSliderWasChanged();
         }
     }
 
     private void OnEnable()
     {
-        //Debug.Log("Ну и?");
+        ////Debug.Log("Ну и?");
         StaticClassForAdditionalFunctions.RefreshLayoutForGroups(this, _verticalGroup);
     }
 
     public void ValueOfSliderWasChanged()
     {
-        //Debug.Log(_slider);
-        //Debug.Log(_slider.value);
-        //Debug.Log(CurrentValue);
+        ////Debug.Log(_slider);
+        ////Debug.Log(_slider.value);
+        ////Debug.Log(CurrentValue);
         CurrentValue = _slider.value;
     }
 }

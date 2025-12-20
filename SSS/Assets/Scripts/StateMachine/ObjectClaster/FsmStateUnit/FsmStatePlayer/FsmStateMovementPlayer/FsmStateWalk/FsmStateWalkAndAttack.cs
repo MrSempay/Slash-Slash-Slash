@@ -13,7 +13,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Walk and Attack state [ENTER]");
+        //Debug.Log("Walk and Attack state [ENTER]");
 
         base.Enter(initialConditionsEntering);
 
@@ -38,7 +38,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
     public override void Exit()
     {
-        Debug.Log("Walk and Attack state [EXIT]");
+        //Debug.Log("Walk and Attack state [EXIT]");
 
         player.attackAreaScript.isEnemyInAttackArea -= MakeDamageToEnemy;
         player.OnAttackFinished -= StopHorizontalMovement;
@@ -54,23 +54,23 @@ public class FsmStateWalkAndAttack : FsmStateWalk
         // так как урон можем наносить только во время свайпа, а иметь мгновенную скорость по оси Х также только во время свайпа, проверяем в условии скорость на неравенство нулю.
         try
         {
-            Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
+            //Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
         }
         catch (Exception e)
         {
-            Debug.LogError("EXCEPTION AT ENTRY: " + e);
+            //Debug.LogError("EXCEPTION AT ENTRY: " + e);
         }
         var mb = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.LogError($"Method info: {mb.DeclaringType.FullName}.{mb.Name}  Assembly={mb.DeclaringType.Assembly.FullName}  Module={mb.Module.Name}  Token={mb.MetadataToken}");
+        //Debug.LogError($"Method info: {mb.DeclaringType.FullName}.{mb.Name}  Assembly={mb.DeclaringType.Assembly.FullName}  Module={mb.Module.Name}  Token={mb.MetadataToken}");
         try
         {
-            Debug.Log("Это сюрреализм");
-            Debug.Log(enemy == null ? "enemy IS NULL" : "enemy NOT NULL");
-            Debug.Log("enemy.gameObject? " + (enemy?.gameObject != null));
+            //Debug.Log("Это сюрреализм");
+            //Debug.Log(enemy == null ? "enemy IS NULL" : "enemy NOT NULL");
+            //Debug.Log("enemy.gameObject? " + (enemy?.gameObject != null));
         }
         catch (Exception e)
         {
-            Debug.LogError("EXCEPTION IN TOP BLOCK: " + e);
+            //Debug.LogError("EXCEPTION IN TOP BLOCK: " + e);
         }
         if (enemy.gameObject.CompareTag("Enemy"))
         {
@@ -87,14 +87,14 @@ public class FsmStateWalkAndAttack : FsmStateWalk
                 }
                 try
                 {
-                    Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
+                    //Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("EXCEPTION AT ENTRY: " + e);
+                    //Debug.LogError("EXCEPTION AT ENTRY: " + e);
                 }
                 var mtb = System.Reflection.MethodBase.GetCurrentMethod();
-                Debug.LogError($"Method info: {mtb.DeclaringType.FullName}.{mtb.Name}  Assembly={mtb.DeclaringType.Assembly.FullName}  Module={mtb.Module.Name}  Token={mtb.MetadataToken}");
+                //Debug.LogError($"Method info: {mtb.DeclaringType.FullName}.{mtb.Name}  Assembly={mtb.DeclaringType.Assembly.FullName}  Module={mtb.Module.Name}  Token={mtb.MetadataToken}");
                 player.enemiesInAttackArea.Add(enemy);
             }
             else
@@ -115,9 +115,9 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
         if (enemy?.gameObject != null)
         {
-            //Debug.Log("CompareTag Enemy: " + enemy.gameObject.CompareTag("Enemy"));
-            //Debug.Log("Tag: " + enemy.gameObject.tag);
-            //Debug.Log("CompareTag EnemyDied: " + enemy.gameObject.CompareTag("EnemyDied"));
+            ////Debug.Log("CompareTag Enemy: " + enemy.gameObject.CompareTag("Enemy"));
+            ////Debug.Log("Tag: " + enemy.gameObject.tag);
+            ////Debug.Log("CompareTag EnemyDied: " + enemy.gameObject.CompareTag("EnemyDied"));
         }
         if (enemy.gameObject.CompareTag("Enemy")) // НЕ РАБОТАЕТ. НЕВЕДОМО ПОЧЕМУ
         {

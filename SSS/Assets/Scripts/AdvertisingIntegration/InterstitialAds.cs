@@ -23,14 +23,14 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void LoadAd()
     {
         currentComboUI.text += " Loading Ad: " + adID;
-        Debug.Log("Loading Ad: " + adID);
+        //Debug.Log("Loading Ad: " + adID);
         Advertisement.Load(adID, this);
     }
 
     public void ShowAd()
     {
         currentComboUI.text += " Showing Ad: " + adID;
-        Debug.Log("Showing Ad: " + adID);
+        //Debug.Log("Showing Ad: " + adID);
         Advertisement.Show(adID, this);
     }
 

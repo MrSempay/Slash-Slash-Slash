@@ -57,7 +57,7 @@ public class RewardedAdComponent : MonoBehaviour
 #elif UNITY_ANDROID
             return adUnitIdAndroid;
 #else
-            Debug.LogWarning("Unsupported platform for Yandex Ads. Using IOS Ad Unit ID by default.");
+            //Debug.LogWarning("Unsupported platform for Yandex Ads. Using IOS Ad Unit ID by default.");
             return adUnitIdAndroid;
 #endif
         }
@@ -76,7 +76,7 @@ public class RewardedAdComponent : MonoBehaviour
         }
         else
         {
-            Debug.Log("RewardedAdComponent: Ad Unit ID is missing.");
+            //Debug.Log("RewardedAdComponent: Ad Unit ID is missing.");
         }
     }
 
@@ -97,7 +97,7 @@ public class RewardedAdComponent : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"{adName}: Configuration failed: {ex.Message}");
+            //Debug.LogError($"{adName}: Configuration failed: {ex.Message}");
         }
     }
 
@@ -115,7 +115,7 @@ public class RewardedAdComponent : MonoBehaviour
         }
         else
         {
-            Debug.Log("Failed to show ad. Ad object not loaded");
+            //Debug.Log("Failed to show ad. Ad object not loaded");
         }
     }
 

@@ -15,7 +15,7 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Equipment inside shop state [ENTER]");
+        //Debug.Log("Equipment inside shop state [ENTER]");
         if (equipment.WasSold) // по идее это вызоветс€ только при перемещении снар€жени€ из инвентар€ геро€ в здание, иначе, если снар€жение просто спавнитс€ в здании, WasSold равно false по умолчанию
         {
             equipment.WasSold = false; // предполагаем, что любое снар€жение, которое попадает в здание, помечаетс€ как "не продано"
@@ -28,15 +28,15 @@ public class FsmStateEquipmentInsideShop : FsmStateEquipment
 
     public override void Exit()
     {
-        Debug.Log("Equipment inside shop state [EXIT]");
+        //Debug.Log("Equipment inside shop state [EXIT]");
         equipment.selfSprite.sortingOrder = 11;
         equipment._areaDetectEnteringExiting.enabled = false; 
     }
 
     public override void Update()
     {
-        //Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment);
-        //Debug.Log(gameObject.GetInstanceID());
+        ////Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment);
+        ////Debug.Log(gameObject.GetInstanceID());
         base.Update();
         if (Input.GetMouseButtonDown(0)) //  огда нажата лева€ кнопка мыши
         {

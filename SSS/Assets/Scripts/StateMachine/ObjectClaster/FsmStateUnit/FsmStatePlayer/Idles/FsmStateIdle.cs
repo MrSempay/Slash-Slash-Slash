@@ -11,7 +11,7 @@ public class FsmStateIdle : FsmStatePlayer
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Idle state [ENTER]");
+        //Debug.Log("Idle state [ENTER]");
 
         SubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment += SomeTranslateEquipment;
@@ -33,7 +33,7 @@ public class FsmStateIdle : FsmStatePlayer
 
     public override void Exit()
     {
-        Debug.Log("Idle state [EXIT]");
+        //Debug.Log("Idle state [EXIT]");
 
         UnsubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment -= SomeTranslateEquipment;
@@ -75,7 +75,7 @@ public class FsmStateIdle : FsmStatePlayer
     }
     private void UpdateIdleAnimation()
     {
-        Debug.Log(" И что за параша?");
+        //Debug.Log(" И что за параша?");
         player.animator.Play(C.Animations.PlayerIdle);
     }
 

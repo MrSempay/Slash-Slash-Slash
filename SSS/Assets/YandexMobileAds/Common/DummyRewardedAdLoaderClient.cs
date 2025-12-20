@@ -24,12 +24,12 @@ namespace YandexMobileAds.Common
 
         public DummyRewardedAdLoaderClient()
         {
-            Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
         }
 
         public void LoadAd(AdRequestConfiguration configuration)
         {
-            Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
 
             if (OnAdLoaded != null)
             {
@@ -43,7 +43,7 @@ namespace YandexMobileAds.Common
 
         public void CancelLoading()
         {
-            Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log(TAG + MethodBase.GetCurrentMethod().Name);
         }
     }
 }

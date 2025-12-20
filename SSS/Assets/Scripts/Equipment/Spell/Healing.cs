@@ -57,13 +57,13 @@ public class Healing : Spell
 
     public override void UnitCastAnimationPeackedForThisEquipment()
     {
-        //Debug.Log("Hilim");
+        ////Debug.Log("Hilim");
         ownerUnit.Heal(healthHealAmount); // —рочно!!! нужно мен€ть!!! на owner !!!, € не могу более на это смотреть...
     }
 
     public override void UnitCastAnimationFinishedForThisEquipment()
     {
-        //Debug.Log("konchaem");
+        ////Debug.Log("konchaem");
         Deactivate(ownerUnit); // AAAAAAAAA
     }
 

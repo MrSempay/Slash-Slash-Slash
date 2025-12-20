@@ -95,7 +95,7 @@ public class LightEmitter : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"Some exception while canceling light fading: {ex}");
+                //Debug.LogWarning($"Some exception while canceling light fading: {ex}");
             }
             finally
             {

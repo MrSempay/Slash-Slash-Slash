@@ -146,14 +146,14 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     /// </summary>
     public void RequestJumpStep(StepMS target)
     {
-        Debug.Log($"[Scenario Step] RequestJump -> {target}");
+        //Debug.Log($"[Scenario Step] RequestJump -> {target}");
         _currentStepMS = target;
         var current = Volatile.Read(ref _stepCts);
         try { current?.Cancel(); } catch { }
     }
     public void RequestJumpScenario(ScenarioMode target)
     {
-        Debug.Log($"[Scenario Mode] RequestJump -> {target}");
+        //Debug.Log($"[Scenario Mode] RequestJump -> {target}");
         _currentMode = target;
         var current = Volatile.Read(ref _stepCts);
         try { current?.Cancel(); } catch { }
@@ -182,7 +182,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("Master scenario cancelled");
+            //Debug.Log("Master scenario cancelled");
         }
     }
 
@@ -280,7 +280,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                                     await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue2_2, stepToken);
                                 }
                                 catch (OperationCanceledException) { throw; }
-                                catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
+                                catch (Exception ex) {  }
 
                                 CameraManager.Instance.DelinkCameraPlayer();
                                 TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
@@ -420,7 +420,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                 }
                 catch (OperationCanceledException)
                 {
-                    Debug.Log("Ожидание прервано (возможно RequestJump установил новый _currentStep)");
+                    //Debug.Log("Ожидание прервано (возможно RequestJump установил новый _currentStep)");
                     if (_currentMode != ScenarioMode.MainScenario) return;
                     // Ожидание прервано (возможно RequestJump установил новый _currentStep).
                     // Не логируем как ошибку — просто идём дальше и обработаем новый шаг.
@@ -436,11 +436,11 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("Level1Scenario: сценарий отменён (глобально).");
+            //Debug.Log("Level1Scenario: сценарий отменён (глобально).");
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Level1Scenario: ошибка в RunScenarioLoop: {ex}");
+            //Debug.LogError($"Level1Scenario: ошибка в RunScenarioLoop: {ex}");
         }
     }
 
@@ -541,11 +541,11 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
             catch (OperationCanceledException)
             {
                 if (_currentMode != ScenarioMode.DefeatScenario) return;
-                Debug.Log("Level1Scenario: сценарий отменён (глобально).");
+                //Debug.Log("Level1Scenario: сценарий отменён (глобально).");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Level1Scenario: ошибка в RunDefeatScenarioLoop: {ex}");
+                //Debug.LogError($"Level1Scenario: ошибка в RunDefeatScenarioLoop: {ex}");
             }
             finally
             {
@@ -564,7 +564,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
     
     private async Task<Unit> SpawnFirstEnemyAndWaitKillAsync(GameObject enemyPrefab, Vector3 pos, CancellationToken ct)
     {
-        //Debug.Log("А хули не спавним?");
+        ////Debug.Log("А хули не спавним?");
         GameObject enemyObj = SpawnObjectAtTargetPosition(enemyPrefab, pos);
         var spawnedUnit = enemyObj.GetComponent<Unit>();
         _scriptFirstEnemyForKill = spawnedUnit;
@@ -623,7 +623,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
 
     protected override void EquipmentWasSold(Equipment equipment)
     {
-        Debug.Log("Не уж то ли Was Sold???");
+        //Debug.Log("Не уж то ли Was Sold???");
         base.EquipmentWasSold(equipment);
         if (equipment.isEquipmentASpell) _spellBought.Publish(true);
         else _ammoBought.Publish(true);
@@ -664,7 +664,7 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
         //_mainScenarioCts?.Cancel();
         //_mainScenarioCts?.Dispose();
         //_mainScenarioCts = null;
-        //Debug.Log("Чё за нах?&&&&");
+        ////Debug.Log("Чё за нах?&&&&");
         _masterScenarioCts?.Cancel();
         _masterScenarioCts?.Dispose();
         _masterScenarioCts = null;

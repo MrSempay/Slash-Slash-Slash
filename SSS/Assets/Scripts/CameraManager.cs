@@ -75,19 +75,19 @@ public class CameraManager : ICleanUp
 
         if (!_moves.TryAdd(param.FinishKey, mi))
             throw new InvalidOperationException($"Move with key '{param.FinishKey}' is already running.");
-        //Debug.Log("Чё за хрень?");
+        ////Debug.Log("Чё за хрень?");
         if (param.CancellationToken.CanBeCanceled)
         {
             mi.CancelReg = param.CancellationToken.Register(() =>
             {
-                //Debug.Log(1);
+                ////Debug.Log(1);
                 if (_moves.TryRemove(param.FinishKey, out var removed))
                 {
-                    //Debug.Log(2);
+                    ////Debug.Log(2);
                     removed.Tcs.TrySetCanceled(param.CancellationToken);
                     MainThreadPost(() =>
                     {
-                        //Debug.Log(3);
+                        ////Debug.Log(3);
                         //try { if (removed.Coroutine != null) CoroutineManager.Instance.StopManagedCoroutine(removed.OwnerCoroutine, removed.Coroutine); }
                         //catch { }
                     });
@@ -100,12 +100,13 @@ public class CameraManager : ICleanUp
         {
             Action actionStop = () =>
             {
-                Debug.Log(11);
+                //Debug.Log(11);
                 if (_moves.TryRemove(param.FinishKey, out var finished))
                 {
-                    Debug.Log(22);
-                    finished.Tcs.TrySetResult(true); Debug.Log(33);
-                    try { finished.CancelReg.Dispose(); Debug.Log(44); } catch { Debug.Log(55); }
+                    //Debug.Log(22);
+                    finished.Tcs.TrySetResult(true); //Debug.Log(33);
+                    try { finished.CancelReg.Dispose(); }
+                    catch { }
                 }
             };
 
@@ -143,13 +144,14 @@ public class CameraManager : ICleanUp
         {
             if (_moves.TryRemove(param.FinishKey, out var removed))
             {
-                Debug.Log(111);
-                try { removed.CancelReg.Dispose(); Debug.Log(222); } catch { Debug.Log(333); }
+                //Debug.Log(111);
+                try { removed.CancelReg.Dispose(); } 
+                catch { }
                 removed.Tcs.TrySetException(ex);
             }
             else
             {
-                Debug.Log(444);
+                //Debug.Log(444);
                 tcs.TrySetException(ex);
             }
         }
@@ -173,7 +175,7 @@ public class CameraManager : ICleanUp
 
         while (Vector3.Distance(tCam.position, desired) > distanceThreshold)
         {
-            //Debug.Log("...");
+            ////Debug.Log("...");
             //if (Player.instance == null || tCam == null || tTarget == null) yield break;
             desired = tTarget.position + Player.instance.localPositionCamera;
             tCam.position = Vector3.MoveTowards(tCam.position, desired, speed * Time.deltaTime);
@@ -411,11 +413,11 @@ public class CameraManager : ICleanUp
 
     public void Dispose()
     {
-        Debug.Log("ДА что за нахрен?");
+        //Debug.Log("ДА что за нахрен?");
 
-        Debug.Log($"Dispose thread: {Thread.CurrentThread.ManagedThreadId}, main: {Thread.CurrentThread == Thread.CurrentThread}");
-        Debug.Log($"SynchronizationContext: {SynchronizationContext.Current?.GetType().Name ?? "null"}");
-        Debug.Log($"UnityContext : {GameManager.UnityContext}");
+        //Debug.Log($"Dispose thread: {Thread.CurrentThread.ManagedThreadId}, main: {Thread.CurrentThread == Thread.CurrentThread}");
+        //Debug.Log($"SynchronizationContext: {SynchronizationContext.Current?.GetType().Name ?? "null"}");
+        //Debug.Log($"UnityContext : {GameManager.UnityContext}");
         if (Interlocked.Exchange(ref _disposed, 1) == 1) return;
 
         foreach (var kv in _moves)
@@ -430,9 +432,9 @@ public class CameraManager : ICleanUp
                 }, null);
             }
             catch { }
-            //Debug.Log("ДА что за нахрен?");
+            ////Debug.Log("ДА что за нахрен?");
             //try { mi.Tcs?.TrySetCanceled(); } catch { }
-            //Debug.Log("ДА что за нахрен?");
+            ////Debug.Log("ДА что за нахрен?");
             try { mi.CancelReg.Dispose(); } catch { }
         }
         _moves.Clear();
@@ -441,7 +443,7 @@ public class CameraManager : ICleanUp
 
     public void DisposeL2()
     {
-        Debug.Log("Dispose CameraService");
+        //Debug.Log("Dispose CameraService");
 
         if (Interlocked.Exchange(ref _disposed, 1) == 1)
             return;
@@ -474,14 +476,14 @@ public class CameraManager : ICleanUp
                         }
                         catch (Exception ex)
                         {
-                            Debug.LogWarning($"Stop coroutine failed: {ex}");
+                            //Debug.LogWarning($"Stop coroutine failed: {ex}");
                         }
                     }, null);
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"Dispose move failed: {ex}");
+                //Debug.LogWarning($"Dispose move failed: {ex}");
             }
         }
 

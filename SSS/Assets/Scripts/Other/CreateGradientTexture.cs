@@ -28,6 +28,6 @@ public class CreateGradientTexture : MonoBehaviour
         string path = "C:\\Users\\Fossa2016\\Documents\\gradient.png";
         //System.IO.File.WriteAllBytes("C:\\Users\\Fossa2016\\Documents\\GitHub\\Slash-Slash-Slash\\SSS\\Assets", gradientTex.EncodeToPNG());
         System.IO.File.WriteAllBytes(path, gradientTex.EncodeToPNG());
-        Debug.Log("Gradient texture saved!");
+        //Debug.Log("Gradient texture saved!");
     }
 }

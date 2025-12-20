@@ -11,7 +11,7 @@ public class PlayingMenu : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log("Игра закрылась");
+        //Debug.Log("Игра закрылась");
         Application.Quit();
     }
 

@@ -18,7 +18,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Fall state [ENTER]");
+        //Debug.Log("Fall state [ENTER]");
         enemy.TEST_Current_State = "Fall";
         Reset();
         enemy.animator.Play("EnemyFall");
@@ -28,7 +28,7 @@ public class FsmStateFallEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Fall state [EXIT]");
+        //Debug.Log("Fall state [EXIT]");
         // animator.Play("fall");
         enemy.fuck.onEnemyLandingAnimationFinished -= SetStateIdleOrWalk;
     }

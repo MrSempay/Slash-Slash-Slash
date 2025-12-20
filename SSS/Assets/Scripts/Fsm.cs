@@ -37,7 +37,7 @@ public class Fsm
         }
         else
         {
-            Debug.Log("гюашкх днаюбхрэ янярнъмхе!?!? йюйни йньлюп!!!");
+            //Debug.Log("гюашкх днаюбхрэ янярнъмхе!?!? йюйни йньлюп!!!");
         }
     }
 
@@ -45,12 +45,12 @@ public class Fsm
     {
         if (unit is Player)
         {
-            Debug.Log("хЦПНЙ");
+            //Debug.Log("хЦПНЙ");
             unit._fsm.SetState<FsmStateIdle>();
         }
         else if (unit is Enemy)
         {
-            Debug.Log("бПЮЦ");
+            //Debug.Log("бПЮЦ");
             unit._fsm.SetState<FsmStateIdleEnemy>();
         } 
 

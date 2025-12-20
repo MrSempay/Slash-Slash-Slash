@@ -332,9 +332,9 @@ public class Player : Unit, IMainTarget
 
     void Update()
     {
-        //Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
+        ////Debug.Log(GameManager.Instance.localizationManager.currentLanguage);
         if (areUpdatingFunctionsEnabled) _fsm.Update();
-        //Debug.Log(enemiesInAttackArea.Count);
+        ////Debug.Log(enemiesInAttackArea.Count);
     }
     private void FixedUpdate()
     {
@@ -400,7 +400,7 @@ public class Player : Unit, IMainTarget
     {
         foreach (Enemy item in enemiesInAttackArea)
         {
-            //Debug.Log(item.gameObject.GetInstanceID());
+            ////Debug.Log(item.gameObject.GetInstanceID());
         }
         Enemy enemyUnit = unit as Enemy; // безопасное приведение, ибо мало ли, вдруг не врага убьём, хотя такого пока что быть не может, ведь атаковать мы можем только тег Enemy
 
@@ -704,7 +704,7 @@ public class Player : Unit, IMainTarget
 
         // правило разрешения стороны: если есть хоть один контакт, указывающий, что стена слева — считаем wallOnLeft = true.
         // можно заменить логикой "последний контакт" или "большинство", если нужно иначе.
-        //Debug.Log("Жесть какая-то");
+        ////Debug.Log("Жесть какая-то");
         wallOnLeft = false;
         foreach (var kv in sideContacts.Values)
         {

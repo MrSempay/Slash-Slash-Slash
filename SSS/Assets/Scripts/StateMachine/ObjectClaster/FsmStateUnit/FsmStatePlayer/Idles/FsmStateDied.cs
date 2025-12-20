@@ -14,7 +14,7 @@ public class FsmStateDied : FsmStatePlayer
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Died state [ENTER]");
+        //Debug.Log("Died state [ENTER]");
 
         player.animator.Play("PlayerDied");
         player.isAlive = false;
@@ -31,7 +31,7 @@ public class FsmStateDied : FsmStatePlayer
 
     public override void Exit()
     {
-        Debug.Log("Died state [EXIT]");
+        //Debug.Log("Died state [EXIT]");
         player.isAlive = true;
     }
 

@@ -12,7 +12,7 @@ public class FsmStateIdleEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Idle Enemy state [ENTER]");
+        //Debug.Log("Idle Enemy state [ENTER]");
         enemy.TEST_Current_State = "Idle";
         enemy.animator.Play("EnemyIdle");
         enemy.rb.linearVelocityX = 0;
@@ -22,7 +22,7 @@ public class FsmStateIdleEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Idle Enemy state [EXIT]");
+        //Debug.Log("Idle Enemy state [EXIT]");
         enemy.isTriggered = true; // по идее любой факт выхода из состояния idle будет выставлять факт триггера в true
 
         enemy.triggerAreaScript.OnPlayerEnteredTriggerArea -= GoToWalkState;

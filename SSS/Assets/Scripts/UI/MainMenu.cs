@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
         if (GameManager.Instance.MaxReachedLevel == GameManager.Instance.orderLevels.Count - 1) // если достигли последнего уровня
         {
-            //Debug.LogWarning("FFFSAFASFASFasf");
+            ////Debug.LogWarning("FFFSAFASFASFasf");
             _buttonTitles = Instantiate(_prefubTitlesButton, _rtMenu); // место находит автоматически
             _buttonTitles.transform.SetSiblingIndex(2);
             _buttonTitles.onClick.AddListener(StartTitlesScene);
@@ -50,9 +50,9 @@ public class MainMenu : MonoBehaviour
     {
         SettingsMenu[] allObjects = Resources.FindObjectsOfTypeAll<SettingsMenu>();
         allObjects[0].Awake(); // ну и фигня, нельзя к Instance обратиться, бо он инициализируется у нас в Awake
-        //Debug.Log(allObjects[0]);
-        //Debug.Log(allObjects[0].GetInstanceID());
-        //Debug.Log(SettingsMenu.Instance);
+        ////Debug.Log(allObjects[0]);
+        ////Debug.Log(allObjects[0].GetInstanceID());
+        ////Debug.Log(SettingsMenu.Instance);
         SettingsMenu.Instance.OnEnable();
         SettingsMenu.Instance.Start();
 
@@ -79,14 +79,14 @@ public class MainMenu : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log("Игра закрылась");
+        //Debug.Log("Игра закрылась");
         Application.Quit();
     }
 
     public void OrientationWasChanged(LANGUAGE orientation)
     {
-        Debug.Log(" ну и шо за хрень это?");
-        Debug.Log(orientation);
+        //Debug.Log(" ну и шо за хрень это?");
+        //Debug.Log(orientation);
         switch (orientation)
         {
             case LANGUAGE.Vertical:

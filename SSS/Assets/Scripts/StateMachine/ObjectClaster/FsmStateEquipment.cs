@@ -29,7 +29,7 @@ public class FsmStateEquipment : FsmState
 
             foreach (Collider2D hit in hits)
             {
-                //Debug.Log("Обнаружен коллайдер: " + hit.gameObject.name);
+                ////Debug.Log("Обнаружен коллайдер: " + hit.gameObject.name);
 
                 GameObject someGameObject = hit.gameObject; // Получаем GameObject
                 if (someGameObject.CompareTag("Equipment"))

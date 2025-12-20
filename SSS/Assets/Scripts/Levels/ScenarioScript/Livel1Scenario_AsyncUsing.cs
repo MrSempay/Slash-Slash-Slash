@@ -100,11 +100,11 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
             // Ждём первого диалога (если он был запущен в Start)
             // (в случае, если StartDialogueNEW уже запустил речь, DialogueFinished закроет tcs)
             await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue1_1, ct);
-            //Debug.Log(1);
+            ////Debug.Log(1);
 
             if (!_studyWasFinished)
             {
-                //Debug.Log(2);
+                ////Debug.Log(2);
                 // Спавним первого врага и ждём, пока его убьют
                 var first = await SpawnFirstEnemyAndWaitKillAsync(_enemyPrefub, _transformPointSpawnFirstEnemy.position, ct);
                 // Ждём 2 секунды, как было в первоначальном коде
@@ -134,18 +134,18 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
                 // боже, на кой тут цикл хD
                 //while (!_studyWasFinished)
                 //{
-                //    //Debug.Log("И снова мы тут...");
+                //    ////Debug.Log("И снова мы тут...");
                 //    var completed = await Task.WhenAny(_firstSpellBuyTcs.Task, _firstAmmunitionBuyTcs.Task);
-                //    //Debug.Log("И снова мы тут1...");
+                //    ////Debug.Log("И снова мы тут1...");
                 //    ct.ThrowIfCancellationRequested();
 
                 //    if (completed == _firstSpellBuyTcs.Task)
                 //    {
-                //        //Debug.Log("И снова мы тут...2");
+                //        ////Debug.Log("И снова мы тут...2");
 
                 //        try { await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue2_2, ct); }
                 //        catch (OperationCanceledException) { throw; }
-                //        catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
+                //        catch (Exception ex) { //Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
                 //        _firstSpellBuyTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously); // не уверен, зачем это. Возможно нужно для того,
                 //                                                                                                // чтобы система могла ожидать следующей покупки заклинания,
                 //                            // если такое вдруг потребуется (хотя по логике “первой покупки” это может быть и не нужно, но такой шаблон защиты от повторного срабатывания).
@@ -196,7 +196,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
                     try { await StartDialogueAsync(C.SS.Level1.Dialogues.Dialogue2_2, ct); }
                     catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { Debug.LogError($"Ошибка при запуске Dialogue2.2: {ex}"); }
+                    catch (Exception ex) { }
 
                     DelinkCameraPlayer(_cameraPlayer);
                     TeleportObjectToPoint(player, _transformPointTeleportTreasury.position);
@@ -273,11 +273,11 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("Level1Scenario: сценарий отменён.");
+            //Debug.Log("Level1Scenario: сценарий отменён.");
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Level1Scenario: ошибка в RunScenarioAsync: {ex}");
+            //Debug.LogError($"Level1Scenario: ошибка в RunScenarioAsync: {ex}");
         }
     }
 
@@ -298,7 +298,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
         try
         {
-            //Debug.Log(dialogueName);
+            ////Debug.Log(dialogueName);
             StartDialogue(dialogueName);
         }
         catch (Exception ex)
@@ -382,7 +382,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
     private async Task<Unit> SpawnFirstEnemyAndWaitKillAsync(GameObject enemyPrefab, Vector3 pos, CancellationToken ct)
     {
-        //Debug.Log("А хули не спавним?");
+        ////Debug.Log("А хули не спавним?");
         GameObject enemyObj = SpawnObjectAtTargetPosition(enemyPrefab, pos);
         var spawnedUnit = enemyObj.GetComponent<Unit>();
         _scriptFirstEnemyForKill = spawnedUnit;
@@ -442,7 +442,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
 
     protected internal override void DialogueFinished(string nameDialogueWithFolder)
     {
-        //Debug.Log("А диалог-то закончили");
+        ////Debug.Log("А диалог-то закончили");
         base.DialogueFinished(nameDialogueWithFolder);
         if (_dialogueTcs.TryGetValue(nameDialogueWithFolder, out var tcs))
         {
@@ -451,7 +451,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
         }
 
         // Если никто не ожидал — просто логируем (или можно сохранять старую ветвь поведения).
-        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
+        //Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
     }
 
     protected internal override void TimerFinished(string markerTimeWait)
@@ -470,7 +470,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
             OnStudyFinish?.Invoke(); // если кто-то слушает — вызовём
         }
 
-        Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
+        //Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
     }
 
     protected override void MovingCameraPlayerWasFinished(string keyFinishing)
@@ -482,7 +482,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
             return;
         }
 
-        Debug.Log($"MovingCameraPlayerWasFinished (no awaiter): {keyFinishing}");
+        //Debug.Log($"MovingCameraPlayerWasFinished (no awaiter): {keyFinishing}");
     }
 
     protected internal override void EnemiesWaveWasDestroyed(string nameWave)
@@ -496,7 +496,7 @@ public class Livel1Scenario_AsyncUsing : ScenarioScript
             return;
         }
 
-        Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
+        //Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
     }
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)

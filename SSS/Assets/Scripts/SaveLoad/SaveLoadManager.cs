@@ -62,7 +62,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(PlayFabManager.Instance.IDTitleAccountLast); 
+        ////Debug.Log(PlayFabManager.Instance.IDTitleAccountLast); 
     }
 
 
@@ -75,12 +75,12 @@ public class SaveLoadManager : MonoBehaviour
     {
         try
         {
-            Debug.Log("Сохраняем общие данные (как локальные, так и синхронизации)");
-            //Debug.Log(GameManager.Instance);
+            //Debug.Log("Сохраняем общие данные (как локальные, так и синхронизации)");
+            ////Debug.Log(GameManager.Instance);
 
             GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel = GameManager.Instance.MaxReachedLevel;
             GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount = PlayFabManager.Instance.IDTitleAccountLast;
-            Debug.Log("Сохраняем  синхронизационные данные для аккаунта с ID: " + PlayFabManager.Instance.IDTitleAccountLast);
+            //Debug.Log("Сохраняем  синхронизационные данные для аккаунта с ID: " + PlayFabManager.Instance.IDTitleAccountLast);
             string jsonGeneralData = JsonUtility.ToJson(GameManager.Instance.wrapperGlobal.wrapperGeneralData, prettyPrint: true);
 
             // Сохранение в файл для локального пользования. Происходит всегда.
@@ -112,7 +112,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Ошибка при сохранении глобальных данных: {ex.Message}");
+            //Debug.LogError($"Ошибка при сохранении глобальных данных: {ex.Message}");
         }
     }
 
@@ -122,7 +122,7 @@ public class SaveLoadManager : MonoBehaviour
         if (File.Exists(_pathToFileGeneralLocalData))
         {
 
-            Debug.Log("Загружаем общие локальные настройки");
+            //Debug.Log("Загружаем общие локальные настройки");
             string json = File.ReadAllText(_pathToFileGeneralLocalData);
 
             if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
@@ -133,19 +133,19 @@ public class SaveLoadManager : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                    //Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
                 }
             }
             else
             {
-                Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
+                //Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
             }
         }
     }    
 
     public void ImplementStoredGeneralData()
     {
-        Debug.Log("Применяем общие локальные настройки");
+        //Debug.Log("Применяем общие локальные настройки");
         GameManager.Instance.MaxReachedLevel = GameManager.Instance.wrapperGlobal.wrapperGeneralData.MaxReachedLevel;
         PlayFabManager.Instance.IDTitleAccountLast = GameManager.Instance.wrapperGlobal.wrapperGeneralData.IDTitleLastSignedAccount;
     }
@@ -171,7 +171,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Ошибка при сохранении настроек: {ex.Message}");
+            //Debug.LogError($"Ошибка при сохранении настроек: {ex.Message}");
         }
     }
 
@@ -191,19 +191,19 @@ public class SaveLoadManager : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning("Error parsing JSON DataSettings: " + e.Message);
+                    //Debug.LogWarning("Error parsing JSON DataSettings: " + e.Message);
                 }
             }
             else
             {
-                Debug.LogWarning("DataSettings.json is empty. Creating new DataWrapperSettings.");
+                //Debug.LogWarning("DataSettings.json is empty. Creating new DataWrapperSettings.");
             }
         }
     }
 
     public void ImplementStoredSettings()
     {
-        //Debug.Log("Implemented");
+        ////Debug.Log("Implemented");
         GameManager.Instance.currentSettings.isLoadingSettings = true;
         ImplementStoredSettingsToggle();
         ImplementStoredSettingsSliders();
@@ -312,7 +312,7 @@ public class SaveLoadManager : MonoBehaviour
 
                 scriptToggle.Awake(); // дабы если на данный момент объекты будут не активны, то мы бы их инициализировали 
                 AssignParametersAndProperties(fieldsAndPropertiesOfWrapper, scriptToggle);
-                //Debug.Log(wrapToggle.selfName);
+                ////Debug.Log(wrapToggle.selfName);
                 //scriptToggle.IsToggled = wrapToggle.isToggled;
 
                 continue; // предположим, что у тумблера не будут дочерние тумблеры...
@@ -399,7 +399,7 @@ public class SaveLoadManager : MonoBehaviour
             ParameterChoseList scriptChoseList = childRectTransform.GetComponent<ParameterChoseList>();
             if (scriptChoseList != null)
             {
-                //Debug.Log(scriptChoseList.CurrentTextValue);
+                ////Debug.Log(scriptChoseList.CurrentTextValue);
                 DataWrapperChoseList wrapper = new DataWrapperChoseList();
                 Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
                 Dictionary<string, object> fieldsAndPropertiesOfScriptSlider = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, scriptChoseList);
@@ -425,11 +425,11 @@ public class SaveLoadManager : MonoBehaviour
                 {
                     foreach (RectTransform rootRectTransform in SettingsMenu.Instance.rectTransformPlacementForSettings)
                     {
-                        //Debug.Log(rootRectTransform);
-                        //Debug.Log(wrapChoseList);
+                        ////Debug.Log(rootRectTransform);
+                        ////Debug.Log(wrapChoseList);
 
                         Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapChoseList);
-                        //Debug.Log(fieldsAndPropertiesOfWrapper);
+                        ////Debug.Log(fieldsAndPropertiesOfWrapper);
                         FindAndImplementAllSlidersInGivenRectTransformRecursivly(rootRectTransform, wrapChoseList, fieldsAndPropertiesOfWrapper);
                     }
                 }
@@ -477,8 +477,8 @@ public class SaveLoadManager : MonoBehaviour
                 DataWrapperInternetSettings wrapper = new DataWrapperInternetSettings();
                 Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapper);
                 Dictionary<string, object> fieldsAndPropertiesOfInternetSettings = GetPropertiesAndFieldsSelectively(fieldsAndPropertiesOfWrapper, GameManager.Instance.wrapperGlobal.wrapperSettings.internetData);
-                //Debug.Log(fieldsAndPropertiesOfInternetSettings);
-                //Debug.Log(GameManager.Instance.currentSettings);
+                ////Debug.Log(fieldsAndPropertiesOfInternetSettings);
+                ////Debug.Log(GameManager.Instance.currentSettings);
 
                 AssignParametersAndProperties(fieldsAndPropertiesOfInternetSettings, GameManager.Instance.currentSettings);
             }
@@ -494,7 +494,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (IDTitleAccount != "")
         {
-            Debug.Log("Загружаем и применяем настройки синхронизации");
+            //Debug.Log("Загружаем и применяем настройки синхронизации");
             string filePathSyncData = Path.Combine(_pathToSyncFolder, string.IsNullOrEmpty(PlayFabManager.Instance.IDTitleAccountLast) ? "default.json" : PlayFabManager.Instance.IDTitleAccountLast + ".json");
 
             if (File.Exists(filePathSyncData))
@@ -514,12 +514,12 @@ public class SaveLoadManager : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                        //Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
                     }
                 }
                 else
                 {
-                    Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
+                    //Debug.LogWarning("GeneralLocalData.json is empty. Creating new DataWrapperSettings.");
                 }
             }
         }

@@ -10,13 +10,13 @@ public class FsmStateBuildingOpened : FsmStateBuilding
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Building Open state [ENTER]");
+        //Debug.Log("Building Open state [ENTER]");
         //building.entirePanel.SetActive(true); // убрали в рамках расстановки снар€жени€ на полу...
     }
 
     public override void Exit()
     {
-        Debug.Log("Building Open state [EXIT]");
+        //Debug.Log("Building Open state [EXIT]");
         //building.entirePanel.SetActive(false); // убрали в рамках расстановки снар€жени€ на полу...
         //building.buttonEnterWasPressedToEnter = false; // убрали в рамках расстановки снар€жени€ на полу...
     }

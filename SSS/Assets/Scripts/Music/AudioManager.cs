@@ -245,7 +245,7 @@ public class AudioManager : MonoBehaviour
             {
                 // clip.name — это имя файла без расширения
                 dict[clip.name] = clip;
-                Debug.Log($"Загружен трек: {clip.name}");
+                //Debug.Log($"Загружен трек: {clip.name}");
             }
         }
     }
@@ -275,7 +275,7 @@ public class AudioManager : MonoBehaviour
     {
         if (_fadeEnvironmentSoundsCoroutine != null)
         {
-            Debug.LogWarning("Fade already in progress!");
+            //Debug.LogWarning("Fade already in progress!");
             return;
         }
 
@@ -297,8 +297,8 @@ public class AudioManager : MonoBehaviour
             }
             //foreach (AudioEmitter emitter in emitters)
             //{
-            //    Debug.Log(emitter);
-            //    Debug.Log(emitter.gameObject);
+            //    //Debug.Log(emitter);
+            //    //Debug.Log(emitter.gameObject);
             //    foreach (AudioSourceExtended audioSourceExtended in emitter.sources.Values)
             //    {
             //        if (audioSourceExtended.audioSource != null)

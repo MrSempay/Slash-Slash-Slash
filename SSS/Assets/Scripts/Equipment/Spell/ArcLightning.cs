@@ -83,10 +83,10 @@ public class ArcLightning : Spell
 
     public override void UnitCastAnimationPeackedForThisEquipment()
     {
-        //Debug.Log("MMM");
+        ////Debug.Log("MMM");
         _arcLightningArea = new GameObject("LightningArea");
         _arcLightningArea.transform.SetParent(ownerUnit.transform, false);
-        //Debug.Log("Mda" + _directionArcLightningArea);
+        ////Debug.Log("Mda" + _directionArcLightningArea);
         _arcLightningArea.transform.localPosition = new Vector3(_directionArcLightningArea * _biasPositionLightningArea.x, _biasPositionLightningArea.y, _biasPositionLightningArea.z);
         //_arcLightningArea.transform.localPosition = Vector3.Scale(_biasPositionLightningArea, new Vector3(_directionArcLightningArea, 1, 1));
         _attackAreaScript = _arcLightningArea.AddComponent<AttackArea>();

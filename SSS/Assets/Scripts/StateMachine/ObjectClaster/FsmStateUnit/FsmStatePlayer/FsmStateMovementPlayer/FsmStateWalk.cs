@@ -12,7 +12,7 @@ public class FsmStateWalk : FsmStateMovementPlayer
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Walk state [ENTER]");
+        //Debug.Log("Walk state [ENTER]");
 
         SubscribeForSignalActivationSomeEquipment();
         player.OnTranslateEquipment += SomeTranslateEquipment;
@@ -35,7 +35,7 @@ public class FsmStateWalk : FsmStateMovementPlayer
 
     public override void Exit()
     {
-        Debug.Log("Walk state [EXIT]");
+        //Debug.Log("Walk state [EXIT]");
 
         UnsubscribeForSignalActivationSomeEquipment();
 
@@ -73,7 +73,7 @@ public class FsmStateWalk : FsmStateMovementPlayer
     {
         base.FixedUpdate();
         //if (player.rb.linearVelocityX == 0) fsmPlayer.SetState<FsmStateIdle>(); 
-        //Debug.Log(desiredVelocityX);
+        ////Debug.Log(desiredVelocityX);
         //if (desiredVelocityX == 0) fsmPlayer.SetState<FsmStateIdle>();
     }
 

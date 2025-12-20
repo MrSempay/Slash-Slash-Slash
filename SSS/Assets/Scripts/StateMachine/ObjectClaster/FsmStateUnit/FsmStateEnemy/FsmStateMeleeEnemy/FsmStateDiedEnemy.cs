@@ -15,7 +15,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Died state [ENTER]");
+        //Debug.Log("Died state [ENTER]");
         enemy.TEST_Current_State = "Died";
         enemy.animator.Play("EnemyDied");
         //enemy.isAlive = false; // устанавливаем в методе Die у Unit
@@ -25,7 +25,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
         enemy.gameObject.tag = C.Tags.EnemyDied;
         enemy.fuck.gameObject.tag = C.Tags.EnemyDied;
 
-        Debug.Log("Проверяем тэг в смерти " + enemy.fuck.gameObject.tag);
+        //Debug.Log("Проверяем тэг в смерти " + enemy.fuck.gameObject.tag);
 
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
 
@@ -39,7 +39,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Died state [EXIT]");
+        //Debug.Log("Died state [EXIT]");
         enemy.isAlive = true;
     }
 

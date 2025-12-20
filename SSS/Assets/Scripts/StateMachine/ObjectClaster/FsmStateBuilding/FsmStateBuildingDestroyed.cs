@@ -12,7 +12,7 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Building Destroyed state [ENTER]");
+        //Debug.Log("Building Destroyed state [ENTER]");
         //building.gameObject.SetActive(false);
 
         building.selfCollider.enabled = false;
@@ -35,6 +35,6 @@ public class FsmStateBuildingDestroyed : FsmStateBuilding
 
     public override void Exit()
     {
-        Debug.Log("Building Destroyed state [EXIT]");
+        //Debug.Log("Building Destroyed state [EXIT]");
     }
 }

@@ -385,7 +385,7 @@ public class ScoreManager : MonoBehaviour
                 {
                     if (rankProperties[i].functionRank != null)
                     {
-                        Debug.Log("RANGGGGGG " + i);
+                        //Debug.Log("RANGGGGGG " + i);
                         rankProperties[i].functionRank?.Invoke(true);
                         actionsForAddOrRomove.Add(rankProperties[i].functionRank);
                     }
@@ -436,13 +436,13 @@ public class ScoreManager : MonoBehaviour
                     CurrentRankStyle = properties.Key;
                     //_progerssBarStyleRank.CurrentValue = value;
 
-                    Debug.Log("Ранг: " + CurrentRankStyle);
+                    //Debug.Log("Ранг: " + CurrentRankStyle);
                 }
                 return; // Важно: выходим из цикла, как только нашли подходящий диапазон
             }
         }
 
-        Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
+        //Debug.LogError("Значение вне допустимого диапазона!"); // Если не попали ни в один диапазон
     }
 
 
@@ -467,7 +467,7 @@ public class ScoreManager : MonoBehaviour
             _currentKillCombo = value;
             if (value > 0)
             {
-                //Debug.Log(value);
+                ////Debug.Log(value);
                 //InvokeAppearingSprite(TYPE_APPEARING_MESSAGE.ComboAdded);
                 InvokeAppearingText(TYPE_APPEARING_MESSAGE.ComboAdded);
             }
@@ -537,7 +537,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(timeZeroizeKillComboTicks); // Ждем 1 секунду
 
         // Сбрасываем комбо после задержки
-        //Debug.Log(GetInstanceID());
+        ////Debug.Log(GetInstanceID());
         CurrentKillCombo = CurrentMinimumAmountCombo;
         _zeroizeKillComboTicksCoroutine = null; // Сбрасываем ссылку на корутину
     }
@@ -558,7 +558,7 @@ public class ScoreManager : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("🔄 Leaderboard call canceled - duplicate prevention");
+            //Debug.Log("🔄 Leaderboard call canceled - duplicate prevention");
             return;
         }
     }
@@ -583,7 +583,7 @@ public class ScoreManager : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("🔄 Leaderboard data update canceled - duplicate prevention");
+            //Debug.Log("🔄 Leaderboard data update canceled - duplicate prevention");
             throw;            
         }
     }
@@ -593,7 +593,7 @@ public class ScoreManager : MonoBehaviour
         //                           ВВВВВВВВВВНННННННННИИИИИИИИИИИММММММММММААААААААААНННННННННННИИИИИИИИИИИИИИЕЕЕЕЕЕЕЕЕЕЕЕ!!!!!!!!!!!! !!!!!!!!!!!!!
         // Instantiate(_prefubLeaderboard, _player.UI.position, Quaternion.identity, _player.UI); ЗАДАЁТ ГЛОБАЛЬНУЮ ПОЗИЦИЮ ДЛЯ ОБЪЕКТА. ТО ЕСТЬ ЧТОБ ОН ЗАСПАВНИЛСЯ В НУЛЕВОЙ ТОЧКЕ
         // ОТНОСИТЕЛЬНО РОДИТЕЛЯ НУЖНО УКАЗЫВАТЬ ВОТ ЭТО ВОТ: _player.UI.position --- ГЛОБАЛЬНУЮ ПОЗИЦИЮ РОДИТЕЛЯ !!!
-        Debug.Log("И вот тут создаём");
+        //Debug.Log("И вот тут создаём");
         // ↓ НЕПОСРЕДСТВЕННО после await - создаём UI
         var parent = Player.instance.UIUpscaledMod
             ? _player.placementLeaderbaord
@@ -611,7 +611,7 @@ public class ScoreManager : MonoBehaviour
         leaderboardCts?.Cancel();
         leaderboardCts?.Dispose();
 
-        //Debug.Log(GetInstanceID()); 
+        ////Debug.Log(GetInstanceID()); 
         if (_instance == this) _instance = null;
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);
         StopAllCoroutines();

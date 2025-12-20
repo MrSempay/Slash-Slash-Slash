@@ -9,7 +9,7 @@ public class AreaDetectEnteringExiting : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         somethingEnterExitArea?.Invoke(true, other.gameObject, transform);
-        //Debug.Log("су йюй бнькх!");
+        ////Debug.Log("су йюй бнькх!");
     }
 
     private void OnTriggerExit2D(Collider2D other)

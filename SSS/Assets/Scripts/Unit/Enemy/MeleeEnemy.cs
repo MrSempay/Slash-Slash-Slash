@@ -20,7 +20,7 @@ public class MeleeEnemy : Enemy
     public override void MakeDamageToUnit(Unit unitWhichIsAttacked)
     {
         List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
-        //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
+        ////Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
         for (int i = 0; i < listOfUnitsInAttackArea.Count; i++)
         {
             if (i < listOfUnitsInAttackArea.Count)

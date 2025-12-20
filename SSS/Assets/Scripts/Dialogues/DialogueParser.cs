@@ -51,7 +51,7 @@ public class DialogueParser : MonoBehaviour
     {
         if (Time.timeScale > 0) // если не пауза
         {
-            //Debug.Log("ќбнаружен коллайдер: " + gameObject.name);
+            ////Debug.Log("ќбнаружен коллайдер: " + gameObject.name);
             if (Input.GetMouseButtonDown(0))
             {
                 Collider2D[] hits = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.05f);
@@ -62,12 +62,12 @@ public class DialogueParser : MonoBehaviour
                 // ѕеребираем все найденные коллайдеры
                 foreach (Collider2D hit in hits)
                 {
-                    //Debug.Log("ќбнаружен коллайдер: " + hit.gameObject.name);
+                    ////Debug.Log("ќбнаружен коллайдер: " + hit.gameObject.name);
 
                     GameObject placeEquipment = hit.gameObject; // ѕолучаем GameObject
                     if (placeEquipment.name == "ButtonMenu")
                     {
-                        Debug.Log("ЌјЎЋ»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» " + placeEquipment.name);
+                        //Debug.Log("ЌјЎЋ»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» " + placeEquipment.name);
                         return;
                         //return placeEquipment.GetComponent<RectTransform>(); // ¬озвращаем RectTransform, если нашли
                     }
@@ -107,13 +107,13 @@ public class DialogueParser : MonoBehaviour
 
         _nameDialogueFileWithParentFolder = GameManager.Instance.nameDialogueCurrent;
         string fullPathToDialogueFile = _nameDialogueFolder + GameManager.Instance.currentSettings.Language + "/" + _nameDialogueFileWithParentFolder;
-        //Debug.Log(fullPathToDialogueFile);
+        ////Debug.Log(fullPathToDialogueFile);
         TextAsset textAsset = Resources.Load<TextAsset>(fullPathToDialogueFile);
 
         if (textAsset == null)
         {
             // по идее можно просто мен€ть сцену далее, если диалог тут не предусмотрен
-            Debug.Log(" Ќет ‘вйликјјјјјјјјјјјј  Text file not found in " + fullPathToDialogueFile + ".txt");
+            //Debug.Log(" Ќет ‘вйликјјјјјјјјјјјј  Text file not found in " + fullPathToDialogueFile + ".txt");
             //StartCoroutine(FinishDialogueAfterOneFrame()); // сделано дл€ того, чтоб GameManager успел подписатьс€ на прослушивание завершени€ данного диалога и подал об этом сигнал прочим.
             // Ѕо иначе у нас, ввиду того что всЄ это происходит в Awake диалога, он даже не успевает подписатьс€ на это завершение, диалог спавнитс€ и уничтожаетс€ сразу в его Awake
 
@@ -146,7 +146,7 @@ public class DialogueParser : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Invalid dialogue line: " + line);
+                //Debug.LogWarning("Invalid dialogue line: " + line);
             }
         }
         DisplayDialogue(_currentIndexDialogue);
@@ -192,7 +192,7 @@ public class DialogueParser : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Dialogue index out of range.");
+            //Debug.LogWarning("Dialogue index out of range.");
         }
     }
 
@@ -217,8 +217,8 @@ public class DialogueParser : MonoBehaviour
 
     protected virtual void FinishDialogue() 
     {
-        Debug.Log("«акончили диалог: " + _nameDialogueFileWithParentFolder);
-        //Debug.Log(_nameDialogueFileWithParentFolder);
+        //Debug.Log("«акончили диалог: " + _nameDialogueFileWithParentFolder);
+        ////Debug.Log(_nameDialogueFileWithParentFolder);
         onDialogueWasFinished?.Invoke(_nameDialogueFileWithParentFolder);
     }
 

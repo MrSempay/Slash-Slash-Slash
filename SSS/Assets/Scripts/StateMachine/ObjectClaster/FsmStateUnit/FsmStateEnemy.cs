@@ -45,24 +45,24 @@ public class FsmStateEnemy : FsmStateUnit
     //Рассчитывает, отрисовывает путь. Меняет направление взгляда персонажа, смещает все детекторы, двигает по оси х.
     public void CalculateDrawPathChangeDirectionAndMove()
     {
-        //Debug.Log(path.corners.Length);
+        ////Debug.Log(path.corners.Length);
         FixingFuckingBuggingRotation();
         if (constraintTimeFlipXCoroutine == null)
         {
             constraintTimeFlipXCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, ConstraintTimeFlipX());
         }
-        //Debug.Log(enemy.currentTargetTransform.position);
-        //Debug.Log(enemy.currentTargetTransform);
+        ////Debug.Log(enemy.currentTargetTransform.position);
+        ////Debug.Log(enemy.currentTargetTransform);
         // Обновляем путь, если необходимо (например, если игрок переместился). По идее надо детектить ещё и y-состовляющую, но да ладно...
         if (enemy.CurrentTargetTransform)
         {
             if (Mathf.Abs(enemy.transform.position.x - enemy.CurrentTargetTransform.position.x) > enemy.arrivalThreshold)
             {
-                //Debug.Log("Emmm???1");
-                //Debug.Log(enemy.currentTargetTransform);
+                ////Debug.Log("Emmm???1");
+                ////Debug.Log(enemy.currentTargetTransform);
                 enemy.isPathValid = NavMesh.CalculatePath(enemy.transform.position + baseUpOffsetForStartPointFindingPath, enemy.CurrentTargetTransform.position + baseUpOffsetForStartPointFindingPath, NavMesh.AllAreas, path);
                 enemy.isPathValid = true;
-                //Debug.Log(path.corners.Length);
+                ////Debug.Log(path.corners.Length);
                 //enemy.agent.destination = enemy.playerTransform.position;
                 //path = enemy.agent.path;
                 if (path.corners.Length >= 1) enemy.isPathValid = true;
@@ -73,7 +73,7 @@ public class FsmStateEnemy : FsmStateUnit
                 }
             }
         }
-        //Debug.Log("Emmm???2");
+        ////Debug.Log("Emmm???2");
         //Действия, если пути нет. Например, поиск пути
         if (!enemy.isPathValid || path.corners.Length < 2) 
         {
@@ -81,21 +81,21 @@ public class FsmStateEnemy : FsmStateUnit
             enemy.rb.linearVelocityX = 0;
             if (enemy.TEST_MOD)
             {
-                Debug.Log(enemy.isPathValid);
-                Debug.Log(path.corners.Length);
-                Debug.Log("Emmm???2");
+                //Debug.Log(enemy.isPathValid);
+                //Debug.Log(path.corners.Length);
+                //Debug.Log("Emmm???2");
             }
             return; // Ничего не делаем, если путь не валиден или слишком короткий
         }
-        //Debug.Log("Emmm???3");
+        ////Debug.Log("Emmm???3");
         // Получаем текущую цель (вторая точка)
         if (enemy.currentCornerIndex < path.corners.Length)
         {
-            //Debug.Log("Emmm???4");
+            ////Debug.Log("Emmm???4");
             enemy.nextPointInPath = path.corners[enemy.currentCornerIndex];
-            //Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]));
-            //Debug.Log(enemy.isGrounded);
-            //Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]));
+            ////Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]));
+            ////Debug.Log(enemy.isGrounded);
+            ////Debug.Log(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]));
             if (StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]) >= 75f &&
                 StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[0], (Vector2)path.corners[enemy.currentCornerIndex]) <= 165f) Jump(false);
         }
@@ -103,19 +103,19 @@ public class FsmStateEnemy : FsmStateUnit
         {
             if (enemy.TEST_MOD)
             {
-                Debug.Log("Emmm???2.5");
+                //Debug.Log("Emmm???2.5");
             }
             //Если все углы пройдены, то останавливаемся
             //enemy.rb.linearVelocityX = 0; // 03.10.2025 - ваще хз что тут происходит. Из-за этого собаки застряют порою
             //return; // 03.10.2025 - ваще хз что тут происходит. Из-за этого собаки застряют порою
         }
-        //Debug.Log("Emmm???6");
+        ////Debug.Log("Emmm???6");
 
         // Перемещение к целевой позиции. Cначала вычислям перемещение (чтоб понять, куда поворачиваться) и только после отзеркаливаем спрайт
-        //Debug.Log("Emmm???3");
+        ////Debug.Log("Emmm???3");
         if (enemy.TEST_MOD)
         {
-            Debug.Log("Emmm???3");
+            //Debug.Log("Emmm???3");
         }
         MoveTowardsTarget();
         //Ориентация спрайта и прочего
@@ -134,22 +134,22 @@ public class FsmStateEnemy : FsmStateUnit
     {
         if (enemy.TEST_MOD)
         {
-            Debug.Log("Emmm???4");
+            //Debug.Log("Emmm???4");
         }
         float direction = Mathf.Sign(enemy.nextPointInPath.x - enemy.transform.position.x);
-        //Debug.Log(direction);
-        //Debug.Log(enemy.speed);
+        ////Debug.Log(direction);
+        ////Debug.Log(enemy.speed);
         enemy.rb.linearVelocityX = direction * enemy.speed;
 
-        //Debug.Log(enemy.rb.linearVelocityX);
+        ////Debug.Log(enemy.rb.linearVelocityX);
         // Проверка достижения цели
         if (Mathf.Abs(enemy.transform.position.x - enemy.nextPointInPath.x) <= enemy.arrivalThreshold)
         {
             if (enemy.TEST_MOD)
             {
-                Debug.Log("Emmm???5");
+                //Debug.Log("Emmm???5");
             }
-            //Debug.Log("Emmm???5");
+            ////Debug.Log("Emmm???5");
             // Переходим к следующей точке
             enemy.currentCornerIndex++;
             if (enemy.currentCornerIndex >= path.corners.Length)
@@ -157,7 +157,7 @@ public class FsmStateEnemy : FsmStateUnit
                 // transformTargets
                 if (enemy.TEST_MOD)
                 {
-                    Debug.Log("Emmm???6");
+                    //Debug.Log("Emmm???6");
                 }
 
                 // Достигли конечной точки
@@ -269,9 +269,9 @@ void DrawPath()
     {
         if (enemy.isGrounded && enemy.isAlive) { // Если мы на земле и живы (какого-то чёрта срабатывает детектор провалов при отключении selfCollider после смерти)
             if (path.corners.Length > 1 && enemy.currentCornerIndex < path.corners.Length) { // вот на ровном месте оно почему-то тут выдаёт 0 иногда 0_0
-                //Debug.Log(enemy.currentCornerIndex - 1);
-                //Debug.Log(enemy.currentCornerIndex);
-                //Debug.Log(path.corners.Length);
+                ////Debug.Log(enemy.currentCornerIndex - 1);
+                ////Debug.Log(enemy.currentCornerIndex);
+                ////Debug.Log(path.corners.Length);
                 if (!(StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) <= -5f
                 && StaticClassForAdditionalFunctions.GetAngle((Vector2)path.corners[enemy.currentCornerIndex - 1], (Vector2)path.corners[enemy.currentCornerIndex]) >= -175f))
                 { // если нам не вниз
@@ -295,7 +295,7 @@ void DrawPath()
     protected void FixingFuckingBuggingRotation()
     {
         float xRotation = enemy.transform.rotation.eulerAngles.x;
-        //Debug.Log(xRotation);
+        ////Debug.Log(xRotation);
 
         // Нормализуем угол к диапазону 0-360
         xRotation = Mathf.Repeat(xRotation, 360.0f);
@@ -307,17 +307,17 @@ void DrawPath()
         if (Mathf.Abs(xRotation - 90f) < rotationThreshold)
         {
             enemy.objForRotate.transform.localRotation = Quaternion.Euler(-90, 0, 0);
-            //Debug.Log("Поворачиваем дочерний объект на -90 градусов");
+            ////Debug.Log("Поворачиваем дочерний объект на -90 градусов");
         }
         else if (Mathf.Abs(xRotation + 90f) < rotationThreshold)
         {
             enemy.objForRotate.transform.localRotation = Quaternion.Euler(90, 0, 0);
-            //Debug.Log("Поворачиваем дочерний объект на 90 градусов");
+            ////Debug.Log("Поворачиваем дочерний объект на 90 градусов");
         }
         else if (Mathf.Abs(xRotation - 0f) < rotationThreshold)
         {
             enemy.objForRotate.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            //Debug.Log("Устанавливаем дочернему объекту нулевой поворот");
+            ////Debug.Log("Устанавливаем дочернему объекту нулевой поворот");
         }
 
         // НЕ НУЖНО обнулять поворот родителя здесь!

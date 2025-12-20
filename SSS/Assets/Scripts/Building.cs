@@ -44,7 +44,7 @@ public class Building : MonoBehaviour
     {
         get { return equipmentInBuilding; }
         set { equipmentInBuilding = value;
-            Debug.Log("Ã€ «ƒ≈———————‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹       " + value);
+            //Debug.Log("Ã€ «ƒ≈———————‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹       " + value);
         }
     }
 
@@ -60,7 +60,7 @@ public class Building : MonoBehaviour
         entirePanel = transform.Find("EntirePanel").gameObject; 
         buttonEnter = transform.Find("CanvasButtonEnter").gameObject;
         pedestals = transform.Find("EntirePanel/Pedestals").gameObject;
-        //Debug.Log("Ã€ “””””””””””””“ " + Quaternion.identity);
+        ////Debug.Log("Ã€ “””””””””””””“ " + Quaternion.identity);
         foreach (Transform equipmentTransform in rectTransformEquipmentPlaces)
         {
             equipmentTransform.rotation = Quaternion.identity;

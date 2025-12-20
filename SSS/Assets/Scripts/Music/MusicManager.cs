@@ -67,7 +67,7 @@ public class MusicManager : MonoBehaviour
 
     public void UploadOtherMusic(List<AudioClip> otherMusics)
     {
-        Debug.Log(otherMusics);
+        //Debug.Log(otherMusics);
         this.otherMusics = otherMusics;
     }
 
@@ -104,7 +104,7 @@ public class MusicManager : MonoBehaviour
         catch (OperationCanceledException) { /* переход отменён — это норма */ }
         catch (Exception ex)
         {
-            Debug.LogError($"[MusicManager] Ошибка проигрывания музыки: {ex}");
+            //Debug.LogError($"[MusicManager] Ошибка проигрывания музыки: {ex}");
         }
     }
 
@@ -112,11 +112,11 @@ public class MusicManager : MonoBehaviour
     {
         if (targetClip == null)
         {
-            Debug.LogError($"[MusicManager] Целевая музыка отсутствует для {type}!");
+            //Debug.LogError($"[MusicManager] Целевая музыка отсутствует для {type}!");
             return;
         }
 
-        Debug.Log($"🎵 Переход к {type} → {targetClip.name}");
+        //Debug.Log($"🎵 Переход к {type} → {targetClip.name}");
 
         // 1️⃣ Затухаем текущую музыку (если есть)
         if (musicSource.isPlaying)
@@ -161,7 +161,7 @@ public class MusicManager : MonoBehaviour
         if (!musicSource.loop)
         {
             await Task.Delay(TimeSpan.FromSeconds(targetClip.length), ct);
-            Debug.Log($"🎵 Музыка {type} завершилась, перезапускаем...");
+            //Debug.Log($"🎵 Музыка {type} завершилась, перезапускаем...");
             await PlayMusicFlowAsync(targetClip, type, ct); // повтор цикла
         }
     }
@@ -221,7 +221,7 @@ public class MusicManager : MonoBehaviour
     private AudioClip FindClipByName(string name)
     {
         IEnumerable<AudioClip> allClips = Enumerable.Empty<AudioClip>();
-        Debug.Log(otherMusics);
+        //Debug.Log(otherMusics);
         if (ambientMusics != null)
             allClips = allClips.Concat(ambientMusics);
         if (fightMusics != null)

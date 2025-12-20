@@ -11,7 +11,7 @@ public class FsmStateStuneUnit : FsmStateUnit
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Stune state [ENTER]");
+        //Debug.Log("Stune state [ENTER]");
         unit.areUpdatingFunctionsEnabled = false;
         rigidBody.linearVelocityX = 0;
         if (unit.animator != null)
@@ -22,15 +22,15 @@ public class FsmStateStuneUnit : FsmStateUnit
             }
             else
             {
-                Debug.Log("--- ÍÅÒ ÀÍÈÌÀÖÈÈ ÑÒÀÍÀ !!! ---" +
-                          "--- Èñïîëüçóåì ÏĞÅÄÛÄÓÙÓŞ àíèìàöèş! ---");
+                //Debug.Log("--- ÍÅÒ ÀÍÈÌÀÖÈÈ ÑÒÀÍÀ !!! ---" +
+                //          "--- Èñïîëüçóåì ÏĞÅÄÛÄÓÙÓŞ àíèìàöèş! ---");
             }
         }
     }
 
     public override void Exit()
     {
-        Debug.Log("Died state [EXIT]");
+        //Debug.Log("Died state [EXIT]");
         unit.areUpdatingFunctionsEnabled = true;
     }
 

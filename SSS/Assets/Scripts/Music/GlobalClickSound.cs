@@ -38,7 +38,7 @@ public class GlobalClickSound : MonoBehaviour
             {
                 if (result.gameObject.GetComponent<Button>() != null)
                 {
-                    Debug.Log(" нопку нашли");
+                    //Debug.Log(" нопку нашли");
                     //AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.PlayerGotDamage, audioEmitter???, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                     AudioManager.Instance.StartSoundEffect(C.MusicSounds.PlayerGotDamage);
                     break;

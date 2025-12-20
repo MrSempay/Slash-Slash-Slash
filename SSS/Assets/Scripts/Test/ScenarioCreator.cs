@@ -8,7 +8,7 @@ public class ScenarioCreator : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(events.Count);
-        Debug.Log(events[0].ClassName);
+        //Debug.Log(events.Count);
+        //Debug.Log(events[0].ClassName);
     }
 }

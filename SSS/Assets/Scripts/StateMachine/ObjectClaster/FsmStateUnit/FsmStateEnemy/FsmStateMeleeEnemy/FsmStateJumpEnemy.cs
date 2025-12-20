@@ -11,7 +11,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Jump state [ENTER]");
+        //Debug.Log("Jump state [ENTER]");
 
         enemy.TEST_Current_State = "Jump";
         enemy.rb.linearVelocity = new Vector2(enemy.rb.linearVelocity.x, 0);
@@ -22,7 +22,7 @@ public class FsmStateJumpEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Walk state [EXIT]");
+        //Debug.Log("Walk state [EXIT]");
     }
 
     public override void Update()

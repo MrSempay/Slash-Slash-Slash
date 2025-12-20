@@ -42,8 +42,8 @@ public class DefaultLevelScenario : ScenarioScript
         for (int i = 0; i < _listInfoAboutEnemiesWaves.Count; i++)
         {
             dictionaryNamesEnemiesWavesAndRewards[i.ToString()] = _listInfoAboutEnemiesWaves[i].scoreRewardIfWaveCompleted;
-            //Debug.Log(dictionaryNamesEnemiesWavesAndRewards[i.ToString()]);
-            //Debug.Log(i.ToString());
+            ////Debug.Log(dictionaryNamesEnemiesWavesAndRewards[i.ToString()]);
+            ////Debug.Log(i.ToString());
         }
 
         //StartDialogue($"{levelBuildScript.selfName}/{C.Dilogues.DialogueStart}"); 
@@ -58,9 +58,9 @@ public class DefaultLevelScenario : ScenarioScript
 
     protected override void EnemiesWaveWasDestroyedWithoutLosingMainTargets(string nameWave)
     {
-        Debug.Log("Текущая волна: " + _currentNumberWave);
-        Debug.Log("Текущая волна: " + nameWave);
-        Debug.Log("Текущая волна: " + dictionaryNamesEnemiesWavesAndRewards[nameWave]);
+        //Debug.Log("Текущая волна: " + _currentNumberWave);
+        //Debug.Log("Текущая волна: " + nameWave);
+        //Debug.Log("Текущая волна: " + dictionaryNamesEnemiesWavesAndRewards[nameWave]);
         scriptPlayer.GiveRewardScore(dictionaryNamesEnemiesWavesAndRewards[nameWave]);
     }
 
@@ -126,14 +126,14 @@ public class DefaultLevelScenario : ScenarioScript
 
     private void RequestJumpStep(StepMS target)
     {
-        Debug.Log($"[Scenario Step] RequestJump -> {target}");
+        //Debug.Log($"[Scenario Step] RequestJump -> {target}");
         _currentStepMS = target;
         var current = Volatile.Read(ref _stepCts);
         try { current?.Cancel(); } catch { }
     }
     private void RequestJumpScenario(ScenarioMode target)
     {
-        Debug.Log($"[Scenario Mode] RequestJump -> {target}");
+        //Debug.Log($"[Scenario Mode] RequestJump -> {target}");
         _currentMode = target;
         var current = Volatile.Read(ref _stepCts);
         try { current?.Cancel(); } catch { }
@@ -172,7 +172,7 @@ public class DefaultLevelScenario : ScenarioScript
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("Master scenario cancelled");
+            //Debug.Log("Master scenario cancelled");
         }
     }
 
@@ -287,11 +287,11 @@ public class DefaultLevelScenario : ScenarioScript
             catch (OperationCanceledException)
             {
                 if (_currentMode != ScenarioMode.MainScenario) return;
-                Debug.Log($"{levelBuildScript.selfName}: сценарий отменён (глобально).");
+                //Debug.Log($"{levelBuildScript.selfName}: сценарий отменён (глобально).");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"{levelBuildScript.selfName}: ошибка в RunDefeatScenarioLoop: {ex}");
+                //Debug.LogError($"{levelBuildScript.selfName}: ошибка в RunDefeatScenarioLoop: {ex}");
             }
             finally
             {
@@ -325,7 +325,7 @@ public class DefaultLevelScenario : ScenarioScript
                 {
                     case StepDS.Start:
 
-                            //Debug.Log("И чё за параша?");
+                            ////Debug.Log("И чё за параша?");
                         CameraManager.Instance.DelinkCameraPlayer();
                         Player.instance.scriptUI.HideAllUI();
 
@@ -335,7 +335,7 @@ public class DefaultLevelScenario : ScenarioScript
 
                         foreach (IMainTarget mainTarget in _allDeterminedMTExceptedPlayer)
                         {
-                            //Debug.Log("И чё за параша?");
+                            ////Debug.Log("И чё за параша?");
                             var paramSchool = new CameraManager.CameraMoveParams
                             {
                                 Camera = Player.instance.mainCamera,
@@ -395,11 +395,11 @@ public class DefaultLevelScenario : ScenarioScript
             catch (OperationCanceledException)
             {
                 if (_currentMode != ScenarioMode.DefeatScenario) return;
-                Debug.Log("Level1Scenario: сценарий отменён (глобально).");
+                //Debug.Log("Level1Scenario: сценарий отменён (глобально).");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Level1Scenario: ошибка в RunDefeatScenarioLoop: {ex}");
+                //Debug.LogError($"Level1Scenario: ошибка в RunDefeatScenarioLoop: {ex}");
             }
             finally
             {
@@ -413,7 +413,7 @@ public class DefaultLevelScenario : ScenarioScript
 
     protected internal override void Defeat()
     {
-        //Debug.Log("aaa");
+        ////Debug.Log("aaa");
         _defeatScenarioCts?.Cancel();
         _defeatScenarioCts?.Dispose();
         _defeatScenarioCts = new CancellationTokenSource();

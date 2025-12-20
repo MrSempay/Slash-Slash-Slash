@@ -61,7 +61,7 @@ public class AppearingText : MonoBehaviour
     // пока что может вызываться только из ScoreManager, но с публичным доступом
     public void SetProperlyPosition(TYPE_APPEARING_MESSAGE typeAppearingMessage)
     {
-        //Debug.Log(typeAppearingMessage.ToString());
+        ////Debug.Log(typeAppearingMessage.ToString());
         RectTransform rectTranformParentGroup = dictionaryPropertiesSprites[typeAppearingMessage].transformParentForSpawnPosition;
 
         textMessage.SetBaseText(typeAppearingMessage.ToString());

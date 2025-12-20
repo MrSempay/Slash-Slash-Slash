@@ -43,13 +43,13 @@ public class BannerAds : MonoBehaviour
 
     private void OnBannerLoaded()
     {
-        Debug.Log("Banner loaded");
+        //Debug.Log("Banner loaded");
         ShowBannerAd();
     }
 
     private void OnBannerError(string message)
     {
-        Debug.Log($"Banner Error: {message}");
+        //Debug.Log($"Banner Error: {message}");
     }
     public void ShowBannerAd()
     {

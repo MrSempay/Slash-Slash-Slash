@@ -16,7 +16,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Equipment selected state [ENTER]");
+        //Debug.Log("Equipment selected state [ENTER]");
 
         Player.isTransitingEquipment = true;
         player.WrapOnTranslateEquipment(true);
@@ -25,7 +25,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
     public override void Exit()
     {
-        Debug.Log("Equipment selected state [EXIT]");
+        //Debug.Log("Equipment selected state [EXIT]");
 
         Player.isTransitingEquipment = false;
         player.WrapOnTranslateEquipment(false);
@@ -96,8 +96,8 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                                                                                  AudioManager.TYPE_SOUND.Default,
                                                                                  AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                     }
-                    Debug.Log(equipment);
-                    Debug.Log(rectTransformPlace);
+                    //Debug.Log(equipment);
+                    //Debug.Log(rectTransformPlace);
 
                     // НУЖНО ДЛЯ ОБМЕНА МЕСТАМИ СНАРЯЖЕНИЯ В ЗДАНИИ И У ИГРОКА. Получаем ссылку на снаряжение, которое находится в интересующем нас месте у игрока либо null
                     equipment.selfCollider.enabled = false;
@@ -106,7 +106,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
                     if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
                     {
-                        Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
+                        //Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
                         isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                         isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
                         //isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
@@ -162,7 +162,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                         // в состояние FsmStateEquipmentInsideShop
                         if (equipment.WasSold == false)
                         {
-                            Debug.Log(equipment.WasSold);
+                            //Debug.Log(equipment.WasSold);
                             if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(player, equipment)) // спелы стоят 0 злата, так что по идее на них всегда будет хватать
                             {
                                 if (equipment.isEquipmentASpell) // если то, что мы продаём - спел
@@ -184,8 +184,8 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                                                                                      AudioManager.TYPE_SOUND.Default,
                                                                                      AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
                         }
-                        Debug.Log(equipment);
-                        Debug.Log(rectTransformPlace);
+                        //Debug.Log(equipment);
+                        //Debug.Log(rectTransformPlace);
 
                         // НУЖНО ДЛЯ ОБМЕНА МЕСТАМИ СНАРЯЖЕНИЯ В ЗДАНИИ И У ИГРОКА. Получаем ссылку на снаряжение, которое находится в интересующем нас месте у игрока либо null
                         equipment.selfCollider.enabled = false;
@@ -194,7 +194,7 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
                         if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
                         {
-                            Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
+                            //Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
                             isAtPlaceEquipment.transform.SetParent(equipment.transformCurrentEquipmentPlace, false);
                             isAtPlaceEquipment.transformCurrentEquipmentPlace = equipment.transformCurrentEquipmentPlace;
                             //isAtPlaceEquipment.transformCurrentEquipmentPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment = isAtPlaceEquipment; // устанавливаем для места снаряжения
@@ -254,12 +254,12 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
         // Перебираем все найденные коллайдеры
         foreach (Collider2D hit in hits)
         {
-            //Debug.Log("Обнаружен коллайдер: " + hit.gameObject.name);
+            ////Debug.Log("Обнаружен коллайдер: " + hit.gameObject.name);
 
             GameObject placeEquipment = hit.gameObject; // Получаем GameObject
             if (placeEquipment.CompareTag("PlaceForEquipment"))
             {
-                //Debug.Log("Обнаружена ячейка для оборудования: " + placeEquipment.name);
+                ////Debug.Log("Обнаружена ячейка для оборудования: " + placeEquipment.name);
                 return placeEquipment.GetComponent<RectTransform>(); // Возвращаем RectTransform, если нашли
             }
         }

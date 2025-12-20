@@ -8,8 +8,8 @@
     старый компонент, получаемый через gameObject.GetComponent, имеет какой-то приоритет над новым (с учётом, конечно же, что и первый и второй компонент наследуются от того компонента,
     который мы пытаемся получить через GetComponent)
 
-        Debug.Log(this.GetInstanceID());
-        Debug.Log(gameObject.GetComponent<Equipment>().GetInstanceID());
+        //Debug.Log(this.GetInstanceID());
+        //Debug.Log(gameObject.GetComponent<Equipment>().GetInstanceID());
                 --- Вызовы выше выдадут разные значения в описанной ситуации! ---
 
 

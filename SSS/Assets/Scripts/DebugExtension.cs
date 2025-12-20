@@ -13,7 +13,7 @@ public static class DebugExtension
         for (int i = 1; i <= 360 / stepSize; i++)
         {
             Vector3 to = position + radius * (right * Mathf.Cos(i * stepSize * Mathf.Deg2Rad) + forward * Mathf.Sin(i * stepSize * Mathf.Deg2Rad));
-            Debug.DrawLine(from, to, color, duration, false);
+            //Debug.DrawLine(from, to, color, duration, false);
             from = to;
         }
     }

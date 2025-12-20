@@ -10,7 +10,7 @@ public class DamageReceiver : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage; // Уменьшаем здоровье
-        Debug.Log(gameObject.name + " получил урон: " + damage + ", осталось здоровья: " + CurrentHealth);
+        //Debug.Log(gameObject.name + " получил урон: " + damage + ", осталось здоровья: " + CurrentHealth);
 
         if (CurrentHealth <= 0)
         {
@@ -25,7 +25,7 @@ public class DamageReceiver : MonoBehaviour
 
     void Die()
     {
-        Debug.Log(gameObject.name + " уничтожен!");
+        //Debug.Log(gameObject.name + " уничтожен!");
         HealthChanged?.Invoke(0);
         Destroy(gameObject); // Уничтожаем объект
     }

@@ -53,7 +53,7 @@ public class AppOpenAdComponent : MonoBehaviour
 #elif UNITY_ANDROID
             return adUnitIdAndroid;
 #else
-            Debug.LogWarning("Unsupported platform for Yandex Ads. Using Android Ad Unit ID by default.");
+            //Debug.LogWarning("Unsupported platform for Yandex Ads. Using Android Ad Unit ID by default.");
             return adUnitIdAndroid;
 #endif
         }
@@ -73,7 +73,7 @@ public class AppOpenAdComponent : MonoBehaviour
         }
         else
         {
-            Debug.Log("App open ad: Ad Unit ID is missing.");
+            //Debug.Log("App open ad: Ad Unit ID is missing.");
         }
     }
 
@@ -126,7 +126,7 @@ public class AppOpenAdComponent : MonoBehaviour
         }
         else
         {
-            Debug.Log("Failed to show ad. Ad object not loaded");
+            //Debug.Log("Failed to show ad. Ad object not loaded");
         }
     }
 

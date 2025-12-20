@@ -17,7 +17,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Melee attack state [ENTER]");
+        //Debug.Log("Melee attack state [ENTER]");
 
         enemy.TEST_Current_State = "Melee Attack";
         enemy.rb.linearVelocityX = 0;
@@ -33,7 +33,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     public override void Exit()
     {
-        Debug.Log("Melee attack state [EXIT]");
+        //Debug.Log("Melee attack state [EXIT]");
 
         enemy.fuck.onAttackAnimationAtRightPointForGetDamage -= MakeDamageToUnit;
         enemy.triggerAreaScript.OnPlayerEnteredTriggerArea -= GoToWalkState;
@@ -49,13 +49,13 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
     //{
     //    while (true)
     //    {
-    //        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 1.5);
-    //        Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+    //        //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 1.5);
+    //        //Debug.Log(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
     //        yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2);
     //        List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
     //                                                        //lock (_lock)
     //        {
-    //            //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
+    //            ////Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
     //            for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
     //            {
     //                if (i < enemy.listOfUnitsInAttackArea.Count)
@@ -82,7 +82,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
         List<Unit> unitsToRemove = new List<Unit>(); // Список для удаления юнитов
                                                      //lock (_lock)
         {
-            //Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
+            ////Debug.Log("IBOOOO " + enemy.listOfUnitsInAttackArea.Count);
             for (int i = 0; i < enemy.listOfUnitsInAttackArea.Count; i++)
             {
                 if (i < enemy.listOfUnitsInAttackArea.Count)
@@ -118,7 +118,7 @@ public class FsmStateMeleeAttackEnemy : FsmStateEnemy
 
     private void GoToWalkState()
     {
-        //Debug.Log("Дичь");
+        ////Debug.Log("Дичь");
         enemy._fsm.SetState<FsmStateWalkEnemy>();
     }
 }

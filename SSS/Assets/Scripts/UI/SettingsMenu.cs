@@ -40,25 +40,25 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
    
     public void Awake()
     {
-        //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
+        ////Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!AwakeWasCalledAlready)
         {
-            //Debug.Log(GetInstanceID());
-            //Debug.Log(AwakeWasCalledAlready);
+            ////Debug.Log(GetInstanceID());
+            ////Debug.Log(AwakeWasCalledAlready);
             if (_instance != null && _instance != this)
             {
-                Debug.Log("Чё за нах?"); 
+                //Debug.Log("Чё за нах?"); 
                 Destroy(gameObject);
                 return;
             }
-            //Debug.Log(GetInstanceID());
+            ////Debug.Log(GetInstanceID());
             _instance = this;
 
             toggleClusterGroup = transform.Find("DownTogglesClaster").GetComponent<RectTransform>();
             rectTransformPlacementForSettings = transform.Find("PlacementForSettings").GetComponent<RectTransform>();
 
-            //Debug.Log(toggleClusterGroup);
-            //Debug.Log(rectTransformPlacementForSettings); 
+            ////Debug.Log(toggleClusterGroup);
+            ////Debug.Log(rectTransformPlacementForSettings); 
             foreach (RectTransform rectTransformToggleGroup in toggleClusterGroup) // пока что хз зачем нам массив всех тумблеров, ведь можно контролировать визуализацию лишь предпоследнего
             {
                 foreach (RectTransform rectTransformToggle in rectTransformToggleGroup)
@@ -100,7 +100,7 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     // чё за хрень 
     public void Start()
     {
-        //Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
+        ////Debug.Log($"{name} Awake: a = {a}, AwakeWasCalledAlready = {AwakeWasCalledAlready}, id={GetInstanceID()}");
         if (!StartWasCalledAlready)     
         {
             //if (!GameManager.Instance.currentSettings.wasUploaded)
@@ -150,10 +150,10 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     }
     private void ValueBrightnessWasChanged(float value, RectTransform rectTransformToggle)
     {
-            //Debug.Log(value);
+            ////Debug.Log(value);
         if (GameManager.Instance.currentSettings.VolumeBrightness != value)
         {
-            //Debug.Log(value);
+            ////Debug.Log(value);
             GameManager.Instance.currentSettings.VolumeBrightness = value;
         }
     }

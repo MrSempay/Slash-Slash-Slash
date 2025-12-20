@@ -21,8 +21,8 @@ public class PlaceForEquipment : MonoBehaviour
         set
         {
             //inventory.CheckWasEquipmentAlreadyInInventory(value, this);
-            //Debug.Log(this.ToString() + previousEquipment);
-            //Debug.Log(this.ToString() + _equipment);
+            ////Debug.Log(this.ToString() + previousEquipment);
+            ////Debug.Log(this.ToString() + _equipment);
             if (isBuildingPlace)
             {
 
@@ -30,7 +30,7 @@ public class PlaceForEquipment : MonoBehaviour
                 {
                     nameOfEquipment.gameObject.SetActive(false);
                     costOfEquipment.gameObject.SetActive(false);
-                    //Debug.Log(_equipment);
+                    ////Debug.Log(_equipment);
                     if (_equipment != null)
                     {  // вот на данный момент (23.09.2025) вообще не понимаю, что это и почему происходит это.
                         _equipment.ParametersOfEquipmentWasAssigned -= ChangeNameAndCostEquipment;
@@ -76,7 +76,7 @@ public class PlaceForEquipment : MonoBehaviour
     {
         if (!isBuildingPlace)
         {
-            //Debug.Log("Mmm?");
+            ////Debug.Log("Mmm?");
             nameOfEquipment.gameObject.SetActive(false);
             costOfEquipment.gameObject.SetActive(false);
             return;

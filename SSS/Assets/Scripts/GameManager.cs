@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
             get { return volumeEffects; }
             set
             {
-                //Debug.Log("А как так вышло");
+                ////Debug.Log("А как так вышло");
                 volumeEffects = value;
                 AudioManager.Instance.audioEffectsUIComponent.volume = Mathf.Clamp01(value);
 
@@ -176,11 +176,11 @@ public class GameManager : MonoBehaviour
                     {
                         foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
                         {
-                            //Debug.Log(value);
+                            ////Debug.Log(value);
                             if (audioSourceExtended.audioSource != null)
                             {
                                 audioSourceExtended.audioSource.volume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
-                                Debug.Log(Mathf.Clamp01(audioSourceExtended.maxVolume * value));
+                                //Debug.Log(Mathf.Clamp01(audioSourceExtended.maxVolume * value));
                             }
                         }
                     }
@@ -198,57 +198,57 @@ public class GameManager : MonoBehaviour
         //    get { return volumeEffects; }
         //    set
         //    {
-        //        Debug.Log($"VolumeEffects SETTER: Начало, value = {value}");
+        //        //Debug.Log($"VolumeEffects SETTER: Начало, value = {value}");
         //        volumeEffects = value;
 
         //        if (AudioManager.Instance == null)
         //        {
-        //            Debug.LogError("AudioManager.Instance is NULL!");
+        //            //Debug.LogError("AudioManager.Instance is NULL!");
         //            return;
         //        }
 
         //        AudioManager.Instance.audioEffectsComponent.volume = value;
 
         //        var dict = AudioManager.Instance.dictionaryObjectsAndTheirAudioSourcesByTypes;
-        //        Debug.Log($"Dictionary count: {dict.Count}");
+        //        //Debug.Log($"Dictionary count: {dict.Count}");
 
         //        int clusterIndex = 0;
         //        foreach (var objAudioSourcesCluster in dict.Values)
         //        {
-        //            Debug.Log($"Cluster {clusterIndex}: {objAudioSourcesCluster.Count} audio sources");
+        //            //Debug.Log($"Cluster {clusterIndex}: {objAudioSourcesCluster.Count} audio sources");
 
         //            int audioSourceIndex = 0;
         //            foreach (AudioManager.AudioSourceExtended audioSourceExtended in objAudioSourcesCluster.Values)
         //            {
-        //                Debug.Log($"AudioSource {audioSourceIndex}: Starting processing");
+        //                //Debug.Log($"AudioSource {audioSourceIndex}: Starting processing");
 
         //                if (audioSourceExtended == null)
         //                {
-        //                    Debug.LogError($"AudioSourceExtended {audioSourceIndex} is NULL!");
+        //                    //Debug.LogError($"AudioSourceExtended {audioSourceIndex} is NULL!");
         //                    audioSourceIndex++;
         //                    continue;
         //                }
 
         //                if (audioSourceExtended.audioSource == null)
         //                {
-        //                    Debug.LogError($"AudioSource {audioSourceIndex} is NULL!");
+        //                    //Debug.LogError($"AudioSource {audioSourceIndex} is NULL!");
         //                    audioSourceIndex++;
         //                    continue;
         //                }
 
-        //                Debug.Log($"Before calculation: maxVolume = {audioSourceExtended.maxVolume}, value = {value}");
+        //                //Debug.Log($"Before calculation: maxVolume = {audioSourceExtended.maxVolume}, value = {value}");
 
         //                float calculatedVolume = Mathf.Clamp01(audioSourceExtended.maxVolume * value);
-        //                Debug.Log($"Calculated volume: {calculatedVolume}");
+        //                //Debug.Log($"Calculated volume: {calculatedVolume}");
 
         //                try
         //                {
         //                    audioSourceExtended.audioSource.volume = calculatedVolume;
-        //                    Debug.Log($"Successfully set volume to: {calculatedVolume}");
+        //                    //Debug.Log($"Successfully set volume to: {calculatedVolume}");
         //                }
         //                catch (System.Exception ex)
         //                {
-        //                    Debug.LogError($"Exception setting volume: {ex.Message}");
+        //                    //Debug.LogError($"Exception setting volume: {ex.Message}");
         //                }
 
         //                audioSourceIndex++;
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
         //            clusterIndex++;
         //        }
 
-        //        Debug.Log("VolumeEffects SETTER: Завершено успешно");
+        //        //Debug.Log("VolumeEffects SETTER: Завершено успешно");
         //    }
         //}
         public string DisplayName
@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour
         // Приватный конструктор - запрещает создание экземпляров класса извне
         private CurrentSettings()
         {
-            //Debug.Log(this);
+            ////Debug.Log(this);
             // Инициализация синглтона (если необходимо)
         }
     } // вообще надо придумать, как изначально установить всю визуализацию в эти настройки по умолчанию
@@ -434,7 +434,7 @@ public class GameManager : MonoBehaviour
     // вызывается в текущей цели (не диалоговой!) для перехода в диалоговоую сцену и определения имени диалога, который будет подгружен на диалоговоую сцену
     public void ChangeSceneTroughDialogue(string nameTargetScene)
     {
-        //Debug.Log("Тут мы : " + nameTargetScene);
+        ////Debug.Log("Тут мы : " + nameTargetScene);
         _nameCurrentScene = SceneManager.GetActiveScene().name;
         _nameTargetScene = nameTargetScene;
         nameDialogueCurrent = _nameCurrentScene + "-" + nameTargetScene;
@@ -489,7 +489,7 @@ public class GameManager : MonoBehaviour
     public PlayerDialogue StartDialogueNEW(string nameDialogue) // этот метод для старта диалога, который получает папку не через параметр, а через LevelBuilder.Instance
     {
         nameDialogueCurrent = LevelBuilder.instance.selfName + $"/{nameDialogue}"; // Level1/Dialogue1 - пример
-        Debug.Log(nameDialogueCurrent);
+        //Debug.Log(nameDialogueCurrent);
         RectTransform rectTransformPositionDialogue = GameObject.Find("PositionForDialogueWindow").GetComponent<RectTransform>();
         RectTransform UI = GameObject.Find("UI").GetComponent<RectTransform>();
         PlayerDialogue sciptPlayerDialogue;
@@ -538,7 +538,7 @@ public class GameManager : MonoBehaviour
         // Устанавливаем родительский Transform
         if (notificationPlacement == null)
         {
-            Debug.LogError("Нет родительского объекта для уведомления");
+            //Debug.LogError("Нет родительского объекта для уведомления");
             return null;
         }
 
@@ -591,7 +591,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentLevelInOrder == orderLevels.Count - 1) // если достигли последнего уровня
         {
-            Debug.Log("Конец игры!");
+            //Debug.Log("Конец игры!");
         }
         else
         {
@@ -711,7 +711,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Debug.Log("Игра закрывается!...");
+        //Debug.Log("Игра закрывается!...");
         _isShuttingDown = true;
         SaveLoadManager.Instance.SaveGeneralData();
         CoroutineManager.Instance.StopAllCoroutinesFor(gameObject);

@@ -13,7 +13,7 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Translating Equipment state [ENTER]");
+        //Debug.Log("Translating Equipment state [ENTER]");
 
         player.OnTranslateEquipment += SomeTranslateEquipment;
         player.OnSetStateIdle += SetStateIdleCallback;
@@ -26,7 +26,7 @@ public class FsmStateTranslatingEquipment : FsmStatePlayer
 
     public override void Exit()
     {
-        Debug.Log("Translating Equipment state [EXIT]");
+        //Debug.Log("Translating Equipment state [EXIT]");
 
         player.OnTranslateEquipment -= SomeTranslateEquipment;
         player.OnSetStateIdle -= SetStateIdleCallback;

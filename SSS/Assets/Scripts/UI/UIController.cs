@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
     private List<RectTransform> _listRTPanels = new();
     public void OpenOrClosePlayMenu()
     {
-        //Debug.Log(settingsMenu.activeSelf);
+        ////Debug.Log(settingsMenu.activeSelf);
         GameManager.Instance.PauseGame(!(playMenu.activeSelf || settingsMenu.activeSelf)); // если хотя бы одна менюшка активна, то значит нужна пауза, иначе снимаем её
 
         if (settingsMenu.activeSelf)

@@ -10,7 +10,7 @@ public class FsmStateDoorClosed : FsmStateDoor
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Closed state [ENTER]");
+        //Debug.Log("Closed state [ENTER]");
 
         door.selfCollider.enabled = true;
         door.selfSprite.sprite = door.spriteDoorClosed;
@@ -28,7 +28,7 @@ public class FsmStateDoorClosed : FsmStateDoor
 
     public override void Exit()
     {
-        Debug.Log("Closed state [EXIT]");
+        //Debug.Log("Closed state [EXIT]");
     }
 
     public override void Update()

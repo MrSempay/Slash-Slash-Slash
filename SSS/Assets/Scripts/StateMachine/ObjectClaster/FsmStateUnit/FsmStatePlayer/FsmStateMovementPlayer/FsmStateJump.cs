@@ -14,7 +14,7 @@ public class FsmStateJump : FsmStateMovementPlayer
 
     public override void Enter(Dictionary<string, object> initialConditionsEntering)
     {
-        Debug.Log("Jump state [ENTER]");
+        //Debug.Log("Jump state [ENTER]");
 
         SubscribeForSignalActivationSomeEquipment();
         player.OnSetStateIdle += SetStateIdleCallback;
@@ -32,7 +32,7 @@ public class FsmStateJump : FsmStateMovementPlayer
 
     public override void Exit()
     {
-        Debug.Log("Jump state [EXIT]");
+        //Debug.Log("Jump state [EXIT]");
 
         UnsubscribeForSignalActivationSomeEquipment();
         player.OnSetStateIdle -= SetStateIdleCallback;

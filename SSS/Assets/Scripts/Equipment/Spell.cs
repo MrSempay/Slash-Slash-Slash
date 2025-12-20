@@ -21,7 +21,7 @@ public class Spell : Equipment
         // Перебираем массив и делаем что-то с каждым врагом 
         foreach (Enemy enemy in allEnemies)
         {
-            Debug.Log("Найден враг: " + enemy.gameObject.name);
+            //Debug.Log("Найден враг: " + enemy.gameObject.name);
             enemy.Die(whoCastedSpell);
         }
         StartCallDown();

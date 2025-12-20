@@ -29,7 +29,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void LoadAd()
     {
-        Debug.Log("Loading Ad: " + adID);
+        //Debug.Log("Loading Ad: " + adID);
         Advertisement.Load(adID, this);
     }
 
@@ -42,7 +42,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
-        Debug.Log("Ad Loaded: " + adUnitId);
+        //Debug.Log("Ad Loaded: " + adUnitId);
 
         if (adUnitId.Equals(adID))
         {
@@ -54,12 +54,12 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
-        Debug.Log($"Error loading Ad Unit {adID}: {error.ToString()} - {message}");
+        //Debug.Log($"Error loading Ad Unit {adID}: {error.ToString()} - {message}");
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
-        Debug.Log($"Error showing Ad Unit {adID}: {error.ToString()} - {message}");
+        //Debug.Log($"Error showing Ad Unit {adID}: {error.ToString()} - {message}");
     }
 
     public void OnUnityAdsShowStart(string placementId)
@@ -74,7 +74,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     {
         if (adUnitId.Equals(adID) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            Debug.Log("Unity Ads Rewarded Ad Completed");
+            //Debug.Log("Unity Ads Rewarded Ad Completed");
         }
     }
     private void OnDestroy()

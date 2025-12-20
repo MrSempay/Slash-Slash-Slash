@@ -41,7 +41,7 @@ public class SyncManager : ICleanUp
     public void Dispose()
     {
         PlayFabManager.Instance.OnGetIDTitleAccountAfterLogin -= SyncronizeGeneralData;
-        Debug.Log("Нещщадно уничтожаем наш SyncManager! Даже жалко как-то...");
+        //Debug.Log("Нещщадно уничтожаем наш SyncManager! Даже жалко как-то...");
     }
 
     public async Task<int?> GetMaxReachedLevel()
@@ -58,7 +58,8 @@ public class SyncManager : ICleanUp
             result => { taskCompletionSource.SetResult(result); },
             error => {
                 taskCompletionSource.TrySetException(new Exception(error.GenerateErrorReport()));
-                Debug.LogError(error.GenerateErrorReport()); }
+                //Debug.LogError(error.GenerateErrorReport());
+                }
         );
 
         try
@@ -68,7 +69,7 @@ public class SyncManager : ICleanUp
         }
         catch (Exception e)
         {
-            Debug.LogError("Error in StartCloudUpdatePlayerStatsNEWAsync: " + e.Message);
+            //Debug.LogError("Error in StartCloudUpdatePlayerStatsNEWAsync: " + e.Message);
             return null;
             // Handle the error here
         }
@@ -89,7 +90,7 @@ public class SyncManager : ICleanUp
                 if (File.Exists(pathGeneralSyncData)) // если файл синхронизации для ID-шника текущего аккаунта (в который мы зашли) уже есть - то есть мы логинились в этот аккаунт на
                                                       // данном устройстве
                 {
-                    Debug.Log("Загружаем синхронизирующие настройки с устройства, сравниваем с данными сервера");
+                    //Debug.Log("Загружаем синхронизирующие настройки с устройства, сравниваем с данными сервера");
                     string json = File.ReadAllText(pathGeneralSyncData);
 
                     if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст. Но по идее такого быть не может, но проверим 
@@ -107,7 +108,7 @@ public class SyncManager : ICleanUp
                                 {
                                     GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue((int)maxReachedLevelServer); // собсна, обновляем. Только изначально в ноль сбрасываем, ибо
                                                                                                                                // свойство позволяет увеличивать напрямую только в большую сторону
-                                    Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель больше, устанавливаем акутальный локально");
+                                    //Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель больше, устанавливаем акутальный локально");
                                 }
                                 else if (wrapperGeneralData.MaxReachedLevel > maxReachedLevelServer)
                                      // если же напротив - на локальном устройстве было наиграно больше игр (допустим, на сереве числился максимальный уровень 2, на устройстве мы наиграли
@@ -119,12 +120,12 @@ public class SyncManager : ICleanUp
                                     GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue(wrapperGeneralData.MaxReachedLevel);
 
                                     PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-                                    Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель меньше, загружаем на сервер больший показатель, обновляем локально");
+                                    //Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель меньше, загружаем на сервер больший показатель, обновляем локально");
                                 }
                                 else if (wrapperGeneralData.MaxReachedLevel == maxReachedLevelServer) // если данные с сервера совпадают с данными для синхронизации
                                 {
                                     GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue((int)maxReachedLevelServer); 
-                                    Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель равен локальному, обновляем локально");
+                                    //Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере показатель равен локальному, обновляем локально"); 
                                 }
                             }
                             else // если на сервере такой статистики не нашли (то есть это первое наше взаимодействие с сервером), просто подгружаем акутальную информацию туда. Стоит
@@ -136,12 +137,12 @@ public class SyncManager : ICleanUp
                                 GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue(wrapperGeneralData.MaxReachedLevel);
 
                                 PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-                                Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере такой статистики нет, загружаем на сервер показатель из файла синхронизации, обновляем локально");
+                                //Debug.Log("Залогинены, есть файл синхронизации для аккаунта, на сервере такой статистики нет, загружаем на сервер показатель из файла синхронизации, обновляем локально");
                             }
                         }
                         catch (Exception e)
                         {
-                            Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                            //Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
                         }
                     }
                 }
@@ -157,16 +158,16 @@ public class SyncManager : ICleanUp
                     if (maxReachedLevelServer != null)
                     {
                         GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue((int)maxReachedLevelServer);
-                        Debug.Log("Залогинены, нет синхронизирующего файла, но папка синхронизации не пуста, не можем брать из локального файла GeneralLocalData" +
-                            ", устанавливаем локально значение MaxReachedLevel, записанное на сервере");
+                        //Debug.Log("Залогинены, нет синхронизирующего файла, но папка синхронизации не пуста, не можем брать из локального файла GeneralLocalData" +
+                        //    ", устанавливаем локально значение MaxReachedLevel, записанное на сервере");
                     }
                     else
                     {
                         GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue(0);
 
                         PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-                        Debug.Log("Залогинены, нет синхронизирующего файла, но папка синхронизации не пуста, не можем брать из локального файла GeneralLocalData, на сервере нет такой" +
-                            " статистики, устанавливаем локально значение MaxReachedLevel в ноль, обновим на сервере статистику, чтоб хотя бы 0 был");
+                        //Debug.Log("Залогинены, нет синхронизирующего файла, но папка синхронизации не пуста, не можем брать из локального файла GeneralLocalData, на сервере нет такой" +
+                        //    " статистики, устанавливаем локально значение MaxReachedLevel в ноль, обновим на сервере статистику, чтоб хотя бы 0 был");
                     }
                 }
             }
@@ -179,7 +180,7 @@ public class SyncManager : ICleanUp
                 if (File.Exists(_pathToFileGeneralLocalData)) // если у нас вообще есть этот локальный файл, то есть хоть раз мы нечто сохраняли. Но по идее должен быть всегда, ибо ВСЕГДА перед
                                                          // логином мы СОХРАНЯЕМ РЕЗУЛЬТАТ ДЛЯ ПРЕДЫДУЩЕЙ СЕССИИ, пусть даже там ID аккаунта будет "".
                 {
-                    Debug.Log("Загружаем локальные настройки с устройства, сравниваем с данными сервера");
+                    //Debug.Log("Загружаем локальные настройки с устройства, сравниваем с данными сервера");
                     string json = File.ReadAllText(_pathToFileGeneralLocalData);
 
                     if (!string.IsNullOrEmpty(json)) // Проверяем, что файл не пуст
@@ -192,8 +193,8 @@ public class SyncManager : ICleanUp
                                 if (wrapperGeneralData.MaxReachedLevel < maxReachedLevelServer)
                                 {
                                     GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue((int)maxReachedLevelServer);
-                                    Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
-                                        " GeneralLocalData, в файле значение меньше, применяем данные с сервера");
+                                    //Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
+                                    //    " GeneralLocalData, в файле значение меньше, применяем данные с сервера");
                                 }
                                 else if (wrapperGeneralData.MaxReachedLevel > maxReachedLevelServer)
                                 {
@@ -201,14 +202,14 @@ public class SyncManager : ICleanUp
 
                                     PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
 
-                                    Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
-                                        " GeneralLocalData, в файле значение больше - обновляем информацию на сервере и обновляем локально");
+                                    //Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
+                                    //    " GeneralLocalData, в файле значение больше - обновляем информацию на сервере и обновляем локально");
                                 }
                                 else if (wrapperGeneralData.MaxReachedLevel == maxReachedLevelServer) // если данные с сервера совпадают с данными для синхронизации
                                 {
                                     GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue((int)maxReachedLevelServer);
-                                    Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
-                                        " GeneralLocalData, значения одинаковы, применяем данные локально (берём с сервера, просто так)");
+                                    //Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, сравниваем показатель с сервера с данными в файле" +
+                                    //    " GeneralLocalData, значения одинаковы, применяем данные локально (берём с сервера, просто так)");
                                 }
                             }
                             else
@@ -216,13 +217,13 @@ public class SyncManager : ICleanUp
                                 GameManager.Instance.ResetMaxReachedLevelToZeroAndSetNewValue(wrapperGeneralData.MaxReachedLevel);
 
                                 PlayFabManager.Instance.StartCloudUpdateMaxReachedLevel();
-                                Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, на сервере такой статистики нет" +
-                                    " применяем локально значение из файла GeneralLocalData и подгружаем данные на сервер");
+                                //Debug.Log("Залогинены, нет файла синхронизации для аккаунта и синхронизирующая папка пуста, на сервере такой статистики нет" +
+                                //    " применяем локально значение из файла GeneralLocalData и подгружаем данные на сервер");
                             }
                         }
                         catch (Exception e)
                         {
-                            Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
+                            //Debug.LogWarning("Error parsing JSON for GeneralLocalData: " + e.Message);
                         }
                     }
                 }
@@ -236,12 +237,12 @@ public class SyncManager : ICleanUp
         if (result.Statistics != null && result.Statistics.Count > 0)
         {
             var stat = result.Statistics[0]; // так как мы запрашивали только одну
-            Debug.Log($"MaxReachedLevel = {stat.Value}");
+            //Debug.Log($"MaxReachedLevel = {stat.Value}");
             return stat.Value;
         }
         else
         {
-            Debug.Log("Статистика MaxReachedLevel отсутствует.");
+            //Debug.Log("Статистика MaxReachedLevel отсутствует.");
             return null;
         }
     }

@@ -70,7 +70,7 @@ public class TitlesParser : MonoBehaviour
         string content = LoadFileContent();
         if (string.IsNullOrEmpty(content))
         {
-            Debug.LogWarning($"ScrollFadeController: Не удалось загрузить содержимое файла (проверьте _titlesTextAsset / Resources / StreamingAssets). fileName={_fileName}");
+            //Debug.LogWarning($"ScrollFadeController: Не удалось загрузить содержимое файла (проверьте _titlesTextAsset / Resources / StreamingAssets). fileName={_fileName}");
             return;
         }
 
@@ -80,9 +80,9 @@ public class TitlesParser : MonoBehaviour
 
         if (_debugPrintLoaded)
         {
-            Debug.Log($"ScrollFadeController: Загружено элементов: {listTextsTitle.Count}");
-            for (int i = 0; i < listTextsTitle.Count; i++)
-                Debug.Log($"#{i}: {listTextsTitle[i].ToString()}");
+            //Debug.Log($"ScrollFadeController: Загружено элементов: {listTextsTitle.Count}");
+            //for (int i = 0; i < listTextsTitle.Count; i++)
+                //Debug.Log($"#{i}: {listTextsTitle[i].ToString()}");
         }
 
         // Здесь можно запустить дальнейшую обработку списка (создание UI-элементов и т.д.)
@@ -114,7 +114,7 @@ public class TitlesParser : MonoBehaviour
         }
         catch (System.Exception ex)
         {
-            Debug.LogWarning($"ScrollFadeController: Ошибка Resources.Load: {ex.Message}");
+            //Debug.LogWarning($"ScrollFadeController: Ошибка Resources.Load: {ex.Message}");
         }
 
         // 3) StreamingAssets (поддерживается в editor/standalone). На Android может потребоваться WWW/UnityWebRequest, но для простоты здесь File.ReadAllText
@@ -126,7 +126,7 @@ public class TitlesParser : MonoBehaviour
         }
         catch (System.Exception ex)
         {
-            Debug.LogWarning($"ScrollFadeController: Ошибка чтения StreamingAssets ({streamingPath}): {ex.Message}");
+            //Debug.LogWarning($"ScrollFadeController: Ошибка чтения StreamingAssets ({streamingPath}): {ex.Message}");
         }
 
         // 4) Пробуем Assets (удобно в Editor, если файл положен рядом с проектом)
@@ -138,7 +138,7 @@ public class TitlesParser : MonoBehaviour
         }
         catch (System.Exception ex)
         {
-            Debug.LogWarning($"ScrollFadeController: Ошибка чтения Assets ({assetsPath}): {ex.Message}");
+            //Debug.LogWarning($"ScrollFadeController: Ошибка чтения Assets ({assetsPath}): {ex.Message}");
         }
 
         return null;
@@ -206,14 +206,14 @@ public class TitlesParser : MonoBehaviour
                             listTextsTitle.Add(new DeserializeTextObject(txt, DeserializeTextObject.TEXT_TYPE.Header));
                         else if (string.Equals(key, "D", System.StringComparison.OrdinalIgnoreCase))
                             listTextsTitle.Add(new DeserializeTextObject(txt, DeserializeTextObject.TEXT_TYPE.Descripton));
-                        else
-                            Debug.LogWarning($"ScrollFadeController: Неизвестный ключ '{key}' в строке: {line}");
+                        else { }
+                            //Debug.LogWarning($"ScrollFadeController: Неизвестный ключ '{key}' в строке: {line}");
                     }
                     continue;
                 }
 
                 // Если строка не подошла ни под одно правило — выводим предупреждение (можно убрать)
-                Debug.LogWarning($"ScrollFadeController: Игнорирую некорректную строку: {line}");
+                //Debug.LogWarning($"ScrollFadeController: Игнорирую некорректную строку: {line}");
             }
         }
 
@@ -296,12 +296,12 @@ public class TitlesParser : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning($"ScrollFadeController: Неизвестный ключ '{key}' в строке: {line}");
+                        //Debug.LogWarning($"ScrollFadeController: Неизвестный ключ '{key}' в строке: {line}");
                         continue;
                     }
                 }
 
-                Debug.LogWarning($"ScrollFadeController: Игнорирую некорректную строку: {line}");
+                //Debug.LogWarning($"ScrollFadeController: Игнорирую некорректную строку: {line}");
             }
         }
 
@@ -328,8 +328,8 @@ public class TitlesParser : MonoBehaviour
     [ContextMenu("PrintParsedTitles")]
     private void PrintParsedTitles()
     {
-        Debug.Log($"ScrollFadeController: Parsed {listTextsTitle.Count} items:");
-        for (int i = 0; i < listTextsTitle.Count; i++)
-            Debug.Log($"#{i}: {listTextsTitle[i].ToString()}");
+        //Debug.Log($"ScrollFadeController: Parsed {listTextsTitle.Count} items:");
+        //for (int i = 0; i < listTextsTitle.Count; i++)
+            //Debug.Log($"#{i}: {listTextsTitle[i].ToString()}"); 
     }
 }

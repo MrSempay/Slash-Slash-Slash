@@ -266,7 +266,7 @@ public static class AdjustEquipmentParameters : object
         List<string> spellNames = new List<string>(spellParameters.Keys);
         if (spellNames.Count == 0)
         {
-            Debug.LogError("No spell names available in unitParameters!");
+            //Debug.LogError("No spell names available in unitParameters!");
             return null; // Или какое-то значение по умолчанию
         }
         foreach (string spellForTestName in spellsForTest)
@@ -306,11 +306,11 @@ public static class AdjustEquipmentParameters : object
         
         if (ammunitionNames.Count == 0)
         {
-            //Debug.LogError("No ammunition names available in equipmentParameters!");
-            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentCategory);
-            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.chance);
-            //Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentRarityType);
-            //Debug.Log("No ammunition names available in equipmentParameters!");
+            ////Debug.LogError("No ammunition names available in equipmentParameters!");
+            ////Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentCategory);
+            ////Debug.Log(randomCategoryAndRarityTypesOfEquipment.chance);
+            ////Debug.Log(randomCategoryAndRarityTypesOfEquipment.equipmentRarityType);
+            ////Debug.Log("No ammunition names available in equipmentParameters!");
 
             //EquipmentChance someChance = GenerateItems(1)[0];
             //string nameItem = GetRandomAmmunitionName(someChance);
@@ -346,7 +346,7 @@ public static class AdjustEquipmentParameters : object
 
         if (Math.Abs(totalChance - 100) > 0.01f) // Проверяем, что сумма близка к 100
         {
-            Debug.LogWarning("Сумма вероятностей не равна 100%. Нормализуем...");
+            //Debug.LogWarning("Сумма вероятностей не равна 100%. Нормализуем...");
             // Нормализуем
             float normalizationFactor = 100f / totalChance;
             for (int i = 0; i < possibleItems.Count; i++)
@@ -366,7 +366,7 @@ public static class AdjustEquipmentParameters : object
 
             foreach (var item in possibleItems)
             {
-                //Debug.Log(item.chance);
+                ////Debug.Log(item.chance);
                 cumulativeChance += item.chance;
                 if (randomValue <= cumulativeChance)
                 {
@@ -381,7 +381,7 @@ public static class AdjustEquipmentParameters : object
             }
             else
             {
-                Debug.LogError("Не удалось выбрать предмет! Проверьте вероятности.");
+                //Debug.LogError("Не удалось выбрать предмет! Проверьте вероятности.");
             }
         }
 
@@ -405,7 +405,7 @@ public static class AdjustEquipmentParameters : object
         {
             nameOfSpell = scriptEquipment.equipmentName;
         }
-        Debug.Log("чё за параща " + type);
+        //Debug.Log("чё за параща " + type);
         // Получаем информацию о методе с указанным именем
         MethodInfo methodInfo = type.GetMethod(nameOfSpell, BindingFlags.Public | BindingFlags.Instance);
 
@@ -432,7 +432,7 @@ public static class AdjustEquipmentParameters : object
         }
         else
         {
-            Debug.Log($"Функция с именем '{nameOfSpell}' не найдена.");
+            //Debug.Log($"Функция с именем '{nameOfSpell}' не найдена.");
             return;
         }
     }

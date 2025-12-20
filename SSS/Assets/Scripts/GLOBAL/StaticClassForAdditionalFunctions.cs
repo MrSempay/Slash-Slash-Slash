@@ -35,13 +35,13 @@ public static class StaticClassForAdditionalFunctions : object
 
         if (objectsParameters == null)
         {
-            Debug.LogError("objectsParameters is null!");
+            //Debug.LogError("objectsParameters is null!");
             return;
         }
 
         if (!objectsParameters.ContainsKey(nameOfObject))
         {
-            Debug.LogWarning($"Object with name '{nameOfObject}' not found in objectsParameters.");
+            //Debug.LogWarning($"Object with name '{nameOfObject}' not found in objectsParameters.");
             return;
         }
 
@@ -66,7 +66,7 @@ public static class StaticClassForAdditionalFunctions : object
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.LogError($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    //Debug.LogError($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
@@ -82,18 +82,18 @@ public static class StaticClassForAdditionalFunctions : object
                     }
                     catch (InvalidCastException e)
                     {
-                        Debug.LogError($"Could not convert value for property '{parameterOrPropertyName}' to type '{propertyInfo.PropertyType.Name}': {e.Message}");
+                        //Debug.LogError($"Could not convert value for property '{parameterOrPropertyName}' to type '{propertyInfo.PropertyType.Name}': {e.Message}");
                     }
                 }
                 else
                 {
                     if (propertyInfo == null)
                     {
-                        Debug.LogWarning($"Property '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                        //Debug.LogWarning($"Property '{parameterOrPropertyName}' not found in class '{type.Name}'.");
                     }
                     else if (!propertyInfo.CanWrite)
                     {
-                        Debug.LogWarning($"Property '{parameterOrPropertyName}' in class '{type.Name}' does not have a setter (is read-only).");
+                        //Debug.LogWarning($"Property '{parameterOrPropertyName}' in class '{type.Name}' does not have a setter (is read-only).");
                     }
                 }
             }
@@ -106,7 +106,7 @@ public static class StaticClassForAdditionalFunctions : object
 
         if (objectsParameters == null)
         {
-            Debug.LogError("objectsParameters is null!");
+            //Debug.LogError("objectsParameters is null!");
             return;
         }
 
@@ -130,7 +130,7 @@ public static class StaticClassForAdditionalFunctions : object
                 }
                 catch (InvalidCastException e)
                 {
-                    Debug.LogWarning($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
+                    //Debug.LogWarning($"Could not convert value for parameter '{parameterOrPropertyName}' to type '{fieldInfo.FieldType.Name}': {e.Message}");
                 }
             }
             else
@@ -146,18 +146,18 @@ public static class StaticClassForAdditionalFunctions : object
                     }
                     catch (InvalidCastException e)
                     {
-                        Debug.LogError($"Could not convert value for property '{parameterOrPropertyName}' to type '{propertyInfo.PropertyType.Name}': {e.Message}");
+                        //Debug.LogError($"Could not convert value for property '{parameterOrPropertyName}' to type '{propertyInfo.PropertyType.Name}': {e.Message}");
                     }
                 }
                 else
                 {
                     if (propertyInfo == null)
                     {
-                        Debug.LogWarning($"Property '{parameterOrPropertyName}' not found in class '{type.Name}'.");
+                        //Debug.LogWarning($"Property '{parameterOrPropertyName}' not found in class '{type.Name}'.");
                     }
                     else if (!propertyInfo.CanWrite)
                     {
-                        Debug.LogWarning($"Property '{parameterOrPropertyName}' in class '{type.Name}' does not have a setter (is read-only).");
+                        //Debug.LogWarning($"Property '{parameterOrPropertyName}' in class '{type.Name}' does not have a setter (is read-only).");
                     }
                 }
             }
@@ -184,7 +184,7 @@ public static class StaticClassForAdditionalFunctions : object
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error getting value for field {field.Name}: {e.Message}");
+                //Debug.LogError($"Error getting value for field {field.Name}: {e.Message}");
             }
         }
 
@@ -203,7 +203,7 @@ public static class StaticClassForAdditionalFunctions : object
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error getting value for property {property.Name}: {e.Message}");
+                //Debug.LogError($"Error getting value for property {property.Name}: {e.Message}");
             }
 
         }
@@ -234,7 +234,7 @@ public static class StaticClassForAdditionalFunctions : object
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Error getting value for field {nameFieldOrProperty}: {e.Message}");
+                    //Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Error getting value for field {nameFieldOrProperty}: {e.Message}");
                 }
                 continue; // Переходим к следующему элементу
             }
@@ -249,12 +249,12 @@ public static class StaticClassForAdditionalFunctions : object
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Error getting value for property {nameFieldOrProperty}: {e.Message}");
+                    //Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Error getting value for property {nameFieldOrProperty}: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Field or readable property with name '{nameFieldOrProperty}' not found in type '{type.FullName}'.");
+                //Debug.LogWarning($"GetPropertiesAndFieldsSelectively: Field or readable property with name '{nameFieldOrProperty}' not found in type '{type.FullName}'.");
             }
         }
 
@@ -274,7 +274,7 @@ public static class StaticClassForAdditionalFunctions : object
     {
         // Проверяем, поддерживает ли устройство вибрацию.
         // Это не всегда необходимо, но может предотвратить ошибки на некоторых платформах.
-        //Debug.Log("Ibo");
+        ////Debug.Log("Ibo");
         if (GameManager.Instance.currentSettings.vibrationOn)
         {
             #if UNITY_ANDROID && !UNITY_EDITOR
@@ -297,16 +297,16 @@ public static class StaticClassForAdditionalFunctions : object
             }
             catch (System.Exception e)
             {
-                Debug.LogWarning("Vibration failed: " + e.Message);
+                //Debug.LogWarning("Vibration failed: " + e.Message);
             }
         }
     }
 
     public static void CallFunctionByName(string nameFunction, object objectWhereShouldBeFunction, params object[] parameters) // в качестве objectWhereShouldBeFunction передаём любой скрипт
     {
-        //Debug.Log(objectWhereShouldBeFunction);
-        //Debug.Log(nameFunction);
-        //Debug.Log(parameters);
+        ////Debug.Log(objectWhereShouldBeFunction);
+        ////Debug.Log(nameFunction);
+        ////Debug.Log(parameters);
         var methodInfo = objectWhereShouldBeFunction.GetType().GetMethod(nameFunction);
         if (methodInfo != null)
         {
@@ -329,7 +329,7 @@ public static class StaticClassForAdditionalFunctions : object
         }
         else
         {
-            Debug.Log($"Method '{nameFunction}' not found in type '{objectWhereShouldBeFunction.GetType().FullName}'");
+            //Debug.Log($"Method '{nameFunction}' not found in type '{objectWhereShouldBeFunction.GetType().FullName}'");
         }
     }
 
@@ -392,10 +392,10 @@ public static class StaticClassForAdditionalFunctions : object
     private static IEnumerator RefreshLayout(HorizontalOrVerticalLayoutGroup layoutGroup)
     {
         layoutGroup.spacing += 0.01f;
-        //Debug.Log("Ну и 2");
+        ////Debug.Log("Ну и 2");
         yield return null;
         //yield return null;
-        //Debug.Log("Ну и 3");
+        ////Debug.Log("Ну и 3");
         layoutGroup.spacing -= 0.01f; // В теории это на null бы проверить, но, по идее, корутина должна втоматически завершиться при изменении сцены... посмотрим.
         //LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup);
         // Или

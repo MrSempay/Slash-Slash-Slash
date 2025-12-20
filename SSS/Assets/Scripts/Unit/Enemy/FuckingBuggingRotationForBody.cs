@@ -18,13 +18,13 @@ public class FuckingBuggingRotationForBody : MonoBehaviour
     public void EnemyLandingAnimationFinished()
     {
         onEnemyLandingAnimationFinished?.Invoke(); // подписываемся, вроде, в объекте состояния FsmStateFallEnemy
-        Debug.Log("EnemyLanding animation finished!");
+        //Debug.Log("EnemyLanding animation finished!");
     }
     // Этот метод будет вызван Animation Event в определённом месте анимации атаки, которое посчитали подходящим для нанесения урона.
     public void AttackAnimationAtRightPointForGetDamage()
     {
         onAttackAnimationAtRightPointForGetDamage?.Invoke(); // подписываемся в состоянии FsmStateMeleeAttacklEnemy
-        Debug.Log("MeleeEnemyAttack animation at right point!");
+        //Debug.Log("MeleeEnemyAttack animation at right point!");
     }
 
     public virtual void SomeAnimationWasStarted(string nameStartedAnimation) // Когда какая-то анимация началась. Делаем через event в самой анимации

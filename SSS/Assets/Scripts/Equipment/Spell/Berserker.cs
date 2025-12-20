@@ -72,7 +72,7 @@ public class Berserker : Spell
     {
         if (isActivated)
         {
-            //Debug.Log("Here");
+            ////Debug.Log("Here");
             StartCallDown();
 
             isActivated = false;

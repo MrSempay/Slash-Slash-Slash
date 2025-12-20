@@ -161,13 +161,13 @@ public class FsmStatePlayer : FsmStateUnit
             // swipe left -> deltaScreen.x < 0
             if (player.wallOnLeft && deltaScreen.x < 0f)
             {
-                Debug.Log("Свайп в стену (слева) отменён");
+                //Debug.Log("Свайп в стену (слева) отменён");
                 return;
             }
             // swipe right -> deltaScreen.x > 0
             else if (!player.wallOnLeft && deltaScreen.x > 0f)
             {
-                Debug.Log("Свайп в стену (справа) отменён");
+                //Debug.Log("Свайп в стену (справа) отменён");
                 return;
             }
         }
@@ -218,7 +218,7 @@ public class FsmStatePlayer : FsmStateUnit
         {
             // Горизонтальный свайп — движение в targetX
             float dxWorld = swipeWorldDelta.x;
-            Debug.Log(swipeWorldDelta.x);
+            //Debug.Log(swipeWorldDelta.x);
             if (Mathf.Abs(dxWorld) >= MIN_SWIPE_WORLD)
             {
                 StartHorizontalMove(dxWorld);
@@ -245,16 +245,16 @@ public class FsmStatePlayer : FsmStateUnit
         player.desiredVelocityX = Mathf.Sign(dxWorld) * player.speed * MOVE_VELOCITY_MULTIPLIER;
 
         // Включаем движение — будет применено в FixedUpdate
-        //Debug.Log(player.movingToTarget);
+        ////Debug.Log(player.movingToTarget);
         player.movingToTarget = true;
-        //Debug.Log(player.movingToTarget);
+        ////Debug.Log(player.movingToTarget);
 
         // Немедленное обновление направления вида (чтобы спрайт сразу повернулся)
         ChangeDirectionView(player.desiredVelocityX > 0f);
 
         // Вызов сигнала начала свайпа/его окончания для внешних listeners
-        //Debug.Log("Ьвф,,");
-        //Debug.Log(player.desiredVelocityX);
+        ////Debug.Log("Ьвф,,");
+        ////Debug.Log(player.desiredVelocityX);
         OnSwipeStarted?.Invoke();
 
         // Смена состояния FSM: если рядом враг — WalkAndAttack, иначе Walk
@@ -266,7 +266,7 @@ public class FsmStatePlayer : FsmStateUnit
 
     protected internal void StopHorizontalMovement() // в Idle вызываем
     {
-        //Debug.Log("Да что за хуета");
+        ////Debug.Log("Да что за хуета");
         player.movingToTarget = false;
         player.desiredVelocityX = 0f;
 
@@ -286,7 +286,7 @@ public class FsmStatePlayer : FsmStateUnit
     {
         if (cam == null)
         {
-            Debug.LogWarning("FsmStatePlayer_Reworked: main camera is null in ScreenToWorldAtZ0.");
+            //Debug.LogWarning("FsmStatePlayer_Reworked: main camera is null in ScreenToWorldAtZ0.");
             return Vector3.zero;
         }
 
@@ -314,7 +314,7 @@ public class FsmStatePlayer : FsmStateUnit
     private void MoveTarget()
     {
         // Применяем физику в FixedUpdate — изменение velocity/linearVelocity
-        //Debug.Log(player.movingToTarget);
+        ////Debug.Log(player.movingToTarget);
         if (player.movingToTarget)
         {
             // Применяем желаемую скорость
@@ -322,9 +322,9 @@ public class FsmStatePlayer : FsmStateUnit
 
             // Проверяем, не прошли ли цель (overshoot)
             float posX = player.transform.position.x;
-            //Debug.Log(player.desiredVelocityX);
-            //Debug.Log(player.targetX);
-            //Debug.Log(STOP_EPSILON);
+            ////Debug.Log(player.desiredVelocityX);
+            ////Debug.Log(player.targetX);
+            ////Debug.Log(STOP_EPSILON);
             if (player.desiredVelocityX > 0f)
             {
                 if (posX >= player.targetX - STOP_EPSILON)

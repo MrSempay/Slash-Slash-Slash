@@ -45,8 +45,8 @@ public class ToggleFixed : ParameterFieldSettings, IControlLifeCicleFunctions
     }
     public void Awake()
     {
-        //Debug.Log(_shouldBeToggledAtStart);
-        //Debug.Log(gameObject.name);
+        ////Debug.Log(_shouldBeToggledAtStart);
+        ////Debug.Log(gameObject.name);
         if (!AwakeWasCalledAlready) {
             selfName = name;
             AwakeWasCalledAlready = true;

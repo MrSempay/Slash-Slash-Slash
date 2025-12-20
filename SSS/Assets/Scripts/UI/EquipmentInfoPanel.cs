@@ -110,7 +110,7 @@ public class EquipmentInfoPanel : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogWarning("Параметр, который не указан к выводу на панель!");
+                            //Debug.LogWarning("Параметр, который не указан к выводу на панель!");
                         }
                     }
                     continue;
@@ -145,7 +145,7 @@ public class EquipmentInfoPanel : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogWarning("Параметр, который не указан к выводу на панель!");
+                            //Debug.LogWarning("Параметр, который не указан к выводу на панель!");
                         }
                     }
                     continue;
@@ -170,7 +170,7 @@ public class EquipmentInfoPanel : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogWarning("Параметр, который не указан к выводу на панель!");
+                            //Debug.LogWarning("Параметр, который не указан к выводу на панель!");
                         }
                     }
                     continue;

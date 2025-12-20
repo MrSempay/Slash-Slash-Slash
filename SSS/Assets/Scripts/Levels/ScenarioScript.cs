@@ -62,7 +62,7 @@ public class ScenarioScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        //Debug.Log("А мы вообще, тут?");
+        ////Debug.Log("А мы вообще, тут?");
 
         //player = Player.instance.gameObject;
 
@@ -165,16 +165,18 @@ public class ScenarioScript : MonoBehaviour
             }
             return;
         }
-        //Debug.Log(equipmentInBuilding.Count);
+        ////Debug.Log(equipmentInBuilding.Count);
         foreach (Equipment equipment in equipmentInBuilding)
         {
             equipment.onEquipmentWasSold += EquipmentWasSold;
-            Debug.Log(equipment);
+            //Debug.Log(equipment);
         }
         _buildingAndEquipmentInBuildingFromLastIteration[building] = new List<Equipment>(equipmentInBuilding);
         
     }
-    protected virtual void EquipmentWasSold(Equipment equipment) { Debug.Log("Equipment was sold"); }
+    protected virtual void EquipmentWasSold(Equipment equipment) { 
+        //Debug.Log("Equipment was sold");
+    }
 
 
 
@@ -301,7 +303,7 @@ public class ScenarioScript : MonoBehaviour
         transformCameraPlayer.position = targetTransform.position + scriptPlayer.localPositionCamera; // Устанавливаем точную позицию
         transformCameraPlayer.SetParent(transformPlayer);
         transformCameraPlayer.localPosition = scriptPlayer.localPositionCamera;
-        //Debug.Log("А мы реально переместили?");
+        ////Debug.Log("А мы реально переместили?");
         MovingCameraPlayerWasFinished(keyFinishing);
     }
     IEnumerator TimeWait(float waitTime, string markerTimeWait)
@@ -574,7 +576,7 @@ public class ScenarioScript : MonoBehaviour
 
         _activeDialogueTcs?.TrySetResult(true);
         _activeDialogueTcs = null;
-        Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
+        //Debug.Log($"DialogueFinished (no awaiter): {nameDialogueWithFolder}");
 
 
     } // сигнал, к которому привязана функция, эмулируется при любом окончании диалога, хоть игрока, хоть сцены
@@ -593,7 +595,7 @@ public class ScenarioScript : MonoBehaviour
 
             return;
         }
-        Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
+        //Debug.Log($"EnemiesWaveWasDestroyed (no awaiter): {nameWave}");
     }
 
     protected internal virtual void TimerFinished(string markerTimeWait)
@@ -616,7 +618,7 @@ public class ScenarioScript : MonoBehaviour
             return;
         }
 
-        Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
+        //Debug.Log($"TimerFinished (no awaiter): {markerTimeWait}");
     }
 
     #endregion FSM-async scenario integraion

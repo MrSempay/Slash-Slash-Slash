@@ -41,7 +41,7 @@ public class Leaderboard : MonoBehaviour
         _HOVLayoutGroupContainerButtons = _rtContainerButtons.GetComponent<HorizontalOrVerticalLayoutGroup>();
 
         _prefubField = ScoreManager.prefubFieldLeaderboard; // не очень, конечно, безопасно, но едва ли лидерборд будет спавниться до ScoreManager
-        //Debug.Log(GetInstanceID());
+        ////Debug.Log(GetInstanceID());
 
         _buttonShowLeaderboard = GameManager.Instance.InstanceTextButton(false, Player.instance.buttonShowLeaderboardPlacement, C.Just.ShowLeaderboard, ShowLeaderboardButtonClick);
         _buttonShowLeaderboard.SetActive(false);
@@ -154,10 +154,10 @@ public class Leaderboard : MonoBehaviour
             foreach (var fieldLeaderboardInfo in PlayFabManager.Instance.lastLeaderboardStatsInfo)
             {
                 FieldInfo scriptFieldLeaderboard = Instantiate(_prefubField, Vector3.zero, Quaternion.identity, _rectTransformPlaceForFields);
-                //Debug.Log(scriptFieldLeaderboard);
-                //Debug.Log(scriptFieldLeaderboard.textNameInfo);
-                //Debug.Log(fieldLeaderboardInfo);
-                //Debug.Log(fieldLeaderboardInfo.Key);
+                ////Debug.Log(scriptFieldLeaderboard);
+                ////Debug.Log(scriptFieldLeaderboard.textNameInfo);
+                ////Debug.Log(fieldLeaderboardInfo);
+                ////Debug.Log(fieldLeaderboardInfo.Key);
                 scriptFieldLeaderboard.textNameInfo.SetNotLocalizableText(fieldLeaderboardInfo.Key);
                 scriptFieldLeaderboard.textValueInfo.SetNotLocalizableText(fieldLeaderboardInfo.Value.ToString());
                 switch (place_number)
