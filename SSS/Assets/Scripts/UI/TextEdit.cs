@@ -51,9 +51,6 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
             string baseText = LocalizationManager.Instance.GetText(baseLocalizationKey);
             if (baseText == "")
             {   
-                //Debug.Log("Ãƒ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿");
-                //Debug.Log(value);
-                //Debug.Log(textComponent);
                 textComponent.text = LocalizationManager.Instance.GetText(value);
             }
             else
@@ -61,12 +58,6 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
                 string settingValue = LocalizationManager.Instance.GetText(value);
                 if (settingValue != "")
                 {
-                    //Debug.Log("≈·‡ÌËÌ‡1");
-                    //Debug.Log("Ãƒ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿");
-                    //Debug.Log(value);
-                    //Debug.Log(textComponent);
-                    //Debug.Log(textComponent.text);
-                    //Debug.Log(LocalizationManager.Instance.GetText(value));
                     textComponent.text = baseText + " " + settingValue;
                 }
                 else
@@ -79,17 +70,12 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
 
     public void UpdateText()
     {
-        //Debug.Log("SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-        //Debug.Log(additionalLocalizationKey);
         Text = additionalLocalizationKey;
         //textComponent.text += " " + notLocalizableText;
         if (notLocalizableText != "")
         {
-            //Debug.Log(baseLocalizationKey);
-            //Debug.Log(notLocalizableText);
             if (additionalLocalizationKey != "" || baseLocalizationKey != "")
             {
-                //Debug.Log("—Û˜Í‡");
                 textComponent.text += " " + notLocalizableText;
             }
             else
@@ -100,14 +86,11 @@ public class TextEdit : MonoBehaviour, ILocalizableText, IControlLifeCicleFuncti
     }
     public void SetNotLocalizableText(string text)
     {
-        //Debug.Log("SHITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-        //Debug.Log(additionalLocalizationKey);
         notLocalizableText = text;
         UpdateText();
     }
     public void SetBaseText(string text)
     {
-        //Debug.Log("≈·‡ÌËÌ‡");
         baseLocalizationKey = text;
         UpdateText();
     }

@@ -170,12 +170,12 @@ public class DialogueParser : MonoBehaviour
             }
 
             string fullPathToIcon = _nameIconsUnitFolder + dialogueLines[index].characterName;
-            Debug.Log("Way: " + fullPathToIcon);
+
             Sprite iconUnit = Resources.Load<Sprite>(fullPathToIcon);
             spriteRendererIconUnit.sprite = iconUnit; 
 
             //_textMeshProUnitPhrase.text = dialogueLines[index].dialogueText; 
-            //Debug.Log(_currentCharacterPosition);
+
             _slowAppearingTextByCharacterCoroutine = CoroutineManager.Instance.StartManagedCoroutine(this.gameObject, WriteTextByCharacter(dialogueLines[index].dialogueText));
             _textMeshProUnitName.text = dialogueLines[index].characterName;
             if (Time.timeScale > 0) // чтоб при паузе за зря не менялось расположение иконки персонажа при смене языка
@@ -184,7 +184,6 @@ public class DialogueParser : MonoBehaviour
                 {
                     if (dialogueLines[index].characterName != dialogueLines[index - 1].characterName)
                     {
-                        //Debug.Log("Shit?");
                         rectTransformNameUnit.localPosition = new Vector3(rectTransformNameUnit.localPosition.x * (-1), rectTransformNameUnit.localPosition.y, rectTransformNameUnit.localPosition.z);
                         rectTransformUnitIcon.localPosition = new Vector3(rectTransformUnitIcon.localPosition.x * (-1), rectTransformUnitIcon.localPosition.y, rectTransformUnitIcon.localPosition.z);
                     }

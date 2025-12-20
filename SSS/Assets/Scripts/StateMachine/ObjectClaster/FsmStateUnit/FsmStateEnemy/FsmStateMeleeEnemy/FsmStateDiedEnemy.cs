@@ -25,7 +25,7 @@ public class FsmStateDiedEnemy : FsmStateEnemy
         enemy.gameObject.tag = C.Tags.EnemyDied;
         enemy.fuck.gameObject.tag = C.Tags.EnemyDied;
 
-        Debug.Log("Проверяем ебучий тэг в смерти " + enemy.fuck.gameObject.tag);
+        Debug.Log("Проверяем тэг в смерти " + enemy.fuck.gameObject.tag);
 
         waitBeforeDisableColliderAndRigidBodyCoroutine = CoroutineManager.Instance.StartManagedCoroutine(gameObject, WaitBeforeDisableColliderAndRigidBody());
 

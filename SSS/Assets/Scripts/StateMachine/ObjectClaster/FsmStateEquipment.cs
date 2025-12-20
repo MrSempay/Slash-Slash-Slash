@@ -9,13 +9,8 @@ public class FsmStateEquipment : FsmState
 
     public FsmStateEquipment(Fsm fsm, GameObject gameObject) : base(fsm, gameObject)
     {
-        //Debug.Log("≈бал€ва€ пиздаЄбка");
         equipment = gameObject.GetComponent<Equipment>();
         baseLocalPositionInfoPanel = equipment.transformPlaceInfoPanel.localPosition;
-
-        //Debug.Log(equipment.GetInstanceID());
-        //Debug.Log(equipment.GetInstanceID());
-        //Debug.Log("—Ќј–я∆≈Ќ»»»»»»»»≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ " + equipment + "" + equipment.GetInstanceID());
 
     }
 
@@ -24,7 +19,6 @@ public class FsmStateEquipment : FsmState
         if (!Player.isTransitingEquipment) // благодар€ этому, по идее, только одно снар€жение может быть в состо€нии Selected. »змен€етс€ только в том состо€нии
         {
             Vector3 mousePosition = new Vector3(x, y, 0);
-            //Debug.Log(mousePosition);
             //—оздаем невидимый коллайдер в центре €чейки
             Collider2D[] hits = Physics2D.OverlapCircleAll(mousePosition - new Vector3(0, 0, 1), 0.5f); //радиус небольшой,  чтобы захватить только центр €чейки.
 
@@ -40,11 +34,6 @@ public class FsmStateEquipment : FsmState
                 GameObject someGameObject = hit.gameObject; // ѕолучаем GameObject
                 if (someGameObject.CompareTag("Equipment"))
                 {
-                    //Debug.Log(equipment);
-                    //Debug.Log(equipment._fsm);
-                    //Debug.Log(someGameObject);
-                    //Debug.Log(someGameObject.GetComponent<Equipment>());
-                    //Debug.Log(equipment.GetInstanceID());
                     if (equipment._fsm.StateCurrent.GetType() == typeof(FsmStateEquipmentSelected)) return someGameObject.GetComponent<Equipment>(); // возвращаем любое снар€жение
 
                     if (someGameObject.GetComponent<Equipment>() == equipment) return someGameObject.GetComponent<Equipment>(); // возвращаем только то снар€жение, которое равно экземпл€ру

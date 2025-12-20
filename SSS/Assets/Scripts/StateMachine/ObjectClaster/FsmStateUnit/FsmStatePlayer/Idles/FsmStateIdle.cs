@@ -63,7 +63,6 @@ public class FsmStateIdle : FsmStatePlayer
 
     private void SetStateWalk()
     {
-        //Debug.Log("Shit ibo");
         if (player.isEnemyNear)
         {
             fsmPlayer.SetState<FsmStateWalkAndAttack>();

@@ -73,7 +73,8 @@ public static class AdjustUnitParameters
                 { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
                 { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
-                { C.DK.callDownMeleeAttack, 1f }
+                { C.DK.callDownMeleeAttack, 1f },
+                { C.DK.IsThroughAble, true }
 
             }
         },
@@ -96,7 +97,8 @@ public static class AdjustUnitParameters
                 { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
                 { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
-                { C.DK.callDownMeleeAttack, 0.6f }
+                { C.DK.callDownMeleeAttack, 0.6f },
+                { C.DK.IsThroughAble, true }
 
             }
         },
@@ -119,7 +121,8 @@ public static class AdjustUnitParameters
                 { C.DK.nameSoundDeath, C.MusicSounds.DogDeath },
                 { C.DK.nameSoundGettingDamage, C.MusicSounds.DogGotDamage }, // проблема в том, что пока что проигрывается вместе со звуком удара
                 { C.DK.nameSoundWalk, C.MusicSounds.DogWalk },
-                { C.DK.callDownMeleeAttack, 0.3f }
+                { C.DK.callDownMeleeAttack, 0.3f },
+                { C.DK.IsThroughAble, false }
 
             }
         },

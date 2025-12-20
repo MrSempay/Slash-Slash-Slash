@@ -107,6 +107,7 @@ public class C
         public const string stuneChanceByStandardAttackPercentage = "stuneChanceByStandardAttackPercentage";
         public const string jumpForce = "jumpForce";
         public const string moneyFromKill = "moneyFromKill";
+        public const string IsThroughAble = "IsThroughAble";
         public const string experienceToNextLevel = "experienceToNextLevel";
         public const string experienceFromKill = "experienceFromKill";
         public const string scoreFromKill = "scoreFromKill";

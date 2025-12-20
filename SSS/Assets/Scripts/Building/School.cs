@@ -100,12 +100,8 @@ public class School : Building, IMainTarget
             Spell scriptOfEquipment;
 
             if (customScriptsEquipment.ContainsKey(randomEquipmentName))
-            {            
-                //Debug.Log("shit");
-
+            {
                 scriptOfEquipment = (Spell) newEquipment.AddComponent(customScriptsEquipment[randomEquipmentName]);
-
-                //Debug.Log(scriptOfEquipment.GetInstanceID());
             }
             else
             {
@@ -182,11 +178,7 @@ public class School : Building, IMainTarget
 
                 if (customScriptsEquipment.ContainsKey(nameSpellLocal))
                 {
-                    //Debug.Log("shit");
-
                     scriptOfEquipment = (Spell)newEquipment.AddComponent(customScriptsEquipment[nameSpellLocal]);
-
-                    //Debug.Log(scriptOfEquipment.GetInstanceID());
                 }
                 else
                 {

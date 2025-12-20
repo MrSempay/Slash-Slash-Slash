@@ -25,6 +25,7 @@ public class MusicManager : MonoBehaviour
     [Header("Music Clips")]
     [SerializeField] private AudioClip beginningMusic;
     [SerializeField] private AudioClip transitionMusic;
+    [SerializeField] private AudioClip defeatMusic;
     [SerializeField] private List<AudioClip> ambientMusics;
     [SerializeField] private List<AudioClip> fightMusics;
     [SerializeField] private List<AudioClip> otherMusics;
@@ -32,6 +33,7 @@ public class MusicManager : MonoBehaviour
     private AudioClip _currentClip;
     private CancellationTokenSource _cts;
     private System.Random _rnd = new();
+    private enum MusicType { Beginning, Ambient, Defeat, Fight, Certain }
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class MusicManager : MonoBehaviour
     // =======================================================================
     public void UpdateMusicLevelSet(AudioClip beginning = null,
                                     AudioClip transition = null,
+                                    AudioClip defeat = null,
                                     List<AudioClip> ambient = null,
                                     List<AudioClip> fight = null,
                                     List<AudioClip> other = null)
@@ -53,6 +56,9 @@ public class MusicManager : MonoBehaviour
 
         if (transition != null && transition != transitionMusic)
             transitionMusic = transition;
+
+        if (defeat != null && defeat != defeatMusic)
+            defeatMusic = defeat;
 
         ambientMusics = ambient ?? ambientMusics ?? new List<AudioClip>();
         fightMusics = fight ?? fightMusics ?? new List<AudioClip>();
@@ -68,6 +74,9 @@ public class MusicManager : MonoBehaviour
     public async void PlayBeginningMusic() =>
         await SafePlayAsync(async ct => await PlayMusicFlowAsync(beginningMusic, MusicType.Beginning, ct));
 
+    public async void PlayDefeatMusic() =>
+        await SafePlayAsync(async ct => await PlayMusicFlowAsync(defeatMusic, MusicType.Defeat, ct));
+
     public async void PlayAmbientMusic() =>
         await SafePlayAsync(async ct => await PlayMusicFlowAsync(GetRandom(ambientMusics), MusicType.Ambient, ct));
 
@@ -76,6 +85,7 @@ public class MusicManager : MonoBehaviour
 
     public async void PlayCertainMusic(string name) =>
         await SafePlayAsync(async ct => await PlayMusicFlowAsync(FindClipByName(name), MusicType.Certain, ct));
+    
 
     // =======================================================================
     // 🔹 Внутренняя логика
@@ -97,8 +107,6 @@ public class MusicManager : MonoBehaviour
             Debug.LogError($"[MusicManager] Ошибка проигрывания музыки: {ex}");
         }
     }
-
-    private enum MusicType { Beginning, Ambient, Fight, Certain }
 
     private async Task PlayMusicFlowAsync(AudioClip targetClip, MusicType type, CancellationToken ct)
     {

@@ -9,11 +9,12 @@ using Unity.VisualScripting;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 // Статический класс для вызова функций, которые должны быть доступны извне и не зависят от логики контекста.
 public static class StaticClassForAdditionalFunctions : object
 {
-    public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical } // БОЖЕ, КАК ЖЕ УЁБИЩНО. Это ПИЗДЕЦ.
+    public enum LANGUAGE { English, Russian, Spanish, Horizontal, Vertical } // кошмар
     public enum TYPES_INCREASING { Percentage, Absolute }
     public enum TYPE_NOTIFICATION { Success, Warning, Failure };
 
@@ -380,6 +381,25 @@ public static class StaticClassForAdditionalFunctions : object
         {
             // подавляем любое исключение (ошибка или отмена)
         }
+    }
+
+    public static void RefreshLayoutForGroups(MonoBehaviour owner, HorizontalOrVerticalLayoutGroup layoutGroup)
+    {
+        owner.StartCoroutine(RefreshLayout(layoutGroup));
+    }
+
+
+    private static IEnumerator RefreshLayout(HorizontalOrVerticalLayoutGroup layoutGroup)
+    {
+        layoutGroup.spacing += 0.01f;
+        //Debug.Log("Ну и 2");
+        yield return null;
+        //yield return null;
+        //Debug.Log("Ну и 3");
+        layoutGroup.spacing -= 0.01f; // В теории это на null бы проверить, но, по идее, корутина должна втоматически завершиться при изменении сцены... посмотрим.
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup);
+        // Или
+        Canvas.ForceUpdateCanvases();
     }
 
 }

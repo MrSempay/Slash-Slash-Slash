@@ -72,8 +72,6 @@ public class ProtectiveField : Spell
             _scriptProtectiveFieldSprite.selfSprite.sortingOrder = _sortOrderProtectionFieldSprite;
 
             AudioManager.Instance.StartSoundEffectAtSpecifiedEmitter(C.MusicSounds.ProtectiveShieldActivation, audioEmitter, AudioManager.TYPE_SOUND.Default, AudioManager.TYPE_AUDIO_SOURCE._2DStandard);
-            //Debug.Log("Ебануться нахуй");
-
         }
     }
 

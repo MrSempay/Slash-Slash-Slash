@@ -19,8 +19,8 @@ public class Equipment : MonoBehaviour
     public Animator mdaaa;
 
 
-    [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для блядства Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
-                                     // ебучих объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
+    [NonSerialized] public Fsm _fsm; // сделали публичным только для того, чтоб проверять текущее состояние для Input. Ведь Input.GetMouseButtonDown(0) у нас срабатывает для всех
+                                     // объектов при нажатии, а не только на том объекте, на котором мы нажали. Посему придётся проверять состояние для ситуации, когда нам не нужно
                                      // делать проверку на то, по этому ли объекту кликнули, ибо подразумевается что в состоянии FsmStateEquipmentSelected одновременно может быть только один объект
     [NonSerialized] public Transform transformPlaceInfoPanel;
     [NonSerialized] public SpriteRenderer selfSprite; // свой компонент спрайта

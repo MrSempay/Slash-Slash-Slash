@@ -113,6 +113,7 @@ public class AudioManager : MonoBehaviour
         _musicManager.UpdateMusicLevelSet(
             beginning: LevelBuilder.instance.beginningMusic,
             transition: LevelBuilder.instance.transitionMusic,
+            defeat: LevelBuilder.instance.defeatMusic,
             ambient: LevelBuilder.instance.listAmbientMusics,
             fight: LevelBuilder.instance.listFightMusics
         );
@@ -142,6 +143,10 @@ public class AudioManager : MonoBehaviour
     public void StartCertainMusicInLoop(string nameMusic)
     {
         _musicManager.PlayCertainMusic(nameMusic);
+    }
+    public void StartDefeatMusicInLoop()
+    {
+        _musicManager.PlayDefeatMusic();
     }
 
 

@@ -105,7 +105,6 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
         {
             //if (!GameManager.Instance.currentSettings.wasUploaded)
             {
-                //Debug.Log("ебала"); 
                 //SaveLoadManager.Instance.LoadSettingsFromFile(); // Загрузим из файла один раз в GameManager
                 SaveLoadManager.Instance.ImplementStoredSettings();
             }
@@ -216,8 +215,6 @@ public class SettingsMenu : MonoBehaviour, IControlLifeCicleFunctions
     }
     private void OnDestroy()
     {
-
-        Debug.Log("Что за нахер ебунячий");
         SaveCurrentSettings();
 
         EventBus.Instance.ToggleSonicOfSettingsMenuWasToggled.RemoveListener(ButtonSonicOfSettingsMenuToggled);

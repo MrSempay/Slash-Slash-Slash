@@ -679,8 +679,6 @@ MonoBehaviour:
   scoreFromKill: 0
   experienceFromKill: 0
   _inventory: {fileID: 0}
-  _currentTargetTransform: {fileID: 0}
-  player: {fileID: 0}
   selfEnemyCollider: {fileID: 705119281058959487}
   transformTargets: []
   fuck: {fileID: 538770094925077176}
@@ -697,6 +695,8 @@ MonoBehaviour:
   isInRazbrestisState: 0
   TEST_Current_State: 
   TEST_MOD: 0
+  _currentTargetTransform: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &4973938418784863996
 GameObject:
   m_ObjectHideFlags: 0

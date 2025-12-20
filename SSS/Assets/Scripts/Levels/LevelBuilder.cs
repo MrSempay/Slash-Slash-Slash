@@ -41,6 +41,7 @@ public class LevelBuilder : MonoBehaviour
     public List<AudioClip> listFightMusics = new();
     public AudioClip beginningMusic;
     public AudioClip transitionMusic;
+    public AudioClip defeatMusic;
 
     public Dictionary<Transform, int> TargetPointsForEnemy
     {
@@ -312,17 +313,10 @@ public class LevelBuilder : MonoBehaviour
     // вернём true только в случае, если умрёт последний враг из последней волны
     public bool WasEnemiesWaveDestroyed(Enemy scriptEnemy)
     {
-        //Debug.Log(listEnemiesFromLastWave.Count);
         if (listEnemiesFromLastWave.Contains(scriptEnemy))
         {
-        //Debug.Log("shit");
-
             listEnemiesFromLastWave.Remove(scriptEnemy);
             return listEnemiesFromLastWave.Count == 0 && spawnEnemyByTimerCoroutine == null; // если враг был последним в списке волны и корутина для их спавна уже не работала
-
-
-
-
         }
         return false;
     }

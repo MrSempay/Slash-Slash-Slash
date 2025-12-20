@@ -4,19 +4,11 @@ public class Spell : Equipment
 {
     public override void Awake()
     {
-        //Debug.Log("≈бучий Awake");
-        //Debug.Log(this.GetInstanceID());
         base.Awake();
     }
 
     public override void Start()
     {
-        //Debug.Log(AdjustEquipmentParameters.spellParameters);
-        //Debug.Log("≈бучий Start");
-        //Debug.Log(this.GetInstanceID());
-        //Debug.Log(gameObject.GetComponent<Equipment>().GetInstanceID());
-        //Debug.Log(equipmentName);
-        //Debug.Log(this);
         StaticClassForAdditionalFunctions.AssignParametersAndProperties(AdjustEquipmentParameters.spellParameters, this, equipmentName); // нужно вызвать до входа в первое состо€ние, поэтому до base
         base.Start();
     }

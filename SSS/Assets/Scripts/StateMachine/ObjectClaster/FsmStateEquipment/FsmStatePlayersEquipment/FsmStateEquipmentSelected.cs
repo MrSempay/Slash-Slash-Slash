@@ -73,10 +73,8 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
                     // НУЖНО ДЛЯ ДЕТЕКЦИИ, НА ПРОДАЖУ ЛИ ДАННЫЙ ЭКЗЕМПЛЯР СНАРЯЖЕНИЯ. Если нет (уже было продано), то ничего не делаем, если да, то проверяем, хватает ли денег, если нет, возвращае
                     // в состояние FsmStateEquipmentInsideShop
-                    //Debug.Log("Что за пиздец");
                     if (equipment.WasSold == false)
                     {
-                        //Debug.Log(equipment.WasSold);
                         if (equipment.BuildingWhereEquipmentIs.HasTargetEnoughMoneyForBuy(player, equipment)) // спелы стоят 0 злата, так что по идее на них всегда будет хватать
                         {
                             if (equipment.isEquipmentASpell) // если то, что мы продаём - спел
@@ -106,11 +104,6 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                     //Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                     Equipment isAtPlaceEquipment = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment;
 
-                    //Debug.Log("Ставим!");
-                    //Debug.Log(rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>());
-                    //Debug.Log(isAtPlaceEquipment);
-                    //Debug.Log(isAtPlaceEquipment.name);
-                    //Debug.Log(isAtPlaceEquipment.equipmentName);
                     if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
                     {
                         Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");
@@ -167,7 +160,6 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
 
                         // НУЖНО ДЛЯ ДЕТЕКЦИИ, НА ПРОДАЖУ ЛИ ДАННЫЙ ЭКЗЕМПЛЯР СНАРЯЖЕНИЯ. Если нет (уже было продано), то ничего не делаем, если да, то проверяем, хватает ли денег, если нет, возвращае
                         // в состояние FsmStateEquipmentInsideShop
-                        //Debug.Log("Что за пиздец");
                         if (equipment.WasSold == false)
                         {
                             Debug.Log(equipment.WasSold);
@@ -200,11 +192,6 @@ public class FsmStateEquipmentSelected : FsmStatePlayersEquipment
                         //Equipment isAtPlaceEquipment = IsEquipmentPlaceOccupied(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                         Equipment isAtPlaceEquipment = rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>().Equipment;
 
-                        //Debug.Log("Ставим!");
-                        //Debug.Log(rectTransformPlace.gameObject.GetComponent<PlaceForEquipment>());
-                        //Debug.Log(isAtPlaceEquipment);
-                        //Debug.Log(isAtPlaceEquipment.name);
-                        //Debug.Log(isAtPlaceEquipment.equipmentName);
                         if (isAtPlaceEquipment) // если таковое снаряжение на заданном месте было найдено
                         {
                             Debug.Log("А ОНО ВЕДЬ БЫЛО ОБНАРУЖЕНО!");

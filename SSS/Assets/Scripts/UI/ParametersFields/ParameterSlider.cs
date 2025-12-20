@@ -7,6 +7,7 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
 {
     private string _nameInvokingFunction;
     private float _currentValue;
+    private VerticalLayoutGroup _verticalGroup;
 
     [SerializeField] private Slider _slider;
 
@@ -34,9 +35,18 @@ public class ParameterSlider : ParameterFieldSettings, IControlLifeCicleFunction
             selfName = gameObject.name;
             _nameInvokingFunction = C.Prefixes.PrefixTrigger + selfName;
             AwakeWasCalledAlready = true;
+
+            _verticalGroup = GetComponent<VerticalLayoutGroup>();
+
             //Debug.Log(_slider);
             ValueOfSliderWasChanged();
         }
+    }
+
+    private void OnEnable()
+    {
+        //Debug.Log("Ну и?");
+        StaticClassForAdditionalFunctions.RefreshLayoutForGroups(this, _verticalGroup);
     }
 
     public void ValueOfSliderWasChanged()

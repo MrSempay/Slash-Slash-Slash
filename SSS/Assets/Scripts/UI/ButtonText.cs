@@ -14,12 +14,8 @@ public class ButtonText : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        //Debug.Log(GetInstanceID());
-        //Debug.Log("enable");
-        //Debug.Log(buttonComponent.onClick.GetPersistentEventCount());
         if (!IsListenerAlreadyAdded(buttonComponent.onClick, PlaySound) && !_soundListenerWasAttached)
         {
-            //Debug.Log("Как же заебало");
             buttonComponent.onClick.AddListener(PlaySound);
             _soundListenerWasAttached = true;
         }

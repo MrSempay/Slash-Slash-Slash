@@ -99,11 +99,7 @@ public class Treasury : Building, IMainTarget
 
             if (customScriptsEquipment.ContainsKey(randomEquipmentName))
             {
-                //Debug.Log("shit");
-
                 scriptOfEquipment = (Ammunition)newEquipment.AddComponent(customScriptsEquipment[randomEquipmentName]);
-
-                //Debug.Log(scriptOfEquipment.GetInstanceID());
             }
             else
             {
@@ -196,11 +192,7 @@ public class Treasury : Building, IMainTarget
                 Dictionary<string, Type> customScriptsEquipment = (Dictionary<string, Type>)AdjustBuildingParameters.buildingParameters[C.DK.Treasury][C.DK.customScriptsEquipment];
                 if (customScriptsEquipment.ContainsKey(nameAmmunition))
                 {
-                    //Debug.Log("shit");
-
                     scriptOfEquipment = (Ammunition)newEquipment.AddComponent(customScriptsEquipment[nameAmmunition]);
-
-                    //Debug.Log(scriptOfEquipment.GetInstanceID());
                 }
                 else
                 {

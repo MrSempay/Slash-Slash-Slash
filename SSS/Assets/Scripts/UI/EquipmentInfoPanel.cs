@@ -217,7 +217,6 @@ public class EquipmentInfoPanel : MonoBehaviour
     {
         yield return null; // ждём конца кадра
         yield return null; // ждём конца кадра
-        //Debug.Log("Мы блять тут вообще?");
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransformPIP);
     }

@@ -16,7 +16,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
         {
             if (_instance == null)
             {
-                var obj = new GameObject("EventBas");
+                var obj = new GameObject("EventBus");
                 _instance = obj.AddComponent<EventBus>();
                 DontDestroyOnLoad(obj);
 
@@ -63,6 +63,7 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
     public UnityEvent<Enemy> OnEnemyWasKilledByPlayer { get; } = new();
     public UnityEvent<int> OnOneEnemyWasKilledByPlayer { get; } = new(); // нужно для подписи для тех специфических итераторов, которые увеличиваются на 1 при убийстве врага игроком
 
+    public UnityEvent OnPlayerWasInstanced { get; } = new();
 
     public void TriggerDoorWasDestroyed(bool wasDestroyed) { DoorWasDestroyed.Invoke(wasDestroyed); }
 
@@ -90,4 +91,6 @@ public class EventBus : MonoBehaviour, IReadOnlyEventBus
 
     public void EnemyWasKilledByPlayer(Enemy enemy) { OnEnemyWasKilledByPlayer.Invoke(enemy);
                                                       OnOneEnemyWasKilledByPlayer.Invoke(1); }
+
+    public void PlayerWasInstanced() { OnPlayerWasInstanced.Invoke(); }
 }

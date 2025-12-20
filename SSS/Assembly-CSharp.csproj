@@ -106,7 +106,6 @@
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateMeleeAttackEnemy.cs" />
     <Compile Include="Assets\Scripts\Levels\ScenarioScript.cs" />
     <Compile Include="Assets\Scripts\GLOBAL\AdjustEquipmentParameters.cs" />
-    <Compile Include="Assets\Scripts\TestingFallZone.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILocalizibleText.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\YandexMobileAdsClientFactory.cs" />
@@ -187,6 +186,7 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\LocationBridge.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterFieldSettings.cs" />
     <Compile Include="Assets\Scripts\UI\AppearingSprite.cs" />
+    <Compile Include="Assets\Scripts\Test\TestingFallZone.cs" />
     <Compile Include="Assets\Scripts\Light\LightManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\BannerBridge.cs" />
     <Compile Include="Assets\Scripts\SaveLoad\WrapperGlobal.cs" />
@@ -218,7 +218,6 @@
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponCategory.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\AppOpenAdClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateFallEnemy.cs" />
-    <Compile Include="Assets\Scripts\UI\SyncManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayer\FsmStateMovementPlayer\FsmStateFall.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdRequestError.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\MobileAdsClient.cs" />
@@ -237,7 +236,6 @@
     <Compile Include="Assets\YandexMobileAds\Platforms\Android\InterstitialAdLoaderClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateEnemy\FsmStateMeleeEnemy\FsmStateDiedEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy.cs" />
-    <Compile Include="Assets\Scripts\TestMovingKinematic.cs" />
     <Compile Include="Assets\YandexMobileAds\Platforms\iOS\AudioSessionManagerClient.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStatePlayerL.cs" />
     <Compile Include="Assets\Scripts\Music\AudioEmitter.cs" />
@@ -296,6 +294,7 @@
     <Compile Include="Assets\Scripts\WeaponSettings\WeaponDatabase.cs" />
     <Compile Include="Assets\Scripts\UI\Leaderboard.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\FsmStateDoor.cs" />
+    <Compile Include="Assets\Scripts\Test\TestMovingKinematic.cs" />
     <Compile Include="Assets\Scripts\UI\ParametersFields\ParameterSlider.cs" />
     <Compile Include="Assets\YandexMobileAds\MobileAds.cs" />
     <Compile Include="Assets\YandexMobileAds\Base\AdFailedToLoadEventArgs.cs" />
@@ -305,6 +304,7 @@
     <Compile Include="Assets\YandexMobileAds\Base\MobileAdsPackageInfo.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\Healing.cs" />
     <Compile Include="Assets\Scripts\Equipment\Spell\Berserker.cs" />
+    <Compile Include="Assets\Scripts\SyncManager.cs" />
     <Compile Include="Assets\Scripts\Music\MusicManager.cs" />
     <Compile Include="Assets\YandexMobileAds\Banner.cs" />
     <Compile Include="Assets\Scripts\StateMachine\ObjectClaster\FsmStateUnit\Door\FsmStateDoorDestroyed.cs" />
@@ -375,17 +375,22 @@
     <Compile Include="Assets\YandexMobileAds\Common\DummyBannerAdSizeClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\Dialogues\English\Level1\DefeatByTargets.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
+    <None Include="Assets\Resources\Dialogues\Russian\Level4\DefeatByTargets.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Resources\Dialogues\Russian\Level1\DefeatByTargets.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level3\DialogueFinish.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue3.1.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Resources\Dialogues\Russian\Level3\DefeatByTargets.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue2.2.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Resources\Dialogues\English\Level5\DialogueStart.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue2.2.txt" />
     <None Include="Assets\Titles.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue2.1.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level2\DialogueStart.txt" />
@@ -404,28 +409,38 @@
     <None Include="Assets\Resources\Dialogues\English\Level2\DialogueFinish.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level4\DialogueStart.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\Resources\Dialogues\English\Level5\DefeatByTargets.txt" />
     <None Include="Assets\Shaders\GradientFade.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue4.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level3\DialogueFinish.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Resources\Dialogues\English\SampleScene\Dialogue1.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue2.1.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level2\DefeatByTargets.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue3.2.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue1.1.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level2\DialogueStart.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\MainMenu-SampleScene.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level5\DialogueFinish.txt" />
+    <None Include="Assets\Resources\Dialogues\Russian\Level2\DefeatByTargets.txt" />
     <None Include="Assets\Resources\Dialogues\English\Level3\DialogueStart.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\Level2\DialogueFinish.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level4\DialogueStart.txt" />
     <None Include="Assets\Scripts\UI\README_PARAMETERS.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue1.1.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue3.1.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level4\DefeatByTargets.txt" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue4.txt" />
     <None Include="Assets\Resources\Dialogues\Russian\Level1\Dialogue1.2.txt" />
     <None Include="Assets\Resources\Dialogues\English\MainMenu-Level1.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Resources\Dialogues\English\Level1\Dialogue1.2.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Resources\Dialogues\English\Level3\DefeatByTargets.txt" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Resources\Dialogues\Russian\Level4\DialogueFinish.txt" />
@@ -433,6 +448,7 @@
     <None Include="Assets\Resources\Dialogues\Russian\Level5\DialogueFinish.txt" />
     <None Include="Assets\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\Resources\Dialogues\Russian\Level5\DefeatByTargets.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

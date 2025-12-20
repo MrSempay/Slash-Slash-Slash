@@ -512,6 +512,8 @@ public class Livel1Scenario_AsyncUsing_FSMUsing : ScenarioScript
                         _ = CameraManager.Instance.MoveCameraToTargetAsync(paramPlayer);
                         _ = AudioManager.Instance.FadeAllEnviromentSoundsAsync();
 
+                        AudioManager.Instance.StartDefeatMusicInLoop();
+
                         await LightManager.Instance.FadeAllLightsAsync(1);
 
                         _currentStepDS = StepDS.StartEndDialogue;

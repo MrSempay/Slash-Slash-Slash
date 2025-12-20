@@ -74,7 +74,6 @@ public class ParameterChoseList : ParameterFieldSettings, IControlLifeCicleFunct
         if (!_lock) // чтоб из этого метода этот же не вызывать, если мы из этого класса его вызываем через CurrentValue
         {
             _lock = true;
-            Debug.Log("изменили хуйню");
             //Debug.Log("2");
             CurrentTextValue = listChosing[_indexCurrentString].ToString();
             CurrentValue = listChosing[_indexCurrentString]; // при вызове этого метода из currentSettings этот вызов не пройдёт, так как у нас стоит проверка на то же значение

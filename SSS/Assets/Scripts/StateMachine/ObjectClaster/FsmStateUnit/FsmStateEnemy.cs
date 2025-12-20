@@ -166,22 +166,17 @@ public class FsmStateEnemy : FsmStateUnit
                                              // нужна лишь дл€ сбрасывани€ скорости в ноль, что мы сами делаем в других состо€ни€х
                 if (enemy.currentMainTarget != null)
                 {
-                    Debug.Log("≈банутьс€0");
                     if (!enemy.currentMainTarget.WasDestroyed)
                     {
-                        Debug.Log("≈банутьс€");
                         return;
                     }
                 }
-                Debug.Log("≈банутьс€1");
                 if (!enemy.isInRazbrestisState)
                 {
-                    Debug.Log("≈банутьс€2");
                     SpawnTemporaryTargetForRazbrestis();
                 }
                 else
                 {
-                    Debug.Log("Ќе ≈банутьс€");
                     enemy.isInRazbrestisState = false;
                     if (enemy.temporaryTargetForRazbrestis)
                     {
@@ -190,12 +185,10 @@ public class FsmStateEnemy : FsmStateUnit
                     }
                     if (enemy.currentMainTarget != null) // если это была целева€ конечна€ точка, 
                     {
-                        Debug.Log("≈банутьс€3");
                         ProcessReachingMainTarget();
                     }
                     else
                     {
-                        Debug.Log("≈банутьс€4");
                         fsm.SetState<FsmStateIdleEnemy>();
                     }
                 }
@@ -206,15 +199,11 @@ public class FsmStateEnemy : FsmStateUnit
 
     private void ProcessReachingMainTarget()
     {
-        Debug.Log("Emmm???7");
         if (enemy.currentMainTarget.WasDestroyed)  // и она уничтожена - 
         {
-            Debug.Log("Emmm???8");
-            Debug.Log(enemy.transformTargets.Count);
             enemy.transformTargets.Remove(enemy.currentMainTarget.targetTransform); // убираем еЄ из с писка и 
             if (enemy.transformTargets.Count > 0)
             {
-                Debug.Log("Emmm???9");
                 int randomIndex = UnityEngine.Random.Range(0, enemy.transformTargets.Count);
                 enemy.CurrentTargetTransform = enemy.transformTargets[randomIndex]; // переходим к рандомной в списке (если достигли школы => к сокровищнице или герою)
             }

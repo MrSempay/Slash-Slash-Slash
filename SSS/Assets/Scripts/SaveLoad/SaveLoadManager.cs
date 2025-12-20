@@ -281,25 +281,18 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (!GameManager.Instance.wrapperGlobal.wrapperSettings.IsPristine())
         {
-            //Debug.Log("Блядство");
             List<RectTransform> rectTransformsRootes = new List<RectTransform>();
             rectTransformsRootes.Add(SettingsMenu.Instance.rectTransformPlacementForSettings);
             rectTransformsRootes.Add(SettingsMenu.Instance.toggleClusterGroup);
-            //Debug.Log(rectTransformsRootes.Count);
+
             foreach (DataWrapperToggle wrapToggle in GameManager.Instance.wrapperGlobal.wrapperSettings.allTogglesData)
             {
-                //Debug.Log(wrapToggle.selfName);
-                //Debug.Log(wrapToggle.IsToggled);
                 foreach (RectTransform rootRectTransform in rectTransformsRootes) // можно было бы в глобальном трансформ нашей SettingsMenu искать, но так искало бы дольше. В целях
                                                                                   // оптимизации вручную задаём в rectTransformsRootes локальные трансформы, в детях которых будут тумблеры
                 {
                     // так как функция вызывается рекурсивно, чтоб постоянно не вызывать в ней GetPropertiesAndFields, мы вызовем это до первого входа в функцию и передадим
                     // словарь fieldsAndPropertiesOfWrapper как параметр в эту функцию (сделано в целях оптимизации)
                     Dictionary<string, object> fieldsAndPropertiesOfWrapper = GetPropertiesAndFields(wrapToggle);
-                    //Debug.Log("ебанушка");
-                    //Debug.Log(rootRectTransform); 
-                    //Debug.Log(wrapToggle); 
-                    //Debug.Log(fieldsAndPropertiesOfWrapper); 
                     FindAndImplementAllTogglesInGivenRectTransformRecursivly(rootRectTransform, wrapToggle, fieldsAndPropertiesOfWrapper);
                 }
             }

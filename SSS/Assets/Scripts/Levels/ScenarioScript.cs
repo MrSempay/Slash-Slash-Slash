@@ -87,7 +87,7 @@ public class ScenarioScript : MonoBehaviour
     protected virtual void Start()
     {
 
-        FinishLevel();
+        //FinishLevel();
     }
 
     public void AddMainTargetNotPlayer(IMainTarget target)
@@ -100,7 +100,6 @@ public class ScenarioScript : MonoBehaviour
         _aliveMTExceptedPlayer.Remove(target);
         if (_aliveMTExceptedPlayer.Count == 0)
         {
-            Debug.Log("≈банашка");
             Defeat();
         }
     }
@@ -128,7 +127,6 @@ public class ScenarioScript : MonoBehaviour
     //}
     protected virtual void DialogueWasStarted(PlayerDialogue playerDialogue)
     {
-        //Debug.Log("ј он, бл€ть, началс€");
         ScriptCurrentDialogue = playerDialogue;
     }
 
@@ -489,7 +487,7 @@ public class ScenarioScript : MonoBehaviour
                     {
                         //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
 
-                        SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - ≈ЅјЌЌЌџџџ≈≈≈ рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
+                        SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
                         if (lastSTF != null) lastSTF.Dispose();
 
                     }, null);
@@ -499,7 +497,7 @@ public class ScenarioScript : MonoBehaviour
                     // ≈сли sync == null (редко в Unity), попытатьс€ безопасно выполнить Ч но это небезопасно.
                     //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
 
-                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - ≈ЅјЌЌЌџџџ≈≈≈ рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
+                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
                     if (lastSTF != null) lastSTF.Dispose();
                 }
             });
@@ -528,7 +526,7 @@ public class ScenarioScript : MonoBehaviour
                 // уже на main thread
                 //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
 
-                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - ≈ЅјЌЌЌџџџ≈≈≈ рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
+                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
                 if (lastSTF != null) lastSTF.Dispose();
             }
             else if (sync != null)
@@ -536,7 +534,7 @@ public class ScenarioScript : MonoBehaviour
                 sync.Post(_ =>
                 {
                     //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - ≈ЅјЌЌЌџџџ≈≈≈ рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
+                    SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
                     if (lastSTF != null) lastSTF.Dispose();
 
                 }, null);
@@ -545,7 +543,7 @@ public class ScenarioScript : MonoBehaviour
             {
                 // no sync Ч best-effort
                 //if (skipTimerStuff != null) { skipTimerStuff.Dispose(); skipTimerStuff = null; }
-                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - ≈ЅјЌЌЌџџџ≈≈≈ рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
+                SkipTimerStuff lastSTF = Interlocked.Exchange(ref _skipTimerStuff, null); //  ќ–ќ„≈, Ё“ќ - рудиментные ƒ≈…—“¬»я. »бо Dispose сам мы уже защитили.
                 if (lastSTF != null) lastSTF.Dispose();
             }
         }
@@ -653,7 +651,7 @@ public class ScenarioScript : MonoBehaviour
         _justTimeWaitCoroutine = null;
         CoroutineManager.Instance?.StopAllCoroutinesFor(gameObject);
 
-        if (GameManager.Instance != null) // а вот так GameManager.Instance?.onDialogueStarted -= DialogueWasStarted; нельз€, сука
+        if (GameManager.Instance != null) // а вот так GameManager.Instance?.onDialogueStarted -= DialogueWasStarted; нельз€, увы
         {
             GameManager.Instance.onDialogueStarted -= DialogueWasStarted;
         }

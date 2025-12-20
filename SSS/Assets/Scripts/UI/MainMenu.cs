@@ -62,7 +62,6 @@ public class MainMenu : MonoBehaviour
         AudioManager.Instance.StartCertainMusicInLoop("MainMenuTheme");
 
         availableLevelSet.UpdateLevelSet();
-        //Debug.Log("Ёто чЄ за ебун€ча€ параша?");
         //AudioManager.Instance.StartMusic(nameOfMainMusicTeam); // - что тут делать пока что хз  
     }
 

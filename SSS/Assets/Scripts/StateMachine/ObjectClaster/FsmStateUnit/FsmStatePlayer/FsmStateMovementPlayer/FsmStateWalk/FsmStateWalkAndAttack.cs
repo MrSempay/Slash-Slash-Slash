@@ -85,12 +85,6 @@ public class FsmStateWalkAndAttack : FsmStateWalk
                                                                              AudioManager.TYPE_SOUND.AttackPeak,
                                                                              AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
                 }
-                //Debug.Log("×òî çà ïîåáåíü åáàíàøêèíà?");
-                Debug.Log("×òî çà åáàòÿíÿ åáàíàÿ?");
-                Debug.Log("Ïðîâåðÿåì åáó÷èé òýã âî âõîæäåíèè " + enemy.fuck.gameObject.tag);
-                Debug.Log($"TRIGGER: {enemy.fuck.gameObject.name}, TAG = {enemy.fuck.gameObject.tag}", enemy.fuck.gameObject);
-                Debug.Log(enemy.gameObject.GetInstanceID());
-                Debug.Log("ìû â  ìåòîäå! Stack: " + Environment.StackTrace);
                 try
                 {
                     Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
@@ -115,13 +109,9 @@ public class FsmStateWalkAndAttack : FsmStateWalk
 
     }
 
-    private void MakeDamageToEnemy(bool isEnemyInArea, Enemy enemy)// ÿ íå åáó, ÷òî òóò ïðîèñõîäèò. Ïðîñòî âûïîëíåíèå ïåðïðûãèâàåò íà ñåðåäèíó ìåòîäà, îòòîãî òàì è ïðîâåðÿåì íà
-                                                                   // tag != "Enemy", ïèçäåö êàêîé-òî
+    private void MakeDamageToEnemy(bool isEnemyInArea, Enemy enemy)// ÿ íå çíàþ, ÷òî òóò ïðîèñõîäèò. Ïðîñòî âûïîëíåíèå ïåðïðûãèâàåò íà ñåðåäèíó ìåòîäà, îòòîãî òàì è ïðîâåðÿåì íà
+                                                                   // tag != "Enemy", 
     {
-        //Debug.Log("LFFFFFFFFFFFFFFFFFFFFFFFFFFÇÀÅÁÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀÀËËËËËËËËËËËËËËÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎ");
-        //Debug.Log("Ýòî ñþððåàëèçì");
-        //Debug.Log(enemy == null ? "enemy == NULL" : "enemy != null");
-        //Debug.Log(enemy?.gameObject == null ? "enemy.gameObject == NULL" : "enemy.gameObject != null");
 
         if (enemy?.gameObject != null)
         {
@@ -129,7 +119,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
             //Debug.Log("Tag: " + enemy.gameObject.tag);
             //Debug.Log("CompareTag EnemyDied: " + enemy.gameObject.CompareTag("EnemyDied"));
         }
-        if (enemy.gameObject.CompareTag("Enemy")) // ÍÅ ÐÀÁÎÒÀÅÒ ÏÀÐÀØÀ. ÕÓÉ ÇÍÀÅÒ ÏÎ×ÅÌÓ
+        if (enemy.gameObject.CompareTag("Enemy")) // ÍÅ ÐÀÁÎÒÀÅÒ. ÍÅÂÅÄÎÌÎ ÏÎ×ÅÌÓ
         {
             if (isEnemyInArea)
             {
@@ -144,24 +134,7 @@ public class FsmStateWalkAndAttack : FsmStateWalk
                                                                              enemy.audioEmitter,
                                                                              AudioManager.TYPE_SOUND.AttackPeak,
                                                                              AudioManager.TYPE_AUDIO_SOURCE._3DStandard);
-                }
-                //Debug.Log("×òî çà ïîåáåíü åáàíàøêèíà?");
-                //Debug.Log("×òî çà åáàòÿíÿ åáàíàÿ?");
-                //Debug.Log("Ïðîâåðÿåì åáó÷èé òýã âî âõîæäåíèè " + enemy.fuck.gameObject.tag);
-                //Debug.Log($"TRIGGER: {enemy.fuck.gameObject.name}, TAG = {enemy.fuck.gameObject.tag}", enemy.fuck.gameObject);
-                //Debug.Log(enemy.gameObject.GetInstanceID());
-                //Debug.Log("ìû â  ìåòîäå! Stack: " + Environment.StackTrace);
-                //try
-                //{
-                //    Debug.LogError(">>> ENTRY TOP METHOD <<< " + GetType().FullName + " thisHash=" + this.GetHashCode());
-                //}
-                //catch (Exception e)
-                //{
-                //    Debug.LogError("EXCEPTION AT ENTRY: " + e);
-                //}
-                //var mtb = System.Reflection.MethodBase.GetCurrentMethod();
-                //Debug.LogError($"Method info: {mtb.DeclaringType.FullName}.{mtb.Name}  Assembly={mtb.DeclaringType.Assembly.FullName}  Module={mtb.Module.Name}  Token={mtb.MetadataToken}");
-                //if (enemy.gameObject.CompareTag("Enemy") && !_makeDamageWasCalledFromEnter) player.enemiesInAttackArea.Add(enemy);
+                }                
             }
             else
             {

@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -10,22 +12,6 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Enemy : Unit
 {
-
-    [SerializeField] private Transform _currentTargetTransform; // временно [SerializeField]
-    [SerializeField] private Player player;
-
-    [NonSerialized] public Transform playerTransform; // компонент Transform игрока (чтоб позицию его знать дл€ навигации)
-    [NonSerialized] public NavMeshAgent agent; // навигационный агент врага (собственный)
-    [NonSerialized] public LineRenderer lineRenderer; // ломанна€ дл€ визуализации пути
-    [NonSerialized] public Vector2 nextPointInPath; // “екуща€ целева€ позици€ (втора€ точка в пути)
-    [NonSerialized] public float arrivalThreshold = 0.3f; // –ассто€ние, при котором считаем, что достигли цели
-    [NonSerialized] public float callDownMeleeAttack;
-    [NonSerialized] public int currentCornerIndex; // »ндекс текущего угла в пути
-    [NonSerialized] public bool isPathValid; // ‘лаг, указывающий, что путь валиден
-    [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. “ребуетс€ лишь дл€ отладки
-    [NonSerialized] public GameObject temporaryTargetForRazbrestis;
-
-
 
     public CapsuleCollider2D selfEnemyCollider;
     public IMainTarget currentMainTarget;
@@ -45,6 +31,24 @@ public class Enemy : Unit
     public string TEST_Current_State; 
     public bool TEST_MOD;
 
+    [NonSerialized] public Transform playerTransform; // компонент Transform игрока (чтоб позицию его знать дл€ навигации)
+    [NonSerialized] public NavMeshAgent agent; // навигационный агент врага (собственный)
+    [NonSerialized] public LineRenderer lineRenderer; // ломанна€ дл€ визуализации пути
+    [NonSerialized] public Vector2 nextPointInPath; // “екуща€ целева€ позици€ (втора€ точка в пути)
+    [NonSerialized] public float arrivalThreshold = 0.3f; // –ассто€ние, при котором считаем, что достигли цели
+    [NonSerialized] public float callDownMeleeAttack;
+    [NonSerialized] public int currentCornerIndex; // »ндекс текущего угла в пути
+    [NonSerialized] public bool isPathValid; // ‘лаг, указывающий, что путь валиден
+    [NonSerialized] public AnimatorClipInfo animatorInfo; // по идее нафиг не нужно. “ребуетс€ лишь дл€ отладки
+    [NonSerialized] public GameObject temporaryTargetForRazbrestis;
+
+
+    [SerializeField] private Transform _currentTargetTransform; // временно [SerializeField]
+    [SerializeField] private Player player;
+    
+    private bool _isThroughAble;
+
+
 
 
     public Transform CurrentTargetTransform // “екуща€ целева€ позици€ (втора€ точка в пути)
@@ -55,15 +59,31 @@ public class Enemy : Unit
             _currentTargetTransform = value;
             if (!isInRazbrestisState)
             {
-                Debug.Log(value);
-                Debug.Log(value.GetComponent<IMainTarget>());
+                //Debug.Log(value);
+                //Debug.Log(value.GetComponent<IMainTarget>());
                 currentMainTarget = value.GetComponent<IMainTarget>();
                 
             }
         }
     }
-
-
+    public bool IsThroughAble // “екуща€ целева€ позици€ (втора€ точка в пути)
+    {
+        get { return _isThroughAble; }
+        set
+        {
+            _isThroughAble = value;
+            //Debug.Log("» что за хрень?");
+            // ¬ключаем игнорирование коллизий
+            if (Player.instance != null)
+            {
+                if (selfEnemyCollider != null)
+                {
+                    Debug.Log("» что за хрень?");
+                    Physics2D.IgnoreCollision(selfEnemyCollider, Player.instance.selfCollider, value);
+                }
+            }
+        }
+    }
 
     protected override void Awake()
     {
@@ -75,22 +95,10 @@ public class Enemy : Unit
         agent = GetComponent<NavMeshAgent>();
         lineRenderer = GetComponent<LineRenderer>(); // ѕолучаем компонент LineRenderer
 
+        EventBus.Instance.OnPlayerWasInstanced.AddListener(PlayerWasInstanced);
 
         Transform transformParametersBars = fuck.transform.Find("ParametersBars");
         if (transformParametersBars != null) parametersBars = transformParametersBars.gameObject;
-
-        // блок ниже - убираем детекцию коллизий между коллайдером каждого экземпл€ра классов, наследуемых от Enemy и Player
-        if (playerTransform != null)
-        {
-            Collider2D playerCollider = playerTransform.gameObject.GetComponent<BoxCollider2D>();
-
-            if (selfEnemyCollider != null && playerCollider != null)
-            {
-                //Debug.Log("»»»»»»»»√√√√√√√√ЌЌЌЌЌЌЌЌЌЌќќќќќќќќќќ––––––––––»»»»»»ћћћћћћћћћћћћћћћћ");
-                Physics2D.IgnoreCollision(selfEnemyCollider, playerCollider);
-            }
-        }
-
 
         attackAreaScript.isPlayerOrAlliesInAttackArea += PlayerOrAlliesInAttackArea; // насколько € понимаю, зона атаки будет детектить и вхождение врагов в эту зону, но суть в том, что
                                                                                      // сами враги подписаны на прослушивание только сигнала вхождени€ игрока в зону, поэтому враги дл€ врагов
@@ -103,14 +111,8 @@ public class Enemy : Unit
         _fsm.AddState(new FsmStateJumpEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateFallEnemy(_fsm, gameObject));
         _fsm.AddState(new FsmStateDiedEnemy(_fsm, gameObject));
-
-
-
-
-
-
-
     }
+
     protected override void Start()
     {
         base.Start();
@@ -127,7 +129,7 @@ public class Enemy : Unit
         _fsm.SetState<FsmStateWalkEnemy>();
     }
 
-    void Update()
+    private void Update()
     {
 
         //Debug.Log(_fsm.StateCurrent);
@@ -146,11 +148,11 @@ public class Enemy : Unit
         }
     }
 
-    public override void OnDestroy()
+    public override void Die(Unit unitFromWhoWasGottenDamage = null)
     {
-        base.OnDestroy();  
-        attackAreaScript.isPlayerOrAlliesInAttackArea -= PlayerOrAlliesInAttackArea;
-        triggerAreaScript.OnPlayerEnteredTriggerArea -= FollowPlayer;
+        _fsm.SetState<FsmStateDiedEnemy>();
+        base.Die(unitFromWhoWasGottenDamage);
+        //Destroy(gameObject); // ”ничтожаем объект
     }
 
     private void PlayerOrAlliesInAttackArea(bool isPlayerOrAlliesInArea, Unit alliesOrPlayer)
@@ -180,12 +182,29 @@ public class Enemy : Unit
         isInRazbrestisState = false;
     }
 
-
-    public override void Die(Unit unitFromWhoWasGottenDamage = null)
+    private void PlayerWasInstanced()
     {
-        _fsm.SetState<FsmStateDiedEnemy>();
-        base.Die(unitFromWhoWasGottenDamage);
-        //Destroy(gameObject); // ”ничтожаем объект
+        IsThroughAble = IsThroughAble;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            var rb = GetComponent<Rigidbody2D>();
+            rb.linearVelocityX = 0; // гасим инерцию
+        }
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();  
+        attackAreaScript.isPlayerOrAlliesInAttackArea -= PlayerOrAlliesInAttackArea;
+        triggerAreaScript.OnPlayerEnteredTriggerArea -= FollowPlayer;
+        EventBus.Instance.OnPlayerWasInstanced.RemoveListener(PlayerWasInstanced);
+    }
+
+
+ 
 
 }

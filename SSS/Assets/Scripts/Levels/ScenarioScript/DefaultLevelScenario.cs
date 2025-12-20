@@ -311,7 +311,6 @@ public class DefaultLevelScenario : ScenarioScript
 
             var stepCts = CreateLinkedStepCts(ct);
             var stepToken = stepCts.Token;
-            //Debug.Log("≈банейший пиздец");
 
             if (_currentMode != ScenarioMode.DefeatScenario) // or DefeatScenario in defeat loop
             {
@@ -366,6 +365,8 @@ public class DefaultLevelScenario : ScenarioScript
                         };
                         _ = CameraManager.Instance.MoveCameraToTargetAsync(paramPlayer);
                         _ = AudioManager.Instance.FadeAllEnviromentSoundsAsync();
+
+                        AudioManager.Instance.StartDefeatMusicInLoop();
 
                         await LightManager.Instance.FadeAllLightsAsync(1);
 

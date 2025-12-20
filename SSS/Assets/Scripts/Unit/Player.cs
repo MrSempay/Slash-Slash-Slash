@@ -52,6 +52,7 @@ public class Player : Unit, IMainTarget
     public RectTransform UI; //
     public UIPlayerManager scriptUI; //
     public RankStyle rankStyle; //
+    public BoxCollider2D selfCollider;
     public bool UIUpscaledMod = false;
     //public List<Spell> listSpellsInInventory = new(); // список заклинаний, доступных игроку в инвентаре 
     //[SerializeField] public TextEdit texxt; //   
@@ -275,9 +276,12 @@ public class Player : Unit, IMainTarget
         GameManager.Instance.notificationPlacement = _notificationPlacement;
         CurrentStamina = staminaMax;
         selfSprite = GetComponent<SpriteRenderer>();
+        selfCollider = GetComponent<BoxCollider2D>();
         _mainCameraTransform = mainCamera.gameObject.GetComponent<Transform>();
         scriptUI = UI.GetComponent<UIPlayerManager>();
+
         EventBus.Instance.DoorWasDestroyed.AddListener(DoorDestroyedOrRepeired);
+        EventBus.Instance.PlayerWasInstanced();
 
         nearAreaDetector.isEnemyNear += EnemyNear;
         attackAreaScript.isEnemyInAttackArea += EnemyHasChangedStatusInAttackArea;
@@ -394,9 +398,6 @@ public class Player : Unit, IMainTarget
 
     protected override void SomeUnitWasDestroyed(Unit unit)
     {
-        //Debug.Log(unit.gameObject.GetInstanceID());
-        //Debug.Log(" xnj pf ебанина?");
-        //Debug.Log(enemiesInAttackArea.Count);
         foreach (Enemy item in enemiesInAttackArea)
         {
             //Debug.Log(item.gameObject.GetInstanceID());
@@ -405,12 +406,10 @@ public class Player : Unit, IMainTarget
 
         if (enemiesInAttackArea.Contains(enemyUnit))
         {
-            //Debug.Log("И, нахуй?");
             enemiesInAttackArea.Remove(enemyUnit);
         }
         if (nearEnemies.Contains(enemyUnit))
         {
-            //Debug.Log("И, нахуй?");
             nearEnemies.Remove(enemyUnit);
         }
 
@@ -434,16 +433,12 @@ public class Player : Unit, IMainTarget
 
         if (enemyUnit != null) 
         {
-                        Debug.Log("mda1");
             if (enemyUnit.isInstancedByLevel)
             {
-                        Debug.Log("mda2");
                 if (LevelBuilder.instance.WasEnemiesWaveDestroyed(enemyUnit)) // подразумевается, что зачищать волну может только герой пока что, если враг сам помрёт, то не засчитается
                 {
-                        Debug.Log("mda3");
                     if (LevelBuilder.instance.IsAllMainTargetsAlive())
                     {
-                        Debug.Log("mda4");
                         OnEnemiesWaveWasDestroyedWithoutLosingMainTargets?.Invoke(LevelBuilder.instance.currentWave); // подписываемся в ScenarioScipt, пока что
                     }
                     OnEnemiesWaveWasDestroyed?.Invoke(LevelBuilder.instance.currentWave);
@@ -502,21 +497,6 @@ public class Player : Unit, IMainTarget
         }
 
     }
-
-    // на данный момент код ниже - дичь. Ибо если игрок врежется головой в платформу или просто подойдёт к вертикальной стенке - isGrounded будет true. То есть прыгать может бесконечно.
-    // Нужно детектить нижнюю часть игрока, то есть отдельный коллайдер и скрипт на него. 
-    /*void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Проверяем, столкнулся ли кубик с объектом с тегом "Ground"
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            if (!isGrounded)
-            {
-                isGrounded = true; // Устанавливаем, что кубик снова на земле
-                if (rb.linearVelocity.x == 0) _fsm.SetState<FsmStateIdle>();
-            }
-        }
-    } */
 
     private void DoorDestroyedOrRepeired(bool isDoorDestroyed)
     {
@@ -736,7 +716,6 @@ public class Player : Unit, IMainTarget
 
     public override void OnDestroy()
     {
-        //Debug.Log("Ебля блядоносная");
         base.OnDestroy();
 
         nearAreaDetector.isEnemyNear -= EnemyNear;
